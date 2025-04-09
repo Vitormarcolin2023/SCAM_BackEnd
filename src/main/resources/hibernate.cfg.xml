@@ -15,7 +15,7 @@
 
         <property name="hibernate.show_sql">true</property> <!-- Show SQL in console -->
         <property name="hibernate.format_sql">true</property> <!-- Show SQL formatted -->
-
+'
 
     </session-factory>
 </hibernate-configuration>
