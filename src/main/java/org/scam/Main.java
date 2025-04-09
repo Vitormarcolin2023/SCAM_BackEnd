@@ -2,6 +2,6 @@ package org.scam;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World! Oi");
+        System.out.println("To com fome");
     }
 }
