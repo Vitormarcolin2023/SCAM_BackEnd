@@ -1,4 +1,4 @@
-package org.scam.enities;
+package org.scam.entities;
 
 public class AlunoEntity {
 }
