@@ -2,30 +2,30 @@ package org.scam;
 
 import org.scam.classes.Projeto;
 import org.scam.cadastros.ProjetoCadastro;
+import org.scam.entities.AlunoEntity;
+import org.scam.repository.AlunoRepository;
+import org.scam.repository.CustomizerFactory;
 
+import javax.persistence.EntityManager;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ProjetoCadastro cadastro = new ProjetoCadastro();
-        Projeto projeto = cadastro.cadastrarProjeto();
 
-        Scanner sc = new Scanner(System.in);
-        int continuar = 0;
+        EntityManager em = CustomizerFactory.getEntityManager();
+        AlunoRepository alunoRepository = new AlunoRepository(em);
 
-        do {
+        AlunoEntity aluno = alunoRepository.buscarPorId(1L);
 
-            System.out.println("======== SISTEMA DE MENTORIA ========");
-            System.out.println("= [1] - Coordenador                 =");
-            System.out.println("= [2] - Mentor                      =");
-            System.out.println("= [3] - Aluno                       =");
-            System.out.println("=====================================\n");
-            continuar = sc.nextInt();
+        System.out.println(aluno.getNome());
+        System.out.println(aluno.getSenha());
+        System.out.println(aluno.getSenha());
 
-
-
-        }while (continuar != 4);
-
+        /*alunoRepository.salvar(
+                new AlunoEntity(
+                        null, "Vitor Hugo Marcolin", "506506", "123456"
+                )
+        );*/
 
     }
 }
