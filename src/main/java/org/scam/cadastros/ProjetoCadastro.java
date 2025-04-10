@@ -47,8 +47,6 @@ public class ProjetoCadastro {
             System.out.print("ID do mentor (fk_mentor_id): ");
             projeto.setFk_mentor_id(Integer.parseInt(scanner.nextLine()));
 
-            System.out.println("\nProjeto cadastrado com sucesso!");
-
         } catch (ParseException e) {
             System.out.println("Formato de data inválido. Use o padrão yyyy-MM-dd.");
         } catch (NumberFormatException e) {
