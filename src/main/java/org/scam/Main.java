@@ -2,10 +2,15 @@ package org.scam;
 
 import org.scam.classes.Coordenador;
 
+import org.scam.classes.Projeto;
+import org.scam.cadastros.ProjetoCadastro;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        ProjetoCadastro cadastro = new ProjetoCadastro();
+        Projeto projeto = cadastro.cadastrarProjeto();
 
         Coordenador coordenador = new Coordenador();
 
@@ -53,7 +58,8 @@ class Funcoes {
 
     public static  boolean login(String documento, String senha){
         System.out.println("\n- Informe seu RA ou CPF: ");
-
+        // em desenvolvimento
+        return true;
     }
 
 }
