@@ -3,10 +3,10 @@ package org.scam.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.security.auth.login.Configuration;
 
 public class CustomizerFactory {
 

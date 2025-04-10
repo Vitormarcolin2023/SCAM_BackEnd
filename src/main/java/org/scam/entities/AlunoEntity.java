@@ -7,7 +7,7 @@ public class AlunoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idAluno;
+    private Long id;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
@@ -19,11 +19,11 @@ public class AlunoEntity {
     private String senha;
 
     public Long getIdAluno() {
-        return idAluno;
+        return id;
     }
 
     public void setIdAluno(Long idAluno) {
-        this.idAluno = idAluno;
+        this.id = idAluno;
     }
 
     public String getNome() {
@@ -54,7 +54,7 @@ public class AlunoEntity {
 
     }
     public AlunoEntity(Long idAluno, String nome, String ra, String senha) {
-        this.idAluno = idAluno;
+        this.id = idAluno;
         this.nome = nome;
         this.ra = ra;
         this.senha = senha;
