@@ -1,5 +1,6 @@
 package org.scam.repository;
 
+import org.scam.classes.IAutenticavel;
 import org.scam.entities.AlunoEntity;
 
 import javax.persistence.EntityManager;

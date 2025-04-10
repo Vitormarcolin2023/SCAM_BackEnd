@@ -54,8 +54,10 @@ class Funcoes {
     public static Scanner sc = new Scanner(System.in);
 
     public static  boolean login(String documento, String senha){
-        System.out.println("\n- Informe seu RA ou CPF: ");
-        // em desenvolvimento
+        System.out.println("\n=============== LOGIN ===============");
+        System.out.println("- Informe seu RA ou CPF: ");
+        System.out.println("- Informe sua senha: ");
+
         return true;
     }
 
