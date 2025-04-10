@@ -34,11 +34,11 @@ public class Main {
         System.out.println(aluno.getSenha());
 
 
-        /*alunoRepository.salvar(
+        alunoRepository.salvar(
                 new AlunoEntity(
-                        null, "Vitor Hugo Marcolin", "506507", "123457"
+                        null ,"Vitor Hugo Marcolin", 506507, "123457"
                 )
-        );*/
+        );
 
     }
 
