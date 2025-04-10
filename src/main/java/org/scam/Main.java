@@ -2,11 +2,30 @@ package org.scam;
 
 import org.scam.classes.Aluno;
 import org.scam.classes.Coordenador;
+import org.scam.entities.AlunoEntity;
 import org.scam.menus.MenuAluno;
+import org.scam.repository.AlunoRepository;
+import org.scam.repository.CustomizerFactory;
+
+import javax.persistence.EntityManager;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        /*
+        VALIDAÇÃO SE ESTÁ OK A LIGAÇÃO COM O BANCO
+
+        EntityManager em = CustomizerFactory.getEntityManager();
+        AlunoRepository alunoRepository = new AlunoRepository(em);
+
+        AlunoEntity aluno = alunoRepository.buscarPorId(1L);
+
+        System.out.println(aluno.getNome());*/
+
+
+
         Aluno alunoPadrao = new Aluno("Lethicia", "lethiciamsm@gmail.com", "lethicia1312", 1, 219421);
         Coordenador coordenadorPadrao = new Coordenador("Admin", "admin@uniamerica.br", "admin123");
 
