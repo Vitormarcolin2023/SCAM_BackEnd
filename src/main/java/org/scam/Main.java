@@ -1,18 +1,14 @@
 package org.scam;
 
+import org.scam.classes.Aluno;
 import org.scam.classes.Coordenador;
-
-import org.scam.classes.Projeto;
-import org.scam.cadastros.ProjetoCadastro;
-
+import org.scam.menus.MenuAluno;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ProjetoCadastro cadastro = new ProjetoCadastro();
-        Projeto projeto = cadastro.cadastrarProjeto();
-
-        Coordenador coordenador = new Coordenador();
+        Aluno alunoPadrao = new Aluno("Lethicia", "lethiciamsm@gmail.com", "lethicia1312", 1, 219421);
+        Coordenador coordenadorPadrao = new Coordenador("Admin", "admin@uniamerica.br", "admin123");
 
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
@@ -37,8 +33,9 @@ public class Main {
                     break;
                 }
                 case 3:{
-
-                    break;
+                        MenuAluno menuAluno = new MenuAluno(alunoPadrao);
+                        menuAluno.exibirMenu();
+                        break;
                 }
                 case 4:{
                     System.out.println("\nSaindo...");
