@@ -13,7 +13,7 @@ public class AlunoEntity {
     private String nome;
 
     @Column(name = "ra", nullable = false, unique = true)
-    private String ra;
+    private int ra;
 
     @Column(name = "senha", nullable = false, length = 45)
     private String senha;
@@ -34,11 +34,11 @@ public class AlunoEntity {
         this.nome = nome;
     }
 
-    public String getRa() {
+    public int getRa() {
         return ra;
     }
 
-    public void setRa(String ra) {
+    public void setRa(int ra) {
         this.ra = ra;
     }
 
@@ -53,7 +53,7 @@ public class AlunoEntity {
     public AlunoEntity() {
 
     }
-    public AlunoEntity(Long idAluno, String nome, String ra, String senha) {
+    public AlunoEntity(Long idAluno, String nome, int ra, String senha) {
         this.id = idAluno;
         this.nome = nome;
         this.ra = ra;
