@@ -1,16 +1,15 @@
 package org.scam.repository;
 
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.security.auth.login.Configuration;
 
 public class CustomizerFactory {
 
-    private static final EntityManagerFactory emf;
+    private static  final EntityManagerFactory emf;
 
     static {
         SessionFactory sessionFactory = new Configuration()
@@ -27,4 +26,10 @@ public class CustomizerFactory {
     public static void fechar(){
         emf.close();
     }
+
+
+
+
+
+
 }

@@ -2,20 +2,20 @@ package org.scam.entities;
 
 import javax.persistence.*;
 
-@Entity(name = "tb_aluno")
+@Entity (name = "tb_aluno")
 public class AlunoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long idAluno;
 
-    @Column(name = "nome", nullable = false, length = 100)
+    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "ra", nullable = false, unique = true)
+    @Column(name = "ra")
     private String ra;
 
-    @Column(name = "senha", nullable = false, length = 45)
+    @Column(name = "senha")
     private String senha;
 
     public Long getIdAluno() {
@@ -53,6 +53,7 @@ public class AlunoEntity {
     public AlunoEntity() {
 
     }
+
     public AlunoEntity(Long idAluno, String nome, String ra, String senha) {
         this.idAluno = idAluno;
         this.nome = nome;
