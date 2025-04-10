@@ -59,8 +59,8 @@ public class MentorEntity {
           this.telefone = telefone;
           this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
-          this.areaDeAtuacao;
-          this.endereco;
+          this.areaDeAtuacao = areaDeAtuacao;
+          this.endereco = endereco;
 
     }
 
@@ -89,7 +89,7 @@ public class MentorEntity {
     public String getTempoDeExperiencia(){return tempoDeExperiencia;}
     public void setTempoDeExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
 
-    public String getTipoDeVinculo(){return tipoDeVinculo}
+    public String getTipoDeVinculo(){return tipoDeVinculo;}
     public void setTipoDeVinculo(String tipoDeVinculo) {this.tipoDeVinculo = tipoDeVinculo;}
 
     public String getAreaDeAtuacao(){return areaDeAtuacao;}
