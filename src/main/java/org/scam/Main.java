@@ -1,9 +1,14 @@
 package org.scam;
 
+import org.scam.classes.Projeto;
+import org.scam.cadastros.ProjetoCadastro;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        ProjetoCadastro cadastro = new ProjetoCadastro();
+        Projeto projeto = cadastro.cadastrarProjeto();
 
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
