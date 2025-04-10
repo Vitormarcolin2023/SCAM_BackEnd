@@ -16,6 +16,7 @@
         <property name="hibernate.show_sql">true</property> <!-- Show SQL in console -->
         <property name="hibernate.format_sql">true</property> <!-- Show SQL formatted -->
 
+
         <mapping class="org.scam.entities.AlunoEntity" />
 
     </session-factory>
