@@ -15,20 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        /*
-        VALIDAÇÃO SE ESTÁ OK A LIGAÇÃO COM O BANCO
-
-        EntityManager em = CustomizerFactory.getEntityManager();
-        AlunoRepository alunoRepository = new AlunoRepository(em);
-
-        AlunoEntity aluno = alunoRepository.buscarPorId(1L);
-
-        System.out.println(aluno.getNome());*/
-
-
-
-        Aluno alunoPadrao = new Aluno("Lethicia", "lethiciamsm@gmail.com", "lethicia1312", 1, 219421);
-        CoordenacaoEntity coordenadorPadrao = new CoordenacaoEntity(1L, "Admin", "admin@uniamerica.br", "admin123");
+        Funcoes funcoes = new Funcoes();
 
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
@@ -55,9 +42,10 @@ public class Main {
                     break;
                 }
                 case 3:{
-                        MenuAluno menuAluno = new MenuAluno(alunoPadrao);
+                       /* MenuAluno menuAluno = new MenuAluno(alunoPadrao);
                         menuAluno.exibirMenu();
-                        break;
+                        break;*/
+                    funcoes.login(3);
                 }
                 case 4:{
                     System.out.println("\nSaindo...");
@@ -73,14 +61,40 @@ public class Main {
 
 class Funcoes {
 
-    public static Scanner sc = new Scanner(System.in);
+    public void login (int tipoUsuario){
 
-    public static  void login(){
+        Scanner sc = new Scanner(System.in);
+
+        EntityManager em = CustomizerFactory.getEntityManager();
+
         System.out.println("\n=============== LOGIN ===============");
-        System.out.println("- Informe seu RA ou CPF: ");
-        String doc = sc.nextLine();
+        System.out.println("- Informe seu email: ");
+        String email = sc.nextLine();
         System.out.println("- Informe sua senha: ");
         String senha = sc.nextLine();
+
+        switch (tipoUsuario){
+            case 1:{
+
+                break;
+            }
+            case 2:{
+
+                break;
+            }
+            case 3:{
+                    AlunoRepository alunoRepository = new AlunoRepository(em);
+
+                    AlunoEntity aluno = alunoRepository.login(email, senha);
+
+                    System.out.println(aluno.getNome());
+                break;
+            }
+            default:{
+                System.out.println("\nUsuário inválido");
+                break;
+            }
+        }
     }
 
 }
