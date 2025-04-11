@@ -23,4 +23,3 @@ public class AlunoRepository {
         em.getTransaction().commit();
     }
 }
-
