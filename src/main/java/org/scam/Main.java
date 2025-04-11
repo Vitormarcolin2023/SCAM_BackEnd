@@ -3,6 +3,7 @@ package org.scam;
 import org.scam.classes.Aluno;
 import org.scam.classes.Coordenador;
 import org.scam.entities.AlunoEntity;
+import org.scam.entities.CoordenacaoEntity;
 import org.scam.menus.MenuAluno;
 import org.scam.repository.AlunoRepository;
 import org.scam.repository.CustomizerFactory;
@@ -27,7 +28,7 @@ public class Main {
 
 
         Aluno alunoPadrao = new Aluno("Lethicia", "lethiciamsm@gmail.com", "lethicia1312", 1, 219421);
-        Coordenador coordenadorPadrao = new Coordenador("Admin", "admin@uniamerica.br", "admin123");
+        CoordenacaoEntity coordenadorPadrao = new CoordenacaoEntity(1L, "Admin", "admin@uniamerica.br", "admin123");
 
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
