@@ -38,9 +38,11 @@ public class Main {
             System.out.println("= [1] - Coordenador                 =");
             System.out.println("= [2] - Mentor                      =");
             System.out.println("= [3] - Aluno                       =");
+            System.out.println("= [4] - Sair                        =");
             System.out.println("=====================================\n");
             System.out.println("- Selecione a opção desejada: ");
             continuar = sc.nextInt();
+            sc.nextLine();
 
             switch (continuar){
                 case 1: {
@@ -72,12 +74,12 @@ class Funcoes {
 
     public static Scanner sc = new Scanner(System.in);
 
-    public static  boolean login(String documento, String senha){
+    public static  void login(){
         System.out.println("\n=============== LOGIN ===============");
         System.out.println("- Informe seu RA ou CPF: ");
+        String doc = sc.nextLine();
         System.out.println("- Informe sua senha: ");
-
-        return true;
+        String senha = sc.nextLine();
     }
 
 }
