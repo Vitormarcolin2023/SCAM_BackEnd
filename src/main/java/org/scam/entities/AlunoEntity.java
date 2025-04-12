@@ -66,11 +66,13 @@ public class AlunoEntity implements UsuarioEntity   {
     public AlunoEntity() {
 
     }
-    public AlunoEntity(Long idAluno, String nome, int ra, String senha) {
-        this.id = idAluno;
+
+    public AlunoEntity(Long id, String nome, int ra, String senha, String email) {
+        this.id = id;
         this.nome = nome;
         this.ra = ra;
         this.senha = senha;
+        this.email = email;
     }
 
     public Aluno toAluno() {
