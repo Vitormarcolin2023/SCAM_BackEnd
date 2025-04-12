@@ -41,8 +41,8 @@ public class EnderecoEntity {
     }
 
     //getters e setters
-    public Long getId() {return id; }
-    public void setId(Long id) {this.id = id; }
+    public Long getIdEndereco() {return id; }
+    public void setIdEndereco(Long id) {this.id = id; }
 
     public String getRua() { return rua; }
     public void setRua(String rua) { this.rua = rua; }

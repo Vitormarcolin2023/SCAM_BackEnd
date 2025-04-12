@@ -35,6 +35,7 @@ public class ProjetoEntity {
     @Column(name = "periodo", nullable = false, length = 45)
     private String periodo;
 
+    //foreign keys
     @ManyToOne
     @JoinColumn(name = "fk_aluno_id", nullable = false)
     private AlunoEntity aluno;
@@ -43,93 +44,37 @@ public class ProjetoEntity {
     @JoinColumn(name = "fk_mentor_id", nullable = false)
     private MentorEntity mentor;
 
-    public ProjetoEntity() {}
+    //getters e setters
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
 
-    public Long getId() {
-        return id;
-    }
+    public String getNomeDoProjeto() {return nomeDoProjeto;}
+    public void setNomeDoProjeto(String nomeDoProjeto) {this.nomeDoProjeto = nomeDoProjeto;}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getDescricao(){return descricao;}
+    public void setDescricao(String descricao) {this.descricao = descricao;}
 
-    public String getNomeDoProjeto() {
-        return nomeDoProjeto;
-    }
+    public String getAreaDeAtuacao() {return areaDeAtuacao;}
+    public void setAreaDeAtuacao(String areaDeAtuacao) {this.areaDeAtuacao = areaDeAtuacao;}
 
-    public void setNomeDoProjeto(String nomeDoProjeto) {
-        this.nomeDoProjeto = nomeDoProjeto;
-    }
+    public LocalDate getDataInicioProjeto() {return dataInicioProjeto;}
+    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {this.dataInicioProjeto = dataInicioProjeto;}
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public LocalDate getDataFinalProjeto() {return dataFinalProjeto;}
+    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {this.dataFinalProjeto = dataFinalProjeto;}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public int getTamanhoDoGrupo() {return tamanhoDoGrupo;}
+    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {this.tamanhoDoGrupo = tamanhoDoGrupo;}
 
-    public String getAreaDeAtuacao() {
-        return areaDeAtuacao;
-    }
+    public String getCurso(){return curso;}
+    public void setCurso(String curso) {this.curso = curso;}
 
-    public void setAreaDeAtuacao(String areaDeAtuacao) {
-        this.areaDeAtuacao = areaDeAtuacao;
-    }
+    public String getPeriodo() {return periodo;}
+    public void setPeriodo(String periodo) {this.periodo = periodo;}
 
-    public LocalDate getDataInicioProjeto() {
-        return dataInicioProjeto;
-    }
+    public AlunoEntity getAluno() {return aluno;}
+    public void setAluno(AlunoEntity aluno) {this.aluno = aluno;}
 
-    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {
-        this.dataInicioProjeto = dataInicioProjeto;
-    }
-
-    public LocalDate getDataFinalProjeto() {
-        return dataFinalProjeto;
-    }
-
-    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {
-        this.dataFinalProjeto = dataFinalProjeto;
-    }
-
-    public int getTamanhoDoGrupo() {
-        return tamanhoDoGrupo;
-    }
-
-    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {
-        this.tamanhoDoGrupo = tamanhoDoGrupo;
-    }
-
-    public String getCurso() {
-        return curso;
-    }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
-    }
-
-    public String getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
-    }
-
-    public AlunoEntity getAluno() {
-        return aluno;
-    }
-
-    public void setAluno(AlunoEntity aluno) {
-        this.aluno = aluno;
-    }
-
-    public MentorEntity getMentor() {
-        return mentor;
-    }
-
-    public void setMentor(MentorEntity mentor) {
-        this.mentor = mentor;
-    }
+    public MentorEntity getMentor() {return mentor;}
+    public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
 }
