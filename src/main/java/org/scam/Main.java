@@ -22,8 +22,6 @@ public class Main {
     public static void main(String[] args) {
 
         Funcoes funcoes = new Funcoes();
-        //MenuAluno menuAluno = new MenuAluno();
-        MenuCoordenador menuCoordenador = new MenuCoordenador();
         MenuMentor menuMentor = new MenuMentor();
 
         Scanner sc = new Scanner(System.in);
@@ -49,15 +47,24 @@ public class Main {
 
                     if (usuario instanceof CoordenacaoEntity) {
 
-                        System.out.println("- Acessando painel do Coordenador...");
+                        System.out.println("\nAcessando painel do Coordenador...");
+                        CoordenacaoEntity coordenacaoEntity = (CoordenacaoEntity) usuario;
+                        Coordenador coordenador = coordenacaoEntity.toCoordenador();
+                        MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
+                        menuCoordenador.exibirMenu();
 
                     } else if (usuario instanceof MentorEntity) {
 
-                        System.out.println("- Acessando painel do Mentor...");
+                        System.out.println("\nAcessando painel do Mentor...");
+                        // vou implementar
 
                     } else if (usuario instanceof AlunoEntity) {
 
-                        System.out.println("- Acessando painel do Aluno...");
+                        System.out.println("\nAcessando painel do Aluno...");
+                        AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
+                        Aluno aluno = alunoEntity.toAluno(); // transfrma a entity em Aluno
+                        MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
+                        menuAluno.exibirMenu(); // chama a funçao p/ rodar o menu aluno
 
                     }
 

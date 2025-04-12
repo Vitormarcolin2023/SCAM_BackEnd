@@ -1,5 +1,8 @@
 package org.scam.entities;
 
+import org.scam.classes.Aluno;
+import org.scam.classes.Coordenador;
+
 import javax.persistence.*;
 
 @Entity(name = "tb_coordenacao")
@@ -42,4 +45,8 @@ public class CoordenacaoEntity implements UsuarioEntity{
 
     public String getSenha(){return senha;}
     public void setSenha(String senha) {this.senha = senha;}
+
+    public Coordenador toCoordenador(){
+        return new Coordenador(nome, email, senha);
+    }
 }

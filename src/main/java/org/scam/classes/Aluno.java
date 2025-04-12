@@ -1,6 +1,6 @@
 package org.scam.classes;
 
-public class Aluno extends Pessoa implements IAutenticavel {
+public class Aluno extends Pessoa {
 
     public int id;
     public int ra;
@@ -25,10 +25,5 @@ public class Aluno extends Pessoa implements IAutenticavel {
 
     public void setRa(int ra) {
         this.ra = ra;
-    }
-
-    @Override
-    public boolean autenticar(String senha) {
-        return false;
     }
 }

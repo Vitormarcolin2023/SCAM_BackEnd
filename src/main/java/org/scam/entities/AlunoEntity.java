@@ -72,4 +72,8 @@ public class AlunoEntity implements UsuarioEntity   {
         this.ra = ra;
         this.senha = senha;
     }
+
+    public Aluno toAluno() {
+        return new Aluno(nome, email, senha, id.intValue(), ra);
+    }
 }
