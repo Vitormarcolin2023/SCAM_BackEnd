@@ -29,9 +29,9 @@ public class ProjetoRepository {
         em.getTransaction().commit();
     }
 
-    public void atualizar(ProjetoEntity projeto) {
+    public void atualizar(ProjetoEntity tb_projeto) {
         em.getTransaction().begin();
-        em.merge(projeto);
+        em.merge(tb_projeto);
         em.getTransaction().commit();
     }
 
