@@ -77,4 +77,18 @@ public class ProjetoEntity {
 
     public MentorEntity getMentor() {return mentor;}
     public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
+
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, AlunoEntity aluno, MentorEntity mentor) {
+        this.id = id;
+        this.nomeDoProjeto = nomeDoProjeto;
+        this.descricao = descricao;
+        this.areaDeAtuacao = areaDeAtuacao;
+        this.dataInicioProjeto = dataInicioProjeto;
+        this.dataFinalProjeto = dataFinalProjeto;
+        this.tamanhoDoGrupo = tamanhoDoGrupo;
+        this.curso = curso;
+        this.periodo = periodo;
+        this.aluno = aluno;
+        this.mentor = mentor;
+    }
 }
