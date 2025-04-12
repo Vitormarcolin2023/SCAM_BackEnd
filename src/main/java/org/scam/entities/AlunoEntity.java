@@ -1,9 +1,11 @@
 package org.scam.entities;
 
+import org.scam.classes.Aluno;
+
 import javax.persistence.*;
 
 @Entity(name = "tb_aluno")
-public class AlunoEntity {
+public class AlunoEntity implements UsuarioEntity   {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

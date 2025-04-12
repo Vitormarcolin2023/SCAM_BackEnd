@@ -10,6 +10,10 @@ public class CoordenacaoRepository {
 
     private EntityManager em;
 
+    public CoordenacaoRepository (EntityManager em){
+        this.em = em;
+    }
+
     public CoordenacaoEntity buscarPorId(Long id){
         return em.find(CoordenacaoEntity.class, id);
     }
@@ -29,7 +33,7 @@ public class CoordenacaoRepository {
     public CoordenacaoEntity login(String email, String senha){
         try{
             return em.createQuery(
-                            "select a from tb_coordenacao a where a.email = :email and a.senha = :senha",
+                            "select c from tb_coordenacao c where c.email = :email and c.senha = :senha",
                             CoordenacaoEntity.class
                     )
                     .setParameter("email", email)

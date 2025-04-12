@@ -3,7 +3,7 @@ package org.scam.entities;
 import javax.persistence.*;
 
 @Entity(name = "tb_coordenacao")
-public class CoordenacaoEntity {
+public class CoordenacaoEntity implements UsuarioEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // SERIAL no PostgreSQL = IDENTITY
