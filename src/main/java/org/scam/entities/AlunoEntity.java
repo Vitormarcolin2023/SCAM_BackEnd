@@ -1,9 +1,11 @@
 package org.scam.entities;
 
+import org.scam.classes.Aluno;
+
 import javax.persistence.*;
 
 @Entity(name = "tb_aluno")
-public class AlunoEntity {
+public class AlunoEntity implements UsuarioEntity   {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +19,9 @@ public class AlunoEntity {
 
     @Column(name = "senha", nullable = false, length = 45)
     private String senha;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
 
     public Long getIdAluno() {
         return id;
@@ -48,6 +53,14 @@ public class AlunoEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public AlunoEntity() {

@@ -1,35 +1,33 @@
 package org.scam.repository;
 
-import org.scam.classes.IAutenticavel;
 import org.scam.entities.AlunoEntity;
+import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
-public class AlunoRepository {
-
+public class MentorRepository {
     private EntityManager em;
 
-    public AlunoRepository(EntityManager em){
+    public MentorRepository(EntityManager em){
         this.em = em;
     }
 
-    public AlunoEntity buscarPorId(Long id){
-        return em.find(AlunoEntity.class, id);
+    public MentorEntity buscarPorId(Long id){
+        return em.find(MentorEntity.class, id);
     }
 
-    public void salvar(AlunoEntity tb_aluno){
+    public void salvar(MentorEntity tb_mentor){
         em.getTransaction().begin();
-        em.persist(tb_aluno);
+        em.persist(tb_mentor);
         em.getTransaction().commit();
     }
 
-    public AlunoEntity login(String email, String senha){
+    public MentorEntity login(String email, String senha){
         try{
             return em.createQuery(
-                    "select a from tb_aluno a where a.email = :email and a.senha = :senha",
-                    AlunoEntity.class
-            )
+                    "select m from tb_mentor m where m.email = :email and m.senha = :senha", MentorEntity.class
+                    )
                     .setParameter("email", email)
                     .setParameter("senha", senha)
                     .getSingleResult();

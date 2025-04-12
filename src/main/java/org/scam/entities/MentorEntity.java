@@ -5,7 +5,7 @@ import org.scam.classes.Endereco;
 import javax.persistence.*;
 
 @Entity(name = "tb_mentor")
-public class MentorEntity {
+public class MentorEntity implements UsuarioEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
