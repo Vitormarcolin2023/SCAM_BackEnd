@@ -14,17 +14,17 @@ public class MenuAluno {
 
     private Aluno aluno;
 
+    private final Scanner sc = new Scanner(System.in);
+    EntityManager em = CustomizerFactory.getEntityManager();
+    ProjetoCadastro projetoCadastro = new ProjetoCadastro();
+    Projeto projeto = new Projeto();
+
+
     public MenuAluno(Aluno aluno) {
         this.aluno = aluno;
     }
 
     public void exibirMenu() {
-
-        EntityManager em = CustomizerFactory.getEntityManager();
-        ProjetoCadastro projetoCadastro = new ProjetoCadastro();
-        Projeto projeto = new Projeto();
-
-        Scanner sc = new Scanner(System.in);
         int opcao;
 
         do {
@@ -39,24 +39,63 @@ public class MenuAluno {
 
             switch (opcao) {
                 case 1:
-                    projeto = projetoCadastro.cadastrarProjeto();
+                    //projeto = projetoCadastro.cadastrarProjeto();
                     System.out.println("Projeto cadastrado com sucesso!");
                     break;
                 case 2:
-                    //litarProjetos
-                    ProjetoRepository projetoRepository = new ProjetoRepository(em);
-                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos();
-                    System.out.println(listaProjetos);
+                    gerenciarProjetos();
                     break;
                 case 3:
                     //listarMentores
                     break;
                 case 4:
-                    System.out.println("Voltando ao menu principal...");
+                    System.out.println("Voltando ao menu principal...\n");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
         } while (opcao != 4);
+    }
+
+    public void gerenciarProjetos(){
+
+        int operacao = 0;
+
+        do {
+            System.out.println("\n======== GERENCIAR PROJETOS ========");
+            System.out.println("[1] - Visualizar projetos");
+            System.out.println("[2] - Editar projetos");
+            System.out.println("[3] - Sair");
+            operacao = sc.nextInt();
+
+            switch (operacao) {
+                case 1: {
+                    ProjetoRepository projetoRepository = new ProjetoRepository(em);
+                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos(aluno.getRa());
+
+                    if(!listaProjetos.isEmpty()){
+                        for(ProjetoEntity projeto : listaProjetos){
+                            System.out.println(projeto.getNomeDoProjeto());
+                        }
+                    }
+                    else {
+                        System.out.println("Projetos do aluno não encontrados");
+                    }
+                    break;
+                }
+                case 2: {
+
+                    break;
+                }
+                case 3: {
+                    System.out.println("Retornando à área do aluno...");
+                    break;
+                }
+                default: {
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+                }
+            }
+        }while (operacao!=3);
     }
 }

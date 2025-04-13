@@ -30,7 +30,7 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
 
-    @Column(name = "tempo_de_experiencia", nullable = false, length = 45)
+    @Column(name = "tempo_experiencia", nullable = false, length = 45)
     private String tempoDeExperiencia;
 
     @Column(name = "tipo_de_vinculo", nullable = false, length = 45)

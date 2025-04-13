@@ -17,8 +17,8 @@ import java.text.ParseException;
 import static org.scam.cadastros.Curso.ADMINISTRADOR;
 
 public class ProjetoCadastro {
-
-    public Projeto cadastrarProjeto() {
+/*
+        public Projeto cadastrarProjeto() {
         Scanner scanner = new Scanner(System.in);
 
         EntityManager em = CustomizerFactory.getEntityManager();
@@ -26,14 +26,14 @@ public class ProjetoCadastro {
         ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Projeto projeto = new Projeto();*/
+        Projeto projeto = new Projeto();
 
         Curso tipoCurso;
         AreaDeAtuacao tipoAreaDeAtucao;
 
 
             /*System.out.print("Digite o ID do projeto: ");
-            projeto.setId(Integer.parseInt(scanner.nextLine()));*/
+            projeto.setId(Integer.parseInt(scanner.nextLine()));
 
             System.out.print("Nome do projeto: ");
             String nomeProjeto = scanner.nextLine();
@@ -167,7 +167,7 @@ public class ProjetoCadastro {
 
             for (MentorEntity x : allPacientes){
                 System.out.println("Id: "+ x.getIdMentor() + " Nome :"+x.getNome());
-            }*/
+            }
 
             System.out.print("ID do mentor (fk_mentor_id): ");
             int mentor = scanner.nextInt();
@@ -235,5 +235,5 @@ public class ProjetoCadastro {
 
 
 
-
+*/
 }

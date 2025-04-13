@@ -37,7 +37,7 @@ public class ProjetoEntity {
 
     //foreign keys
     @ManyToOne
-    @JoinColumn(name = "fk_aluno_id", nullable = false)
+    @JoinColumn(name = "fk_aluno_ra", nullable = false)
     private AlunoEntity aluno;
 
     @ManyToOne
@@ -91,4 +91,6 @@ public class ProjetoEntity {
         this.aluno = aluno;
         this.mentor = mentor;
     }
+
+    public ProjetoEntity(){}
 }

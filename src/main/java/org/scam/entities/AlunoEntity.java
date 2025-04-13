@@ -8,14 +8,11 @@ import javax.persistence.*;
 public class AlunoEntity implements UsuarioEntity   {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "ra", nullable = false, unique = true)
+    private int ra;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
-    @Column(name = "ra", nullable = false, unique = true)
-    private int ra;
 
     @Column(name = "senha", nullable = false, length = 45)
     private String senha;
@@ -23,13 +20,8 @@ public class AlunoEntity implements UsuarioEntity   {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    public Long getIdAluno() {
-        return id;
-    }
-
-    public void setIdAluno(Long idAluno) {
-        this.id = idAluno;
-    }
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     public String getNome() {
         return nome;
@@ -45,6 +37,14 @@ public class AlunoEntity implements UsuarioEntity   {
 
     public void setRa(int ra) {
         this.ra = ra;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSenha() {
