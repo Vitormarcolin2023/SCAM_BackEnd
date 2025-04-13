@@ -2,17 +2,12 @@ package org.scam.cadastros;
 
 import org.scam.classes.Projeto;
 import org.scam.entities.MentorEntity;
-import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 import static org.scam.cadastros.Curso.ADMINISTRADOR;
 
@@ -28,8 +23,8 @@ public class ProjetoCadastro {
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Projeto projeto = new Projeto();
 
-        Curso tipoCurso;
-        AreaDeAtuacao tipoAreaDeAtucao;
+        Curso tipoCurso = null;
+        AreaDeAtuacao tipoAreaDeAtucao = null;
 
 
             /*System.out.print("Digite o ID do projeto: ");
@@ -88,7 +83,7 @@ public class ProjetoCadastro {
 
             switch (opCurso) {
                 case 1:
-                    tipoCurso = Curso.ADMINISTRADOR;
+                    tipoCurso = ADMINISTRADOR;
                     break;
                 case 2:
                     tipoCurso = Curso.AGRONOMIA;
@@ -190,7 +185,7 @@ public class ProjetoCadastro {
         );
 
         System.out.println("Projeto cadastrado com sucesso!");
-
+        return null;
     }
 
 

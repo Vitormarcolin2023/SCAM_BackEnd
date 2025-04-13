@@ -40,6 +40,9 @@ public class Main {
             sc.nextLine();
 
             if (continuar >= 1 && continuar <= 3) {
+                if(continuar == 2){
+                    new MenuMentor().menu();
+                }
                 UsuarioEntity usuario = funcoes.login(continuar);
 
                 if (usuario != null) {
