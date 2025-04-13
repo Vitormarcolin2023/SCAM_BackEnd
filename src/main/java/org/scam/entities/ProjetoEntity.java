@@ -3,8 +3,7 @@ package org.scam.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_projeto")
+@Entity(name = "tb_projeto")
 public class ProjetoEntity {
 
     @Id
@@ -17,6 +16,7 @@ public class ProjetoEntity {
     @Column(name = "descricao", nullable = false, length = 100)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "area_de_atuacao", nullable = false, length = 45)
     private String areaDeAtuacao;
 
@@ -36,59 +36,119 @@ public class ProjetoEntity {
     private String periodo;
 
     //foreign keys
-    @ManyToOne
-    @JoinColumn(name = "fk_aluno_id", nullable = false)
-    private AlunoEntity aluno;
+    @Column(name = "fk_aluno_ra")
+    private int raAluno;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_mentor_id", nullable = false)
-    private MentorEntity mentor;
+    @Column(name = "fk_mentor_id")
+    private int idMentor;
 
-    //getters e setters
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
+    //GETTER AND SETTER
+    public Long getId() {
+        return id;
+    }
 
-    public String getNomeDoProjeto() {return nomeDoProjeto;}
-    public void setNomeDoProjeto(String nomeDoProjeto) {this.nomeDoProjeto = nomeDoProjeto;}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDescricao(){return descricao;}
-    public void setDescricao(String descricao) {this.descricao = descricao;}
+    public String getNomeDoProjeto() {
+        return nomeDoProjeto;
+    }
 
-    public String getAreaDeAtuacao() {return areaDeAtuacao;}
-    public void setAreaDeAtuacao(String areaDeAtuacao) {this.areaDeAtuacao = areaDeAtuacao;}
+    public void setNomeDoProjeto(String nomeDoProjeto) {
+        this.nomeDoProjeto = nomeDoProjeto;
+    }
 
-    public LocalDate getDataInicioProjeto() {return dataInicioProjeto;}
-    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {this.dataInicioProjeto = dataInicioProjeto;}
+    public String getDescricao() {
+        return descricao;
+    }
 
-    public LocalDate getDataFinalProjeto() {return dataFinalProjeto;}
-    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {this.dataFinalProjeto = dataFinalProjeto;}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    public int getTamanhoDoGrupo() {return tamanhoDoGrupo;}
-    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {this.tamanhoDoGrupo = tamanhoDoGrupo;}
+    public String getAreaDeAtuacao() {
+        return areaDeAtuacao;
+    }
 
-    public String getCurso(){return curso;}
-    public void setCurso(String curso) {this.curso = curso;}
+    public void setAreaDeAtuacao(String areaDeAtuacao) {
+        this.areaDeAtuacao = areaDeAtuacao;
+    }
 
-    public String getPeriodo() {return periodo;}
-    public void setPeriodo(String periodo) {this.periodo = periodo;}
+    public LocalDate getDataInicioProjeto() {
+        return dataInicioProjeto;
+    }
 
-    public AlunoEntity getAluno() {return aluno;}
-    public void setAluno(AlunoEntity aluno) {this.aluno = aluno;}
+    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {
+        this.dataInicioProjeto = dataInicioProjeto;
+    }
 
-    public MentorEntity getMentor() {return mentor;}
-    public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
+    public LocalDate getDataFinalProjeto() {
+        return dataFinalProjeto;
+    }
 
-    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, AlunoEntity aluno, MentorEntity mentor) {
+    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {
+        this.dataFinalProjeto = dataFinalProjeto;
+    }
+
+    public int getTamanhoDoGrupo() {
+        return tamanhoDoGrupo;
+    }
+
+    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {
+        this.tamanhoDoGrupo = tamanhoDoGrupo;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public int getRaAluno() {
+        return raAluno;
+    }
+
+    public void setRaAluno(int raAluno) {
+        this.raAluno = raAluno;
+    }
+
+    public int getIdMentor() {
+        return idMentor;
+    }
+
+    public void setIdMentor(int idMentor) {
+        this.idMentor = idMentor;
+    }
+
+    //CONTRUTOR
+
+
+    public ProjetoEntity() {
+
+    }
+
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, int aluno, int mentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
-        this.areaDeAtuacao = areaDeAtuacao;
+        this.areaDeAtuacao = areaDeAtuacao.toString();
         this.dataInicioProjeto = dataInicioProjeto;
         this.dataFinalProjeto = dataFinalProjeto;
         this.tamanhoDoGrupo = tamanhoDoGrupo;
-        this.curso = curso;
+        this.curso = curso.toString();
         this.periodo = periodo;
-        this.aluno = aluno;
-        this.mentor = mentor;
+        this.raAluno = aluno;
+        this.idMentor = mentor;
     }
 }
