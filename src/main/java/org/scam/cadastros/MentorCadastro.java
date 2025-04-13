@@ -83,7 +83,7 @@ public class MentorCadastro {
             mentor.setCpf(cpf);
             mentor.setEmail(email);
             mentor.setSenha(senha);
-            mentor.setTipoDeUsuario("MENTOR");
+            mentor.setTipoDeUsuario("Formado");
             mentor.setTelefone(telefone);
             mentor.setTempoExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);

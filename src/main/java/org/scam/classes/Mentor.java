@@ -7,7 +7,7 @@ public class Mentor extends Pessoa implements IAutenticavel {
     private boolean ativo;
     protected Endereco endereco;
     private String cpf;
-    private String tipoDeUsuarioo;
+    private String tipoDeUsuario;
     private String telefone;
     private String tempoExperiencia;
     private String tipoVinculo;
@@ -17,6 +17,23 @@ public class Mentor extends Pessoa implements IAutenticavel {
     public Mentor() {
         super();
         this.ativo = true;
+    }
+
+    public Mentor(String nome, String email, String senha, String formacao, int anosExperiencia, TipoMentor tipo, boolean ativo, Endereco endereco, String cpf, String tipoDeUsuario, String telefone,
+                  String tempoExperiencia, String tipoVinculo, String areaAtuacao){
+        super(nome, email, senha);
+        this.formacao = formacao;
+        this.anosExperiencia = anosExperiencia;
+        this.tipo = tipo;
+        this.ativo = ativo;
+        this.endereco = endereco;
+        this.cpf = cpf;
+        this.tipoDeUsuario = tipoDeUsuario;
+        this.telefone = telefone;
+        this.tempoExperiencia = tempoExperiencia;
+        this.tipoVinculo = tipoVinculo;
+        this.areaAtuacao = areaAtuacao;
+
     }
 
     public Mentor(String nome, String email, String formacao, int anosExperiencia,
@@ -73,7 +90,7 @@ public class Mentor extends Pessoa implements IAutenticavel {
     }
 
     public void setTipoDeUsuario(String mentor) {
-        this.tipoDeUsuarioo = mentor;
+        this.tipoDeUsuario = mentor;
     }
 
     public void setTelefone(String telefone) {
