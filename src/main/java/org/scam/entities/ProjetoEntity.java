@@ -2,6 +2,8 @@ package org.scam.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity
 @Table(name = "tb_projeto")
@@ -78,6 +80,11 @@ public class ProjetoEntity {
     public MentorEntity getMentor() {return mentor;}
     public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
 
+    //construtor vazio
+    // Construtor padrão necessário para o JPA
+    public ProjetoEntity() {}
+
+    //construtor parametrizado
     public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, AlunoEntity aluno, MentorEntity mentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
@@ -91,4 +98,17 @@ public class ProjetoEntity {
         this.aluno = aluno;
         this.mentor = mentor;
     }
+
+    //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
+    @PrePersist
+    @PreUpdate
+    private void validarDatas(){
+        if(dataInicioProjeto != null && dataFinalProjeto != null){
+            if(dataInicioProjeto.isAfter(dataFinalProjeto)){
+                throw new IllegalArgumentException("A data do início do projeto não pode ser depois da data final.");
+            }
+        }
+    }
+
+
 }
