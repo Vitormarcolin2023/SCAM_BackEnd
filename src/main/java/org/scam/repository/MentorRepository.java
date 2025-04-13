@@ -5,6 +5,7 @@ import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 public class MentorRepository {
     private EntityManager em;
@@ -36,5 +37,9 @@ public class MentorRepository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<MentorEntity> buscarTodos(){
+        return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 }
