@@ -56,7 +56,7 @@ public class Main {
                     } else if (usuario instanceof MentorEntity) {
 
                         System.out.println("\nAcessando painel do Mentor...");
-                        // vou implementar
+
 
                     } else if (usuario instanceof AlunoEntity) {
 
