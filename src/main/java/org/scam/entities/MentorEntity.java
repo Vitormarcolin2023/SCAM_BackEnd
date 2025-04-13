@@ -43,7 +43,7 @@ public class MentorEntity implements UsuarioEntity{
 
     //relacao com a tabela de Endereco
     @ManyToOne
-    @JoinColumn(name = "fk_enderco_id", nullable = false)
+    @JoinColumn(name = "fk_endereco_id", nullable = false)
     private EnderecoEntity endereco;
 
     public MentorEntity(){
