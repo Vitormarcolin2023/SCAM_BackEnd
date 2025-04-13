@@ -6,6 +6,12 @@ public class Mentor extends Pessoa implements IAutenticavel {
     private TipoMentor tipo;
     private boolean ativo;
     protected Endereco endereco;
+    private String cpf;
+    private String tipoDeUsuarioo;
+    private String telefone;
+    private String tempoExperiencia;
+    private String tipoVinculo;
+    private String areaAtuacao;
 
     // Construtores
     public Mentor() {
@@ -60,5 +66,33 @@ public class Mentor extends Pessoa implements IAutenticavel {
         return "Nome: " + nome + "\nEmail: " + email + "\nStatus: " + (ativo ? "Ativo" : "Desativado")
                 + "\nFormação: " + formacao + "\nAnos de Experiência: " + anosExperiencia
                 + "\nEndereço: " + endereco + "\nTipo: " + tipo;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setTipoDeUsuario(String mentor) {
+        this.tipoDeUsuarioo = mentor;
+    }
+
+    public void setTelefone(String telefone) {
+    this.telefone = telefone;
+    }
+
+    public void setTempoExperiencia(String tempoExperiencia) {
+    this.tempoExperiencia = tempoExperiencia;
+    }
+
+    public void setTipoDeVinculo(String tipoVinculo) {
+        this.tipoVinculo = tipoVinculo;
+    }
+
+    public void setAreaDeAtuacao(String areaAtuacao) {
+        this.areaAtuacao = areaAtuacao;
+    }
+
+    public String getId() {
+    return "";
     }
 }

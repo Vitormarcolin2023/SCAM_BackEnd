@@ -4,6 +4,9 @@ public class Endereco {
     private String rua;
     private String cidade;
     private String estado;
+    private int numero;
+    private String bairro;
+    private String cep;
 
     // Construtor padrão
     public Endereco() {}
@@ -35,5 +38,17 @@ public class Endereco {
     @Override
     public String toString() {
         return rua + ", " + cidade + ", " + estado;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }

@@ -1,10 +1,13 @@
 package org.scam.entities;
 
+import org.scam.cadastros.AreaDeAtuacao;
+import org.scam.cadastros.Curso;
 import org.scam.classes.Endereco;
 
 import javax.persistence.*;
 
-@Entity(name = "tb_mentor")
+@Entity
+@Table(name = "tb_mentor")
 public class MentorEntity implements UsuarioEntity{
 
     @Id
@@ -29,13 +32,13 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
 
-    @Column(name = "tempo_de_experiencia", nullable = false, length = 45)
-    private String tempoDeExperiencia;
+    @Column(name = "tempo_experiencia", nullable = false)
+    private String tempoExperiencia;
 
-    @Column(name = "tipo_de_vinculo", nullable = false, length = 45)
+    @Column(name = "tipo_de_vinculo", nullable = false)
     private String tipoDeVinculo;
 
-    @Column(name = "area_de_atuacao", nullable = false, length = 45)
+    @Column(name = "area_de_atuacao", nullable = false)
     private String areaDeAtuacao;
 
     //relacao com a tabela de Endereco
@@ -57,11 +60,14 @@ public class MentorEntity implements UsuarioEntity{
           this.senha = senha;
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
-          this.tempoDeExperiencia = tempoDeExperiencia;
+          this.tempoExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;
           this.endereco = endereco;
 
+    }
+
+    public MentorEntity(Object o, String nomeProjeto, String descricaoProjeto, AreaDeAtuacao tipoAreaDeAtucao, String dataInicio, String dataFinal, int qtdParticipante, Curso tipoCurso, String periodo, int raAluno, int mentor) {
     }
 
     //getters e setters
@@ -86,8 +92,8 @@ public class MentorEntity implements UsuarioEntity{
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
 
-    public String getTempoDeExperiencia(){return tempoDeExperiencia;}
-    public void setTempoDeExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
+    public String getTempoDeExperiencia(){return tempoExperiencia;}
+    public void setTempoExperiencia(String tempoDeExperiencia) {this.tempoExperiencia = tempoDeExperiencia;}
 
     public String getTipoDeVinculo(){return tipoDeVinculo;}
     public void setTipoDeVinculo(String tipoDeVinculo) {this.tipoDeVinculo = tipoDeVinculo;}
@@ -97,4 +103,5 @@ public class MentorEntity implements UsuarioEntity{
 
     public EnderecoEntity getEndereco() {return endereco;}
     public void setEndereco(EnderecoEntity endereco) {this.endereco = endereco;}
-}
+
+    }
