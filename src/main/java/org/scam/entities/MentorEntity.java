@@ -34,7 +34,7 @@ public class MentorEntity implements UsuarioEntity{
     private String telefone;
 
     @Column(name = "tempo_experiencia", nullable = false)
-    private String tempoExperiencia;
+    private String tempoDeExperiencia;
 
     @Column(name = "tipo_de_vinculo", nullable = false)
     private String tipoDeVinculo;
@@ -61,7 +61,7 @@ public class MentorEntity implements UsuarioEntity{
           this.senha = senha;
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
-          this.tempoExperiencia = tempoDeExperiencia;
+          this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;
           this.endereco = endereco;
@@ -93,8 +93,8 @@ public class MentorEntity implements UsuarioEntity{
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
 
-    public String getTempoDeExperiencia(){return tempoExperiencia;}
-    public void setTempoDeExperiencia(String tempoDeExperiencia) {this.tempoExperiencia = tempoDeExperiencia;}
+    public String getTempoDeExperiencia(){return tempoDeExperiencia;}
+    public void setTempoExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
 
     public String getTipoDeVinculo(){return tipoDeVinculo;}
     public void setTipoDeVinculo(String tipoDeVinculo) {this.tipoDeVinculo = tipoDeVinculo;}
