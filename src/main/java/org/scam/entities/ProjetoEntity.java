@@ -102,13 +102,15 @@ public class ProjetoEntity {
     //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
     @PrePersist
     @PreUpdate
-    private void validarDatas(){
+    private void validarProjeto(){
         if(dataInicioProjeto != null && dataFinalProjeto != null){
             if(dataInicioProjeto.isAfter(dataFinalProjeto)){
                 throw new IllegalArgumentException("A data do início do projeto não pode ser depois da data final.");
             }
         }
+
+        if(tamanhoDoGrupo < 2 || tamanhoDoGrupo >6){
+            throw new IllegalArgumentException("A quantidade de integrantes deve ser de mínimo 2 e máximo 6.");
+        }
     }
-
-
 }
