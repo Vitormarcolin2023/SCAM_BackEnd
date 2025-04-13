@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static org.scam.cadastros.Curso.ADMINISTRADOR;
 
 public class ProjetoCadastro {
-
+/*
         public Projeto cadastrarProjeto() {
         Scanner scanner = new Scanner(System.in);
 
@@ -229,5 +229,5 @@ public class ProjetoCadastro {
 
 
 
-
+*/
 }

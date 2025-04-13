@@ -39,7 +39,7 @@ public class MenuAluno {
 
             switch (opcao) {
                 case 1:
-                    projeto = projetoCadastro.cadastrarProjeto();
+                    //projeto = projetoCadastro.cadastrarProjeto();
                     System.out.println("Projeto cadastrado com sucesso!");
                     break;
                 case 2:
