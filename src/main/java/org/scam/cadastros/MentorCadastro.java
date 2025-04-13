@@ -85,7 +85,7 @@ public class MentorCadastro {
             mentor.setSenha(senha);
             mentor.setTipoDeUsuario("Formado");
             mentor.setTelefone(telefone);
-            mentor.setTempoExperiencia(tempoExperiencia);
+            mentor.setTempoDeExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);
             mentor.setAreaDeAtuacao(areaAtuacao);
             mentor.setEndereco(endereco);

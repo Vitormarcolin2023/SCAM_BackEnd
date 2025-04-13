@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static org.scam.cadastros.Curso.ADMINISTRADOR;
 
 public class ProjetoCadastro {
-/*
+
         public Projeto cadastrarProjeto() {
         Scanner scanner = new Scanner(System.in);
 
@@ -20,14 +20,13 @@ public class ProjetoCadastro {
         MentorRepository mentorRepository = new MentorRepository(em);
         ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
-        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Projeto projeto = new Projeto();
 
         Curso tipoCurso = null;
         AreaDeAtuacao tipoAreaDeAtucao = null;
 
-
-            /*System.out.print("Digite o ID do projeto: ");
+            System.out.print("Digite o ID do projeto: ");
             projeto.setId(Integer.parseInt(scanner.nextLine()));
 
             System.out.print("Nome do projeto: ");
@@ -158,7 +157,7 @@ public class ProjetoCadastro {
             System.out.print("RA do aluno responsável: ");
             int raAluno = scanner.nextInt();
 
-            /*List<MentorEntity> allPacientes = mentorRepository.buscarTodos();
+            List<MentorEntity> allPacientes = mentorRepository.buscarTodos();
 
             for (MentorEntity x : allPacientes){
                 System.out.println("Id: "+ x.getIdMentor() + " Nome :"+x.getNome());
@@ -230,5 +229,5 @@ public class ProjetoCadastro {
 
 
 
-*/
+
 }

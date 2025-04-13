@@ -93,8 +93,8 @@ public class MentorEntity implements UsuarioEntity{
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
 
-    public String getTempoDeExperiencia(){return tempoDeExperiencia;}
-    public void setTempoDeExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
+    public String getTempoDeExperiencia(){return tempoExperiencia;}
+    public void setTempoDeExperiencia(String tempoDeExperiencia) {this.tempoExperiencia = tempoDeExperiencia;}
 
     public String getTipoDeVinculo(){return tipoDeVinculo;}
     public void setTipoDeVinculo(String tipoDeVinculo) {this.tipoDeVinculo = tipoDeVinculo;}

@@ -39,7 +39,7 @@ public class MenuAluno {
 
             switch (opcao) {
                 case 1:
-                    //projeto = projetoCadastro.cadastrarProjeto();
+                    projeto = projetoCadastro.cadastrarProjeto();
                     System.out.println("Projeto cadastrado com sucesso!");
                     break;
                 case 2:
@@ -79,7 +79,7 @@ public class MenuAluno {
                         }
                     }
                     else {
-                        System.out.println("Projetos do aluno não encontrados");
+                        System.out.println("Aluno sem projetos.\n");
                     }
                     break;
                 }
