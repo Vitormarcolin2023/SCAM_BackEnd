@@ -18,8 +18,8 @@ public class ProjetoRepository {
         return em.find(ProjetoEntity.class, id);
     }
 
-    public List<ProjetoEntity> buscarTodos() {
-        TypedQuery<ProjetoEntity> query = em.createQuery("SELECT p FROM ProjetoEntity p", ProjetoEntity.class);
+    public List<ProjetoEntity> buscarTodos(int ra) {
+        TypedQuery<ProjetoEntity> query = em.createQuery("SELECT p FROM ProjetoEntity p WHERE fk_aluno_ra = :ra", ProjetoEntity.class).setParameter("ra", ra);
         return query.getResultList();
     }
 

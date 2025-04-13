@@ -13,9 +13,6 @@ public class MenuAluno {
     }
 
     public void exibirMenu() {
-
-        ProjetoCadastro projetoCadastro = new ProjetoCadastro();
-
         Scanner sc = new Scanner(System.in);
         int opcao;
 
@@ -30,7 +27,9 @@ public class MenuAluno {
 
             switch (opcao) {
                 case 1:
-                    projetoCadastro.cadastrarProjeto();
+                    ProjetoCadastro projetoCadastro = new ProjetoCadastro();
+                    Projeto projeto = projetoCadastro.cadastrarProjeto();
+                    System.out.println("Projeto cadastrado com sucesso!");
                     break;
                 case 2:
                     //listarMentores();

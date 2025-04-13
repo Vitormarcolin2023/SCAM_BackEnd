@@ -10,7 +10,7 @@ import javax.persistence.PreUpdate;
 public class ProjetoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nome_do_projeto", nullable = false, length = 45)
@@ -38,11 +38,13 @@ public class ProjetoEntity {
     private String periodo;
 
     //foreign keys
-    @Column(name = "fk_aluno_ra", nullable = false)
-    private int aluno;
+    @ManyToOne
+    @JoinColumn(name = "fk_aluno_id", nullable = false)
+    private AlunoEntity aluno;
 
-    @Column(name = "fk_mentor_id", nullable = false)
-    private int mentor;
+    @ManyToOne
+    @JoinColumn(name = "fk_mentor_id", nullable = false)
+    private MentorEntity mentor;
 
     //getters e setters
     public Long getId() {return id;}
@@ -72,28 +74,18 @@ public class ProjetoEntity {
     public String getPeriodo() {return periodo;}
     public void setPeriodo(String periodo) {this.periodo = periodo;}
 
-    public int getAluno() {
-        return aluno;
-    }
+    public AlunoEntity getAluno() {return aluno;}
+    public void setAluno(AlunoEntity aluno) {this.aluno = aluno;}
 
-    public void setAluno(int aluno) {
-        this.aluno = aluno;
-    }
-
-    public int getMentor() {
-        return mentor;
-    }
-
-    public void setMentor(int mentor) {
-        this.mentor = mentor;
-    }
+    public MentorEntity getMentor() {return mentor;}
+    public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
 
     //construtor vazio
     // Construtor padrão necessário para o JPA
     public ProjetoEntity() {}
 
     //construtor parametrizado
-    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, int aluno, int mentor) {
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, AlunoEntity aluno, MentorEntity mentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
