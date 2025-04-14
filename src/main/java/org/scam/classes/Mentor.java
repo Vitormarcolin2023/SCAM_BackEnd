@@ -8,25 +8,25 @@ public class Mentor extends Pessoa implements IAutenticavel {
     String cpf;
     String email;
     String senha;
-    String tipoDeUsuario;
+    TipoMentor tipoDeUsuario;
     String telefone;
     String tempoDeExperiencia;
     String tipoDeVinculo;
     String areaDeAtuacao;
     EnderecoEntity endereco;
 
-    public Mentor(Long id, String nome, String cpf, String email, String senha, String tipoDeUsuario, String telefone, String tempoDeExperiencia, String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco) {
-    this.id = id;
-    this.nome = nome;
-    this.cpf = cpf;
-    this.email = email;
-    this.senha = senha;
-    this.tipoDeUsuario = tipoDeUsuario;
-    this.telefone = telefone;
-    this.tempoDeExperiencia = tempoDeExperiencia;
-    this.tipoDeVinculo = tipoDeVinculo;
-    this.areaDeAtuacao = areaDeAtuacao;
-    this.endereco = endereco;
+    public Mentor(Long id, String nome, String cpf, String email, String senha, TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia, String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.tipoDeUsuario = tipoDeUsuario;
+        this.telefone = telefone;
+        this.tempoDeExperiencia = tempoDeExperiencia;
+        this.tipoDeVinculo = tipoDeVinculo;
+        this.areaDeAtuacao = areaDeAtuacao;
+        this.endereco = endereco;
     }
 
     @Override
@@ -75,11 +75,11 @@ public class Mentor extends Pessoa implements IAutenticavel {
         this.senha = senha;
     }
 
-    public String getTipoDeUsuario() {
+    public TipoMentor getTipoDeUsuario() {
         return tipoDeUsuario;
     }
 
-    public void setTipoDeUsuario(String tipoDeUsuario) {
+    public void setTipoDeUsuario(TipoMentor tipoDeUsuario) {
         this.tipoDeUsuario = tipoDeUsuario;
     }
 

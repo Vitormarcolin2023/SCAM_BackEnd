@@ -1,10 +1,6 @@
 package org.scam.entities;
-
-import org.scam.cadastros.AreaDeAtuacao;
-import org.scam.cadastros.Curso;
-import org.scam.classes.Aluno;
-import org.scam.classes.Endereco;
 import org.scam.classes.Mentor;
+import org.scam.classes.TipoMentor;
 
 import javax.persistence.*;
 
@@ -28,8 +24,9 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "senha", nullable = false, length = 100)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_de_usuario", nullable = false, length = 45)
-    private String tipoDeUsuario;
+    private TipoMentor tipoDeUsuario;
 
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
@@ -53,7 +50,7 @@ public class MentorEntity implements UsuarioEntity{
 
     public MentorEntity(
         String nome, String cpf, String email, String senha,
-        String tipoDeUsuario, String telefone, String tempoDeExperiencia,
+        TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia,
         String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
@@ -67,9 +64,6 @@ public class MentorEntity implements UsuarioEntity{
           this.areaDeAtuacao = areaDeAtuacao;
           this.endereco = endereco;
 
-    }
-
-    public MentorEntity(Object o, String nomeProjeto, String descricaoProjeto, AreaDeAtuacao tipoAreaDeAtucao, String dataInicio, String dataFinal, int qtdParticipante, Curso tipoCurso, String periodo, int raAluno, int mentor) {
     }
 
     //getters e setters
@@ -88,8 +82,8 @@ public class MentorEntity implements UsuarioEntity{
     public String getSenha() {return senha;}
     public void setSenha(String senha) {this.senha = senha;}
 
-    public String getTipoDeUsuario(){return tipoDeUsuario;}
-    public void setTipoDeUsuario(String tipoDeUsuario) {this.tipoDeUsuario = tipoDeUsuario;}
+    public TipoMentor getTipoDeUsuario() { return tipoDeUsuario; }
+    public void setTipoDeUsuario(TipoMentor tipoDeUsuario) { this.tipoDeUsuario = tipoDeUsuario; }
 
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}

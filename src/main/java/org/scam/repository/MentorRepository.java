@@ -1,6 +1,5 @@
 package org.scam.repository;
 
-import org.scam.entities.AlunoEntity;
 import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
