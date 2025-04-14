@@ -1,115 +1,130 @@
 package org.scam.classes;
 
+import org.scam.entities.EnderecoEntity;
+
 public class Mentor extends Pessoa implements IAutenticavel {
-    private String formacao;
-    private int anosExperiencia;
-    private TipoMentor tipo;
-    private boolean ativo;
-    protected Endereco endereco;
-    private String cpf;
-    private String tipoDeUsuario;
-    private String telefone;
-    private String tempoExperiencia;
-    private String tipoVinculo;
-    private String areaAtuacao;
+    Long id;
+    String nome;
+    String cpf;
+    String email;
+    String senha;
+    String tipoDeUsuario;
+    String telefone;
+    String tempoDeExperiencia;
+    String tipoDeVinculo;
+    String areaDeAtuacao;
+    EnderecoEntity endereco;
 
-    // Construtores
-    public Mentor() {
-        super();
-        this.ativo = true;
+    public Mentor(Long id, String nome, String cpf, String email, String senha, String tipoDeUsuario, String telefone, String tempoDeExperiencia, String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco) {
+    this.id = id;
+    this.nome = nome;
+    this.cpf = cpf;
+    this.email = email;
+    this.senha = senha;
+    this.tipoDeUsuario = tipoDeUsuario;
+    this.telefone = telefone;
+    this.tempoDeExperiencia = tempoDeExperiencia;
+    this.tipoDeVinculo = tipoDeVinculo;
+    this.areaDeAtuacao = areaDeAtuacao;
+    this.endereco = endereco;
     }
-
-    public Mentor(String nome, String email, String senha, String formacao, int anosExperiencia, TipoMentor tipo, boolean ativo, Endereco endereco, String cpf, String tipoDeUsuario, String telefone,
-                  String tempoExperiencia, String tipoVinculo, String areaAtuacao){
-        super(nome, email, senha);
-        this.formacao = formacao;
-        this.anosExperiencia = anosExperiencia;
-        this.tipo = tipo;
-        this.ativo = ativo;
-        this.endereco = endereco;
-        this.cpf = cpf;
-        this.tipoDeUsuario = tipoDeUsuario;
-        this.telefone = telefone;
-        this.tempoExperiencia = tempoExperiencia;
-        this.tipoVinculo = tipoVinculo;
-        this.areaAtuacao = areaAtuacao;
-
-    }
-
-    public Mentor(String nome, String email, String formacao, int anosExperiencia,
-                  Endereco endereco, TipoMentor tipo, String senha) {
-        super(nome, email, senha);
-        this.formacao = formacao;
-        this.anosExperiencia = anosExperiencia;
-        this.tipo = tipo;
-        this.ativo = true;
-        this.endereco = new Endereco(endereco);
-    }
-
-    // Construtor de cópia
-    public Mentor(Mentor outroMentor) {
-        super(outroMentor);
-        this.formacao = outroMentor.formacao;
-        this.anosExperiencia = outroMentor.anosExperiencia;
-        this.tipo = outroMentor.tipo;
-        this.ativo = outroMentor.ativo;
-        this.endereco = new Endereco(outroMentor.endereco);
-    }
-
-    // Implementação da interface
-    @Override
-    public boolean autenticar(String senha) {
-        return this.senha.equals(senha);
-    }
-
-    // Getters e Setters
-    public String getFormacao() { return formacao; }
-    public void setFormacao(String formacao) { this.formacao = formacao; }
-
-    public int getAnosExperiencia() { return anosExperiencia; }
-    public void setAnosExperiencia(int anosExperiencia) { this.anosExperiencia = anosExperiencia; }
-
-    public TipoMentor getTipo() { return tipo; }
-    public void setTipo(TipoMentor tipo) { this.tipo = tipo; }
-
-    public boolean isAtivo() { return ativo; }
-    public void setAtivo(boolean ativo) { this.ativo = ativo; }
-
-    public Endereco getEndereco() { return endereco; }
-    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
 
     @Override
-    public String toString() {
-        return "Nome: " + nome + "\nEmail: " + email + "\nStatus: " + (ativo ? "Ativo" : "Desativado")
-                + "\nFormação: " + formacao + "\nAnos de Experiência: " + anosExperiencia
-                + "\nEndereço: " + endereco + "\nTipo: " + tipo;
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public void setTipoDeUsuario(String mentor) {
-        this.tipoDeUsuario = mentor;
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getSenha() {
+        return senha;
+    }
+
+    @Override
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getTipoDeUsuario() {
+        return tipoDeUsuario;
+    }
+
+    public void setTipoDeUsuario(String tipoDeUsuario) {
+        this.tipoDeUsuario = tipoDeUsuario;
+    }
+
+    public String getTelefone() {
+        return telefone;
     }
 
     public void setTelefone(String telefone) {
-    this.telefone = telefone;
+        this.telefone = telefone;
     }
 
-    public void setTempoExperiencia(String tempoExperiencia) {
-    this.tempoExperiencia = tempoExperiencia;
+    public String getTempoDeExperiencia() {
+        return tempoDeExperiencia;
     }
 
-    public void setTipoDeVinculo(String tipoVinculo) {
-        this.tipoVinculo = tipoVinculo;
+    public void setTempoDeExperiencia(String tempoDeExperiencia) {
+        this.tempoDeExperiencia = tempoDeExperiencia;
     }
 
-    public void setAreaDeAtuacao(String areaAtuacao) {
-        this.areaAtuacao = areaAtuacao;
+    public String getTipoDeVinculo() {
+        return tipoDeVinculo;
     }
 
-    public String getId() {
-    return "";
+    public void setTipoDeVinculo(String tipoDeVinculo) {
+        this.tipoDeVinculo = tipoDeVinculo;
+    }
+
+    public String getAreaDeAtuacao() {
+        return areaDeAtuacao;
+    }
+
+    public void setAreaDeAtuacao(String areaDeAtuacao) {
+        this.areaDeAtuacao = areaDeAtuacao;
+    }
+
+    public EnderecoEntity getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(EnderecoEntity endereco) {
+        this.endereco = endereco;
+    }
+
+    @Override
+    public boolean autenticar(String senha) {
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package org.scam.entities;
 
 import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.cadastros.Curso;
+import org.scam.classes.Aluno;
 import org.scam.classes.Endereco;
 import org.scam.classes.Mentor;
 
@@ -105,7 +106,7 @@ public class MentorEntity implements UsuarioEntity{
     public EnderecoEntity getEndereco() {return endereco;}
     public void setEndereco(EnderecoEntity endereco) {this.endereco = endereco;}
 
-    /*public Mentor toMentor(){
-        return new Mentor(nome, email, formacao, );
-    }*/
+    public Mentor toMentor(){
+        return new Mentor(id, nome, cpf, email, senha, tipoDeUsuario, telefone, tempoDeExperiencia, tipoDeVinculo, areaDeAtuacao, endereco);
+    }
 }
