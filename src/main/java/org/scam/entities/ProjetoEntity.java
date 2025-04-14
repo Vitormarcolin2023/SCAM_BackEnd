@@ -151,7 +151,7 @@ public class ProjetoEntity {
     }
 
     //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
-    /*@PrePersist
+    @PrePersist
     @PreUpdate
     private void validarProjeto(){
         if(dataInicioProjeto != null && dataFinalProjeto != null){
@@ -163,6 +163,6 @@ public class ProjetoEntity {
         if(tamanhoDoGrupo < 2 || tamanhoDoGrupo >6){
             throw new IllegalArgumentException("A quantidade de integrantes deve ser de mínimo 2 e máximo 6.");
         }
-    }*/
+    }
 
 }
