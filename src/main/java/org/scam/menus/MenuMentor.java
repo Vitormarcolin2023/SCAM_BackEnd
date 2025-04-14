@@ -1,10 +1,15 @@
 package org.scam.menus;
 
 import org.scam.cadastros.MentorCadastro;
+import org.scam.classes.Mentor;
 
 import java.util.Scanner;
 
 public class MenuMentor {
+    private Mentor mentor;
+    public MenuMentor(Mentor mentor){this.mentor = mentor;}
+
+    public MenuMentor(){}
 
     public void menu() {
         Scanner sc = new Scanner(System.in);
@@ -21,7 +26,7 @@ public class MenuMentor {
 
            switch (continuar){
                case 1:
-                   break;
+                   return;
                case 2:
                    new MentorCadastro().cadastrarMentor();
                    break;
@@ -29,5 +34,9 @@ public class MenuMentor {
                    System.out.println("Opção inválida!");
            }
        }while (continuar != 3);
+    }
+
+    public void exibirMenu() {
+        System.out.println("teste");
     }
 }
