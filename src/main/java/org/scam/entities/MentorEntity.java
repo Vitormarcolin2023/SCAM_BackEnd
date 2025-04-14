@@ -105,7 +105,7 @@ public class MentorEntity implements UsuarioEntity{
     public EnderecoEntity getEndereco() {return endereco;}
     public void setEndereco(EnderecoEntity endereco) {this.endereco = endereco;}
 
-    /*public Mentor toMentor(){
-        return new Mentor(nome, email, formacao, );
+   /* public Mentor toMentor(){
+        return new Mentor();
     }*/
 }
