@@ -4,8 +4,7 @@ import org.scam.classes.TipoMentor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "tb_mentor")
+@Entity(name = "tb_mentor")
 public class MentorEntity implements UsuarioEntity{
 
     @Id

@@ -2,6 +2,7 @@ package org.scam;
 
 import org.scam.classes.Aluno;
 import org.scam.classes.Coordenador;
+import org.scam.classes.Mentor;
 import org.scam.entities.AlunoEntity;
 import org.scam.entities.CoordenacaoEntity;
 import org.scam.entities.MentorEntity;
@@ -23,7 +24,6 @@ public class Main {
     public static void main(String[] args) {
 
         Funcoes funcoes = new Funcoes();
-        MenuMentor menuMentor = new MenuMentor();
 
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
@@ -60,6 +60,10 @@ public class Main {
                     } else if (usuario instanceof MentorEntity) {
 
                         System.out.println("\nAcessando painel do Mentor...");
+                        MentorEntity mentorEntity = (MentorEntity) usuario;
+                        Mentor mentor = mentorEntity.toMentor();
+                        MenuMentor menuMentor = new MenuMentor(mentor);
+                        menuMentor.exibirMenu();
 
 
                     } else if (usuario instanceof AlunoEntity) {
@@ -110,6 +114,7 @@ class Funcoes {
             }
             case 2: {
                 MentorRepository mentorRepository = new MentorRepository(em);
+                System.out.println("passei aqui");
                 return mentorRepository.login(email, senha);
             }
             case 3: {
