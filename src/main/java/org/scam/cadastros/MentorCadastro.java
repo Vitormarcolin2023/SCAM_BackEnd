@@ -1,5 +1,6 @@
 package org.scam.cadastros;
 
+import org.scam.classes.TipoMentor;
 import org.scam.entities.EnderecoEntity;
 import org.scam.entities.MentorEntity;
 import org.scam.repository.CustomizerFactory;
@@ -40,6 +41,23 @@ public class MentorCadastro {
         System.out.print("Área de atuação: ");
         String areaAtuacao = scanner.nextLine();
 
+        System.out.println("\n[SELEÇÃO DE TIPO DE MENTOR]");
+        TipoMentor[] tipos = TipoMentor.values();
+        for (int i = 0; i < tipos.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, tipos[i].name());
+        }
+        System.out.print("Digite o número correspondente ao tipo: ");
+
+        int escolhaTipo;
+        TipoMentor tipoMentor;
+        try {
+            escolhaTipo = Integer.parseInt(scanner.nextLine());
+            tipoMentor = tipos[escolhaTipo - 1];
+        } catch (Exception e) {
+            System.out.println("Escolha inválida! Usando padrão 'Formado'.");
+            tipoMentor = TipoMentor.Formado;
+        }
+
         // 3. Coletar ENDEREÇO
         System.out.println("\n[ENDEREÇO]");
         System.out.print("Rua: ");
@@ -60,7 +78,7 @@ public class MentorCadastro {
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
 
-        // Persistência usando sua CustomizerFactory
+        // Persistência usando CustomizerFactory
         EntityManager em = CustomizerFactory.getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -83,7 +101,7 @@ public class MentorCadastro {
             mentor.setCpf(cpf);
             mentor.setEmail(email);
             mentor.setSenha(senha);
-            mentor.setTipoDeUsuario("Formado");
+            mentor.setTipoDeUsuario(tipoMentor);
             mentor.setTelefone(telefone);
             mentor.setTempoExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);
