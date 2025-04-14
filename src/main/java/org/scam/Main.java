@@ -13,6 +13,7 @@ import org.scam.repository.AlunoRepository;
 import org.scam.repository.CoordenacaoRepository;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
+import org.scam.utils.Sessao;
 
 import javax.persistence.EntityManager;
 import java.sql.SQLOutput;
@@ -67,6 +68,9 @@ public class Main {
                         AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
                         Aluno aluno = alunoEntity.toAluno(); // transfrma a entity em Aluno
                         MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
+                        // SALVA O RA
+                        Sessao.setRaAluno(alunoEntity.getRa());
+
                         menuAluno.exibirMenu(); // chama a funçao p/ rodar o menu aluno
 
                     }

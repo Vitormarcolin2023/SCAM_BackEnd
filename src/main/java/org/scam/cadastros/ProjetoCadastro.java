@@ -1,6 +1,7 @@
 package org.scam.cadastros;
 
 
+import org.scam.entities.AlunoEntity;
 import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
@@ -8,6 +9,7 @@ import org.scam.repository.ProjetoRepository;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.Scanner;
+import org.scam.utils.Sessao;
 
 public class ProjetoCadastro {
 
@@ -17,6 +19,7 @@ public class ProjetoCadastro {
         EntityManager em = CustomizerFactory.getEntityManager();
         MentorRepository mentorRepository = new MentorRepository(em);
         ProjetoRepository projetoRepository = new ProjetoRepository(em);
+        AlunoEntity alunoEntity = new AlunoEntity();
 
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Projeto projeto = new Projeto();*/
@@ -155,14 +158,16 @@ public class ProjetoCadastro {
         System.out.print("Período: ");
         String periodo = scanner.nextLine();
 
-        System.out.print("RA do aluno responsável: ");
-        int raAluno = scanner.nextInt();
+        /*System.out.print("RA do aluno responsável: ");
+        int raAluno = scanner.nextInt();/*
 
             /*List<MentorEntity> allPacientes = mentorRepository.buscarTodos();
 
             for (MentorEntity x : allPacientes){
                 System.out.println("Id: "+ x.getIdMentor() + " Nome :"+x.getNome());
             }*/
+
+        int ra = Sessao.getRaAluno();
 
         System.out.print("ID do mentor (fk_mentor_id): ");
         int mentor = scanner.nextInt();
@@ -176,7 +181,7 @@ public class ProjetoCadastro {
         novoProjeto.setTamanhoDoGrupo(qtdParticipante);
         novoProjeto.setCurso(tipoCursoString);
         novoProjeto.setPeriodo(periodo);
-        novoProjeto.setRaAluno(raAluno);
+        novoProjeto.setRaAluno(ra);
         novoProjeto.setIdMentor(mentor);
 
 
