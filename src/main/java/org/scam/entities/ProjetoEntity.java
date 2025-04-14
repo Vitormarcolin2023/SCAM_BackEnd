@@ -2,15 +2,13 @@ package org.scam.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 @Entity
 @Table(name = "tb_projeto")
 public class ProjetoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "nome_do_projeto", nullable = false, length = 45)
@@ -19,7 +17,7 @@ public class ProjetoEntity {
     @Column(name = "descricao", nullable = false, length = 100)
     private String descricao;
 
-    @Column(name = "area_de_atuacao", nullable = false, length = 45)
+    @Column(name = "area_de_atuacao")
     private String areaDeAtuacao;
 
     @Column(name = "data_inicio_projeto", nullable = false)
@@ -28,64 +26,117 @@ public class ProjetoEntity {
     @Column(name = "data_final_projeto", nullable = false)
     private LocalDate dataFinalProjeto;
 
-    @Column(name = "tamanho_do_grupo", nullable = false)
+    @Column(name = "tamanho_do_grupo")
     private int tamanhoDoGrupo;
 
-    @Column(name = "curso", nullable = false, length = 45)
+    @Column(name = "curso")
     private String curso;
 
     @Column(name = "periodo", nullable = false, length = 45)
     private String periodo;
 
     //foreign keys
-    @ManyToOne
-    @JoinColumn(name = "fk_aluno_id", nullable = false)
-    private AlunoEntity aluno;
+    @Column(name = "fk_aluno_ra")
+    private int raAluno;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_mentor_id", nullable = false)
-    private MentorEntity mentor;
+    @Column(name = "fk_mentor_id")
+    private int idMentor;
 
-    //getters e setters
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
+    //GETTER AND SETTER
 
-    public String getNomeDoProjeto() {return nomeDoProjeto;}
-    public void setNomeDoProjeto(String nomeDoProjeto) {this.nomeDoProjeto = nomeDoProjeto;}
+    public Long getId() {
+        return id;
+    }
 
-    public String getDescricao(){return descricao;}
-    public void setDescricao(String descricao) {this.descricao = descricao;}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getAreaDeAtuacao() {return areaDeAtuacao;}
-    public void setAreaDeAtuacao(String areaDeAtuacao) {this.areaDeAtuacao = areaDeAtuacao;}
+    public String getNomeDoProjeto() {
+        return nomeDoProjeto;
+    }
 
-    public LocalDate getDataInicioProjeto() {return dataInicioProjeto;}
-    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {this.dataInicioProjeto = dataInicioProjeto;}
+    public void setNomeDoProjeto(String nomeDoProjeto) {
+        this.nomeDoProjeto = nomeDoProjeto;
+    }
 
-    public LocalDate getDataFinalProjeto() {return dataFinalProjeto;}
-    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {this.dataFinalProjeto = dataFinalProjeto;}
+    public String getDescricao() {
+        return descricao;
+    }
 
-    public int getTamanhoDoGrupo() {return tamanhoDoGrupo;}
-    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {this.tamanhoDoGrupo = tamanhoDoGrupo;}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    public String getCurso(){return curso;}
-    public void setCurso(String curso) {this.curso = curso;}
+    public String getAreaDeAtuacao() {
+        return areaDeAtuacao;
+    }
 
-    public String getPeriodo() {return periodo;}
-    public void setPeriodo(String periodo) {this.periodo = periodo;}
+    public void setAreaDeAtuacao(String areaDeAtuacao) {
+        this.areaDeAtuacao = areaDeAtuacao;
+    }
 
-    public AlunoEntity getAluno() {return aluno;}
-    public void setAluno(AlunoEntity aluno) {this.aluno = aluno;}
+    public LocalDate getDataInicioProjeto() {
+        return dataInicioProjeto;
+    }
 
-    public MentorEntity getMentor() {return mentor;}
-    public void setMentor(MentorEntity mentor) {this.mentor = mentor;}
+    public void setDataInicioProjeto(LocalDate dataInicioProjeto) {
+        this.dataInicioProjeto = dataInicioProjeto;
+    }
 
-    //construtor vazio
-    // Construtor padrão necessário para o JPA
-    public ProjetoEntity() {}
+    public LocalDate getDataFinalProjeto() {
+        return dataFinalProjeto;
+    }
 
-    //construtor parametrizado
-    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, AlunoEntity aluno, MentorEntity mentor) {
+    public void setDataFinalProjeto(LocalDate dataFinalProjeto) {
+        this.dataFinalProjeto = dataFinalProjeto;
+    }
+
+    public int getTamanhoDoGrupo() {
+        return tamanhoDoGrupo;
+    }
+
+    public void setTamanhoDoGrupo(int tamanhoDoGrupo) {
+        this.tamanhoDoGrupo = tamanhoDoGrupo;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public int getRaAluno() {
+        return raAluno;
+    }
+
+    public void setRaAluno(int raAluno) {
+        this.raAluno = raAluno;
+    }
+
+    public int getIdMentor() {
+        return idMentor;
+    }
+
+    public void setIdMentor(int idMentor) {
+        this.idMentor = idMentor;
+    }
+
+    public ProjetoEntity() {
+
+    }
+
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, int raAluno, int idMentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
@@ -95,12 +146,12 @@ public class ProjetoEntity {
         this.tamanhoDoGrupo = tamanhoDoGrupo;
         this.curso = curso;
         this.periodo = periodo;
-        this.aluno = aluno;
-        this.mentor = mentor;
+        this.raAluno = raAluno;
+        this.idMentor = idMentor;
     }
 
     //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
-    @PrePersist
+    /*@PrePersist
     @PreUpdate
     private void validarProjeto(){
         if(dataInicioProjeto != null && dataFinalProjeto != null){
@@ -112,5 +163,6 @@ public class ProjetoEntity {
         if(tamanhoDoGrupo < 2 || tamanhoDoGrupo >6){
             throw new IllegalArgumentException("A quantidade de integrantes deve ser de mínimo 2 e máximo 6.");
         }
-    }
+    }*/
+
 }

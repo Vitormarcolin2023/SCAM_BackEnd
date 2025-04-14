@@ -1,19 +1,17 @@
 package org.scam.cadastros;
 
-import org.scam.classes.Projeto;
-import org.scam.entities.MentorEntity;
+
+import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
-
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.Scanner;
-
-import static org.scam.cadastros.Curso.ADMINISTRADOR;
 
 public class ProjetoCadastro {
 
-    public Projeto cadastrarProjeto() {
+    public void cadastrarProjeto() {
         Scanner scanner = new Scanner(System.in);
 
         EntityManager em = CustomizerFactory.getEntityManager();
@@ -23,140 +21,142 @@ public class ProjetoCadastro {
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Projeto projeto = new Projeto();*/
 
-        Curso tipoCurso = null;
-        AreaDeAtuacao tipoAreaDeAtucao = null;
+        //Curso tipoCurso;
+        //AreaDeAtuacao tipoAreaDeAtucao;
 
+        String tipoCursoString = "";
+        String tipoArea = "";
 
             /*System.out.print("Digite o ID do projeto: ");
             projeto.setId(Integer.parseInt(scanner.nextLine()));*/
 
-            System.out.print("Nome do projeto: ");
-            String nomeProjeto = scanner.nextLine();
+        System.out.print("Nome do projeto: ");
+        String nomeProjeto = scanner.nextLine();
 
-            System.out.print("Descrição do projeto: ");
-            String descricaoProjeto = scanner.nextLine();
+        System.out.print("Descrição do projeto: ");
+        String descricaoProjeto = scanner.nextLine();
 
-            exibirMenuAreaDeAtuacao();
+        exibirMenuAreaDeAtuacao();
 
-            System.out.print("Escolha a área de atuação: ");
-            int opAreaDeAtuacao = scanner.nextInt();
+        System.out.print("Escolha a área de atuação: ");
+        int opAreaDeAtuacao = scanner.nextInt();
 
-            switch (opAreaDeAtuacao){
-                case 1:
-                    tipoAreaDeAtucao = AreaDeAtuacao.AGRÁRIAS_E_BIOLOGIA;
-                    break;
-                case 2:
-                    tipoAreaDeAtucao = AreaDeAtuacao.EDUCAÇÃO;
-                    break;
-                case 3:
-                    tipoAreaDeAtucao = AreaDeAtuacao.ENGENHARIA_E_ARQUITETURA;
-                    break;
-                case 4:
-                    tipoAreaDeAtucao = AreaDeAtuacao.GESTÃO;
-                    break;
-                case 5:
-                    tipoAreaDeAtucao = AreaDeAtuacao.SAÚDE;
-                    break;
-                case 6:
-                    tipoAreaDeAtucao = AreaDeAtuacao.SOCIAIS;
-                    break;
-                case 7:
-                    tipoAreaDeAtucao = AreaDeAtuacao.TECNOLOGIA;
-                    break;
-                default:
-                    System.out.println("Área de atuação inválido.");
-            }
+        switch (opAreaDeAtuacao){
+            case 1:
+                tipoArea = "AGRÁRIAS_E_BIOLOGIA";
+                break;
+            case 2:
+                tipoArea = "EDUCAÇÃO";
+                break;
+            case 3:
+                tipoArea = "ENGENHARIA_E_ARQUITETURA";
+                break;
+            case 4:
+                tipoArea = "GESTÃO";
+                break;
+            case 5:
+                tipoArea = "SAÚDE";
+                break;
+            case 6:
+                tipoArea = "SOCIAIS";
+                break;
+            case 7:
+                tipoArea = "TECNOLOGIA";
+                break;
+            default:
+                System.out.println("Área de atuação inválido.");
+        }
 
-            System.out.print("Data de início do projeto (yyyy-MM-dd): ");
-            String dataInicio = scanner.nextLine();
+        System.out.print("Data de início do projeto (yyyy-MM-dd): ");
+        String dataInicio = scanner.next();
 
-            System.out.print("Data de término do projeto (yyyy-MM-dd): ");
-            String dataFinal = scanner.nextLine();
+        System.out.print("Data de término do projeto (yyyy-MM-dd): ");
+        String dataFinal = scanner.next();
 
-            System.out.print("Quantidade de integrantes: ");
-            int qtdParticipante = scanner.nextInt();
+        System.out.print("Quantidade de integrantes: ");
+        int qtdParticipante = scanner.nextInt();
 
-            exibirMenuCursos();
+        exibirMenuCursos();
 
-            System.out.print("Escolha o curso: ");
-            int opCurso = scanner.nextInt();
+        System.out.print("Escolha o curso: ");
+        int opCurso = scanner.nextInt();
 
-            switch (opCurso) {
-                case 1:
-                    tipoCurso = ADMINISTRADOR;
-                    break;
-                case 2:
-                    tipoCurso = Curso.AGRONOMIA;
-                    break;
-                case 3:
-                    tipoCurso = Curso.ANÁLISE_E_DESENVOLVIMENTO_DE_SISTEMAS;
-                    break;
-                case 4:
-                    tipoCurso = Curso.ARQUITETURA_E_URBANISMO;
-                    break;
-                case 5:
-                    tipoCurso = Curso.BIOMEDICINA;
-                    break;
-                case 6:
-                    tipoCurso = Curso.CIÊNCIAS_BIOLÓGICAS;
-                    break;
-                case 7:
-                    tipoCurso = Curso.CIÊNCIAS_CONTÁBEIS;
-                    break;
-                case 8:
-                    tipoCurso = Curso.DESIGN_GRÁFICA_DIGITAL;
-                    break;
-                case 9:
-                    tipoCurso = Curso.DIREITO;
-                    break;
-                case 10:
-                    tipoCurso = Curso.EDUCAÇÃO_FÍSICA;
-                    break;
-                case 11:
-                    tipoCurso = Curso.ENFERMAGEM;
-                    break;
-                case 12:
-                    tipoCurso = Curso.ENGENHARIA_CIVIL;
-                    break;
-                case 13:
-                    tipoCurso = Curso.ENGENHARIA_DE_SOFTWARE;
-                    break;
-                case 14:
-                    tipoCurso = Curso.ENGENHARIA_ELÉTRICA;
-                    break;
-                case 15:
-                    tipoCurso = Curso.ENGENHARIA_MECÂNICA;
-                    break;
-                case 16:
-                    tipoCurso = Curso.FARMÁCIA;
-                    break;
-                case 17:
-                    tipoCurso = Curso.FISIOTERAPIA;
-                    break;
-                case 18:
-                    tipoCurso = Curso.MEDICINA_VETERINÁRIA;
-                    break;
-                case 19:
-                    tipoCurso = Curso.NUTRIÇÃO;
-                    break;
-                case 20:
-                    tipoCurso = Curso.PEDAGOGIA;
-                    break;
-                case 21:
-                    tipoCurso = Curso.PSICOLOGIA;
-                    break;
-                case 22:
-                    tipoCurso = Curso.PUBLICIDADE_E_PROPAGANDA;
-                    break;
-                default:
-                    System.out.println("Curso inválido.");
-            }
+        switch (opCurso) {
+            case 1:
+                tipoCursoString =  "ADMINISTRADOR";
+                break;
+            case 2:
+                tipoCursoString =  "AGRONOMIA";
+                break;
+            case 3:
+                tipoCursoString =  "ANÁLISE_E_DESENVOLVIMENTO_DE_SISTEMAS";
+                break;
+            case 4:
+                tipoCursoString =  "ARQUITETURA_E_URBANISMO";
+                break;
+            case 5:
+                tipoCursoString =  "BIOMEDICINA";
+                break;
+            case 6:
+                tipoCursoString =  "CIÊNCIAS_BIOLÓGICAS";
+                break;
+            case 7:
+                tipoCursoString =  "CIÊNCIAS_CONTÁBEIS";
+                break;
+            case 8:
+                tipoCursoString =  "DESIGN_GRÁFICA_DIGITAL";
+                break;
+            case 9:
+                tipoCursoString =  "DIREITO";
+                break;
+            case 10:
+                tipoCursoString =  "EDUCAÇÃO_FÍSICA";
+                break;
+            case 11:
+                tipoCursoString =  "ENFERMAGEM";
+                break;
+            case 12:
+                tipoCursoString =  "ENGENHARIA_CIVIL";
+                break;
+            case 13:
+                tipoCursoString =  "ENGENHARIA_DE_SOFTWARE";
+                break;
+            case 14:
+                tipoCursoString =  "ENGENHARIA_ELÉTRICA";
+                break;
+            case 15:
+                tipoCursoString =  "ENGENHARIA_MECÂNICA";
+                break;
+            case 16:
+                tipoCursoString =  "FARMÁCIA";
+                break;
+            case 17:
+                tipoCursoString =  "FISIOTERAPIA";
+                break;
+            case 18:
+                tipoCursoString =  "MEDICINA_VETERINÁRIA";
+                break;
+            case 19:
+                tipoCursoString =  "NUTRIÇÃO";
+                break;
+            case 20:
+                tipoCursoString =  "PEDAGOGIA";
+                break;
+            case 21:
+                tipoCursoString =  "PSICOLOGIA";
+                break;
+            case 22:
+                tipoCursoString =  "PUBLICIDADE_E_PROPAGANDA";
+                break;
+            default:
+                System.out.println("Curso inválido.");
+        }
 
-            System.out.print("Período: ");
-            String periodo = scanner.nextLine();
+        System.out.print("Período: ");
+        String periodo = scanner.nextLine();
 
-            System.out.print("RA do aluno responsável: ");
-            int raAluno = scanner.nextInt();
+        System.out.print("RA do aluno responsável: ");
+        int raAluno = scanner.nextInt();
 
             /*List<MentorEntity> allPacientes = mentorRepository.buscarTodos();
 
@@ -164,28 +164,23 @@ public class ProjetoCadastro {
                 System.out.println("Id: "+ x.getIdMentor() + " Nome :"+x.getNome());
             }*/
 
-            System.out.print("ID do mentor (fk_mentor_id): ");
-            int mentor = scanner.nextInt();
+        System.out.print("ID do mentor (fk_mentor_id): ");
+        int mentor = scanner.nextInt();
 
-        mentorRepository.salvar(
-                new MentorEntity(
-                        null,
-                        nomeProjeto,
-                        descricaoProjeto,
-                        tipoAreaDeAtucao,
-                        dataInicio,
-                        dataFinal,
-                        qtdParticipante,
-                        tipoCurso,
-                        periodo,
-                        raAluno,
-                        mentor
+        ProjetoEntity novoProjeto = new ProjetoEntity();
+        novoProjeto.setNomeDoProjeto(nomeProjeto);
+        novoProjeto.setDescricao(descricaoProjeto);
+        novoProjeto.setAreaDeAtuacao(tipoArea);
+        novoProjeto.setDataInicioProjeto(LocalDate.parse(dataInicio));
+        novoProjeto.setDataFinalProjeto(LocalDate.parse(dataFinal));
+        novoProjeto.setTamanhoDoGrupo(qtdParticipante);
+        novoProjeto.setCurso(tipoCursoString);
+        novoProjeto.setPeriodo(periodo);
+        novoProjeto.setRaAluno(raAluno);
+        novoProjeto.setIdMentor(mentor);
 
-                )
-        );
 
-        System.out.println("Projeto cadastrado com sucesso!");
-        return null;
+        projetoRepository.salvar(novoProjeto);
     }
 
 
