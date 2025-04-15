@@ -39,7 +39,6 @@ public class MenuMentor {
     public void exibirMenu() {
 
         //adicionar o scanner
-        //verificar se deve adicionar o int 0
         do{
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");

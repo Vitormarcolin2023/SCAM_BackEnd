@@ -41,4 +41,41 @@ public class MentorRepository {
     public List<MentorEntity> buscarTodos(){
         return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
     }
+
+    public boolean existePorCpf(String cpf) {
+        try {
+            em.createQuery(
+                            "SELECT m FROM tb_mentor m WHERE m.cpf = :cpf", MentorEntity.class)
+                    .setParameter("cpf", cpf)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existePorTelefone(String telefone) {
+        try {
+            em.createQuery(
+                            "SELECT m FROM tb_mentor m WHERE m.telefone = :telefone", MentorEntity.class)
+                    .setParameter("telefone", telefone)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existePorEmail(String email) {
+        try {
+            em.createQuery(
+                            "SELECT m FROM tb_mentor m WHERE m.email = :email", MentorEntity.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
 }
