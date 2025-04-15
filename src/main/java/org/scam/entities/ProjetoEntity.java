@@ -141,7 +141,9 @@ public class ProjetoEntity {
 
     }
 
-    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, AreaDeAtuacao areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, Curso curso, String periodo, int raAluno, int idMentor) {
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, AreaDeAtuacao areaDeAtuacao,
+                         LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo,
+                         Curso curso, String periodo, int raAluno, int idMentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
