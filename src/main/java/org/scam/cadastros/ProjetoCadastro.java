@@ -2,14 +2,12 @@ package org.scam.cadastros;
 
 
 import org.scam.entities.AlunoEntity;
-import org.scam.entities.MentorEntity;
 import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 import org.scam.utils.Sessao;
 
@@ -157,8 +155,6 @@ public class ProjetoCadastro {
                 System.out.println("Curso inválido.");
         }
 
-        scanner.nextLine();
-
         System.out.print("Período: ");
         String periodo = scanner.nextLine();
 
@@ -172,20 +168,6 @@ public class ProjetoCadastro {
             }*/
 
         int ra = Sessao.getRaAluno();
-
-        // Buscar e listar mentores da mesma área
-        List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(tipoArea);
-
-        if (mentoresDisponiveis.isEmpty()) {
-            System.out.println("Nenhum mentor disponível para essa área de atuação.");
-            return;
-        }
-
-        System.out.println("Mentores disponíveis para a área " + tipoArea + ":");
-        for (MentorEntity mentorEntity : mentoresDisponiveis) {
-            System.out.println("ID: " + mentorEntity.getIdMentor() + " | Nome: " + mentorEntity.getNome());
-        }
-
 
         System.out.print("ID do mentor (fk_mentor_id): ");
         int mentor = scanner.nextInt();
@@ -202,13 +184,8 @@ public class ProjetoCadastro {
         novoProjeto.setRaAluno(ra);
         novoProjeto.setIdMentor(mentor);
 
-        // Valida se não houve erro no cadastro
-        if(projetoRepository.salvar(novoProjeto)){
-            System.out.println("\nProjeto cadastrado com sucesso!");
-        }
-        else {
-            System.out.println("\nAlgo deu errado, tente novamente.");
-        }
+
+        projetoRepository.salvar(novoProjeto);
     }
 
 

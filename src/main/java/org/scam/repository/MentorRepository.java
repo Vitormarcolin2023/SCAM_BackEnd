@@ -4,8 +4,6 @@ import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class MentorRepository {
@@ -41,7 +39,7 @@ public class MentorRepository {
     }
 
     public List<MentorEntity> buscarTodos(){
-        return em.createQuery("SELECT m  FROM tb_mentor m", MentorEntity.class).getResultList();
+        return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 
     public boolean existePorCpf(String cpf) {
@@ -80,39 +78,4 @@ public class MentorRepository {
         }
     }
 
-
-    public MentorEntity buscarPorEmail(String email) {
-        try {
-            return em.createQuery("SELECT m FROM MentorEntity m WHERE m.email = :email", MentorEntity.class)
-                    .setParameter("email", email)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    public void editarMentor(MentorEntity mentor) {
-        try {
-            em.getTransaction().begin();
-            em.merge(mentor); // atualiza o objeto no banco
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-            System.out.println("❌ Erro ao atualizar mentor.");
-        }
-    }
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(String area) {
-        TypedQuery<MentorEntity> query = em.createQuery(
-                "SELECT m FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class
-        );
-        query.setParameter("area", area);
-        return query.getResultList();
-    }
 }
