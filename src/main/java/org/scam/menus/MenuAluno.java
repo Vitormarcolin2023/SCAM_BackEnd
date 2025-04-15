@@ -64,6 +64,7 @@ public class MenuAluno {
 
     public void gerenciarProjetos() {
 
+        List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
         int operacao = 0;
 
         do {
@@ -75,14 +76,12 @@ public class MenuAluno {
 
             switch (operacao) {
                 case 1: {
-                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
-
                     if (!listaProjetos.isEmpty()) {
                         mostrarProjetos(listaProjetos);
                         System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
                         long idProjeto = sc.nextInt();
                         if(idProjeto != 0){
-                            projetoCompleto(idProjeto);
+                            projetoCompleto(idProjeto, false);
                         }
                     }
                     else {
@@ -91,7 +90,14 @@ public class MenuAluno {
                     break;
                 }
                 case 2: {
-
+                        if (!listaProjetos.isEmpty()){
+                            mostrarProjetos(listaProjetos);
+                            System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
+                            long idProjeto = sc.nextInt();
+                            if(idProjeto != 0){
+                                projetoCompleto(idProjeto, true);
+                            }
+                        }
                     break;
                 }
                 case 3: {
@@ -116,22 +122,40 @@ public class MenuAluno {
         }
     }
 
-    public void projetoCompleto(long id){
+    public void projetoCompleto(long id, boolean enumerar) {
         ProjetoEntity projeto = projetoRepository.buscarUmProjeto(id, aluno.ra);
 
-        if(projeto == null){
+        if (projeto == null) {
             System.out.println("\n- Projeto com ID " + id + " não encontrado!");
             return;
         }
 
-        System.out.println("- ID: [" + projeto.getId() + "]");
-        System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
-        System.out.println("- Descrição: " + projeto.getDescricao());
-        System.out.println("- Área de atuação: " + projeto.getAreaDeAtuacao());
-        System.out.println("- Início: " + projeto.getDataInicioProjeto());
-        System.out.println("- Término: " + projeto.getDataFinalProjeto());
-        System.out.println("- Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
-        System.out.println("- Curso: " + projeto.getCurso());
-        System.out.println("- Período: " + projeto.getPeriodo());
+        System.out.println("\n================== DETALHES DO PROJETO ====================");
+
+        if (enumerar) {
+            System.out.println("[1] - Nome do projeto:" + projeto.getNomeDoProjeto());
+            System.out.println("[2] - Descrição: " + projeto.getDescricao());
+            System.out.println("[3] - Área de atuação: " + projeto.getAreaDeAtuacao());
+            System.out.println("[4] - Início: " + projeto.getDataInicioProjeto());
+            System.out.println("[5] - Término: " + projeto.getDataFinalProjeto());
+            System.out.println("[6] - Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
+            System.out.println("[7] - Curso: " + projeto.getCurso());
+            System.out.println("[8] - Período: " + projeto.getPeriodo());
+        } else {
+            System.out.println("- ID: [" + projeto.getId() + "]");
+            System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
+            System.out.println("- Descrição: " + projeto.getDescricao());
+            System.out.println("- Área de atuação: " + projeto.getAreaDeAtuacao());
+            System.out.println("- Início: " + projeto.getDataInicioProjeto());
+            System.out.println("- Término: " + projeto.getDataFinalProjeto());
+            System.out.println("- Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
+            System.out.println("- Curso: " + projeto.getCurso());
+            System.out.println("- Período: " + projeto.getPeriodo());
+        }
+        System.out.println("---------------------------------------------------------------\n");
+    }
+
+    public void atualizarInfoProjeto(){
+
     }
 }
