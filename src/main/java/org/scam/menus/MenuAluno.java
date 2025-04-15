@@ -1,4 +1,6 @@
 package org.scam.menus;
+import org.scam.cadastros.AreaDeAtuacao;
+import org.scam.cadastros.Curso;
 import org.scam.classes.*;
 import org.scam.cadastros.ProjetoCadastro;
 import org.scam.entities.MentorEntity;
@@ -8,6 +10,7 @@ import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,9 +52,7 @@ public class MenuAluno {
                 case 3:
                     MentorRepository mentorRepository = new MentorRepository(em);
                     List<MentorEntity> listaMentores = mentorRepository.listarTodosMentores();
-                    for(MentorEntity mentor : listaMentores){
-                        System.out.println(mentor.getNome());
-                    }
+                    mostrarMentores(listaMentores);
                     break;
                 case 4:
                     System.out.println("Voltando ao menu principal...\n");
@@ -62,8 +63,19 @@ public class MenuAluno {
         } while (opcao != 4);
     }
 
-    public void gerenciarProjetos() {
+    public void mostrarMentores(List<MentorEntity> mentores){
+        System.out.println("\n=============== MENTORES ===============");
+        for(MentorEntity mentor : mentores){
+            System.out.println("- ID: [" + mentor.getIdMentor() + "]");
+            System.out.println("- Nome: " + mentor.getNome());
+            System.out.println("- Área de atuação: " + mentor.getAreaDeAtuacao());
+            System.out.println("- Tempo de experiência: " + mentor.getTempoDeExperiencia());
+            System.out.println("- Email: " + mentor.getEmail());
+            System.out.println("--------------------------------------");
+        }
+    }
 
+    public void gerenciarProjetos() {
         List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
         int operacao = 0;
 
@@ -148,6 +160,7 @@ public class MenuAluno {
         System.out.println("---------------------------------------------------------------\n");
     }
 
+
     public void atualizarInfoProjeto(List<ProjetoEntity> listaProjetos){
 
         if (listaProjetos.isEmpty()){
@@ -157,11 +170,95 @@ public class MenuAluno {
 
         mostrarProjetos(listaProjetos);
         System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
-        long idProjeto = sc.nextInt();
-        if(idProjeto != 0){
-            projetoCompleto(idProjeto, true);
-            System.out.println("- Informe o campo que deseja atualizar: ");
-            int opAtualizar = sc.nextInt();
+        long idProjeto = sc.nextLong();
+        sc.nextLine(); // limpar buffer
+
+        if(idProjeto == 0) return;
+
+        ProjetoEntity projeto = projetoRepository.buscarUmProjeto(idProjeto, aluno.ra);
+
+        if (projeto == null) {
+            System.out.println("- Projeto não encontrado.");
+            return;
+        }
+
+        projetoCompleto(idProjeto, true);
+        System.out.println("- Informe o número do campo que deseja atualizar: ");
+        int opAtualizar = sc.nextInt();
+        sc.nextLine(); // limpar buffer
+
+        try {
+            switch (opAtualizar){
+                case 1 : {
+                    System.out.println("- Novo nome do projeto: ");
+                    String novoNome = sc.nextLine();
+                    projeto.setNomeDoProjeto(novoNome);
+                    break;
+                }
+                case 2 : {
+                    System.out.println("- Nova descrição: ");
+                    String novaDescricao = sc.nextLine();
+                    projeto.setDescricao(novaDescricao);
+                    break;
+                }
+                case 3 : {
+                    System.out.println("- Nova área de atuação (opções):");
+                    for (AreaDeAtuacao area : AreaDeAtuacao.values()) {
+                        System.out.println("  - " + area.name());
+                    }
+                    System.out.print("- Digite a nova área: ");
+                    String novaArea = sc.nextLine().toUpperCase();
+                    projeto.setAreaDeAtuacao(AreaDeAtuacao.valueOf(novaArea));
+                    break;
+                }
+                case 4 : {
+                    System.out.println("- Nova data de início (yyyy-MM-dd): ");
+                    String novaData = sc.nextLine();
+                    projeto.setDataInicioProjeto(LocalDate.parse(novaData));
+                    break;
+                }
+                case 5 : {
+                    System.out.println("- Nova data de término (yyyy-MM-dd): ");
+                    String novaData = sc.nextLine();
+                    projeto.setDataFinalProjeto(LocalDate.parse(novaData));
+                    break;
+                }
+                case 6 : {
+                    System.out.println("- Novo tamanho do grupo (mínimo 2, máximo 6): ");
+                    int novoTamanho = sc.nextInt();
+                    sc.nextLine(); // limpar buffer
+                    projeto.setTamanhoDoGrupo(novoTamanho);
+                    break;
+                }
+                case 7 : {
+                    System.out.println("- Novo curso (opções):");
+                    for (Curso curso : Curso.values()) {
+                        System.out.println("  - " + curso.name());
+                    }
+                    System.out.print("- Digite o novo curso: ");
+                    String novoCurso = sc.nextLine().toUpperCase();
+                    projeto.setCurso(Curso.valueOf(novoCurso));
+                    break;
+                }
+                case 8 : {
+                    System.out.println("- Novo período: ");
+                    String novoPeriodo = sc.nextLine();
+                    projeto.setPeriodo(novoPeriodo);
+                    break;
+                }
+                default : {
+                    System.out.println("- Opção inválida.");
+                    return;
+                }
+            }
+
+            projetoRepository.atualizar(projeto);
+            System.out.println("- Projeto atualizado com sucesso!");
+
+        } catch (Exception e) {
+            System.out.println("- Erro ao atualizar projeto: " + e.getMessage());
         }
     }
+
+
 }

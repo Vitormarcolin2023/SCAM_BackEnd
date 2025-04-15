@@ -52,14 +52,14 @@ public class MenuCoordenador {
                         for (MentorEntity m : mentores){
                             System.out.println("ID: " + m.getIdMentor() +
                                     " | Nome: " + m.getNome() +
-                                    " | CPF: " + m.getCpf() +
-                                    " | Email: " + m.getEmail() +
-                                    " | Tipo de Usuário: " + m.getTipoDeUsuario() +
-                                    " | Telefone: " + m.getTelefone() +
-                                    " | Tempo de Experiência: " + m.getTempoDeExperiencia() +
-                                    " | Tipo de Vínculo: " + m.getTipoDeVinculo() +
-                                    " | Área de Atuação: " + m.getAreaDeAtuacao() +
-                                    " | Endereço: " + m.getEndereco().toString());
+                                    "\n | CPF: " + m.getCpf() +
+                                    "\n | Email: " + m.getEmail() +
+                                    "\n | Tipo de Usuário: " + m.getTipoDeUsuario() +
+                                    "\n | Telefone: " + m.getTelefone() +
+                                    "\n | Tempo de Experiência: " + m.getTempoDeExperiencia() +
+                                    "\n | Tipo de Vínculo: " + m.getTipoDeVinculo() +
+                                    "\n | Área de Atuação: " + m.getAreaDeAtuacao() +
+                                    "\n | Endereço: " + m.getEndereco().toString());
                         }
                     }
                     break;
@@ -82,10 +82,10 @@ public class MenuCoordenador {
                         for (ProjetoEntity p: projetos){
                             System.out.println("ID: " + p.getId() +
                                     "| Nome: " + p.getNomeDoProjeto() +
-                                    "| Curso: " + p.getCurso() +
-                                    "| Área de atuação: " + p.getAreaDeAtuacao() +
-                                    "| Aluno: " + p.getRaAluno() +
-                                    "| Mentor: " + p.getIdMentor()) ;
+                                    "\n| Curso: " + p.getCurso() +
+                                    "\n| Área de atuação: " + p.getAreaDeAtuacao() +
+                                    "\n| Aluno: " + p.getRaAluno() +
+                                    "\n| Mentor: " + p.getIdMentor()) ;
                         }
                     }
 
