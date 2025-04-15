@@ -25,6 +25,13 @@ public class ProjetoRepository {
         return query.getResultList();
     }
 
+    // utilizado no menu do coordenador
+    public List<ProjetoEntity> listarTodosProjetos(){
+        String buscarBanco = "SELECT p FROM ProjetoEntity p";
+        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
+        return query.getResultList();
+    }
+
     public ProjetoEntity buscarUmProjeto(long idProjeto, int ra){
         try{
             return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_aluno_ra = :ra", ProjetoEntity.class)

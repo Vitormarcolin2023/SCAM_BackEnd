@@ -48,7 +48,7 @@ public class MenuAluno {
                     break;
                 case 3:
                     MentorRepository mentorRepository = new MentorRepository(em);
-                    List<MentorEntity> listaMentores = mentorRepository.buscarTodos();
+                    List<MentorEntity> listaMentores = mentorRepository.listarTodosMentores();
                     for(MentorEntity mentor : listaMentores){
                         System.out.println(mentor.getNome());
                     }

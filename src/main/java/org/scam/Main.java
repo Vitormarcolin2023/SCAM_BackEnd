@@ -115,7 +115,6 @@ class Funcoes {
             }
             case 2: {
                 MentorRepository mentorRepository = new MentorRepository(em);
-                System.out.println("passei aqui");
                 return mentorRepository.login(email, senha);
             }
             case 3: {
