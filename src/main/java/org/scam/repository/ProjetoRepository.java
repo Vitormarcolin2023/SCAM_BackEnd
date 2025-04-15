@@ -18,6 +18,7 @@ public class ProjetoRepository {
         return em.find(ProjetoEntity.class, id);
     }
 
+<<<<<<< HEAD
     public List<ProjetoEntity> buscarTodos(int ra) {
         TypedQuery<ProjetoEntity> query = em.createQuery("SELECT p FROM ProjetoEntity p WHERE fk_aluno_ra = :ra", ProjetoEntity.class).setParameter("ra", ra);
         return query.getResultList();
@@ -27,6 +28,35 @@ public class ProjetoRepository {
         em.getTransaction().begin();
         em.persist(projeto);
         em.getTransaction().commit();
+=======
+    public List<ProjetoEntity> buscarTodos(String fk, int ra) {
+        String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
+        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
+        query.setParameter("ra", ra);
+        return query.getResultList();
+    }
+
+    public ProjetoEntity buscarUmProjeto(long idProjeto, int ra){
+        try{
+            return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_aluno_ra = :ra", ProjetoEntity.class)
+                    .setParameter("idProjeto", idProjeto)
+                    .setParameter("ra", ra)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public boolean salvar(ProjetoEntity projeto){
+        try {
+            em.getTransaction().begin();
+            em.persist(projeto);
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+>>>>>>> b15bc235d2520b3699a4640de02ce810f7178c5d
     }
 
     public void atualizar(ProjetoEntity tb_projeto) {

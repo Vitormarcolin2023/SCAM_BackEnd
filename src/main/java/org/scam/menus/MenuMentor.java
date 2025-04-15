@@ -65,13 +65,13 @@ public class MenuMentor {
             switch(opcao){
                 case 1:
                     //visualizar projeto;
-                    //break;
+                    break;
                 case 2:
-                    //atualizar conta;
-                    //break;
+                    new MentorCadastro().editarMentor();
+                    break;
                 case 3:
                     //deletar conta
-                    //break;
+                    break;
                 case 4:
                     System.out.println("=========================");
                     System.out.println("=Voltando ao Menu Mentor=");

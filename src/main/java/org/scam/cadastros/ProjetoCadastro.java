@@ -27,8 +27,8 @@ public class ProjetoCadastro {
         //Curso tipoCurso;
         //AreaDeAtuacao tipoAreaDeAtucao;
 
-        String tipoCursoString = "";
-        String tipoArea = "";
+        //String tipoCursoString = "";
+        //String tipoArea = "";
 
             /*System.out.print("Digite o ID do projeto: ");
             projeto.setId(Integer.parseInt(scanner.nextLine()));*/
@@ -39,7 +39,7 @@ public class ProjetoCadastro {
         System.out.print("Descrição do projeto: ");
         String descricaoProjeto = scanner.nextLine();
 
-        exibirMenuAreaDeAtuacao();
+        /*exibirMenuAreaDeAtuacao();
 
         System.out.print("Escolha a área de atuação: ");
         int opAreaDeAtuacao = scanner.nextInt();
@@ -68,6 +68,22 @@ public class ProjetoCadastro {
                 break;
             default:
                 System.out.println("Área de atuação inválido.");
+        }*/
+
+        System.out.println("\n[SELEÇÃO A ÁREA DE ATUAÇÃO]");
+        AreaDeAtuacao[] tiposA = AreaDeAtuacao.values();
+        for (int i = 0; i < tiposA.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, tiposA[i].name());
+        }
+        System.out.print("Digite o número correspondente ao tipo: ");
+
+        int escolhaTipoA;
+        AreaDeAtuacao areaDeAtuacao = null;
+        try {
+            escolhaTipoA = Integer.parseInt(scanner.nextLine());
+            areaDeAtuacao = tiposA[escolhaTipoA - 1];
+        } catch (Exception e) {
+            System.out.println("Escolha inválida!.");
         }
 
         System.out.print("Data de início do projeto (yyyy-MM-dd): ");
@@ -79,7 +95,7 @@ public class ProjetoCadastro {
         System.out.print("Quantidade de integrantes: ");
         int qtdParticipante = scanner.nextInt();
 
-        exibirMenuCursos();
+        /*exibirMenuCursos();
 
         System.out.print("Escolha o curso: ");
         int opCurso = scanner.nextInt();
@@ -153,6 +169,22 @@ public class ProjetoCadastro {
                 break;
             default:
                 System.out.println("Curso inválido.");
+        }*/
+
+        System.out.println("\n[SELEÇÃO O CURSO]");
+        Curso[] tiposC = Curso.values();
+        for (int i = 0; i < tiposC.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, tiposC[i].name());
+        }
+        System.out.print("Digite o número correspondente ao tipo: ");
+
+        int escolhaTipoC;
+        Curso cursoEscolhido = null;
+        try {
+            escolhaTipoC = Integer.parseInt(scanner.nextLine());
+            cursoEscolhido = tiposC[escolhaTipoC - 1];
+        } catch (Exception e) {
+            System.out.println("Escolha inválida!.");
         }
 
         System.out.print("Período: ");
@@ -169,17 +201,34 @@ public class ProjetoCadastro {
 
         int ra = Sessao.getRaAluno();
 
+<<<<<<< HEAD
+=======
+        // Buscar e listar mentores da mesma área
+        List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(areaDeAtuacao);
+
+        if (mentoresDisponiveis.isEmpty()) {
+            System.out.println("Nenhum mentor disponível para essa área de atuação.");
+            return;
+        }
+
+        System.out.println("Mentores disponíveis para a área " + areaDeAtuacao + ":");
+        for (MentorEntity mentorEntity : mentoresDisponiveis) {
+            System.out.println("ID: " + mentorEntity.getIdMentor() + " | Nome: " + mentorEntity.getNome());
+        }
+
+
+>>>>>>> b15bc235d2520b3699a4640de02ce810f7178c5d
         System.out.print("ID do mentor (fk_mentor_id): ");
         int mentor = scanner.nextInt();
 
         ProjetoEntity novoProjeto = new ProjetoEntity();
         novoProjeto.setNomeDoProjeto(nomeProjeto);
         novoProjeto.setDescricao(descricaoProjeto);
-        novoProjeto.setAreaDeAtuacao(tipoArea);
+        novoProjeto.setAreaDeAtuacao(areaDeAtuacao);
         novoProjeto.setDataInicioProjeto(LocalDate.parse(dataInicio));
         novoProjeto.setDataFinalProjeto(LocalDate.parse(dataFinal));
         novoProjeto.setTamanhoDoGrupo(qtdParticipante);
-        novoProjeto.setCurso(tipoCursoString);
+        novoProjeto.setCurso(cursoEscolhido);
         novoProjeto.setPeriodo(periodo);
         novoProjeto.setRaAluno(ra);
         novoProjeto.setIdMentor(mentor);

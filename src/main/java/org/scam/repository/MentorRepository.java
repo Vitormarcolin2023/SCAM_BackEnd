@@ -1,5 +1,6 @@
 package org.scam.repository;
 
+import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
@@ -78,4 +79,38 @@ public class MentorRepository {
         }
     }
 
+<<<<<<< HEAD
+=======
+
+    public MentorEntity buscarPorEmail(String email) {
+        try {
+            return em.createQuery("SELECT m FROM MentorEntity m WHERE m.email = :email", MentorEntity.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public void editarMentor(MentorEntity mentor) {
+        try {
+            em.getTransaction().begin();
+            em.merge(mentor); // atualiza o objeto no banco
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            System.out.println("❌ Erro ao atualizar mentor.");
+        }
+    }
+
+    public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(AreaDeAtuacao area) {
+        return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class)
+                .setParameter("area", area)
+                .getResultList();
+    }
+
+>>>>>>> b15bc235d2520b3699a4640de02ce810f7178c5d
 }
