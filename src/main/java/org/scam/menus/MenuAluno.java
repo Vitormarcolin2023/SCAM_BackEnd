@@ -1,8 +1,10 @@
 package org.scam.menus;
 import org.scam.classes.*;
 import org.scam.cadastros.ProjetoCadastro;
+import org.scam.entities.MentorEntity;
 import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CustomizerFactory;
+import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
 
 import javax.persistence.EntityManager;
@@ -40,13 +42,16 @@ public class MenuAluno {
             switch (opcao) {
                 case 1:
                     projetoCadastro.cadastrarProjeto();
-                    System.out.println("Projeto cadastrado com sucesso!");
                     break;
                 case 2:
                     gerenciarProjetos();
                     break;
                 case 3:
-                    //listarMentores
+                    MentorRepository mentorRepository = new MentorRepository(em);
+                    List<MentorEntity> listaMentores = mentorRepository.buscarTodos();
+                    for(MentorEntity mentor : listaMentores){
+                        System.out.println(mentor.getNome());
+                    }
                     break;
                 case 4:
                     System.out.println("Voltando ao menu principal...\n");
@@ -71,13 +76,14 @@ public class MenuAluno {
             switch (operacao) {
                 case 1: {
                     ProjetoRepository projetoRepository = new ProjetoRepository(em);
-                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos(aluno.getRa());
+                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
 
                     if (!listaProjetos.isEmpty()) {
-                        for (ProjetoEntity projeto : listaProjetos) {
-                            System.out.println(projeto.getNomeDoProjeto());
-                        }
-                    } else {
+                        mostrarProjetos(listaProjetos);
+                        System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou [0] para sair: ");
+                        int opListProjetos = sc.nextInt();
+                    }
+                    else {
                         System.out.println("Aluno sem projetos.\n");
                     }
                     break;
@@ -96,5 +102,15 @@ public class MenuAluno {
                 }
             }
         } while (operacao != 3);
+    }
+
+    public void mostrarProjetos(List<ProjetoEntity> listaProjetos){
+        System.out.println("\n============ PROJETOS ===============\n");
+        for (ProjetoEntity projeto : listaProjetos) {
+            System.out.println("- ID: [" + projeto.getId() + "]");
+            System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
+            System.out.println("- Descrição: " + projeto.getDescricao());
+            System.out.println("-------------------------------------");
+        }
     }
 }
