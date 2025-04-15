@@ -4,6 +4,8 @@ import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class MentorRepository {
@@ -40,5 +42,16 @@ public class MentorRepository {
 
     public List<MentorEntity> buscarTodos(){
         return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(String area) {
+        TypedQuery<MentorEntity> query = em.createQuery(
+                "SELECT m FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class
+        );
+        query.setParameter("area", area);
+        return query.getResultList();
     }
 }
