@@ -58,15 +58,16 @@ public class Main {
                         menuCoordenador.exibirMenu();
 
                     } else if (usuario instanceof MentorEntity) {
-
                         System.out.println("\nAcessando painel do Mentor...");
                         MentorEntity mentorEntity = (MentorEntity) usuario;
                         Mentor mentor = mentorEntity.toMentor();
+
+                        Sessao.setMentorLogado(mentor);
+
                         MenuMentor menuMentor = new MenuMentor(mentor);
                         menuMentor.exibirMenu();
 
-
-                    } else if (usuario instanceof AlunoEntity) {
+                    }else if (usuario instanceof AlunoEntity) {
 
                         System.out.println("\nAcessando painel do Aluno...");
                         AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)

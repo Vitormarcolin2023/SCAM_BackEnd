@@ -81,6 +81,30 @@ public class MentorRepository {
     }
 
 
+    public MentorEntity buscarPorEmail(String email) {
+        try {
+            return em.createQuery("SELECT m FROM MentorEntity m WHERE m.email = :email", MentorEntity.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public void editarMentor(MentorEntity mentor) {
+        try {
+            em.getTransaction().begin();
+            em.merge(mentor); // atualiza o objeto no banco
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            System.out.println("❌ Erro ao atualizar mentor.");
+        }
+    }
+
     @PersistenceContext
     private EntityManager entityManager;
 

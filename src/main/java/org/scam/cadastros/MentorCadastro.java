@@ -1,10 +1,12 @@
 package org.scam.cadastros;
 
+import org.scam.classes.Mentor;
 import org.scam.classes.TipoMentor;
 import org.scam.entities.EnderecoEntity;
 import org.scam.entities.MentorEntity;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
+import org.scam.utils.Sessao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -169,4 +171,125 @@ public class MentorCadastro {
             }
         }
     }
+
+    public void editarMentor() {
+        EntityManager em = CustomizerFactory.getEntityManager();
+        MentorRepository repository = new MentorRepository(em);
+        Scanner scanner = new Scanner(System.in);
+
+        Mentor mentor = Sessao.getMentorLogado();
+        if (mentor == null) {
+            System.out.println("❌ Nenhum mentor logado.");
+            return;
+        }
+
+        MentorEntity mentorEntity = repository.buscarPorEmail(mentor.getEmail());
+
+        if (mentorEntity == null) {
+            System.out.println("❌ Mentor não encontrado no banco de dados.");
+            return;
+        }
+
+        System.out.println("\n=== EDIÇÃO DE MENTOR ===");
+        System.out.println("Deixe o campo em branco para manter o valor atual.\n");
+
+        System.out.print("Nome atual: " + mentorEntity.getNome() + "\nNovo nome: ");
+        String novoNome = scanner.nextLine();
+        if (!novoNome.trim().isEmpty()) {
+            mentorEntity.setNome(novoNome);
+        }
+
+        System.out.print("Telefone atual: " + mentorEntity.getTelefone() + "\nNovo telefone: ");
+        String novoTelefone = scanner.nextLine();
+        if (!novoTelefone.trim().isEmpty()) {
+            mentorEntity.setTelefone(novoTelefone);
+        }
+
+        System.out.print("Senha atual: " + mentorEntity.getSenha() + "\nNova senha: ");
+        String novaSenha = scanner.nextLine();
+        if (!novaSenha.trim().isEmpty()) {
+            mentorEntity.setSenha(novaSenha);
+        }
+
+        System.out.print("Tempo de experiência atual: " + mentorEntity.getTempoDeExperiencia() + "\nNovo tempo: ");
+        String novaExperiencia = scanner.nextLine();
+        if (!novaExperiencia.trim().isEmpty()) {
+            mentorEntity.setTempoExperiencia(novaExperiencia);
+        }
+
+        System.out.print("Tipo de vínculo atual: " + mentorEntity.getTipoDeVinculo() + "\nNovo vínculo: ");
+        String novoVinculo = scanner.nextLine();
+        if (!novoVinculo.trim().isEmpty()) {
+            mentorEntity.setTipoDeVinculo(novoVinculo);
+        }
+
+        System.out.println("Área de atuação atual: " + mentorEntity.getAreaDeAtuacao());
+
+        System.out.println("\n[SELEÇÃO DA NOVA ÁREA DE ATUAÇÃO]");
+        AreaDeAtuacao[] areas = AreaDeAtuacao.values();
+        for (int i = 0; i < areas.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, areas[i].name());
+        }
+        System.out.print("Digite o número correspondente ou pressione Enter para manter: ");
+        String escolha = scanner.nextLine();
+        if (!escolha.trim().isEmpty()) {
+            try {
+                int indice = Integer.parseInt(escolha);
+                AreaDeAtuacao novaAreaEnum = areas[indice - 1];
+                mentorEntity.setAreaDeAtuacao(novaAreaEnum);
+            } catch (Exception e) {
+                System.out.println("❌ Escolha inválida. Área de atuação anterior mantida.");
+            }
+        }
+
+        EnderecoEntity endereco = mentorEntity.getEndereco();
+        if (endereco != null) {
+            System.out.println("\n--- Endereço ---");
+
+            System.out.print("Rua atual: " + endereco.getRua() + "\nNova rua: ");
+            String novaRua = scanner.nextLine();
+            if (!novaRua.trim().isEmpty()) {
+                endereco.setRua(novaRua);
+            }
+
+            System.out.print("Número atual: " + endereco.getNumero() + "\nNovo número: ");
+            String novoNumeroStr = scanner.nextLine();
+            if (!novoNumeroStr.trim().isEmpty()) {
+                try {
+                    int novoNumero = Integer.parseInt(novoNumeroStr);
+                    endereco.setNumero(novoNumero);
+                } catch (NumberFormatException e) {
+                    System.out.println("Número inválido. Valor anterior mantido.");
+                }
+            }
+
+            System.out.print("Bairro atual: " + endereco.getBairro() + "\nNovo bairro: ");
+            String novoBairro = scanner.nextLine();
+            if (!novoBairro.trim().isEmpty()) {
+                endereco.setBairro(novoBairro);
+            }
+
+            System.out.print("Cidade atual: " + endereco.getCidade() + "\nNova cidade: ");
+            String novaCidade = scanner.nextLine();
+            if (!novaCidade.trim().isEmpty()) {
+                endereco.setCidade(novaCidade);
+            }
+
+            System.out.print("Estado atual: " + endereco.getEstado() + "\nNovo estado: ");
+            String novoEstado = scanner.nextLine();
+            if (!novoEstado.trim().isEmpty()) {
+                endereco.setEstado(novoEstado);
+            }
+
+            System.out.print("CEP atual: " + endereco.getCep() + "\nNovo CEP: ");
+            String novoCep = scanner.nextLine();
+            if (!novoCep.trim().isEmpty()) {
+                endereco.setCep(novoCep);
+            }
+        }
+
+        repository.editarMentor(mentorEntity);
+        System.out.println("\n✅ Mentor atualizado com sucesso!");
+    }
+
 }

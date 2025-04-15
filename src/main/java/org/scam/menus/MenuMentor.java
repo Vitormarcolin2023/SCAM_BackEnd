@@ -54,7 +54,7 @@ public class MenuMentor {
                     //visualizar projeto;
                     break;
                 case 2:
-                    //new MentorCadastro().editarMentor();
+                    new MentorCadastro().editarMentor();
                     break;
                 case 3:
                     //deletar conta
