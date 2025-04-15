@@ -37,6 +37,30 @@ public class MenuMentor {
     }
 
     public void exibirMenu() {
-        System.out.println("teste");
+
+        //adicionar o scanner
+        //verificar se deve adicionar o int 0
+        do{
+            System.out.println("========= PAINEL DO MENTOR =============");
+            System.out.println("= [1] - Visualizar Projetos            =");
+            System.out.println("= [2] - Atualizar Conta                =");
+            System.out.println("= [3] - Deletar Conta                  =");
+            System.out.println("=======================================\n");
+
+            switch(){
+                case 1:
+                    //visualizar projeto;
+                    //break;
+                case 2:
+                    //atualizar conta;
+                    //break;
+                case 3:
+                    //deletar conta
+                    //break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+
+        }while();
     }
 }
