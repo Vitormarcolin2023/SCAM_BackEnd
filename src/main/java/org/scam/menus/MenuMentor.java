@@ -38,28 +38,31 @@ public class MenuMentor {
 
     public void exibirMenu() {
 
-        //adicionar o scanner
+        Scanner scanner = new Scanner(System.in);
+        int continuar = 0;
         do{
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");
             System.out.println("= [2] - Atualizar Conta                =");
             System.out.println("= [3] - Deletar Conta                  =");
             System.out.println("=======================================\n");
+            continuar = scanner.nextInt();
+            scanner.nextLine();
 
-            switch(){
+            switch(continuar){
                 case 1:
                     //visualizar projeto;
-                    //break;
+                    break;
                 case 2:
-                    //atualizar conta;
-                    //break;
+                    //new MentorCadastro().editarMentor();
+                    break;
                 case 3:
                     //deletar conta
-                    //break;
+                    break;
                 default:
                     System.out.println("Opção inválida!");
             }
 
-        }while();
+        }while(continuar != 3);
     }
 }
