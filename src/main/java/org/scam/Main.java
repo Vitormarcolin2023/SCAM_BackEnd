@@ -17,7 +17,6 @@ import org.scam.repository.MentorRepository;
 import org.scam.utils.Sessao;
 
 import javax.persistence.EntityManager;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -115,7 +114,6 @@ class Funcoes {
             }
             case 2: {
                 MentorRepository mentorRepository = new MentorRepository(em);
-                System.out.println("passei aqui");
                 return mentorRepository.login(email, senha);
             }
             case 3: {

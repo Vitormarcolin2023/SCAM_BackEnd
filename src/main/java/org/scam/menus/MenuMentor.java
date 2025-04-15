@@ -2,8 +2,12 @@ package org.scam.menus;
 
 import org.scam.cadastros.MentorCadastro;
 import org.scam.classes.Mentor;
+import org.scam.classes.Projeto;
+import org.scam.entities.ProjetoEntity;
 import org.scam.repository.MentorRepository;
+import org.scam.repository.ProjetoRepository;
 
+import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 
@@ -11,6 +15,8 @@ import javax.persistence.EntityManager;
 public class MenuMentor {
     private Mentor mentor;
     private EntityManager em;
+    Projeto projeto = new Projeto();
+    ProjetoRepository projetoRepository = new ProjetoRepository(em);
     public MenuMentor(Mentor mentor){
         this.mentor = mentor;
         this.em = em;
@@ -48,9 +54,6 @@ public class MenuMentor {
         Scanner sc = new Scanner(System.in);
         int opcao;
 
-        // Cria o repositório com a instância compartilhada de EntityManager 'em'
-        MentorRepository mentorRepository = new MentorRepository(em);
-
         do{
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");
@@ -64,7 +67,16 @@ public class MenuMentor {
 
             switch(opcao){
                 case 1:
-                    //visualizar projeto;
+                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("mentorLogado", mentor.getId());
+
+                    if (!listaProjetos.isEmpty()) {
+                        mostrarProjetos(listaProjetos);
+                        System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
+                        long idProjeto = sc.nextInt();
+                        if(idProjeto != 0){
+                            projetoCompleto(idProjeto);
+                        }
+                    }
                     break;
                 case 2:
                     new MentorCadastro().editarMentor();
@@ -81,5 +93,34 @@ public class MenuMentor {
             }
 
         }while(opcao != 4);
+    }
+
+    public void mostrarProjetos(List<ProjetoEntity> listaProjetos){
+        System.out.println("\n========================= PROJETOS ============================");
+        for (ProjetoEntity projeto : listaProjetos) {
+            System.out.println("- ID: [" + projeto.getId() + "]");
+            System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
+            System.out.println("- Descrição: " + projeto.getDescricao());
+            System.out.println("---------------------------------------------------------------\n");
+        }
+    }
+
+    public void projetoCompleto(long id){
+        ProjetoEntity projeto = projetoRepository.buscarUmProjeto(id, mentor.getId());
+
+        if(projeto == null){
+            System.out.println("\n- Projeto com ID " + id + " não encontrado!");
+            return;
+        }
+
+        System.out.println("- ID: [" + projeto.getId() + "]");
+        System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
+        System.out.println("- Descrição: " + projeto.getDescricao());
+        System.out.println("- Área de atuação: " + projeto.getAreaDeAtuacao());
+        System.out.println("- Início: " + projeto.getDataInicioProjeto());
+        System.out.println("- Término: " + projeto.getDataFinalProjeto());
+        System.out.println("- Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
+        System.out.println("- Curso: " + projeto.getCurso());
+        System.out.println("- Período: " + projeto.getPeriodo());
     }
 }

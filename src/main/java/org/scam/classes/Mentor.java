@@ -40,8 +40,8 @@ public class Mentor extends Pessoa implements IAutenticavel {
         this.nome = nome;
     }
 
-    public Long getId() {
-        return id;
+    public int getId() {
+        return Math.toIntExact(id);
     }
 
     public void setId(Long id) {
