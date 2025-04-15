@@ -1,6 +1,5 @@
 package org.scam.classes;
 
-import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.entities.EnderecoEntity;
 
 public class Mentor extends Pessoa implements IAutenticavel {
@@ -13,10 +12,10 @@ public class Mentor extends Pessoa implements IAutenticavel {
     String telefone;
     String tempoDeExperiencia;
     String tipoDeVinculo;
-    AreaDeAtuacao areaDeAtuacao;
+    String areaDeAtuacao;
     EnderecoEntity endereco;
 
-    public Mentor(Long id, String nome, String cpf, String email, String senha, TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia, String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco) {
+    public Mentor(Long id, String nome, String cpf, String email, String senha, TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia, String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -108,11 +107,11 @@ public class Mentor extends Pessoa implements IAutenticavel {
         this.tipoDeVinculo = tipoDeVinculo;
     }
 
-    public AreaDeAtuacao getAreaDeAtuacao() {
+    public String getAreaDeAtuacao() {
         return areaDeAtuacao;
     }
 
-    public void setAreaDeAtuacao(AreaDeAtuacao areaDeAtuacao) {
+    public void setAreaDeAtuacao(String areaDeAtuacao) {
         this.areaDeAtuacao = areaDeAtuacao;
     }
 
