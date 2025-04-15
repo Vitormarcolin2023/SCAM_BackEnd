@@ -10,7 +10,7 @@ public class MentorEntity implements UsuarioEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
@@ -68,8 +68,8 @@ public class MentorEntity implements UsuarioEntity{
     }
 
     //getters e setters
-    public Long getIdMentor(){return id;}
-    public void setIdMentor(Long id) {this.id = id;}
+    public int getIdMentor(){return id;}
+    public void setIdMentor(int id) {this.id = id;}
 
     public String getNome(){return nome;}
     public void setNome(String nome) {this.nome = nome;}
