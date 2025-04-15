@@ -2,12 +2,19 @@ package org.scam.menus;
 
 import org.scam.cadastros.MentorCadastro;
 import org.scam.classes.Mentor;
+import org.scam.repository.MentorRepository;
 
 import java.util.Scanner;
+import javax.persistence.EntityManager;
+
 
 public class MenuMentor {
     private Mentor mentor;
-    public MenuMentor(Mentor mentor){this.mentor = mentor;}
+    private EntityManager em;
+    public MenuMentor(Mentor mentor){
+        this.mentor = mentor;
+        this.em = em;
+    }
 
     public MenuMentor(){}
 
@@ -38,15 +45,24 @@ public class MenuMentor {
 
     public void exibirMenu() {
 
-        //adicionar o scanner
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+
+        // Cria o repositório com a instância compartilhada de EntityManager 'em'
+        MentorRepository mentorRepository = new MentorRepository(em);
+
         do{
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");
             System.out.println("= [2] - Atualizar Conta                =");
             System.out.println("= [3] - Deletar Conta                  =");
+            System.out.println("= [4] - Voltar ao Menu Mentor          =");
             System.out.println("=======================================\n");
+            System.out.print("Escolha uma opção: ");
+            opcao = sc.nextInt();
+            sc.nextLine();
 
-            switch(){
+            switch(opcao){
                 case 1:
                     //visualizar projeto;
                     //break;
@@ -56,10 +72,14 @@ public class MenuMentor {
                 case 3:
                     //deletar conta
                     //break;
+                case 4:
+                    System.out.println("=========================");
+                    System.out.println("=Voltando ao Menu Mentor=");
+                    System.out.println("=========================");
                 default:
                     System.out.println("Opção inválida!");
             }
 
-        }while();
+        }while(opcao != 4);
     }
 }
