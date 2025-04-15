@@ -177,52 +177,67 @@ public class MentorCadastro {
         MentorRepository repository = new MentorRepository(em);
         Scanner scanner = new Scanner(System.in);
 
-        Mentor mentor = Sessao.getMentorLogado();
-        if (mentor == null) {
+        // Recupera o mentor logado da sessão
+        Mentor mentorLogado = Sessao.getMentorLogado();
+        if (mentorLogado == null) {
             System.out.println("❌ Nenhum mentor logado.");
             return;
         }
 
-        MentorEntity mentorEntity = repository.buscarPorEmail(mentor.getEmail());
+        // Se o mentor está logado, você pode acessar as informações diretamente
+        MentorEntity mentorEntity = new MentorEntity();
+        mentorEntity.setNome(mentorLogado.getNome());
+        mentorEntity.setCpf(mentorLogado.getCpf());
+        mentorEntity.setEmail(mentorLogado.getEmail());
+        mentorEntity.setSenha(mentorLogado.getSenha());
+        mentorEntity.setTelefone(mentorLogado.getTelefone());
+        mentorEntity.setTipoDeUsuario(mentorLogado.getTipoDeUsuario());
+        mentorEntity.setTempoExperiencia(mentorLogado.getTempoDeExperiencia());
+        mentorEntity.setTipoDeVinculo(mentorLogado.getTipoDeVinculo());
+        mentorEntity.setAreaDeAtuacao(mentorLogado.getAreaDeAtuacao());
+        mentorEntity.setEndereco(mentorLogado.getEndereco());
 
-        if (mentorEntity == null) {
-            System.out.println("❌ Mentor não encontrado no banco de dados.");
-            return;
-        }
+        // Agora você já tem os dados do mentor na variável mentorEntity e pode editá-los
 
         System.out.println("\n=== EDIÇÃO DE MENTOR ===");
         System.out.println("Deixe o campo em branco para manter o valor atual.\n");
 
+        // Editar nome
         System.out.print("Nome atual: " + mentorEntity.getNome() + "\nNovo nome: ");
         String novoNome = scanner.nextLine();
         if (!novoNome.trim().isEmpty()) {
             mentorEntity.setNome(novoNome);
         }
 
+        // Editar telefone
         System.out.print("Telefone atual: " + mentorEntity.getTelefone() + "\nNovo telefone: ");
         String novoTelefone = scanner.nextLine();
         if (!novoTelefone.trim().isEmpty()) {
             mentorEntity.setTelefone(novoTelefone);
         }
 
+        // Editar senha
         System.out.print("Senha atual: " + mentorEntity.getSenha() + "\nNova senha: ");
         String novaSenha = scanner.nextLine();
         if (!novaSenha.trim().isEmpty()) {
             mentorEntity.setSenha(novaSenha);
         }
 
+        // Editar tempo de experiência
         System.out.print("Tempo de experiência atual: " + mentorEntity.getTempoDeExperiencia() + "\nNovo tempo: ");
         String novaExperiencia = scanner.nextLine();
         if (!novaExperiencia.trim().isEmpty()) {
             mentorEntity.setTempoExperiencia(novaExperiencia);
         }
 
+        // Editar tipo de vínculo
         System.out.print("Tipo de vínculo atual: " + mentorEntity.getTipoDeVinculo() + "\nNovo vínculo: ");
         String novoVinculo = scanner.nextLine();
         if (!novoVinculo.trim().isEmpty()) {
             mentorEntity.setTipoDeVinculo(novoVinculo);
         }
 
+        // Editar área de atuação
         System.out.println("Área de atuação atual: " + mentorEntity.getAreaDeAtuacao());
 
         System.out.println("\n[SELEÇÃO DA NOVA ÁREA DE ATUAÇÃO]");
@@ -242,6 +257,7 @@ public class MentorCadastro {
             }
         }
 
+        // Se o endereço do mentor também precisar ser editado, você pode fazer isso aqui
         EnderecoEntity endereco = mentorEntity.getEndereco();
         if (endereco != null) {
             System.out.println("\n--- Endereço ---");
@@ -288,6 +304,7 @@ public class MentorCadastro {
             }
         }
 
+        // Atualizar os dados no repositório
         repository.editarMentor(mentorEntity);
         System.out.println("\n✅ Mentor atualizado com sucesso!");
     }
