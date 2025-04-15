@@ -184,18 +184,13 @@ public class MentorCadastro {
             return;
         }
 
-        // Se o mentor está logado, você pode acessar as informações diretamente
-        MentorEntity mentorEntity = new MentorEntity();
-        mentorEntity.setNome(mentorLogado.getNome());
-        mentorEntity.setCpf(mentorLogado.getCpf());
-        mentorEntity.setEmail(mentorLogado.getEmail());
-        mentorEntity.setSenha(mentorLogado.getSenha());
-        mentorEntity.setTelefone(mentorLogado.getTelefone());
-        mentorEntity.setTipoDeUsuario(mentorLogado.getTipoDeUsuario());
-        mentorEntity.setTempoExperiencia(mentorLogado.getTempoDeExperiencia());
-        mentorEntity.setTipoDeVinculo(mentorLogado.getTipoDeVinculo());
-        mentorEntity.setAreaDeAtuacao(mentorLogado.getAreaDeAtuacao());
-        mentorEntity.setEndereco(mentorLogado.getEndereco());
+        // Recupera o mentor existente do banco pelo ID
+        MentorEntity mentorEntity = repository.buscarPorId(mentorLogado.getId());
+        if (mentorEntity == null) {
+            System.out.println("❌ Mentor não encontrado no banco de dados.");
+            return;
+        }
+
 
         // Agora você já tem os dados do mentor na variável mentorEntity e pode editá-los
 
