@@ -31,6 +31,7 @@ public class MenuCoordenador {
         CoordenacaoRepository coordenacaoRepo = new CoordenacaoRepository(em);
         MentorRepository mentorRepo = new MentorRepository(em);
         ProjetoRepository projetoRepo = new ProjetoRepository(em);
+        List<MentorEntity> mentores = mentorRepo.listarTodosMentores();
         do{
             System.out.println("\n========MENU COORDENADOR=======");
             System.out.println("- [1] Listar Mentores");
@@ -44,26 +45,10 @@ public class MenuCoordenador {
 
             switch (opcao){
                 case 1:
-                    List<MentorEntity> mentores = mentorRepo.listarTodosMentores();
-                    System.out.println("\n======Lista de mentores======");
-                    if (mentores.isEmpty()){
-                        System.out.println("Nenhum mentor encontrado.");
-                    }else{
-                        for (MentorEntity m : mentores){
-                            System.out.println("ID: " + m.getIdMentor() +
-                                    " | Nome: " + m.getNome() +
-                                    "\n | CPF: " + m.getCpf() +
-                                    "\n | Email: " + m.getEmail() +
-                                    "\n | Tipo de Usuário: " + m.getTipoDeUsuario() +
-                                    "\n | Telefone: " + m.getTelefone() +
-                                    "\n | Tempo de Experiência: " + m.getTempoDeExperiencia() +
-                                    "\n | Tipo de Vínculo: " + m.getTipoDeVinculo() +
-                                    "\n | Área de Atuação: " + m.getAreaDeAtuacao() +
-                                    "\n | Endereço: " + m.getEndereco().toString());
-                        }
-                    }
+                    mostrarMentores(mentores);
                     break;
                 case 2:
+                    mostrarMentores(mentores);
                     System.out.println("Digite o ID do mentor que deseja remover");
                     int id = (int) sc.nextLong();
                     sc.nextLine();
@@ -81,7 +66,7 @@ public class MenuCoordenador {
                     }else{
                         for (ProjetoEntity p: projetos){
                             System.out.println("ID: " + p.getId() +
-                                    "| Nome: " + p.getNomeDoProjeto() +
+                                    "\n| Nome: " + p.getNomeDoProjeto() +
                                     "\n| Curso: " + p.getCurso() +
                                     "\n| Área de atuação: " + p.getAreaDeAtuacao() +
                                     "\n| Aluno: " + p.getRaAluno() +
@@ -96,10 +81,28 @@ public class MenuCoordenador {
                 default:
                     System.out.println("Opção inválida.");
             }
-        }while (opcao !=3);
+        }while (opcao !=4);
 
+    }
 
-
+    public void mostrarMentores(List<MentorEntity> mentores){
+        System.out.println("\n======Lista de mentores======");
+        if (mentores.isEmpty()){
+            System.out.println("Nenhum mentor encontrado.");
+        }else{
+            for (MentorEntity m : mentores){
+                System.out.println("ID: " + m.getIdMentor() +
+                        "\n | Nome: " + m.getNome() +
+                        "\n | CPF: " + m.getCpf() +
+                        "\n | Email: " + m.getEmail() +
+                        "\n | Tipo de Usuário: " + m.getTipoDeUsuario() +
+                        "\n | Telefone: " + m.getTelefone() +
+                        "\n | Tempo de Experiência: " + m.getTempoDeExperiencia() +
+                        "\n | Tipo de Vínculo: " + m.getTipoDeVinculo() +
+                        "\n | Área de Atuação: " + m.getAreaDeAtuacao() +
+                        "\n | Endereço: " + m.getEndereco().toString());
+            }
+        }
     }
 
 }
