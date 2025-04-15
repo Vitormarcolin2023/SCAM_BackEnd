@@ -5,6 +5,8 @@ import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class MentorRepository {
@@ -40,7 +42,7 @@ public class MentorRepository {
     }
 
     public List<MentorEntity> buscarTodos(){
-        return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
+        return em.createQuery("SELECT m  FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 
     public boolean existePorCpf(String cpf) {
@@ -79,8 +81,6 @@ public class MentorRepository {
         }
     }
 
-<<<<<<< HEAD
-=======
 
     public MentorEntity buscarPorEmail(String email) {
         try {
@@ -112,5 +112,4 @@ public class MentorRepository {
                 .getResultList();
     }
 
->>>>>>> b15bc235d2520b3699a4640de02ce810f7178c5d
 }

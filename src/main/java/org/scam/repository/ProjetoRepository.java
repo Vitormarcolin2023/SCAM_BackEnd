@@ -18,17 +18,6 @@ public class ProjetoRepository {
         return em.find(ProjetoEntity.class, id);
     }
 
-<<<<<<< HEAD
-    public List<ProjetoEntity> buscarTodos(int ra) {
-        TypedQuery<ProjetoEntity> query = em.createQuery("SELECT p FROM ProjetoEntity p WHERE fk_aluno_ra = :ra", ProjetoEntity.class).setParameter("ra", ra);
-        return query.getResultList();
-    }
-
-    public void salvar(ProjetoEntity projeto){
-        em.getTransaction().begin();
-        em.persist(projeto);
-        em.getTransaction().commit();
-=======
     public List<ProjetoEntity> buscarTodos(String fk, int ra) {
         String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
         TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
@@ -56,7 +45,6 @@ public class ProjetoRepository {
         } catch (Exception e) {
             return false;
         }
->>>>>>> b15bc235d2520b3699a4640de02ce810f7178c5d
     }
 
     public void atualizar(ProjetoEntity tb_projeto) {
