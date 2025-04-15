@@ -17,7 +17,6 @@ import org.scam.repository.MentorRepository;
 import org.scam.utils.Sessao;
 
 import javax.persistence.EntityManager;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -71,7 +70,7 @@ public class Main {
 
                         System.out.println("\nAcessando painel do Aluno...");
                         AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
-                        Aluno aluno = alunoEntity.toAluno(); // transfo3rma a entity em Aluno
+                        Aluno aluno = alunoEntity.toAluno(); // transforma a entity em Aluno
                         MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
                         // SALVA O RA
                         Sessao.setRaAluno(alunoEntity.getRa());
@@ -115,7 +114,6 @@ class Funcoes {
             }
             case 2: {
                 MentorRepository mentorRepository = new MentorRepository(em);
-                System.out.println("passei aqui");
                 return mentorRepository.login(email, senha);
             }
             case 3: {

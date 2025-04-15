@@ -1,9 +1,14 @@
 package org.scam.menus;
 
 import org.scam.classes.Coordenador;
+import org.scam.entities.*;
+import org.scam.entities.CoordenacaoEntity;
 import org.scam.entities.MentorEntity;
+import org.scam.entities.ProjetoEntity;
 import org.scam.repository.CoordenacaoRepository;
 import org.scam.repository.CustomizerFactory;
+import org.scam.repository.MentorRepository;
+import org.scam.repository.ProjetoRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,18 +23,20 @@ public class MenuCoordenador {
     }
 
     public void exibirMenu(){
-        System.out.println("Deu certo, usuário: " + coordenador.getNome());
+        System.out.println("Usuário: " + coordenador.getNome());
         Scanner sc = new Scanner(System.in);
-        int opcao = -1;
+        int opcao;
 
         EntityManager em = CustomizerFactory.getEntityManager();
-        CoordenacaoRepository coor = new CoordenacaoRepository(em);
-
+        CoordenacaoRepository coordenacaoRepo = new CoordenacaoRepository(em);
+        MentorRepository mentorRepo = new MentorRepository(em);
+        ProjetoRepository projetoRepo = new ProjetoRepository(em);
         do{
             System.out.println("\n========MENU COORDENADOR=======");
-            System.out.println("[1]Listar Mentores");
-            System.out.println("[2]Remover Mentor");
-            System.out.println("[3]Sair");
+            System.out.println("- [1] Listar Mentores");
+            System.out.println("- [2] Remover Mentor");
+            System.out.println("- [3] Listar projetos");
+            System.out.println("- [4] Sair");
             System.out.println("================================");
             System.out.println("Escolha uma opção:");
             opcao = sc.nextInt();
@@ -37,7 +44,7 @@ public class MenuCoordenador {
 
             switch (opcao){
                 case 1:
-                    List<MentorEntity> mentores = coor.listarTodosMentores();
+                    List<MentorEntity> mentores = mentorRepo.listarTodosMentores();
                     System.out.println("\n======Lista de mentores======");
                     if (mentores.isEmpty()){
                         System.out.println("Nenhum mentor encontrado.");
@@ -45,8 +52,14 @@ public class MenuCoordenador {
                         for (MentorEntity m : mentores){
                             System.out.println("ID: " + m.getIdMentor() +
                                     " | Nome: " + m.getNome() +
-                                    "| Email: " + m.getEmail() +
-                                    "| Area de atuacao: " + m.getAreaDeAtuacao());
+                                    " | CPF: " + m.getCpf() +
+                                    " | Email: " + m.getEmail() +
+                                    " | Tipo de Usuário: " + m.getTipoDeUsuario() +
+                                    " | Telefone: " + m.getTelefone() +
+                                    " | Tempo de Experiência: " + m.getTempoDeExperiencia() +
+                                    " | Tipo de Vínculo: " + m.getTipoDeVinculo() +
+                                    " | Área de Atuação: " + m.getAreaDeAtuacao() +
+                                    " | Endereço: " + m.getEndereco().toString());
                         }
                     }
                     break;
@@ -54,11 +67,30 @@ public class MenuCoordenador {
                     System.out.println("Digite o ID do mentor que deseja remover");
                     Long id = sc.nextLong();
                     sc.nextLine();
-                    coor.removerPorId(id);
+                    coordenacaoRepo.removerPorId(id);
                     System.out.println("Mentor removido com sucesso.");
 
                     break;
+
                 case 3:
+                    List<ProjetoEntity> projetos = projetoRepo.listarTodosProjetos();
+
+                    System.out.println("\n=============== Lista de Projetos ===============");
+                    if(projetos.isEmpty()){
+                        System.out.println("Nenhum projeto encontrado");
+                    }else{
+                        for (ProjetoEntity p: projetos){
+                            System.out.println("ID: " + p.getId() +
+                                    "| Nome: " + p.getNomeDoProjeto() +
+                                    "| Curso: " + p.getCurso() +
+                                    "| Área de atuação: " + p.getAreaDeAtuacao() +
+                                    "| Aluno: " + p.getRaAluno() +
+                                    "| Mentor: " + p.getIdMentor()) ;
+                        }
+                    }
+
+                    break;
+                case 4:
                     System.out.println("Saindo do painel no coordenador....");
                     break;
                 default:

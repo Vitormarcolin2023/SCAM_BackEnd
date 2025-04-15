@@ -41,8 +41,17 @@ public class MentorRepository {
         }
     }
 
-    public List<MentorEntity> buscarTodos(){
-        return em.createQuery("SELECT m  FROM tb_mentor m", MentorEntity.class).getResultList();
+    public List<MentorEntity> listarTodosMentores(){
+        return em.createQuery("SELECT m FROM tb_mentor m", MentorEntity.class).getResultList();
+    }
+
+    public void removerPorId(Long id){
+        MentorEntity mentor = em.find(MentorEntity.class, id);
+        if (mentor != null){
+            em.getTransaction().begin();
+            em.remove(mentor);
+            em.getTransaction().commit();
+        }
     }
 
     public boolean existePorCpf(String cpf) {
