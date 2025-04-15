@@ -70,7 +70,7 @@ public class Main {
 
                         System.out.println("\nAcessando painel do Aluno...");
                         AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
-                        Aluno aluno = alunoEntity.toAluno(); // transfrma a entity em Aluno
+                        Aluno aluno = alunoEntity.toAluno(); // transfo3rma a entity em Aluno
                         MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
                         // SALVA O RA
                         Sessao.setRaAluno(alunoEntity.getRa());

@@ -184,8 +184,13 @@ public class ProjetoCadastro {
         novoProjeto.setRaAluno(ra);
         novoProjeto.setIdMentor(mentor);
 
-
-        projetoRepository.salvar(novoProjeto);
+        // Valida se não houve erro no cadastro
+        if(projetoRepository.salvar(novoProjeto)){
+            System.out.println("\nProjeto cadastrado com sucesso!");
+        }
+        else {
+            System.out.println("\nAlgo deu errado, tente novamente.");
+        }
     }
 
 

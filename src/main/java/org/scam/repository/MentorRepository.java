@@ -39,6 +39,6 @@ public class MentorRepository {
     }
 
     public List<MentorEntity> buscarTodos(){
-        return em.createQuery("SELECT M FROM tb_mentor m", MentorEntity.class).getResultList();
+        return em.createQuery("SELECT m  FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 }
