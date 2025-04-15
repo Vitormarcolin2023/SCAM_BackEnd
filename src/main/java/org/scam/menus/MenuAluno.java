@@ -90,14 +90,7 @@ public class MenuAluno {
                     break;
                 }
                 case 2: {
-                        if (!listaProjetos.isEmpty()){
-                            mostrarProjetos(listaProjetos);
-                            System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
-                            long idProjeto = sc.nextInt();
-                            if(idProjeto != 0){
-                                projetoCompleto(idProjeto, true);
-                            }
-                        }
+                        atualizarInfoProjeto(listaProjetos);
                     break;
                 }
                 case 3: {
@@ -155,7 +148,20 @@ public class MenuAluno {
         System.out.println("---------------------------------------------------------------\n");
     }
 
-    public void atualizarInfoProjeto(){
+    public void atualizarInfoProjeto(List<ProjetoEntity> listaProjetos){
 
+        if (listaProjetos.isEmpty()){
+            System.out.println("Aluno sem projetos.\n");
+            return;
+        }
+
+        mostrarProjetos(listaProjetos);
+        System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
+        long idProjeto = sc.nextInt();
+        if(idProjeto != 0){
+            projetoCompleto(idProjeto, true);
+            System.out.println("- Informe o campo que deseja atualizar: ");
+            int opAtualizar = sc.nextInt();
+        }
     }
 }
