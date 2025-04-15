@@ -4,6 +4,8 @@ import org.scam.classes.TipoMentor;
 import org.scam.entities.EnderecoEntity;
 import org.scam.entities.MentorEntity;
 import org.scam.repository.CustomizerFactory;
+import org.scam.repository.MentorRepository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.Scanner;
@@ -18,17 +20,43 @@ public class MentorCadastro {
         System.out.print("Nome completo: ");
         String nome = scanner.nextLine();
 
+        // Persistência usando CustomizerFactory
+        EntityManager em = CustomizerFactory.getEntityManager();
+        MentorRepository mentorRepo = new MentorRepository(em); // Instancia do repositório
+
         System.out.print("CPF (somente números): ");
         String cpf = scanner.nextLine();
 
+        // Verifica se já existe CPF cadastrado
+        if (mentorRepo.existePorCpf(cpf)) {
+            System.out.println("❌ Já existe um mentor cadastrado com esse CPF.");
+            em.close();
+            return;
+        }
+
         System.out.print("E-mail: ");
         String email = scanner.nextLine();
+
+        // Verifica se já existe e-mail cadastrado
+        if (mentorRepo.existePorEmail(email)) {
+            System.out.println("❌ Já existe um mentor cadastrado com esse e-mail.");
+            em.close();
+            return;
+        }
+
 
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
 
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine();
+
+        // Verifica se já existe telefone cadastrado
+        if (mentorRepo.existePorTelefone(telefone)) {
+            System.out.println("❌ Já existe um mentor cadastrado com esse telefone.");
+            em.close();
+            return;
+        }
 
         // 2. Coletar INFORMAÇÕES PROFISSIONAIS
         System.out.println("\n[INFORMAÇÕES PROFISSIONAIS]");
@@ -79,8 +107,8 @@ public class MentorCadastro {
         String cep = scanner.nextLine();
 
         // Persistência usando CustomizerFactory
-        EntityManager em = CustomizerFactory.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
+        EntityManager em2 = CustomizerFactory.getEntityManager();
+        EntityTransaction tx = em2.getTransaction();
 
         try {
             tx.begin();
@@ -93,7 +121,7 @@ public class MentorCadastro {
             endereco.setCidade(cidade);
             endereco.setEstado(estado);
             endereco.setCep(cep);
-            em.persist(endereco);
+            em2.persist(endereco);
 
             // Criar e persistir mentor
             MentorEntity mentor = new MentorEntity();
@@ -107,7 +135,7 @@ public class MentorCadastro {
             mentor.setTipoDeVinculo(tipoVinculo);
             mentor.setAreaDeAtuacao(areaAtuacao);
             mentor.setEndereco(endereco);
-            em.persist(mentor);
+            em2.persist(mentor);
 
             tx.commit();
 
@@ -120,8 +148,8 @@ public class MentorCadastro {
             System.err.println("❌ Erro ao cadastrar mentor: " + e.getMessage());
             e.printStackTrace();
         } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
+            if (em2 != null && em2.isOpen()) {
+                em2.close();
             }
         }
     }
