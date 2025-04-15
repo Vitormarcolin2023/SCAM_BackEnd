@@ -54,6 +54,7 @@ public class ProjetoCadastro {
         System.out.print("Quantidade de integrantes: ");
         int qtdParticipante = scanner.nextInt();
 
+        //Utiliza enum para apresentar os cursos
         System.out.println("\n[SELEÇÃO O CURSO]");
         Curso[] tiposC = Curso.values();
         for (int i = 0; i < tiposC.length; i++) {
