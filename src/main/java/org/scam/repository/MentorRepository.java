@@ -1,5 +1,6 @@
 package org.scam.repository;
 
+import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.entities.MentorEntity;
 
 import javax.persistence.EntityManager;
@@ -105,14 +106,10 @@ public class MentorRepository {
         }
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(String area) {
-        TypedQuery<MentorEntity> query = em.createQuery(
-                "SELECT m FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class
-        );
-        query.setParameter("area", area);
-        return query.getResultList();
+    public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(AreaDeAtuacao area) {
+        return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class)
+                .setParameter("area", area)
+                .getResultList();
     }
+
 }
