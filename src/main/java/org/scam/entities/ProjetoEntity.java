@@ -1,5 +1,8 @@
 package org.scam.entities;
 
+import org.scam.cadastros.AreaDeAtuacao;
+import org.scam.cadastros.Curso;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -17,8 +20,9 @@ public class ProjetoEntity {
     @Column(name = "descricao", nullable = false, length = 100)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "area_de_atuacao")
-    private String areaDeAtuacao;
+    private AreaDeAtuacao areaDeAtuacao;
 
     @Column(name = "data_inicio_projeto", nullable = false)
     private LocalDate dataInicioProjeto;
@@ -29,8 +33,9 @@ public class ProjetoEntity {
     @Column(name = "tamanho_do_grupo")
     private int tamanhoDoGrupo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "curso")
-    private String curso;
+    private Curso curso;
 
     @Column(name = "periodo", nullable = false, length = 45)
     private String periodo;
@@ -68,11 +73,11 @@ public class ProjetoEntity {
         this.descricao = descricao;
     }
 
-    public String getAreaDeAtuacao() {
+    public AreaDeAtuacao getAreaDeAtuacao() {
         return areaDeAtuacao;
     }
 
-    public void setAreaDeAtuacao(String areaDeAtuacao) {
+    public void setAreaDeAtuacao(AreaDeAtuacao areaDeAtuacao) {
         this.areaDeAtuacao = areaDeAtuacao;
     }
 
@@ -100,11 +105,11 @@ public class ProjetoEntity {
         this.tamanhoDoGrupo = tamanhoDoGrupo;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
@@ -136,7 +141,7 @@ public class ProjetoEntity {
 
     }
 
-    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, String areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, String curso, String periodo, int raAluno, int idMentor) {
+    public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, AreaDeAtuacao areaDeAtuacao, LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo, Curso curso, String periodo, int raAluno, int idMentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
