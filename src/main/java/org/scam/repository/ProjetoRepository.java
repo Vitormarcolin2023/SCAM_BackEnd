@@ -25,6 +25,14 @@ public class ProjetoRepository {
         return query.getResultList();
     }
 
+
+    public List<ProjetoEntity> buscarTodosMentor(String fk, int id) {
+        String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :id";
+        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
     // utilizado no menu do coordenador
     public List<ProjetoEntity> listarTodosProjetos(){
         String buscarBanco = "SELECT p FROM ProjetoEntity p";
@@ -37,6 +45,17 @@ public class ProjetoRepository {
             return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_aluno_ra = :ra", ProjetoEntity.class)
                     .setParameter("idProjeto", idProjeto)
                     .setParameter("ra", ra)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public ProjetoEntity buscarUmProjetoMentor(long idProjeto, int id){
+        try{
+            return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_mentor_id = :id", ProjetoEntity.class)
+                    .setParameter("idProjeto", idProjeto)
+                    .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
             return null;

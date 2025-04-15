@@ -70,7 +70,7 @@ public class MenuMentor {
 
             switch(opcao){
                 case 1:
-                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("mentorLogado", mentor.getId());
+                    List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodosMentor("idMentor", mentor.getId());
 
                     if (!listaProjetos.isEmpty()) {
                         mostrarProjetos(listaProjetos);
@@ -119,7 +119,7 @@ public class MenuMentor {
     }
 
     public void projetoCompleto(long id){
-        ProjetoEntity projeto = projetoRepository.buscarUmProjeto(id, mentor.getId());
+        ProjetoEntity projeto = projetoRepository.buscarUmProjetoMentor(id, mentor.getId());
 
         if(projeto == null){
             System.out.println("\n- Projeto com ID " + id + " não encontrado!");
