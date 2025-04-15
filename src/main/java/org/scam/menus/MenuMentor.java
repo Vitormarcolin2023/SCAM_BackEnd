@@ -17,10 +17,13 @@ public class MenuMentor {
     private EntityManager em;
     Projeto projeto = new Projeto();
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
-    public MenuMentor(Mentor mentor){
+
+    public MenuMentor(Mentor mentor, EntityManager em){
         this.mentor = mentor;
         this.em = em;
+        this.projetoRepository = new ProjetoRepository(em);
     }
+
 
     public MenuMentor(){}
 
@@ -82,8 +85,18 @@ public class MenuMentor {
                     new MentorCadastro().editarMentor();
                     break;
                 case 3:
-                    //deletar conta
-                    break;
+                    System.out.print("Tem certeza que deseja deletar sua conta? (s/n): ");
+                    String confirmacao = sc.nextLine();
+
+                    if (confirmacao.equalsIgnoreCase("s")) {
+                        MentorRepository mentorRepository = new MentorRepository(em);
+                        mentorRepository.removerPorId(mentor.getId());
+                        System.out.println("✅ Conta deletada com sucesso.");
+
+                        opcao = 4;
+                    } else {
+                        System.out.println("❌ Operação cancelada.");
+                    }                    break;
                 case 4:
                     System.out.println("=========================");
                     System.out.println("=Voltando ao Menu Mentor=");

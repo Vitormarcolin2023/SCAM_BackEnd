@@ -2,6 +2,7 @@ package org.scam.repository;
 
 import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.entities.MentorEntity;
+import org.scam.entities.ProjetoEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,7 +17,7 @@ public class MentorRepository {
         this.em = em;
     }
 
-    public MentorEntity buscarPorId(Long id){
+    public MentorEntity buscarPorId(int id){
         return em.find(MentorEntity.class, id);
     }
 
@@ -45,7 +46,7 @@ public class MentorRepository {
         return em.createQuery("SELECT m FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 
-    public void removerPorId(Long id){
+    public void removerPorId(int id){
         MentorEntity mentor = em.find(MentorEntity.class, id);
         if (mentor != null){
             em.getTransaction().begin();
@@ -119,6 +120,13 @@ public class MentorRepository {
         return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class)
                 .setParameter("area", area)
                 .getResultList();
+    }
+
+    public List<ProjetoEntity> buscarTodos(String fk, int ra) {
+        String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
+        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
+        query.setParameter("ra", ra);
+        return query.getResultList();
     }
 
 }
