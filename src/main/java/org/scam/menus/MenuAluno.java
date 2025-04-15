@@ -20,7 +20,7 @@ public class MenuAluno {
     EntityManager em = CustomizerFactory.getEntityManager();
     ProjetoCadastro projetoCadastro = new ProjetoCadastro();
     Projeto projeto = new Projeto();
-
+    ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
     public MenuAluno(Aluno aluno) {
         this.aluno = aluno;
@@ -75,13 +75,15 @@ public class MenuAluno {
 
             switch (operacao) {
                 case 1: {
-                    ProjetoRepository projetoRepository = new ProjetoRepository(em);
                     List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
 
                     if (!listaProjetos.isEmpty()) {
                         mostrarProjetos(listaProjetos);
-                        System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou [0] para sair: ");
-                        int opListProjetos = sc.nextInt();
+                        System.out.println("- Digite o ID do projeto que deseja visualizar mais informações ou 0 para sair: ");
+                        long idProjeto = sc.nextInt();
+                        if(idProjeto != 0){
+                            projetoCompleto(idProjeto);
+                        }
                     }
                     else {
                         System.out.println("Aluno sem projetos.\n");
@@ -105,12 +107,31 @@ public class MenuAluno {
     }
 
     public void mostrarProjetos(List<ProjetoEntity> listaProjetos){
-        System.out.println("\n============ PROJETOS ===============\n");
+        System.out.println("\n========================= PROJETOS ============================");
         for (ProjetoEntity projeto : listaProjetos) {
             System.out.println("- ID: [" + projeto.getId() + "]");
             System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
             System.out.println("- Descrição: " + projeto.getDescricao());
-            System.out.println("-------------------------------------");
+            System.out.println("---------------------------------------------------------------\n");
         }
+    }
+
+    public void projetoCompleto(long id){
+        ProjetoEntity projeto = projetoRepository.buscarUmProjeto(id, aluno.ra);
+
+        if(projeto == null){
+            System.out.println("\n- Projeto com ID " + id + " não encontrado!");
+            return;
+        }
+
+        System.out.println("- ID: [" + projeto.getId() + "]");
+        System.out.println("- Nome do projeto:" + projeto.getNomeDoProjeto());
+        System.out.println("- Descrição: " + projeto.getDescricao());
+        System.out.println("- Área de atuação: " + projeto.getAreaDeAtuacao());
+        System.out.println("- Início: " + projeto.getDataInicioProjeto());
+        System.out.println("- Término: " + projeto.getDataFinalProjeto());
+        System.out.println("- Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
+        System.out.println("- Curso: " + projeto.getCurso());
+        System.out.println("- Período: " + projeto.getPeriodo());
     }
 }

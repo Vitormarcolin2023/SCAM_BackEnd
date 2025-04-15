@@ -19,10 +19,21 @@ public class ProjetoRepository {
     }
 
     public List<ProjetoEntity> buscarTodos(String fk, int ra) {
-        String jpql = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
-        TypedQuery<ProjetoEntity> query = em.createQuery(jpql, ProjetoEntity.class);
+        String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
+        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
         query.setParameter("ra", ra);
         return query.getResultList();
+    }
+
+    public ProjetoEntity buscarUmProjeto(long idProjeto, int ra){
+        try{
+            return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_aluno_ra = :ra", ProjetoEntity.class)
+                    .setParameter("idProjeto", idProjeto)
+                    .setParameter("ra", ra)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean salvar(ProjetoEntity projeto){
