@@ -17,7 +17,7 @@ public class CoordenacaoRepository {
         this.em = em;
     }
 
-    public CoordenacaoEntity buscarPorId(Long id) {
+    public CoordenacaoEntity buscarPorId(int id) {
         return em.find(CoordenacaoEntity.class, id);
     }
 
@@ -51,7 +51,7 @@ public class CoordenacaoRepository {
     public List<MentorEntity> listarTodosMentores(){
         return em.createQuery("SELECT m FROM tb_mentor m", MentorEntity.class).getResultList();
     }
-    public void removerPorId(Long id){
+    public void removerPorId(int id){
         MentorEntity mentor = em.find(MentorEntity.class, id);
         if (mentor != null){
             em.getTransaction().begin();

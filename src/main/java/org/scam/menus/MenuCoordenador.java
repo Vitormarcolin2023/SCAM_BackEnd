@@ -65,7 +65,7 @@ public class MenuCoordenador {
                     break;
                 case 2:
                     System.out.println("Digite o ID do mentor que deseja remover");
-                    Long id = sc.nextLong();
+                    int id = (int) sc.nextLong();
                     sc.nextLine();
                     coordenacaoRepo.removerPorId(id);
                     System.out.println("Mentor removido com sucesso.");
