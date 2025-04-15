@@ -66,8 +66,24 @@ public class MentorCadastro {
         System.out.print("Tipo de vínculo (ex: CLT, PJ): ");
         String tipoVinculo = scanner.nextLine();
 
-        System.out.print("Área de atuação: ");
-        String areaAtuacao = scanner.nextLine();
+        /*System.out.print("Área de atuação: ");
+        String areaAtuacao = scanner.nextLine();*/
+
+        System.out.println("\n[SELEÇÃO A ÁREA DE ATUAÇÃO]");
+        AreaDeAtuacao[] tiposA = AreaDeAtuacao.values();
+        for (int i = 0; i < tiposA.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, tiposA[i].name());
+        }
+        System.out.print("Digite o número correspondente ao tipo: ");
+
+        int escolhaTipoA;
+        AreaDeAtuacao areaDeAtuacao = null;
+        try {
+            escolhaTipoA = Integer.parseInt(scanner.nextLine());
+            areaDeAtuacao = tiposA[escolhaTipoA - 1];
+        } catch (Exception e) {
+            System.out.println("Escolha inválida!.");
+        }
 
         System.out.println("\n[SELEÇÃO DE TIPO DE MENTOR]");
         TipoMentor[] tipos = TipoMentor.values();
@@ -133,7 +149,7 @@ public class MentorCadastro {
             mentor.setTelefone(telefone);
             mentor.setTempoExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);
-            mentor.setAreaDeAtuacao(areaAtuacao);
+            mentor.setAreaDeAtuacao(areaDeAtuacao);
             mentor.setEndereco(endereco);
             em2.persist(mentor);
 

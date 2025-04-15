@@ -1,4 +1,5 @@
 package org.scam.entities;
+import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.classes.Mentor;
 import org.scam.classes.TipoMentor;
 
@@ -36,8 +37,9 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "tipo_de_vinculo", nullable = false)
     private String tipoDeVinculo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "area_de_atuacao", nullable = false)
-    private String areaDeAtuacao;
+    private AreaDeAtuacao areaDeAtuacao;
 
     //relacao com a tabela de Endereco
     @ManyToOne
@@ -50,7 +52,7 @@ public class MentorEntity implements UsuarioEntity{
     public MentorEntity(
         String nome, String cpf, String email, String senha,
         TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia,
-        String tipoDeVinculo, String areaDeAtuacao, EnderecoEntity endereco){
+        String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
           this.cpf = cpf;
@@ -93,8 +95,8 @@ public class MentorEntity implements UsuarioEntity{
     public String getTipoDeVinculo(){return tipoDeVinculo;}
     public void setTipoDeVinculo(String tipoDeVinculo) {this.tipoDeVinculo = tipoDeVinculo;}
 
-    public String getAreaDeAtuacao(){return areaDeAtuacao;}
-    public void setAreaDeAtuacao(String areaDeAtuacao) {this.areaDeAtuacao = areaDeAtuacao;}
+    public AreaDeAtuacao getAreaDeAtuacao(){return areaDeAtuacao;}
+    public void setAreaDeAtuacao(AreaDeAtuacao areaDeAtuacao) {this.areaDeAtuacao = areaDeAtuacao;}
 
     public EnderecoEntity getEndereco() {return endereco;}
     public void setEndereco(EnderecoEntity endereco) {this.endereco = endereco;}
