@@ -46,7 +46,7 @@ public class MentorRepository {
         return em.createQuery("SELECT m FROM tb_mentor m", MentorEntity.class).getResultList();
     }
 
-    public void removerPorId(Long id){
+    public void removerPorId(int id){
         MentorEntity mentor = em.find(MentorEntity.class, id);
         if (mentor != null){
             em.getTransaction().begin();

@@ -63,10 +63,11 @@ public class Main {
 
                         Sessao.setMentorLogado(mentor);
 
-                        MenuMentor menuMentor = new MenuMentor(mentor);
+                        EntityManager em = CustomizerFactory.getEntityManager();
+                        MenuMentor menuMentor = new MenuMentor(mentor, em);
                         menuMentor.exibirMenu();
-
-                    }else if (usuario instanceof AlunoEntity) {
+                    
+                    } else if (usuario instanceof AlunoEntity) {
 
                         System.out.println("\nAcessando painel do Aluno...");
                         AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
