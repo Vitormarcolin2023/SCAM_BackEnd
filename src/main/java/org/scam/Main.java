@@ -17,7 +17,6 @@ import org.scam.repository.MentorRepository;
 import org.scam.utils.Sessao;
 
 import javax.persistence.EntityManager;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
