@@ -91,13 +91,18 @@ public class ProjetoCadastro {
             return;
         }
 
-        System.out.println("Mentores disponíveis para a área " + areaDeAtuacao + ":");
+
+        System.out.println("======== MENTOR CADASTRADO NA ÁREA DE: "+ areaDeAtuacao +" ========");
+
         for (MentorEntity mentorEntity : mentoresDisponiveis) {
+            System.out.println("===============================================================");
             System.out.println("ID: " + mentorEntity.getIdMentor() + " | Nome: " + mentorEntity.getNome());
+            System.out.println("Tempo de experincia: " + mentorEntity.getTempoDeExperiencia());
+            System.out.println("===============================================================");
         }
 
 
-        System.out.print("ID do mentor (fk_mentor_id): ");
+        System.out.print("ID do mentor: ");
         int mentor = scanner.nextInt();
 
         ProjetoEntity novoProjeto = new ProjetoEntity();
