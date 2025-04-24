@@ -31,6 +31,9 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
 
+    @Column(name = "status", nullable = false)
+    private boolean status = true; // por padrão, todos mentor é ATIVO
+
     @Column(name = "tempo_experiencia", nullable = false)
     private String tempoDeExperiencia;
 
@@ -46,12 +49,13 @@ public class MentorEntity implements UsuarioEntity{
     @JoinColumn(name = "fk_endereco_id", nullable = false)
     private EnderecoEntity endereco;
 
+
     public MentorEntity(){
     }
 
     public MentorEntity(
         String nome, String cpf, String email, String senha,
-        TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia,
+        TipoMentor tipoDeUsuario, String telefone, String status, String tempoDeExperiencia,
         String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
@@ -60,6 +64,7 @@ public class MentorEntity implements UsuarioEntity{
           this.senha = senha;
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
+          this.status = true;
           this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;

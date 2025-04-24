@@ -46,6 +46,8 @@ public class MenuMentor {
                case 2:
                    new MentorCadastro().cadastrarMentor();
                    break;
+               case 3:
+                   break;
                default:
                    System.out.println("Opção inválida!");
            }
@@ -61,7 +63,7 @@ public class MenuMentor {
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");
             System.out.println("= [2] - Atualizar Conta                =");
-            System.out.println("= [3] - Deletar Conta                  =");
+            System.out.println("= [3] - Desativar Conta                  =");
             System.out.println("= [4] - Voltar ao Menu Mentor          =");
             System.out.println("=======================================\n");
             System.out.print("Escolha uma opção: ");
