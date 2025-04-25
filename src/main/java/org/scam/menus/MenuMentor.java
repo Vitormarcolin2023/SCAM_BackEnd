@@ -50,6 +50,7 @@ public class MenuMentor {
                    break;
                default:
                    System.out.println("Opção inválida!");
+                   break;
            }
        }while (continuar != 3);
     }
@@ -98,13 +99,16 @@ public class MenuMentor {
                         opcao = 4;
                     } else {
                         System.out.println("❌ Operação cancelada.");
-                    }                    break;
+                    }
+                    break;
                 case 4:
                     System.out.println("=========================");
                     System.out.println("=Voltando ao Menu Mentor=");
                     System.out.println("=========================");
+                    break;
                 default:
                     System.out.println("Opção inválida!");
+                    break;
             }
 
         }while(opcao != 4);
