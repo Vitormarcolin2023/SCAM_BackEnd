@@ -51,7 +51,7 @@ public class MenuAluno {
                     break;
                 case 3:
                     MentorRepository mentorRepository = new MentorRepository(em);
-                    List<MentorEntity> listaMentores = mentorRepository.listarTodosMentores();
+                    List<MentorEntity> listaMentores = mentorRepository.listarMentoresAtivo();
                     mostrarMentores(listaMentores);
                     break;
                 case 4:

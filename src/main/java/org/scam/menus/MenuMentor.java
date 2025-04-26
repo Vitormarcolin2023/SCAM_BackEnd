@@ -88,13 +88,13 @@ public class MenuMentor {
                     new MentorCadastro().editarMentor();
                     break;
                 case 3:
-                    System.out.print("Tem certeza que deseja deletar sua conta? (s/n): ");
+                    System.out.print("Tem certeza que deseja desativar sua conta? (s/n): ");
                     String confirmacao = sc.nextLine();
 
                     if (confirmacao.equalsIgnoreCase("s")) {
                         MentorRepository mentorRepository = new MentorRepository(em);
-                        mentorRepository.removerPorId(mentor.getId());
-                        System.out.println("✅ Conta deletada com sucesso.");
+                        mentorRepository.desativarPorId(mentor.getId());
+                        System.out.println("✅ Conta desativada com sucesso.");
 
                         opcao = 4;
                     } else {

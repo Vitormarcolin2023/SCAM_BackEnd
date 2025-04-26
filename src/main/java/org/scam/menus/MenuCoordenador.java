@@ -31,7 +31,7 @@ public class MenuCoordenador {
         CoordenacaoRepository coordenacaoRepo = new CoordenacaoRepository(em);
         MentorRepository mentorRepo = new MentorRepository(em);
         ProjetoRepository projetoRepo = new ProjetoRepository(em);
-        List<MentorEntity> mentores = mentorRepo.listarTodosMentores();
+        List<MentorEntity> mentores = mentorRepo.listarMentoresAtivo();
         do{
             System.out.println("\n========MENU COORDENADOR=======");
             System.out.println("- [1] Listar Mentores");

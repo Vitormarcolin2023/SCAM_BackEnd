@@ -2,6 +2,7 @@ package org.scam.entities;
 import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.classes.Mentor;
 import org.scam.classes.TipoMentor;
+import org.scam.repository.StatusMentor;
 
 import javax.persistence.*;
 
@@ -31,8 +32,9 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private boolean status = true; // por padrão, todos mentor é ATIVO
+    private StatusMentor status = StatusMentor.ATIVO; // por padrão, todos mentor é ATIVO
 
     @Column(name = "tempo_experiencia", nullable = false)
     private String tempoDeExperiencia;
@@ -55,7 +57,7 @@ public class MentorEntity implements UsuarioEntity{
 
     public MentorEntity(
         String nome, String cpf, String email, String senha,
-        TipoMentor tipoDeUsuario, String telefone, String status, String tempoDeExperiencia,
+        TipoMentor tipoDeUsuario, String telefone, StatusMentor status, String tempoDeExperiencia,
         String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
@@ -64,7 +66,7 @@ public class MentorEntity implements UsuarioEntity{
           this.senha = senha;
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
-          this.status = true;
+          this.status = status;
           this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;
@@ -91,8 +93,12 @@ public class MentorEntity implements UsuarioEntity{
     public TipoMentor getTipoDeUsuario() { return tipoDeUsuario; }
     public void setTipoDeUsuario(TipoMentor tipoDeUsuario) { this.tipoDeUsuario = tipoDeUsuario; }
 
+    public StatusMentor getStatus() {return status;}
+    public void setStatus(StatusMentor status) {this.status = status;}
+
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
+
 
     public String getTempoDeExperiencia(){return tempoDeExperiencia;}
     public void setTempoExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
