@@ -53,11 +53,12 @@ public class MentorRepository {
                 .getResultList();
     }
 
-    public void desativarPorId(int id){
+    public void desativarPorId(int id,String motivo){
         MentorEntity mentor = em.find(MentorEntity.class, id);
         if (mentor != null && mentor.getStatus() == StatusMentor.ATIVO){
             em.getTransaction().begin();
             mentor.setStatus(StatusMentor.DESATIVO);
+            mentor.setMotivoDesativacao(motivo);
             em.merge(mentor);
             em.getTransaction().commit();
         }

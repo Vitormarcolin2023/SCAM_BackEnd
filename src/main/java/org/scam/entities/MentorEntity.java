@@ -36,6 +36,9 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "status", nullable = false)
     private StatusMentor status = StatusMentor.ATIVO; // por padrão, todos mentor é ATIVO
 
+    @Column(name = "motivo_desativacao", length = 255)
+    private String motivoDesativacao;
+
     @Column(name = "tempo_experiencia", nullable = false)
     private String tempoDeExperiencia;
 
@@ -57,7 +60,7 @@ public class MentorEntity implements UsuarioEntity{
 
     public MentorEntity(
         String nome, String cpf, String email, String senha,
-        TipoMentor tipoDeUsuario, String telefone, StatusMentor status, String tempoDeExperiencia,
+        TipoMentor tipoDeUsuario, String telefone, StatusMentor status, String motivoDesativacao, String tempoDeExperiencia,
         String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
@@ -67,6 +70,7 @@ public class MentorEntity implements UsuarioEntity{
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
           this.status = status;
+          this.motivoDesativacao = motivoDesativacao;
           this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;
@@ -93,12 +97,14 @@ public class MentorEntity implements UsuarioEntity{
     public TipoMentor getTipoDeUsuario() { return tipoDeUsuario; }
     public void setTipoDeUsuario(TipoMentor tipoDeUsuario) { this.tipoDeUsuario = tipoDeUsuario; }
 
-    public StatusMentor getStatus() {return status;}
-    public void setStatus(StatusMentor status) {this.status = status;}
-
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
 
+    public StatusMentor getStatus() {return status;}
+    public void setStatus(StatusMentor status) {this.status = status;}
+
+    public String getMotivoDesativacao(){return motivoDesativacao;}
+    public void setMotivoDesativacao(String motivoDesativacao){this.motivoDesativacao = motivoDesativacao;}
 
     public String getTempoDeExperiencia(){return tempoDeExperiencia;}
     public void setTempoExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}

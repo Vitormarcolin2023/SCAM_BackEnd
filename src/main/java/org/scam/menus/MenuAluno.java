@@ -51,8 +51,8 @@ public class MenuAluno {
                     break;
                 case 3:
                     MentorRepository mentorRepository = new MentorRepository(em);
-                    List<MentorEntity> listaMentores = mentorRepository.listarMentoresAtivo();
-                    mostrarMentores(listaMentores);
+                    List<MentorEntity> listarMentores = mentorRepository.listarMentoresAtivo();
+                    mostrarMentores(listarMentores);
                     break;
                 case 4:
                     System.out.println("Voltando ao menu principal...\n");
