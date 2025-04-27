@@ -47,10 +47,10 @@ public class MenuCoordenador {
 
             switch (opcao){
                 case 1:
-                    mostrarMentores(mentoresAtivos);
+                    mostrarMentores(mentoresAtivos, false);
                     break;
                 case 2:
-                    mostrarMentores(mentoresDesativos);
+                    mostrarMentores(mentoresDesativos,true);
                     break;
                 case 3:
                     System.out.println("Digite o ID do mentor que deseja remover");
@@ -88,11 +88,11 @@ public class MenuCoordenador {
                 default:
                     System.out.println("Opção inválida.");
             }
-        }while (opcao !=4);
+        }while (opcao !=5);
 
     }
 
-    public void mostrarMentores(List<MentorEntity> mentores){
+    public void mostrarMentores(List<MentorEntity> mentores, boolean mostrarMotivoDesativacao ){
         System.out.println("\n======Lista de mentores======");
         if (mentores.isEmpty()){
             System.out.println("Nenhum mentor encontrado.");
@@ -107,8 +107,12 @@ public class MenuCoordenador {
                         "\n | Tempo de Experiência: " + m.getTempoDeExperiencia() +
                         "\n | Tipo de Vínculo: " + m.getTipoDeVinculo() +
                         "\n | Área de Atuação: " + m.getAreaDeAtuacao() +
-                        "\n | Endereço: " + m.getEndereco().toString() +
-                        "\n | Motivo que foi desativado: " + m.getMotivoDesativacao());
+                        "\n | Endereço: " + m.getEndereco().toString());
+                if(mostrarMotivoDesativacao){
+                   System.out.println("| Motivo que foi desativado: " + m.getMotivoDesativacao());
+                }
+
+
             }
         }
     }

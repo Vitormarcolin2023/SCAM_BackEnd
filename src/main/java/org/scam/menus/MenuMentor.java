@@ -89,9 +89,12 @@ public class MenuMentor {
                     break;
                 case 3:
                     System.out.print("Tem certeza que deseja desativar sua conta? (s/n): ");
-                    String motivo = sc.nextLine();
+                    String confirmacao = sc.nextLine();
 
-                    if (motivo.equalsIgnoreCase("s")) {
+                    if (confirmacao.equalsIgnoreCase("s")) {
+                        System.out.println("Digite o motivo da desativação:");
+                        String motivo = sc.nextLine();
+
                         MentorRepository mentorRepository = new MentorRepository(em);
                         mentorRepository.desativarPorId(mentor.getId(), motivo);
                         System.out.println("✅ Conta desativada com sucesso.");
