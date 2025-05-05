@@ -22,7 +22,7 @@ public class MenuAluno {
     private final Scanner sc = new Scanner(System.in);
     EntityManager em = CustomizerFactory.getEntityManager();
     ProjetoCadastro projetoCadastro = new ProjetoCadastro();
-    Projeto projeto = new Projeto();
+    //Projeto projeto = new Projeto();
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
     public MenuAluno(Aluno aluno) {

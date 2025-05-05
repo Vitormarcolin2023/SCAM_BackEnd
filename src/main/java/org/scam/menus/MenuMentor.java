@@ -2,7 +2,7 @@ package org.scam.menus;
 
 import org.scam.cadastros.MentorCadastro;
 import org.scam.classes.Mentor;
-import org.scam.classes.Projeto;
+
 import org.scam.entities.ProjetoEntity;
 import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 public class MenuMentor {
     private Mentor mentor;
     private EntityManager em;
-    Projeto projeto = new Projeto();
+
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
     public MenuMentor(Mentor mentor, EntityManager em){
