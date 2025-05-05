@@ -46,8 +46,11 @@ public class MenuMentor {
                case 2:
                    new MentorCadastro().cadastrarMentor();
                    break;
+               case 3:
+                   break;
                default:
                    System.out.println("Opção inválida!");
+                   break;
            }
        }while (continuar != 3);
     }
@@ -61,7 +64,7 @@ public class MenuMentor {
             System.out.println("========= PAINEL DO MENTOR =============");
             System.out.println("= [1] - Visualizar Projetos            =");
             System.out.println("= [2] - Atualizar Conta                =");
-            System.out.println("= [3] - Deletar Conta                  =");
+            System.out.println("= [3] - Desativar Conta                  =");
             System.out.println("= [4] - Voltar ao Menu Mentor          =");
             System.out.println("=======================================\n");
             System.out.print("Escolha uma opção: ");
@@ -85,24 +88,30 @@ public class MenuMentor {
                     new MentorCadastro().editarMentor();
                     break;
                 case 3:
-                    System.out.print("Tem certeza que deseja deletar sua conta? (s/n): ");
+                    System.out.print("Tem certeza que deseja desativar sua conta? (s/n): ");
                     String confirmacao = sc.nextLine();
 
                     if (confirmacao.equalsIgnoreCase("s")) {
+                        System.out.println("Digite o motivo da desativação:");
+                        String motivo = sc.nextLine();
+
                         MentorRepository mentorRepository = new MentorRepository(em);
-                        mentorRepository.removerPorId(mentor.getId());
-                        System.out.println("✅ Conta deletada com sucesso.");
+                        mentorRepository.desativarPorId(mentor.getId(), motivo);
+                        System.out.println("✅ Conta desativada com sucesso.");
 
                         opcao = 4;
                     } else {
                         System.out.println("❌ Operação cancelada.");
-                    }                    break;
+                    }
+                    break;
                 case 4:
                     System.out.println("=========================");
                     System.out.println("=Voltando ao Menu Mentor=");
                     System.out.println("=========================");
+                    break;
                 default:
                     System.out.println("Opção inválida!");
+                    break;
             }
 
         }while(opcao != 4);
