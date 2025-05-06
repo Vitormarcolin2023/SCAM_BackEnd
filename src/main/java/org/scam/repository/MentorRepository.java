@@ -1,12 +1,12 @@
 package org.scam.repository;
 
 import org.scam.cadastros.AreaDeAtuacao;
+import org.scam.cadastros.StatusMentor;
 import org.scam.entities.MentorEntity;
 import org.scam.entities.ProjetoEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -137,5 +137,29 @@ public class MentorRepository {
         query.setParameter("ra", ra);
         return query.getResultList();
     }
+
+    public List<MentorEntity> listarMentoresEmAnalise() {
+        return em.createQuery("SELECT m FROM tb_mentor m WHERE m.status = :status", MentorEntity.class)
+                .setParameter("status", StatusMentor.ANALISE)
+                .getResultList();
+    }
+
+    public void atualizar(MentorEntity mentor) {
+        try {
+            // Verificar se a transação já está ativa
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();  // Inicia uma transação caso não tenha uma ativa
+            }
+            em.merge(mentor);  // Atualiza ou insere o mentor no banco de dados
+            em.getTransaction().commit();  // Confirma a transação
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();  // Reverte a transação em caso de erro
+            }
+            e.printStackTrace();
+            System.out.println("❌ Erro ao atualizar mentor.");
+        }
+    }
+
 
 }

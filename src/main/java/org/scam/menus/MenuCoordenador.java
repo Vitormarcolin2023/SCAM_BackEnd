@@ -9,6 +9,7 @@ import org.scam.repository.CoordenacaoRepository;
 import org.scam.repository.CustomizerFactory;
 import org.scam.repository.MentorRepository;
 import org.scam.repository.ProjetoRepository;
+import org.scam.services.MentorAnaliseService;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -39,7 +40,8 @@ public class MenuCoordenador {
             System.out.println("- [2] Listar Mentores Desativo");
             System.out.println("- [3] Desativar Mentor");
             System.out.println("- [4] Listar projetos");
-            System.out.println("- [5] Sair");
+            System.out.println("- [5] Aprovar Mentor");
+            System.out.println("- [6] Sair");
             System.out.println("================================");
             System.out.println("Escolha uma opção:");
             opcao = sc.nextInt();
@@ -83,6 +85,10 @@ public class MenuCoordenador {
 
                     break;
                 case 5:
+                    MentorAnaliseService service = new MentorAnaliseService();
+                    service.revisarMentoresEmAnalise();
+                    break;
+                case 6:
                     System.out.println("Saindo do painel no coordenador....");
                     break;
                 default:

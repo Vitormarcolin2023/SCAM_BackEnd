@@ -2,7 +2,7 @@ package org.scam.entities;
 import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.classes.Mentor;
 import org.scam.classes.TipoMentor;
-import org.scam.repository.StatusMentor;
+import org.scam.cadastros.StatusMentor;
 
 import javax.persistence.*;
 
@@ -34,7 +34,7 @@ public class MentorEntity implements UsuarioEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private StatusMentor status = StatusMentor.ATIVO; // por padrão, todos mentor é ATIVO
+    private StatusMentor status = StatusMentor.ANALISE; // por padrão, todos mentor é ANALISE, para coordenção analisar
 
     @Column(name = "motivo_desativacao", length = 255)
     private String motivoDesativacao;
