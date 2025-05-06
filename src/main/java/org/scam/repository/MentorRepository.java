@@ -42,15 +42,24 @@ public class MentorRepository {
         }
     }
 
-    public List<MentorEntity> listarTodosMentores(){
-        return em.createQuery("SELECT m FROM tb_mentor m", MentorEntity.class).getResultList();
+    public List<MentorEntity> listarMentoresAtivo(){
+        return em.createQuery("SELECT m FROM tb_mentor m WHERE m.status = :status", MentorEntity.class)
+                .setParameter("status", StatusMentor.ATIVO)
+                .getResultList();
+    }
+    public List<MentorEntity> listarMentoresDesativo(){
+        return em.createQuery("SELECT m FROM tb_mentor m WHERE m.status = :status", MentorEntity.class)
+                .setParameter("status", StatusMentor.DESATIVO)
+                .getResultList();
     }
 
-    public void removerPorId(int id){
+    public void desativarPorId(int id,String motivo){
         MentorEntity mentor = em.find(MentorEntity.class, id);
-        if (mentor != null){
+        if (mentor != null && mentor.getStatus() == StatusMentor.ATIVO){
             em.getTransaction().begin();
-            em.remove(mentor);
+            mentor.setStatus(StatusMentor.DESATIVO);
+            mentor.setMotivoDesativacao(motivo);
+            em.merge(mentor);
             em.getTransaction().commit();
         }
     }

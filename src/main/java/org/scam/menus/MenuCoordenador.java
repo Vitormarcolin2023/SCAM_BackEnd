@@ -31,13 +31,15 @@ public class MenuCoordenador {
         CoordenacaoRepository coordenacaoRepo = new CoordenacaoRepository(em);
         MentorRepository mentorRepo = new MentorRepository(em);
         ProjetoRepository projetoRepo = new ProjetoRepository(em);
-        List<MentorEntity> mentores = mentorRepo.listarTodosMentores();
+        List<MentorEntity> mentoresAtivos = mentorRepo.listarMentoresAtivo();
+        List<MentorEntity> mentoresDesativos = mentorRepo.listarMentoresDesativo();
         do{
             System.out.println("\n========MENU COORDENADOR=======");
-            System.out.println("- [1] Listar Mentores");
-            System.out.println("- [2] Remover Mentor");
-            System.out.println("- [3] Listar projetos");
-            System.out.println("- [4] Sair");
+            System.out.println("- [1] Listar Mentores Ativos");
+            System.out.println("- [2] Listar Mentores Desativo");
+            System.out.println("- [3] Desativar Mentor");
+            System.out.println("- [4] Listar projetos");
+            System.out.println("- [5] Sair");
             System.out.println("================================");
             System.out.println("Escolha uma opção:");
             opcao = sc.nextInt();
@@ -45,19 +47,24 @@ public class MenuCoordenador {
 
             switch (opcao){
                 case 1:
-                    mostrarMentores(mentores);
+                    mostrarMentores(mentoresAtivos, false);
                     break;
                 case 2:
-                    mostrarMentores(mentores);
+                    mostrarMentores(mentoresDesativos,true);
+                    break;
+                case 3:
                     System.out.println("Digite o ID do mentor que deseja remover");
-                    int id = (int) sc.nextLong();
+                    int id = sc.nextInt();
                     sc.nextLine();
-                    coordenacaoRepo.removerPorId(id);
-                    System.out.println("Mentor removido com sucesso.");
+
+                    System.out.println("Informe o motivo para a desativação do mentor:");
+                    String motivo = sc.nextLine();
+
+                    mentorRepo.desativarPorId(id, motivo);
+                    System.out.println("Mentor desativado com sucesso.");
 
                     break;
-
-                case 3:
+                case 4:
                     List<ProjetoEntity> projetos = projetoRepo.listarTodosProjetos();
 
                     System.out.println("\n=============== Lista de Projetos ===============");
@@ -75,17 +82,17 @@ public class MenuCoordenador {
                     }
 
                     break;
-                case 4:
+                case 5:
                     System.out.println("Saindo do painel no coordenador....");
                     break;
                 default:
                     System.out.println("Opção inválida.");
             }
-        }while (opcao !=4);
+        }while (opcao !=5);
 
     }
 
-    public void mostrarMentores(List<MentorEntity> mentores){
+    public void mostrarMentores(List<MentorEntity> mentores, boolean mostrarMotivoDesativacao ){
         System.out.println("\n======Lista de mentores======");
         if (mentores.isEmpty()){
             System.out.println("Nenhum mentor encontrado.");
@@ -101,6 +108,11 @@ public class MenuCoordenador {
                         "\n | Tipo de Vínculo: " + m.getTipoDeVinculo() +
                         "\n | Área de Atuação: " + m.getAreaDeAtuacao() +
                         "\n | Endereço: " + m.getEndereco().toString());
+                if(mostrarMotivoDesativacao){
+                   System.out.println("| Motivo que foi desativado: " + m.getMotivoDesativacao());
+                }
+
+
             }
         }
     }

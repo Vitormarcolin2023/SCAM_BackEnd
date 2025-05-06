@@ -27,6 +27,12 @@ public class EnderecoEntity {
     @Column(name = "cep", nullable = false, length = 45)
     private String cep;
 
+    @Override
+    public String toString(){
+        return rua + "," + numero + "-" + bairro + "," + cidade + "-" +  estado + ", CEP:" + cep;
+    }
+
+
     public EnderecoEntity(){} //construtor padrão
 
     public EnderecoEntity(

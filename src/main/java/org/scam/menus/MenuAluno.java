@@ -22,6 +22,7 @@ public class MenuAluno {
     private final Scanner sc = new Scanner(System.in);
     EntityManager em = CustomizerFactory.getEntityManager();
     ProjetoCadastro projetoCadastro = new ProjetoCadastro();
+    //Projeto projeto = new Projeto();
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
     public MenuAluno(Aluno aluno) {
@@ -50,8 +51,8 @@ public class MenuAluno {
                     break;
                 case 3:
                     MentorRepository mentorRepository = new MentorRepository(em);
-                    List<MentorEntity> listaMentores = mentorRepository.listarTodosMentores();
-                    mostrarMentores(listaMentores);
+                    List<MentorEntity> listarMentores = mentorRepository.listarMentoresAtivo();
+                    mostrarMentores(listarMentores);
                     break;
                 case 4:
                     System.out.println("Voltando ao menu principal...\n");

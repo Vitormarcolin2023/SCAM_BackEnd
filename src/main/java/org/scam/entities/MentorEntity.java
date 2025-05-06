@@ -2,6 +2,7 @@ package org.scam.entities;
 import org.scam.cadastros.AreaDeAtuacao;
 import org.scam.classes.Mentor;
 import org.scam.classes.TipoMentor;
+import org.scam.repository.StatusMentor;
 
 import javax.persistence.*;
 
@@ -31,6 +32,13 @@ public class MentorEntity implements UsuarioEntity{
     @Column(name = "telefone", nullable = false, unique = true, length = 45)
     private String telefone;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusMentor status = StatusMentor.ATIVO; // por padrão, todos mentor é ATIVO
+
+    @Column(name = "motivo_desativacao", length = 255)
+    private String motivoDesativacao;
+
     @Column(name = "tempo_experiencia", nullable = false)
     private String tempoDeExperiencia;
 
@@ -46,12 +54,13 @@ public class MentorEntity implements UsuarioEntity{
     @JoinColumn(name = "fk_endereco_id", nullable = false)
     private EnderecoEntity endereco;
 
+
     public MentorEntity(){
     }
 
     public MentorEntity(
         String nome, String cpf, String email, String senha,
-        TipoMentor tipoDeUsuario, String telefone, String tempoDeExperiencia,
+        TipoMentor tipoDeUsuario, String telefone, StatusMentor status, String motivoDesativacao, String tempoDeExperiencia,
         String tipoDeVinculo, AreaDeAtuacao areaDeAtuacao, EnderecoEntity endereco){
 
           this.nome = nome;
@@ -60,6 +69,8 @@ public class MentorEntity implements UsuarioEntity{
           this.senha = senha;
           this.tipoDeUsuario = tipoDeUsuario;
           this.telefone = telefone;
+          this.status = status;
+          this.motivoDesativacao = motivoDesativacao;
           this.tempoDeExperiencia = tempoDeExperiencia;
           this.tipoDeVinculo = tipoDeVinculo;
           this.areaDeAtuacao = areaDeAtuacao;
@@ -88,6 +99,12 @@ public class MentorEntity implements UsuarioEntity{
 
     public String getTelefone() {return telefone;}
     public void setTelefone(String telefone) {this.telefone = telefone;}
+
+    public StatusMentor getStatus() {return status;}
+    public void setStatus(StatusMentor status) {this.status = status;}
+
+    public String getMotivoDesativacao(){return motivoDesativacao;}
+    public void setMotivoDesativacao(String motivoDesativacao){this.motivoDesativacao = motivoDesativacao;}
 
     public String getTempoDeExperiencia(){return tempoDeExperiencia;}
     public void setTempoExperiencia(String tempoDeExperiencia) {this.tempoDeExperiencia = tempoDeExperiencia;}
