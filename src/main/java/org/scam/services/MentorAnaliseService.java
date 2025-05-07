@@ -58,7 +58,7 @@ public class MentorAnaliseService {
         int escolha = sc.nextInt();
         sc.nextLine();
 
-        em.getTransaction().begin();
+
         if (escolha == 1) {
             mentorSelecionado.setStatus(StatusMentor.ATIVO);
             mentorSelecionado.setMotivoDesativacao(null);
@@ -70,7 +70,7 @@ public class MentorAnaliseService {
             mentorSelecionado.setMotivoDesativacao(motivo);
             System.out.println("Mentor reprovado.");
         }
+
         mentorRepository.atualizar(mentorSelecionado);
-        em.getTransaction().commit();
     }
 }
