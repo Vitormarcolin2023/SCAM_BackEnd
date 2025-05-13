@@ -7,21 +7,25 @@ public class AreaDeAtuacaoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "descricao")
     private String descricaoAreaDeAtuacao;
 
-    public AreaDeAtuacaoEntity(int id, String descricaoAreaDeAtuacao) {
+    public AreaDeAtuacaoEntity() {
+
+    }
+
+    public AreaDeAtuacaoEntity(long id, String descricaoAreaDeAtuacao) {
         this.id = id;
         this.descricaoAreaDeAtuacao = descricaoAreaDeAtuacao;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

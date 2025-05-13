@@ -1,5 +1,6 @@
 package org.scam.menus;
 
+import org.scam.cadastros.AreaDeAtuacaoCadastro;
 import org.scam.classes.Coordenador;
 import org.scam.entities.*;
 import org.scam.entities.CoordenacaoEntity;
@@ -41,7 +42,10 @@ public class MenuCoordenador {
             System.out.println("- [3] Desativar Mentor");
             System.out.println("- [4] Listar projetos");
             System.out.println("- [5] Aprovar Mentor");
-            System.out.println("- [6] Sair");
+            System.out.println("- [6] Cadastrar Área de Atuação");
+            System.out.println("- [7] Cadastrar Curso");
+            System.out.println("- [8] Cadastrar Aluno");
+            System.out.println("- [9] Sair");
             System.out.println("================================");
             System.out.println("Escolha uma opção:");
             opcao = sc.nextInt();
@@ -89,6 +93,10 @@ public class MenuCoordenador {
                     service.revisarMentoresEmAnalise();
                     break;
                 case 6:
+                    AreaDeAtuacaoCadastro area = new AreaDeAtuacaoCadastro();
+                    area.cadastrarAreaDeAtuacao();
+                    break;
+                case 9:
                     System.out.println("Saindo do painel no coordenador....");
                     break;
                 default:
