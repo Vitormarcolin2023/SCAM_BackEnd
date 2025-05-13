@@ -1,26 +1,25 @@
 package org.scam.repository;
 
-import org.scam.entities.AreaDeAtuacaoEntity;
 
+import org.scam.entities.CursoEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-import java.util.List;
 
-public class AreaDeAtuacaoRepository {
+public class CursoRepository {
     private EntityManager em;
 
-    public AreaDeAtuacaoRepository(EntityManager em){
+    public CursoRepository(EntityManager em){
         this.em = em;
     }
 
-    public AreaDeAtuacaoEntity buscarPorId(Long id){
-        return em.find(AreaDeAtuacaoEntity.class, id);
+    public CursoEntity buscarPorId(Long id){
+        return em.find(CursoEntity.class, id);
     }
 
-    public void salvar(AreaDeAtuacaoEntity areaDeAtuacao) {
+    public void salvar(CursoEntity curso) {
         try {
             em.getTransaction().begin();
-            em.persist(areaDeAtuacao);
+            em.persist(curso);
             em.getTransaction().commit();
         } catch (PersistenceException e) {
             if (em.getTransaction().isActive()) {
@@ -29,9 +28,4 @@ public class AreaDeAtuacaoRepository {
             throw e; // Repassa a exceção para ser tratada no cadastro
         }
     }
-
-    public List<AreaDeAtuacaoEntity> listarTodas() {
-        return em.createQuery("SELECT a FROM tb_area_de_atuacao a", AreaDeAtuacaoEntity.class).getResultList();
-    }
-
 }

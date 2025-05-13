@@ -14,12 +14,23 @@ public class CursoEntity {
 
     //Foreing Keys
     @Column(name = "fk_area_de_atuacao_id")
-    private int idAreaDeAtuacao;
+    private int fk_area_de_atuacao_id;
 
-    public CursoEntity(int id, String descricaoCurso, int idAreaDeAtuacao) {
-        this.id = id;
+    public int getAreaDeAtuacao() {
+        return fk_area_de_atuacao_id;
+    }
+
+    public void setAreaDeAtuacao(int areaDeAtuacao) {
+        this.fk_area_de_atuacao_id = areaDeAtuacao;
+    }
+
+    public CursoEntity() {
+
+    }
+
+    public CursoEntity(String descricaoCurso, int areaDeAtuacao) {
         this.descricaoCurso = descricaoCurso;
-        this.idAreaDeAtuacao = idAreaDeAtuacao;
+        this.fk_area_de_atuacao_id = areaDeAtuacao;
     }
 
     public int getId() {
@@ -38,11 +49,11 @@ public class CursoEntity {
         this.descricaoCurso = descricaoCurso;
     }
 
-    public int getIdAreaDeAtuacao() {
-        return idAreaDeAtuacao;
+    public int getFk_area_de_atuacao_id() {
+        return fk_area_de_atuacao_id;
     }
 
-    public void setIdAreaDeAtuacao(int idAreaDeAtuacao) {
-        this.idAreaDeAtuacao = idAreaDeAtuacao;
+    public void setFk_area_de_atuacao_id(int fk_area_de_atuacao_id) {
+        this.fk_area_de_atuacao_id = fk_area_de_atuacao_id;
     }
 }
