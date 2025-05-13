@@ -1,5 +1,6 @@
 package org.scam.menus;
 
+import org.scam.Main;
 import org.scam.cadastros.AlunoCadastro;
 import org.scam.cadastros.AreaDeAtuacaoCadastro;
 import org.scam.cadastros.CursoCadastro;
@@ -108,6 +109,7 @@ public class MenuCoordenador {
                     break;
                 case 9:
                     System.out.println("Saindo do painel no coordenador....");
+                    Main mainNova = new Main();
                     break;
                 default:
                     System.out.println("Opção inválida.");

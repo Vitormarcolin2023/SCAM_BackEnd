@@ -75,6 +75,7 @@ public class Main {
                         MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
                         // SALVA O RA
                         Sessao.setRaAluno(alunoEntity.getRa());
+                        Sessao.setCursoAluno(alunoEntity.getCursoId());
 
                         menuAluno.exibirMenu(); // chama a funçao p/ rodar o menu aluno
 

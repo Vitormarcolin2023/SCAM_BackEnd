@@ -5,6 +5,7 @@ import org.scam.classes.Mentor;
 public class Sessao {
     private static int raAluno;
     private static Mentor mentorLogado;
+    private static int cursoAluno;
 
 
     public static void setRaAluno(int ra) {
@@ -21,6 +22,14 @@ public class Sessao {
 
     public static Mentor getMentorLogado() {
         return mentorLogado;
+    }
+
+    public static int getCursoAluno() {
+        return cursoAluno;
+    }
+
+    public static void setCursoAluno(int cursoAluno) {
+        Sessao.cursoAluno = cursoAluno;
     }
 
     public static void limparSessao() {

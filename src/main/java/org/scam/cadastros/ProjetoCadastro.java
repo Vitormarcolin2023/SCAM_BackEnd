@@ -83,6 +83,9 @@ public class ProjetoCadastro {
         //RA automatico
         int ra = Sessao.getRaAluno();
 
+        /*//Curso automatico
+        int curso = Sessao.getCursoAluno();*/
+
         // Buscar e listar mentores da mesma área
         List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(areaDeAtuacao);
 
