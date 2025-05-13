@@ -1,9 +1,11 @@
 package org.scam.repository;
 
 
+import org.scam.entities.AreaDeAtuacaoEntity;
 import org.scam.entities.CursoEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 public class CursoRepository {
     private EntityManager em;
@@ -27,5 +29,9 @@ public class CursoRepository {
             }
             throw e; // Repassa a exceção para ser tratada no cadastro
         }
+    }
+
+    public List<CursoEntity> listarTodas() {
+        return em.createQuery("SELECT a FROM tb_curso a", CursoEntity.class).getResultList();
     }
 }

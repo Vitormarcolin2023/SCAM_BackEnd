@@ -1,10 +1,9 @@
 package org.scam.repository;
 
-import org.scam.classes.IAutenticavel;
 import org.scam.entities.AlunoEntity;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 public class AlunoRepository {
 
@@ -18,10 +17,17 @@ public class AlunoRepository {
         return em.find(AlunoEntity.class, id);
     }
 
-    public void salvar(AlunoEntity tb_aluno){
-        em.getTransaction().begin();
-        em.persist(tb_aluno);
-        em.getTransaction().commit();
+    public void salvar(AlunoEntity aluno) {
+        try {
+            em.getTransaction().begin();
+            em.persist(aluno);
+            em.getTransaction().commit();
+        } catch (PersistenceException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback(); // Desfaz a transação em caso de erro
+            }
+            throw e; // Repassa a exceção para ser tratada no cadastro
+        }
     }
 
     public AlunoEntity login(String email, String senha){

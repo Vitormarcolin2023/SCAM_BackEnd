@@ -1,5 +1,6 @@
 package org.scam.menus;
 
+import org.scam.cadastros.AlunoCadastro;
 import org.scam.cadastros.AreaDeAtuacaoCadastro;
 import org.scam.cadastros.CursoCadastro;
 import org.scam.classes.Coordenador;
@@ -100,6 +101,10 @@ public class MenuCoordenador {
                 case 7:
                     CursoCadastro curso = new CursoCadastro();
                     curso.cadastrarCurso();
+                    break;
+                case 8:
+                    AlunoCadastro aluno = new AlunoCadastro();
+                    aluno.cadastrarAluno();
                     break;
                 case 9:
                     System.out.println("Saindo do painel no coordenador....");
