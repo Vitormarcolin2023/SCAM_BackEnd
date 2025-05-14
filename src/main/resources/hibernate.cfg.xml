@@ -16,10 +16,10 @@
         <property name="hibernate.show_sql">true</property> <!-- Show SQL in console -->
         <property name="hibernate.format_sql">true</property> <!-- Show SQL formatted -->
 
-        <mapping class="org.scam.entities.AlunoEntity"/>
-        <mapping class="org.scam.entities.CoordenacaoEntity"/>
-        <mapping class="org.scam.entities.MentorEntity"/>
-        <mapping class="org.scam.entities.EnderecoEntity"/>
-        <mapping class="org.scam.entities.ProjetoEntity"/>
+        <mapping class="org.scam.model.entities.AlunoEntity"/>
+        <mapping class="org.scam.model.entities.CoordenacaoEntity"/>
+        <mapping class="org.scam.model.entities.MentorEntity"/>
+        <mapping class="org.scam.model.entities.EnderecoEntity"/>
+        <mapping class="org.scam.model.entities.ProjetoEntity"/>
     </session-factory>
 </hibernate-configuration>
