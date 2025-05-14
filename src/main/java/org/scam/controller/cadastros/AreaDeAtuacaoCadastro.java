@@ -1,0 +1,34 @@
+package org.scam.controller.cadastros;
+
+
+import org.scam.model.entities.AreaDeAtuacaoEntity;
+import org.scam.model.repository.AreaDeAtuacaoRepository;
+import org.scam.model.repository.CustomizerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+import java.util.Scanner;
+
+public class AreaDeAtuacaoCadastro {
+
+    public void cadastrarAreaDeAtuacao() {
+        Scanner scanner = new Scanner(System.in);
+
+        EntityManager em = CustomizerFactory.getEntityManager();
+        AreaDeAtuacaoRepository areaDeAtuacaoRepository = new AreaDeAtuacaoRepository(em);
+
+        System.out.print("Nome da Área de Atuação: ");
+        String nomeArea = scanner.nextLine();
+
+        AreaDeAtuacaoEntity novaArea = new AreaDeAtuacaoEntity();
+        novaArea.setDescricaoAreaDeAtuacao(nomeArea);
+
+        try {
+            areaDeAtuacaoRepository.salvar(novaArea);
+            System.out.println("\nÁrea de atuação cadastrada com sucesso!"); // Mensagem mais específica
+        } catch (PersistenceException e) {
+            System.err.println("\nErro ao cadastrar área de atuação: " + e.getMessage());
+        } finally {
+            em.close(); // Importante: Fechar o EntityManager
+        }
+    }
+}
