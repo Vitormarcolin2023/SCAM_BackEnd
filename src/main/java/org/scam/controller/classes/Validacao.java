@@ -3,14 +3,14 @@ package org.scam.controller.classes;
 import java.util.Scanner;
 
 public class Validacao {
-    private static Scanner scanner = new Scanner(System.in);
+    private  Scanner scanner = new Scanner(System.in);
 
-    public static String lerString(String mensagem) {
+    public String lerString(String mensagem) {
         System.out.print(mensagem);
         return scanner.nextLine();
     }
 
-    public static int lerInteiro(String mensagem) {
+    public int lerInteiro(String mensagem) {
         while (true) {
             try {
                 System.out.print(mensagem);
@@ -21,7 +21,7 @@ public class Validacao {
         }
     }
 
-    public static String lerEmail(String mensagem) {
+    public String lerEmail(String mensagem) {
         while (true) {
             String email = lerString(mensagem);
             if (email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {

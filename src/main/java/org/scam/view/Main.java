@@ -3,17 +3,13 @@ package org.scam.view;
 import org.scam.controller.classes.Aluno;
 import org.scam.controller.classes.Coordenador;
 import org.scam.controller.classes.Mentor;
-import org.scam.model.entities.AlunoEntity;
-import org.scam.model.entities.CoordenacaoEntity;
-import org.scam.model.entities.MentorEntity;
-import org.scam.model.entities.UsuarioEntity;
+import org.scam.controller.classes.Validacao;
+import org.scam.controller.login.Credenciais;
+import org.scam.controller.login.Usuario;
 import org.scam.controller.menus.MenuAluno;
 import org.scam.controller.menus.MenuCoordenador;
 import org.scam.controller.menus.MenuMentor;
-import org.scam.model.repository.AlunoRepository;
-import org.scam.model.repository.CoordenacaoRepository;
 import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.repository.MentorRepository;
 import org.scam.model.services.Sessao;
 
 import javax.persistence.EntityManager;
@@ -22,9 +18,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Funcoes funcoes = new Funcoes();
-
         Scanner sc = new Scanner(System.in);
+        Usuario login = new Usuario(); // utilizada para validar as informações de login
+        EntityManager em = CustomizerFactory.getEntityManager();
+
         int continuar = 0;
 
         do {
@@ -39,93 +36,70 @@ public class Main {
             continuar = sc.nextInt();
             sc.nextLine();
 
-            if (continuar >= 1 && continuar <= 3) {
-                if(continuar == 2){
-                    new MenuMentor().menu();
-                }
-                UsuarioEntity usuario = funcoes.login(continuar);
-
-                if (usuario != null) {
-                    System.out.println("\nBem-vindo(a), " + usuario.getNome());
-
-                    if (usuario instanceof CoordenacaoEntity) {
-
-                        System.out.println("\nAcessando painel do Coordenador...");
-                        CoordenacaoEntity coordenacaoEntity = (CoordenacaoEntity) usuario;
-                        Coordenador coordenador = coordenacaoEntity.toCoordenador();
+            switch (continuar) {
+                case 1: {
+                    Credenciais credenciais = menuLogin(continuar);
+                    Coordenador coordenador = login.loginCoordenador(credenciais.getEmail(), credenciais.getSenha());
+                    if(coordenador!=null){
                         MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
                         menuCoordenador.exibirMenu();
-
-                    } else if (usuario instanceof MentorEntity) {
-                        System.out.println("\nAcessando painel do Mentor...");
-                        MentorEntity mentorEntity = (MentorEntity) usuario;
-                        Mentor mentor = mentorEntity.toMentor();
-
-                        Sessao.setMentorLogado(mentor);
-
-                        EntityManager em = CustomizerFactory.getEntityManager();
-                        MenuMentor menuMentor = new MenuMentor(mentor, em);
-                        menuMentor.exibirMenu();
-                    
-                    } else if (usuario instanceof AlunoEntity) {
-
-                        System.out.println("\nAcessando painel do Aluno...");
-                        AlunoEntity alunoEntity = (AlunoEntity) usuario; // usuário como AlunoEntity (casting)
-                        Aluno aluno = alunoEntity.toAluno(); // transforma a entity em Aluno
-                        MenuAluno menuAluno = new MenuAluno(aluno); // instancia o menu aluno
-                        // SALVA O RA
-                        Sessao.setRaAluno(alunoEntity.getRa());
-
-                        menuAluno.exibirMenu(); // chama a funçao p/ rodar o menu aluno
-
                     }
-
-                } else {
-                    System.out.println("\nUsuário ou senha inválidos.");
+                   else {
+                        System.out.println("\nUsuário ou senha inválidos!");
+                    }
+                    break;
                 }
-            } else if (continuar == 4) {
-                System.out.println("\nSaindo...");
-            } else {
-                System.out.println("\nOpção inválida. Tente novamente.");
+                case 2: {
+                    Credenciais credenciais = menuLogin(continuar);
+                    Mentor mentor = login.loginMentor(credenciais.getEmail(), credenciais.getSenha());
+                    if(mentor!=null){
+                        MenuMentor menuMentor = new MenuMentor(mentor, em);
+                        Sessao.setMentorLogado(mentor);
+                        menuMentor.exibirMenu();
+                    }
+                    else {
+                        System.out.println("\nUsuário ou senha inválidos!");
+                    }
+                    break;
+                }
+                case 3: {
+                    Credenciais credenciais = menuLogin(continuar);
+                    Aluno aluno = login.loginAluno(credenciais.getEmail(), credenciais.getSenha());
+                    if(aluno!=null){
+                        MenuAluno menuAluno = new MenuAluno(aluno);
+                        menuAluno.exibirMenu();
+                    }
+                    else {
+                        System.out.println("\nUsuário ou senha inválidos!");
+                    }
+                    break;
+                }
+                case 4: {
+                    System.out.println("\nSaindo...");
+                    break;
+                }
+                default: {
+                    System.out.println("\nOpção inválida, tente novamente.");
+                    break;
+                }
             }
-
-        }while (continuar != 4);
-
-
+        }while (continuar != 4) ;
     }
-}
 
-class Funcoes {
 
-    public UsuarioEntity login (int tipoUsuario) {
+
+    public static Credenciais menuLogin (int tipoUsuario) {
 
         Scanner sc = new Scanner(System.in);
-        EntityManager em = CustomizerFactory.getEntityManager();
+        Validacao validacao = new Validacao(); // utilizada para validar os dados digitados pelo usuário para login
 
         System.out.println("\n=============== LOGIN ===============");
-        System.out.println("- Informe seu email: ");
-        String email = sc.nextLine();
+        String email = validacao.lerEmail("- Informe seu email: ");
         System.out.println("- Informe sua senha: ");
         String senha = sc.nextLine();
 
-        switch (tipoUsuario){
-            case 1: {
-                CoordenacaoRepository coordenacaoRepository = new CoordenacaoRepository(em);
-                return coordenacaoRepository.login(email, senha);
-            }
-            case 2: {
-                MentorRepository mentorRepository = new MentorRepository(em);
-                return mentorRepository.login(email, senha);
-            }
-            case 3: {
-                AlunoRepository alunoRepository = new AlunoRepository(em);
-                return alunoRepository.login(email, senha);
-            }
-            default: {
-                System.out.println("\nUsuário inválido");
-                return null;
-            }
-        }
+        return new Credenciais(email, senha);
     }
 }
+
 
