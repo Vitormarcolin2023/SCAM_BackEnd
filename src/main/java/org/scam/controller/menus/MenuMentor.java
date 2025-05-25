@@ -4,8 +4,10 @@ import org.scam.controller.cadastros.MentorCadastro;
 import org.scam.controller.classes.Mentor;
 
 import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
 import org.scam.model.repository.ProjetoRepository;
+import org.scam.model.services.Sessao;
 
 import java.util.List;
 import java.util.Scanner;
@@ -14,13 +16,12 @@ import javax.persistence.EntityManager;
 
 public class MenuMentor {
     private Mentor mentor;
-    private EntityManager em;
+    private final EntityManager em = CustomizerFactory.getEntityManager();
 
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
-    public MenuMentor(Mentor mentor, EntityManager em){
+    public MenuMentor(Mentor mentor){
         this.mentor = mentor;
-        this.em = em;
         this.projetoRepository = new ProjetoRepository(em);
     }
 
@@ -59,6 +60,8 @@ public class MenuMentor {
 
         Scanner sc = new Scanner(System.in);
         int opcao;
+
+        Sessao.setMentorLogado(mentor);
 
         do{
             System.out.println("========= PAINEL DO MENTOR =============");

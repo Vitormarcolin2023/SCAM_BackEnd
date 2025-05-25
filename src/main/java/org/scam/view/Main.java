@@ -20,7 +20,6 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
-        EntityManager em = CustomizerFactory.getEntityManager();
 
         int continuar = 0;
 
@@ -53,8 +52,7 @@ public class Main {
                     Credenciais credenciais = menuLogin(continuar);
                     Mentor mentor = login.loginMentor(credenciais.getEmail(), credenciais.getSenha());
                     if(mentor!=null){
-                        MenuMentor menuMentor = new MenuMentor(mentor, em);
-                        Sessao.setMentorLogado(mentor);
+                        MenuMentor menuMentor = new MenuMentor(mentor);
                         menuMentor.exibirMenu();
                     }
                     else {
