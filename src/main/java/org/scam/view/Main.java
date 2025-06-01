@@ -9,10 +9,7 @@ import org.scam.controller.login.Usuario;
 import org.scam.controller.menus.MenuAluno;
 import org.scam.controller.menus.MenuCoordenador;
 import org.scam.controller.menus.MenuMentor;
-import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.services.Sessao;
 
-import javax.persistence.EntityManager;
 import java.util.Scanner;
 
 public class Main {

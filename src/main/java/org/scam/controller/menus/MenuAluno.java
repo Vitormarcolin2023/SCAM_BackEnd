@@ -8,6 +8,7 @@ import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
 import org.scam.model.repository.ProjetoRepository;
+import org.scam.model.services.Sessao;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -29,6 +30,9 @@ public class MenuAluno {
     }
 
     public void exibirMenu() {
+
+        Sessao.setRaAluno(aluno.ra);
+
         int opcao;
 
         do {

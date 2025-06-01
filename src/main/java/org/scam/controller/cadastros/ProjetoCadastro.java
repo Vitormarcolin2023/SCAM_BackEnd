@@ -29,7 +29,7 @@ public class ProjetoCadastro {
         System.out.print("Descrição do projeto: ");
         String descricaoProjeto = scanner.nextLine();
 
-        System.out.println("\n[SELEÇÃO A ÁREA DE ATUAÇÃO]");
+        System.out.println("\n[SELEÇÃO ÁREA DE ATUAÇÃO]");
         AreaDeAtuacao[] tiposA = AreaDeAtuacao.values();
         for (int i = 0; i < tiposA.length; i++) {
             System.out.printf("%d - %s%n", i + 1, tiposA[i].name());
@@ -48,8 +48,9 @@ public class ProjetoCadastro {
         System.out.print("Data de início do projeto (yyyy-MM-dd): ");
         String dataInicio = scanner.next();
 
-        System.out.print("Data de término do projeto (yyyy-MM-dd): ");
-        String dataFinal = scanner.next();
+        // calcula data de término automaticamente
+        LocalDate inicioInformado = LocalDate.parse(dataInicio);
+        LocalDate dataTermino = inicioInformado.plusMonths(5);
 
         System.out.print("Quantidade de integrantes: ");
         int qtdParticipante = scanner.nextInt();
@@ -87,7 +88,7 @@ public class ProjetoCadastro {
         List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(areaDeAtuacao);
 
         if (mentoresDisponiveis.isEmpty()) {
-            System.out.println("Nenhum mentor disponível para essa área de atuação.");
+            System.out.println("Nenhum mentor disponível para essa área de atuação.\nNão é possível cadastrar o projeto.");
             return;
         }
 
@@ -110,7 +111,7 @@ public class ProjetoCadastro {
         novoProjeto.setDescricao(descricaoProjeto);
         novoProjeto.setAreaDeAtuacao(areaDeAtuacao);
         novoProjeto.setDataInicioProjeto(LocalDate.parse(dataInicio));
-        novoProjeto.setDataFinalProjeto(LocalDate.parse(dataFinal));
+        novoProjeto.setDataFinalProjeto(dataTermino);
         novoProjeto.setTamanhoDoGrupo(qtdParticipante);
         novoProjeto.setCurso(cursoEscolhido);
         novoProjeto.setPeriodo(periodo);
