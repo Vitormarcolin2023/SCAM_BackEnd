@@ -15,7 +15,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        //LoginViewCoordenação.loginCoordenacao(); - Coordenação
+        LoginAlunoView.loginAluno();
+
+        /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
 
         int continuar = 0;
@@ -80,7 +83,7 @@ public class Main {
                     break;
                 }
             }
-        }while (continuar != 4) ;
+        }while (continuar != 4) ;*/
     }
 
 
