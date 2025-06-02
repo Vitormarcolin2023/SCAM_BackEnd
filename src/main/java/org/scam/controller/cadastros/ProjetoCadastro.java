@@ -22,6 +22,7 @@ public class ProjetoCadastro {
         MentorRepository mentorRepository = new MentorRepository(em);
         ProjetoRepository projetoRepository = new ProjetoRepository(em);
         AlunoEntity alunoEntity = new AlunoEntity();
+        ProjetoEntity novoProjeto = new ProjetoEntity();
 
         System.out.print("Nome do projeto: ");
         String nomeProjeto = scanner.nextLine();
@@ -52,9 +53,6 @@ public class ProjetoCadastro {
         LocalDate inicioInformado = LocalDate.parse(dataInicio);
         LocalDate dataTermino = inicioInformado.plusMonths(5);
 
-        System.out.print("Quantidade de integrantes: ");
-        int qtdParticipante = scanner.nextInt();
-
         //Utiliza enum para apresentar os cursos
         System.out.println("\n[SELEÇÃO O CURSO]");
         Curso[] tiposC = Curso.values();
@@ -81,8 +79,35 @@ public class ProjetoCadastro {
         System.out.print("Período: ");
         String periodo = scanner.nextLine();
 
-        //RA automatico
-        int ra = Sessao.getRaAluno();
+        // adiciona o aluno que está cadastrando o projeto
+        AlunoEntity alunoPrincipal = em.find(AlunoEntity.class, Sessao.getRaAluno());
+        novoProjeto.getAlunos().add(alunoPrincipal);
+
+        // Para adicionar vários alunos no projeto por RA - adiciona dinamicamente
+        int qtdParticipante = 0; // contador para alunos adicionados no projeto
+        while (true) {
+            System.out.print("Digite o RA do aluno para adicionar ao projeto (ou 0 para finalizar): ");
+            int ra = scanner.nextInt();
+            scanner.nextLine();
+
+            if (ra == 0) {
+                break;
+            }
+
+            AlunoEntity aluno = em.find(AlunoEntity.class, ra);
+            if (aluno != null) {
+                if (!novoProjeto.getAlunos().contains(aluno)) {
+                    novoProjeto.getAlunos().add(aluno);
+                    System.out.println("Aluno adicionado.");
+                    qtdParticipante++;
+                } else {
+                    System.out.println("Este aluno já foi adicionado.");
+                }
+            } else {
+                System.out.println("Aluno com RA " + ra + " não encontrado.");
+            }
+        }
+
 
         // Buscar e listar mentores da mesma área
         List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(areaDeAtuacao);
@@ -106,7 +131,15 @@ public class ProjetoCadastro {
         System.out.print("ID do mentor: ");
         int mentor = scanner.nextInt();
 
-        ProjetoEntity novoProjeto = new ProjetoEntity();
+        MentorEntity mentorSelecionado = em.find(MentorEntity.class, mentor);
+        if (mentorSelecionado != null) {
+            novoProjeto.setMentor(mentorSelecionado);
+        } else {
+            System.out.println("Mentor não encontrado.");
+            return;
+        }
+
+
         novoProjeto.setNomeDoProjeto(nomeProjeto);
         novoProjeto.setDescricao(descricaoProjeto);
         novoProjeto.setAreaDeAtuacao(areaDeAtuacao);
@@ -115,8 +148,6 @@ public class ProjetoCadastro {
         novoProjeto.setTamanhoDoGrupo(qtdParticipante);
         novoProjeto.setCurso(cursoEscolhido);
         novoProjeto.setPeriodo(periodo);
-        novoProjeto.setRaAluno(ra);
-        novoProjeto.setIdMentor(mentor);
 
         // Valida se não houve erro no cadastro
         if(projetoRepository.salvar(novoProjeto)){

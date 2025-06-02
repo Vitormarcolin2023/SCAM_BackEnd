@@ -28,7 +28,7 @@ public class MenuMentor {
 
     public MenuMentor(){}
 
-    public void menu() {
+    public boolean menu() {
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
        do{
@@ -43,10 +43,10 @@ public class MenuMentor {
 
            switch (continuar){
                case 1:
-                   return;
+                   return true;
                case 2:
                    new MentorCadastro().cadastrarMentor();
-                   break;
+                   return false;
                case 3:
                    break;
                default:
@@ -54,6 +54,7 @@ public class MenuMentor {
                    break;
            }
        }while (continuar != 3);
+       return false;
     }
 
     public void exibirMenu() {

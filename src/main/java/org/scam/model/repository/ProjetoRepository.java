@@ -18,11 +18,11 @@ public class ProjetoRepository {
         return em.find(ProjetoEntity.class, id);
     }
 
-    public List<ProjetoEntity> buscarTodos(String fk, int ra) {
-        String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :ra";
-        TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
-        query.setParameter("ra", ra);
-        return query.getResultList();
+    public List<ProjetoEntity> buscarTodos(int ra) {
+        return em.createQuery(
+                "SELECT p FROM ProjetoEntity p JOIN p.alunos a WHERE a.ra = :ra", ProjetoEntity.class)
+                .setParameter("ra", ra)
+                .getResultList();
     }
 
 
@@ -40,9 +40,11 @@ public class ProjetoRepository {
         return query.getResultList();
     }
 
-    public ProjetoEntity buscarUmProjeto(long idProjeto, int ra){
-        try{
-            return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_aluno_ra = :ra", ProjetoEntity.class)
+    public ProjetoEntity buscarUmProjeto(long idProjeto, int ra) {
+        try {
+            return em.createQuery(
+                            "SELECT p FROM ProjetoEntity p JOIN p.alunos a " +
+                                    "WHERE p.id = :idProjeto AND a.ra = :ra", ProjetoEntity.class)
                     .setParameter("idProjeto", idProjeto)
                     .setParameter("ra", ra)
                     .getSingleResult();
@@ -50,6 +52,7 @@ public class ProjetoRepository {
             return null;
         }
     }
+
 
     public ProjetoEntity buscarUmProjetoMentor(long idProjeto, int id){
         try{

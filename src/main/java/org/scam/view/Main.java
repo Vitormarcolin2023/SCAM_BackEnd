@@ -46,14 +46,16 @@ public class Main {
                     break;
                 }
                 case 2: {
-                    Credenciais credenciais = menuLogin(continuar);
-                    Mentor mentor = login.loginMentor(credenciais.getEmail(), credenciais.getSenha());
-                    if(mentor!=null){
-                        MenuMentor menuMentor = new MenuMentor(mentor);
-                        menuMentor.exibirMenu();
-                    }
-                    else {
-                        System.out.println("\nUsuário ou senha inválidos!");
+                    MenuMentor menuMentor = new MenuMentor();
+                    boolean fazLogin = menuMentor.menu();
+                    if(fazLogin) {
+                        Credenciais credenciais = menuLogin(continuar);
+                        Mentor mentor = login.loginMentor(credenciais.getEmail(), credenciais.getSenha());
+                        if (mentor != null) {
+                            menuMentor.exibirMenu();
+                        } else {
+                            System.out.println("\nUsuário ou senha inválidos!");
+                        }
                     }
                     break;
                 }

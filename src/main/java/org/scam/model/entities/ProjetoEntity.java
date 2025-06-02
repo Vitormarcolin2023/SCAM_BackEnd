@@ -5,6 +5,8 @@ import org.scam.controller.cadastros.Curso;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_projeto")
@@ -40,12 +42,38 @@ public class ProjetoEntity {
     @Column(name = "periodo", nullable = false, length = 45)
     private String periodo;
 
-    //foreign keys
-    @Column(name = "fk_aluno_ra")
-    private int raAluno;
 
-    @Column(name = "fk_mentor_id")
-    private int idMentor;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "tb_projeto_aluno",
+            joinColumns = @JoinColumn(name = "projeto_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_ra")
+    )
+    private List<AlunoEntity> alunos = new ArrayList<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "fk_mentor_id", nullable = false)
+    private MentorEntity mentor;
+
+    // Getters e setters
+
+    public List<AlunoEntity> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<AlunoEntity> alunos) {
+        this.alunos = alunos;
+    }
+
+    public MentorEntity getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(MentorEntity mentor) {
+        this.mentor = mentor;
+    }
+
 
     //GETTER AND SETTER
 
@@ -121,29 +149,13 @@ public class ProjetoEntity {
         this.periodo = periodo;
     }
 
-    public int getRaAluno() {
-        return raAluno;
-    }
-
-    public void setRaAluno(int raAluno) {
-        this.raAluno = raAluno;
-    }
-
-    public int getIdMentor() {
-        return idMentor;
-    }
-
-    public void setIdMentor(int idMentor) {
-        this.idMentor = idMentor;
-    }
-
     public ProjetoEntity() {
 
     }
 
     public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, AreaDeAtuacao areaDeAtuacao,
                          LocalDate dataInicioProjeto, LocalDate dataFinalProjeto, int tamanhoDoGrupo,
-                         Curso curso, String periodo, int raAluno, int idMentor) {
+                         Curso curso, String periodo, List<AlunoEntity> alunos, MentorEntity mentor) {
         this.id = id;
         this.nomeDoProjeto = nomeDoProjeto;
         this.descricao = descricao;
@@ -153,9 +165,10 @@ public class ProjetoEntity {
         this.tamanhoDoGrupo = tamanhoDoGrupo;
         this.curso = curso;
         this.periodo = periodo;
-        this.raAluno = raAluno;
-        this.idMentor = idMentor;
+        this.alunos = alunos;
+        this.mentor = mentor;
     }
+
 
     //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
     @PrePersist
