@@ -11,9 +11,9 @@ public class Main {
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 
-        //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
 
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
 
         int continuar = 0;
@@ -78,7 +78,7 @@ public class Main {
                     break;
                 }
             }
-        }while (continuar != 4) ;
+        }while (continuar != 4) ;*/
     }
 
 
