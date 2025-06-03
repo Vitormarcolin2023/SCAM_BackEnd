@@ -1,16 +1,9 @@
-package org.scam.view;
+package org.scam;
 
-import org.scam.controller.classes.Aluno;
-import org.scam.controller.classes.Coordenador;
-import org.scam.controller.classes.Mentor;
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
-import org.scam.controller.login.Usuario;
-import org.scam.controller.menus.MenuAluno;
-import org.scam.controller.menus.MenuCoordenador;
-import org.scam.controller.menus.MenuMentor;
+import org.scam.view.TelaSelecaoUsuarioView;
 
-import javax.swing.text.html.parser.TagElement;
 import java.util.Scanner;
 
 public class Main {
