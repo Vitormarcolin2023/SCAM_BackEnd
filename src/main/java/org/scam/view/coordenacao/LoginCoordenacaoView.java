@@ -1,4 +1,4 @@
-package org.scam.view;
+package org.scam.view.coordenacao;
 
 import org.scam.controller.classes.Coordenador;
 import org.scam.controller.menus.MenuCoordenador;
@@ -51,22 +51,25 @@ public class LoginCoordenacaoView {
         titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JTextField userField = new JTextField();
-        userField.setMaximumSize(new Dimension(250, 40));
-        userField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel email = new JLabel("Email");
         email.setForeground(Color.WHITE);
         email.setFont(new Font("SansSerif", Font.BOLD, 15));
-        email.setAlignmentX(Component.CENTER_ALIGNMENT);
+        email.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        email.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 70));
+        JTextField userField = new JTextField();
+        userField.setMaximumSize(new Dimension(250, 40));
+        userField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setMaximumSize(new Dimension(250, 40));
-        passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel senha = new JLabel("Senha");
         senha.setForeground(Color.WHITE);
         senha.setFont(new Font("SansSerif", Font.BOLD, 15));
-        senha.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        senha.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        senha.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 65));
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setMaximumSize(new Dimension(250, 40));
+        passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton loginButton = new JButton("Login");
         loginButton.setBackground(new Color(0, 200, 100));
@@ -78,9 +81,11 @@ public class LoginCoordenacaoView {
         panel.add(titulo);
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
         panel.add(email);
-        panel.add(userField);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        panel.add(userField);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
         panel.add(senha);
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(passwordField);
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
         panel.add(loginButton);
@@ -111,7 +116,7 @@ public class LoginCoordenacaoView {
                     telaLogin.dispose();
 
                     MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
-                    menuCoordenador.exibirMenu();
+                    PainelPrincipalView.painelCoordenacao();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }

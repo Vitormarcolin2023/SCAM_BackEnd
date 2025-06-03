@@ -1,5 +1,7 @@
 package org.scam.view;
 
+import org.scam.view.coordenacao.LoginCoordenacaoView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
