@@ -22,7 +22,7 @@ public class TelaSelecaoUsuarioView {
         painelCentral.setLayout(new BoxLayout(painelCentral, BoxLayout.Y_AXIS));
         painelCentral.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
-        JLabel titulo = new JLabel("BOAS VINDAS");
+        JLabel titulo = new JLabel("BOAS VINDAS AO SAM");
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
