@@ -1,11 +1,13 @@
 package org.scam.controller.cadastros;
 
+import org.scam.controller.classes.Endereco;
 import org.scam.controller.classes.Mentor;
 import org.scam.controller.classes.TipoMentor;
 import org.scam.model.entities.EnderecoEntity;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
+import org.scam.model.services.BuscarCEP;
 import org.scam.model.services.Sessao;
 
 import javax.persistence.EntityManager;
@@ -106,23 +108,16 @@ public class MentorCadastro {
 
         // 3. Coletar ENDEREÇO
         System.out.println("\n[ENDEREÇO]");
-        System.out.print("Rua: ");
-        String rua = scanner.nextLine();
-
-        System.out.print("Número: ");
-        int numero = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Bairro: ");
-        String bairro = scanner.nextLine();
-
-        System.out.print("Cidade: ");
-        String cidade = scanner.nextLine();
-
-        System.out.print("Estado (UF): ");
-        String estado = scanner.nextLine();
 
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
+
+        BuscarCEP buscarCEP = new BuscarCEP();
+        Endereco endereco = buscarCEP.getEndereco(cep);
+        System.out.println(endereco.getLogradouro());
+
+        System.out.println("Informe o número: ");
+        int numero = scanner.nextInt();
 
         // Persistência usando CustomizerFactory
         EntityManager em2 = CustomizerFactory.getEntityManager();
@@ -132,14 +127,14 @@ public class MentorCadastro {
             tx.begin();
 
             // Criar e persistir endereço
-            EnderecoEntity endereco = new EnderecoEntity();
-            endereco.setRua(rua);
-            endereco.setNumero(numero);
-            endereco.setBairro(bairro);
-            endereco.setCidade(cidade);
-            endereco.setEstado(estado);
-            endereco.setCep(cep);
-            em2.persist(endereco);
+            EnderecoEntity enderecoEntity = new EnderecoEntity();
+            enderecoEntity.setRua(endereco.getLogradouro());
+            enderecoEntity.setNumero(numero);
+            enderecoEntity.setBairro(endereco.getBairro());
+            enderecoEntity.setCidade(endereco.getLocalidade());
+            enderecoEntity.setEstado(endereco.getEstado());
+            enderecoEntity.setCep(endereco.getCep());
+            em2.persist(enderecoEntity);
 
             // Criar e persistir mentor
             MentorEntity mentor = new MentorEntity();
@@ -152,7 +147,7 @@ public class MentorCadastro {
             mentor.setTempoExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);
             mentor.setAreaDeAtuacao(areaDeAtuacao);
-            mentor.setEndereco(endereco);
+            mentor.setEndereco(enderecoEntity);
             em2.persist(mentor);
 
             tx.commit();
