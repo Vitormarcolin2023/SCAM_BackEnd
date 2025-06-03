@@ -10,12 +10,18 @@ import org.scam.controller.menus.MenuAluno;
 import org.scam.controller.menus.MenuCoordenador;
 import org.scam.controller.menus.MenuMentor;
 
+import javax.swing.text.html.parser.TagElement;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        //LoginViewCoordenação.loginCoordenacao(); - Coordenação
+        //LoginAlunoView.loginAluno(); - Aluno
+
+        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+
+        /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
 
         int continuar = 0;
@@ -80,7 +86,7 @@ public class Main {
                     break;
                 }
             }
-        }while (continuar != 4) ;
+        }while (continuar != 4) ;*/
     }
 
 
