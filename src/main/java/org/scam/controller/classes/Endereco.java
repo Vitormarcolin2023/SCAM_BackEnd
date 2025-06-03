@@ -1,54 +1,82 @@
 package org.scam.controller.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Endereco {
-    private String rua;
-    private String cidade;
+    private String logradouro;
+    private String localidade;
     private String estado;
-    private int numero;
     private String bairro;
     private String cep;
+    private int numero;
 
     // Construtor padrão
     public Endereco() {}
 
     // Construtor parametrizado
-    public Endereco(String rua, String cidade, String estado) {
-        this.rua = rua;
-        this.cidade = cidade;
+
+
+    public Endereco(String logradouro, String localidade, String estado, String bairro, String cep) {
+        this.logradouro = logradouro;
+        this.localidade = localidade;
         this.estado = estado;
+        this.bairro = bairro;
+        this.cep = cep;
     }
 
     // Construtor de cópia
     public Endereco(Endereco outroEndereco) {
-        this.rua = outroEndereco.rua;
-        this.cidade = outroEndereco.cidade;
+        this.logradouro = outroEndereco.logradouro;
+        this.localidade = outroEndereco.localidade;
         this.estado = outroEndereco.estado;
     }
 
     // Getters e Setters
-    public String getRua() { return rua; }
-    public void setRua(String rua) { this.rua = rua; }
-
-    public String getCidade() { return cidade; }
-    public void setCidade(String cidade) { this.cidade = cidade; }
-
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-
-    @Override
-    public String toString() {
-        return rua + ", " + cidade + ", " + estado;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public int getNumero() {
+        return numero;
     }
 }
