@@ -37,7 +37,7 @@ public class MenuAluno {
         int opcao;
 
         do {
-            System.out.println("\n=========== MENU DO ALUNO ===========");
+            System.out.println("\n=========== MENU xDO ALUNO ===========");
             System.out.println("[1] - Cadastrar Projeto");
             System.out.println("[2] - Gerenciar Projetos");
             System.out.println("[3] - Listar Mentores");
