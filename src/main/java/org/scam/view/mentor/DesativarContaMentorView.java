@@ -60,9 +60,15 @@ public class DesativarContaMentorView {
 
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
-            JInternalFrame internalFrame = new JInternalFrame("Desativação de Conta", true, true, true, true);
-            internalFrame.setSize(400, 400);
+            JInternalFrame internalFrame = new JInternalFrame();
+            internalFrame.setSize(1055, 585);
             internalFrame.setLayout(new BorderLayout());
+            internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
+            javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+            if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                basicUI.setNorthPane(null); // remove a barra de título
+            }
+
 
             JPanel painelDialog = new JPanel();
             painelDialog.setBackground(new Color(50, 50, 50));
