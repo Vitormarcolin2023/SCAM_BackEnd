@@ -1,4 +1,4 @@
-package org.scam.view;
+package org.scam.view.mentor;
 
 import org.scam.controller.classes.Mentor;
 import org.scam.controller.menus.MenuMentor;

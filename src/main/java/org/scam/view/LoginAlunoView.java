@@ -1,4 +1,4 @@
-package org.scam.view;
+package org.scam.view.aluno;
 
 import org.scam.controller.classes.Aluno;
 import org.scam.controller.menus.MenuAluno;

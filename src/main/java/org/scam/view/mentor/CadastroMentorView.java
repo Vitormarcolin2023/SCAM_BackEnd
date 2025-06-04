@@ -1,4 +1,4 @@
-package org.scam.view;
+package org.scam.view.mentor;
 
 public class CadastroMentorView {
 }

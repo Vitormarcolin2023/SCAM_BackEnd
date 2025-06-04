@@ -1,6 +1,8 @@
 package org.scam.view;
 
+import org.scam.view.aluno.LoginAlunoView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
+import org.scam.view.mentor.LoginMentorView;
 
 import javax.swing.*;
 import java.awt.*;
