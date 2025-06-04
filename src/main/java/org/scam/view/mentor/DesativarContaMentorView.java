@@ -5,17 +5,18 @@ import java.awt.*;
 
 public class DesativarContaMentorView {
     public static void main(String[] args) {
-        // Criação da janela principal
+
+        // Criação da Janela Principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());
 
-        // TOPO VERDE
+        // TOPO VERDE COM TÍTULO
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 200, 100)); // Verde vibrante
+        topo.setBackground(new Color(0, 128, 66));
         topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
-        topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15)); // Centralizar o título
+        topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -23,19 +24,17 @@ public class DesativarContaMentorView {
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
-        // PAINEL CENTRAL com fundo cinza escuro e layout BorderLayout
-        JPanel painelCentral = new JPanel();
-        painelCentral.setBackground(new Color(60, 60, 60)); // fundo geral
-        painelCentral.setLayout(new BorderLayout());
+        // PAINEL CENTRAL COM FUNDO CINZA ESCURO
+        JPanel painelCentral = new JPanel(new BorderLayout());
+        painelCentral.setBackground(new Color(60, 60, 60));
         frame.add(painelCentral, BorderLayout.CENTER);
 
-        // PAINEL DE BOTÕES LATERAL (esquerdo)
+        // PAINEL LATERAL COM BOTÕES
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBackground(new Color(45, 45, 45));
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // Criação dos botões
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
@@ -54,66 +53,73 @@ public class DesativarContaMentorView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // ÁREA DE CONTEÚDO CENTRAL (vazio por enquanto)
-        JPanel painelConteudo = new JPanel();
-        painelConteudo.setBackground(new Color(80, 80, 80));
-        painelCentral.add(painelConteudo, BorderLayout.CENTER);
+        // DESKTOP PANE para Internal Frames
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(80, 80, 80));
+        painelCentral.add(desktopPane, BorderLayout.CENTER);
 
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
-            JDialog dialog = new JDialog(frame, "Desativação de Conta", true);
-            dialog.setSize(500, 450);
-            dialog.setLocationRelativeTo(frame);
+            JInternalFrame internalFrame = new JInternalFrame();
+            internalFrame.setSize(1055, 585);
+            internalFrame.setLayout(new BorderLayout());
+            internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
+            javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+            if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                basicUI.setNorthPane(null); // remove a barra de título
+            }
 
-            JPanel panel = new JPanel();
-            panel.setBackground(new Color(50, 50, 50));
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+
+            JPanel painelDialog = new JPanel();
+            painelDialog.setBackground(new Color(50, 50, 50));
+            painelDialog.setLayout(new BoxLayout(painelDialog, BoxLayout.Y_AXIS));
+            painelDialog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
             JLabel lblTitulo = new JLabel("Desativação de Conta");
             lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
             lblTitulo.setForeground(new Color(0, 200, 100));
             lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panel.add(lblTitulo);
-            panel.add(Box.createVerticalStrut(20));
+            painelDialog.add(lblTitulo);
+            painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
             lblConfirma.setForeground(Color.WHITE);
             lblConfirma.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            panel.add(lblConfirma);
-            panel.add(Box.createVerticalStrut(10));
+            lblConfirma.setAlignmentX(Component.CENTER_ALIGNMENT);
+            painelDialog.add(lblConfirma);
+            painelDialog.add(Box.createVerticalStrut(10));
 
-            // Botões de opção SIM/NÃO
-            JRadioButton rdbSim = new JRadioButton("Sim");
-            JRadioButton rdbNao = new JRadioButton("Não");
-            rdbSim.setBackground(new Color(50, 50, 50));
-            rdbNao.setBackground(new Color(50, 50, 50));
-            rdbSim.setForeground(Color.WHITE);
-            rdbNao.setForeground(Color.WHITE);
+            JRadioButton btnSim = new JRadioButton("Sim");
+            JRadioButton btnNao = new JRadioButton("Não");
+            btnSim.setBackground(new Color(50, 50, 50));
+            btnNao.setBackground(new Color(50, 50, 50));
+            btnSim.setForeground(Color.WHITE);
+            btnNao.setForeground(Color.WHITE);
+
             ButtonGroup grupo = new ButtonGroup();
-            grupo.add(rdbSim);
-            grupo.add(rdbNao);
+            grupo.add(btnSim);
+            grupo.add(btnNao);
 
             JPanel opcoes = new JPanel();
             opcoes.setBackground(new Color(50, 50, 50));
             opcoes.setLayout(new BoxLayout(opcoes, BoxLayout.Y_AXIS));
-            opcoes.add(rdbSim);
-            opcoes.add(rdbNao);
-            panel.add(opcoes);
-            panel.add(Box.createVerticalStrut(20));
+            opcoes.add(btnSim);
+            opcoes.add(btnNao);
+            painelDialog.add(opcoes);
+            painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblMotivo = new JLabel("Digite o motivo da desativação da conta:");
             lblMotivo.setForeground(Color.WHITE);
             lblMotivo.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            panel.add(lblMotivo);
-            panel.add(Box.createVerticalStrut(10));
+            painelDialog.add(lblMotivo);
+            painelDialog.add(Box.createVerticalStrut(10));
 
             JTextArea areaTexto = new JTextArea(5, 30);
             areaTexto.setLineWrap(true);
             areaTexto.setWrapStyleWord(true);
             JScrollPane scroll = new JScrollPane(areaTexto);
-            panel.add(scroll);
-            panel.add(Box.createVerticalStrut(20));
+            painelDialog.add(scroll);
+            painelDialog.add(Box.createVerticalStrut(20));
 
             JButton btnConfirmar = new JButton("Confirmar");
             btnConfirmar.setBackground(new Color(0, 200, 100));
@@ -123,16 +129,20 @@ public class DesativarContaMentorView {
             btnConfirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             btnConfirmar.addActionListener(ev -> {
-                dialog.dispose(); // Fecha a janela
                 JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
+                internalFrame.dispose();
             });
 
-            panel.add(btnConfirmar);
-            dialog.add(panel);
-            dialog.setVisible(true);
+            painelDialog.add(btnConfirmar);
+            internalFrame.add(painelDialog, BorderLayout.CENTER);
+            internalFrame.setVisible(true);
+            desktopPane.add(internalFrame);
+            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+            internalFrame.moveToFront();
         });
 
-        // Exibir janela
+        // Exibir a Janela
         frame.setVisible(true);
     }
 }
