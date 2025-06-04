@@ -1,4 +1,4 @@
-package org.scam.view;
+package org.scam.view.coordenacao;
 
 import org.scam.controller.classes.Coordenador;
 import org.scam.controller.menus.MenuCoordenador;
@@ -116,7 +116,7 @@ public class LoginCoordenacaoView {
                     telaLogin.dispose();
 
                     MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
-                    menuCoordenador.exibirMenu();
+                    PainelPrincipalView.painelCoordenacao();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
