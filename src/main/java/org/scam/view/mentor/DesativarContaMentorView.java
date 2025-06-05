@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DesativarContaMentorView {
-    public static void main (String[]args) {
+    public static void main(String[]args) {
 
         // Criação da Janela Principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -87,7 +87,7 @@ public class DesativarContaMentorView {
             painelDialog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
             JLabel lblTitulo = new JLabel("Desativação de Conta");
-            lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+            lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
             lblTitulo.setForeground(new Color(0, 200, 100));
             lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
             painelDialog.add(lblTitulo);
@@ -95,7 +95,7 @@ public class DesativarContaMentorView {
 
             JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
             lblConfirma.setForeground(Color.WHITE);
-            lblConfirma.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            lblConfirma.setFont(new Font("SansSerif", Font.PLAIN, 20));
             lblConfirma.setAlignmentX(Component.CENTER_ALIGNMENT);
             painelDialog.add(lblConfirma);
             painelDialog.add(Box.createVerticalStrut(10));
@@ -121,9 +121,10 @@ public class DesativarContaMentorView {
 
             JLabel lblMotivo = new JLabel("Digite o motivo da desativação da conta:");
             lblMotivo.setForeground(Color.WHITE);
-            lblMotivo.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            lblMotivo.setFont(new Font("SansSerif", Font.PLAIN, 20));
             painelDialog.add(lblMotivo);
             painelDialog.add(Box.createVerticalStrut(10));
+            lblMotivo.setAlignmentX(1.0f);
 
             JTextArea areaTexto = new JTextArea(5, 30);
             areaTexto.setLineWrap(true);
@@ -140,6 +141,23 @@ public class DesativarContaMentorView {
             btnConfirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             btnConfirmar.addActionListener(ev -> {
+                // Validação antes de confirmar
+                if (!btnSim.isSelected() && !btnNao.isSelected()) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Por favor, selecione uma opção: Sim ou Não.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (areaTexto.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Por favor, informe o motivo da desativação.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
                 internalFrame.dispose();
             });
@@ -153,20 +171,18 @@ public class DesativarContaMentorView {
             internalFrame.moveToFront();
         });
 
+        // AÇÃO DO BOTÃO "Voltar" para ir à tela de login
         btnVoltar.addActionListener(e -> {
-            int resposta = JOptionPane.showConfirmDialog(frame,
+            int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
                     "Confirmação",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.YES_NO_OPTION);
 
-            if (resposta == JOptionPane.YES_OPTION) {
+            if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose(); // Fecha a janela atual
                 LoginMentorView.loginMentor(); // Abre a tela de login
             }
-            // Se clicar em NO, não faz nada e permanece na tela atual
         });
-
 
         // Exibir a Janela
         frame.setVisible(true);
