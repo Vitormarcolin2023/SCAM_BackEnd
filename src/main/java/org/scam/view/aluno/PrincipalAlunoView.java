@@ -1,5 +1,7 @@
 package org.scam.view.aluno;
 
+import org.scam.view.EstilosPadrao;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +21,7 @@ public class PrincipalAlunoView {
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setFont(EstilosPadrao.tituloSAM);
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
