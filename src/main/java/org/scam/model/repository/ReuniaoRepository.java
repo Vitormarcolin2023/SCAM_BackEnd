@@ -14,14 +14,10 @@ public class ReuniaoRepository {
     }
 
     public List<ReuniaoEntity> buscarReunioes(int ra){
-        try{
             return em.createQuery(
                 "SELECT r FROM ReuniaoEntity r JOIN r.alunos a WHERE a.ra = :ra", ReuniaoEntity.class)
                     .setParameter("ra", ra)
                     .getResultList();
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     public List<ReuniaoEntity> buscarReunioesMentor(int idMentor){
