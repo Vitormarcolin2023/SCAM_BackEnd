@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DesativarContaMentorView {
-    public static void main(String[] args) {
+    public static void main (String[]args) {
 
         // Criação da Janela Principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -38,6 +38,7 @@ public class DesativarContaMentorView {
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
+        JButton btnVoltar = new JButton("Voltar");
 
         Dimension botaoTamanho = new Dimension(165, 30);
         Font fonteBotao = new Font("SansSerif", Font.PLAIN, 14);
@@ -51,6 +52,17 @@ public class DesativarContaMentorView {
             painelBotoes.add(Box.createVerticalStrut(15));
         }
 
+        // Estilo especial para o botão "Voltar"
+        btnVoltar.setMaximumSize(botaoTamanho);
+        btnVoltar.setPreferredSize(botaoTamanho);
+        btnVoltar.setFont(fonteBotao);
+        btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnVoltar.setBackground(new Color(0, 128, 66));
+        btnVoltar.setForeground(Color.WHITE);
+        btnVoltar.setFocusPainted(false);
+        painelBotoes.add(btnVoltar);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
         // DESKTOP PANE para Internal Frames
@@ -63,12 +75,11 @@ public class DesativarContaMentorView {
             JInternalFrame internalFrame = new JInternalFrame();
             internalFrame.setSize(1055, 585);
             internalFrame.setLayout(new BorderLayout());
-            internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
+            internalFrame.setBorder(BorderFactory.createLineBorder(new Color(37, 36, 36), 2));
             javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
             if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
                 basicUI.setNorthPane(null); // remove a barra de título
             }
-
 
             JPanel painelDialog = new JPanel();
             painelDialog.setBackground(new Color(50, 50, 50));
@@ -141,6 +152,21 @@ public class DesativarContaMentorView {
                     (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
             internalFrame.moveToFront();
         });
+
+        btnVoltar.addActionListener(e -> {
+            int resposta = JOptionPane.showConfirmDialog(frame,
+                    "Tem certeza que deseja voltar para a tela de login?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                frame.dispose(); // Fecha a janela atual
+                LoginMentorView.loginMentor(); // Abre a tela de login
+            }
+            // Se clicar em NO, não faz nada e permanece na tela atual
+        });
+
 
         // Exibir a Janela
         frame.setVisible(true);
