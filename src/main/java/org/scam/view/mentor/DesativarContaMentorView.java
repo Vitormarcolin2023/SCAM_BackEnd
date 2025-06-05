@@ -178,10 +178,10 @@ public class DesativarContaMentorView {
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION);
 
-            if (confirmar == JOptionPane.YES_OPTION) {
+            /*if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose(); // Fecha a janela atual
-                LoginMentorView.loginMentor(); // Abre a tela de login
-            }
+                LoginOneMentorView.loginMentorOne(); // Abre a tela de login
+            }*/
         });
 
         // Exibir a Janela

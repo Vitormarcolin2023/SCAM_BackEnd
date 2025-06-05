@@ -14,9 +14,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class LoginMentorView {
-
-    public static void loginMentor() {
+public class LoginTwoMentorView {
+    public static void loginMentorTwo(){
         // Janela
         JFrame telaLogin = new JFrame("Login - Mentor");
         telaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -2,7 +2,8 @@ package org.scam.view;
 
 import org.scam.view.aluno.LoginAlunoView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
-import org.scam.view.mentor.LoginMentorView;
+import org.scam.view.mentor.LoginOneMentorView;
+import org.scam.view.mentor.LoginTwoMentorView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,13 +62,15 @@ public class TelaSelecaoUsuarioView {
 
                 frame.dispose(); // fecha esta tela
 
-                if ("Aluno".equals(selecionado)) {
+               /* if ("Aluno".equals(selecionado)) {
                     LoginAlunoView.loginAluno();
                 } else if ("Mentor".equals(selecionado)) {
-                    LoginMentorView.loginMentor(); // você ainda vai implementar essa
+                    LoginOneMentorView.loginMentorOne(); // você ainda vai implementar essa
                 } else if ("Coordenação".equals(selecionado)) {
                     LoginCoordenacaoView.loginCoordenacao();
                 }
+                */
+
             }
         });
     }
