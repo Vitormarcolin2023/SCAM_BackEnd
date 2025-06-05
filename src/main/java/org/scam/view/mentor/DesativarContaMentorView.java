@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DesativarContaMentorView {
-    public static void main(String[]args) {
+    public static void exibir() {
 
         // Criação da Janela Principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -89,14 +89,14 @@ public class DesativarContaMentorView {
             JLabel lblTitulo = new JLabel("Desativação de Conta");
             lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
             lblTitulo.setForeground(new Color(0, 200, 100));
-            lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+            lblTitulo.setAlignmentX(0.0f);
             painelDialog.add(lblTitulo);
             painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
             lblConfirma.setForeground(Color.WHITE);
             lblConfirma.setFont(new Font("SansSerif", Font.PLAIN, 20));
-            lblConfirma.setAlignmentX(Component.CENTER_ALIGNMENT);
+            lblConfirma.setAlignmentX(0.0f);
             painelDialog.add(lblConfirma);
             painelDialog.add(Box.createVerticalStrut(10));
 
@@ -124,7 +124,7 @@ public class DesativarContaMentorView {
             lblMotivo.setFont(new Font("SansSerif", Font.PLAIN, 20));
             painelDialog.add(lblMotivo);
             painelDialog.add(Box.createVerticalStrut(10));
-            lblMotivo.setAlignmentX(1.0f);
+            lblMotivo.setAlignmentX(0.0f);
 
             JTextArea areaTexto = new JTextArea(5, 30);
             areaTexto.setLineWrap(true);
