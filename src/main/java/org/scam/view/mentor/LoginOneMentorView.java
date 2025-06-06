@@ -72,7 +72,7 @@ public class LoginOneMentorView {
         loginButton.setBackground(new Color(0, 200, 100));
         loginButton.setForeground(Color.BLACK);
         loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Adiciona ao painel
         panel.add(titulo);
