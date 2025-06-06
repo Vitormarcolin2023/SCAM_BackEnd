@@ -10,6 +10,7 @@ public class EstilosPadrao {
     public static Color cinzaClaro = new Color(90, 90, 90);
 
     // Fontes e tamanhos padrão
+    //título: SISTEMA DE ACOMPANHAMENTO DE MENTORIAS
     public static Font tituloSAM = new Font("SansSerif", Font.BOLD, 21);
     public static Font fontePadrao = new Font("SansSerif", Font.PLAIN, 13);
     public static Font fonteTitulos = new Font("SansSerif", Font.PLAIN, 16);

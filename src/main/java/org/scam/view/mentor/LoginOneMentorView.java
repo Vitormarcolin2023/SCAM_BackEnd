@@ -36,9 +36,9 @@ public class LoginOneMentorView {
         topo.setBackground(new Color(0, 200, 100));
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
-        JLabel tituloTopo = new JLabel("SISTEMA DE CADASTRO E GERENCIAMENTO DE MENTORES");
+        JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
-        tituloTopo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        tituloTopo.setFont(new Font("SansSerif", Font.BOLD, 21));
         topo.add(tituloTopo);
         telaLogin.add(topo, BorderLayout.NORTH);
 
@@ -50,7 +50,7 @@ public class LoginOneMentorView {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(45, 45, 45));
         panel.setBorder(BorderFactory.createEmptyBorder(40, 20, 40, 20));
-        panel.setPreferredSize(new Dimension(320, 250));
+        panel.setPreferredSize(new Dimension(320, 260));
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Título
@@ -76,7 +76,7 @@ public class LoginOneMentorView {
         panel.add(cadastroButton, gbc);
 
         // Espaço entre os botões
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 1;
         panel.add(Box.createHorizontalStrut(50), gbc);
 
@@ -86,8 +86,8 @@ public class LoginOneMentorView {
         loginButton.setForeground(Color.BLACK);
         loginButton.setFont(new Font("SansSerif", Font.BOLD,16));
         loginButton.setPreferredSize(new Dimension(165, 30)); // largura, altura
-        gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         panel.add(loginButton, gbc);
 
         // Botão Voltar (abaixo e centralizado)
@@ -98,10 +98,11 @@ public class LoginOneMentorView {
         voltarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridwidth = 3;
         gbc.insets = new Insets(30, 0, 0, 0);
         panel.add(voltarButton, gbc);
+
 
 
         voltarButton.addActionListener(e -> {

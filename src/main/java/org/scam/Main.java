@@ -10,11 +10,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        DesativarContaMentorView.desativarContaM();
 
-
-
-        //LoginOneMentorView.loginOne();
+        //DesativarContaMentorView.desativarContaM();
+        LoginOneMentorView.loginOne();
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 
