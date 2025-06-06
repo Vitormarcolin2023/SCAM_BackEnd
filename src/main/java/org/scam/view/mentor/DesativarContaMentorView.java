@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DesativarContaMentorView {
-    public static void exibir() {
+    public static void desativarContaM() {
 
         // Criação da Janela Principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -178,10 +178,10 @@ public class DesativarContaMentorView {
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION);
 
-            /*if (confirmar == JOptionPane.YES_OPTION) {
+            if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose(); // Fecha a janela atual
-                LoginOneMentorView.loginMentorOne(); // Abre a tela de login
-            }*/
+                LoginOneMentorView.loginOne(); // Abre a tela de login
+            }
         });
 
         // Exibir a Janela

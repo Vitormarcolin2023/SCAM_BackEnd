@@ -20,8 +20,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-//nome da funcao loginMentorOne
-
 
 public class LoginOneMentorView {
 
@@ -105,7 +103,7 @@ public class LoginOneMentorView {
         gbc.insets = new Insets(30, 0, 0, 0);
         panel.add(voltarButton, gbc);
 
-        // Correto:
+
         voltarButton.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(telaLogin,
                     "Tem certeza que deseja voltar para a tela de seleção de usuário?",
@@ -117,11 +115,6 @@ public class LoginOneMentorView {
                 TelaSelecaoUsuarioView.exibirTelaSelecao();
             }
         });
-
-
-
-
-
 
         // Adiciona painel ao container central
         containerCentro.add(panel);

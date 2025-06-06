@@ -2,6 +2,7 @@ package org.scam.view;
 
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
+import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 
 import java.util.Scanner;
@@ -9,12 +10,15 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        LoginOneMentorView.loginOne();
+        DesativarContaMentorView.desativarContaM();
 
+
+
+        //LoginOneMentorView.loginOne();
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 
-        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
 
         /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login

@@ -62,14 +62,14 @@ public class TelaSelecaoUsuarioView {
 
                 frame.dispose(); // fecha esta tela
 
-               /* if ("Aluno".equals(selecionado)) {
+                if ("Aluno".equals(selecionado)) {
                     LoginAlunoView.loginAluno();
                 } else if ("Mentor".equals(selecionado)) {
-                    LoginOneMentorView.loginMentorOne(); // você ainda vai implementar essa
+                    LoginOneMentorView.loginOne(); // você ainda vai implementar essa
                 } else if ("Coordenação".equals(selecionado)) {
                     LoginCoordenacaoView.loginCoordenacao();
                 }
-                */
+
 
             }
         });
