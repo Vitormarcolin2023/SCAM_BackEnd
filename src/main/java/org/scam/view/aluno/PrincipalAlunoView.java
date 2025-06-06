@@ -1,5 +1,7 @@
 package org.scam.view.aluno;
 
+import org.scam.view.EstilosPadrao;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +21,7 @@ public class PrincipalAlunoView {
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setFont(EstilosPadrao.tituloSAM);
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
@@ -59,15 +61,18 @@ public class PrincipalAlunoView {
         // AÇÃO DO BOTÃO "btnReuniao"
         btnReuniao.addActionListener(e -> {
 
+            JInternalFrame internalFrame = new JInternalFrame(); // cria o internal frame
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                JInternalFrame internalFrame = ReuniaoView.visualizarReunioes();
-                desktopPane.add(internalFrame);
-                internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                        (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-                internalFrame.moveToFront();
+                internalFrame = ReuniaoView.visualizarReunioes();
+            } else if (posicaoBtnReuniao==2) {
+                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
             }
+            desktopPane.add(internalFrame);
+            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+            internalFrame.moveToFront();
         });
 
         // Exibir a Janela
