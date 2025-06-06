@@ -90,6 +90,13 @@ public class LoginOneMentorView {
         gbc.gridy = 2;
         panel.add(loginButton, gbc);
 
+        //ação de ao clicar ir para a pagina login 2
+        loginButton.addActionListener(e -> {
+            telaLogin.dispose(); // fecha a tela atual
+            LoginTwoMentorView.loginTwo(); // abre a tela de login final
+        });
+
+
         // Botão Voltar (abaixo e centralizado)
         JButton voltarButton = new JButton("Voltar");
         voltarButton.setBackground(Color.white);

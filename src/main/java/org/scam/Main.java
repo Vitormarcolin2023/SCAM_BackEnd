@@ -4,6 +4,7 @@ import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
+import org.scam.view.mentor.LoginTwoMentorView;
 
 import java.util.Scanner;
 
@@ -12,7 +13,8 @@ public class Main {
 
 
         //DesativarContaMentorView.desativarContaM();
-        LoginOneMentorView.loginOne();
+        //LoginOneMentorView.loginOne();
+        LoginTwoMentorView.loginTwo();
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 

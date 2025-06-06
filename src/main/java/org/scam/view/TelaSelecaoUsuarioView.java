@@ -65,7 +65,7 @@ public class TelaSelecaoUsuarioView {
                 if ("Aluno".equals(selecionado)) {
                     LoginAlunoView.loginAluno();
                 } else if ("Mentor".equals(selecionado)) {
-                    LoginOneMentorView.loginOne(); // você ainda vai implementar essa
+                    LoginOneMentorView.loginOne();
                 } else if ("Coordenação".equals(selecionado)) {
                     LoginCoordenacaoView.loginCoordenacao();
                 }
