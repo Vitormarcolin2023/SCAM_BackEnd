@@ -4,6 +4,7 @@ import org.scam.model.repository.StatusReuniao;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class ReuniaoEntity {
 
     @Column(name = "data_reuniao", nullable = false)
     private LocalDate dataReuniao;
+
+    @Column(name = "horario_reuniao", nullable = false)
+    private LocalTime horarioReuniao;
 
     @Column(name = "local_reuniao", nullable = false, length = 100)
     private String localReuniao;

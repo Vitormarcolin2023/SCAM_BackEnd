@@ -61,15 +61,18 @@ public class PrincipalAlunoView {
         // AÇÃO DO BOTÃO "btnReuniao"
         btnReuniao.addActionListener(e -> {
 
+            JInternalFrame internalFrame = new JInternalFrame(); // cria o internal frame
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                JInternalFrame internalFrame = ReuniaoView.visualizarReunioes();
-                desktopPane.add(internalFrame);
-                internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                        (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-                internalFrame.moveToFront();
+                internalFrame = ReuniaoView.visualizarReunioes();
+            } else if (posicaoBtnReuniao==2) {
+                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
             }
+            desktopPane.add(internalFrame);
+            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+            internalFrame.moveToFront();
         });
 
         // Exibir a Janela
