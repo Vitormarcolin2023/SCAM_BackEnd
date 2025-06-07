@@ -1,54 +1,111 @@
 package org.scam.view.coordenacao;
 
+import org.scam.controller.MentorController;
+import org.scam.controller.ProjetoController;
+import org.scam.model.entities.MentorEntity;
+import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.repository.StatusMentor;
+import org.scam.view.mentor.DesativarMentorView;
+import org.scam.view.mentor.MentorListView;
+import org.scam.view.projeto.ProjetoListView;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
+import java.util.List;
 
 public class PainelPrincipalView {
 
+    // Cores e fontes padrão
+    public static final Color verdeUni = new Color(0, 200, 100);
+    public static final Color cinzaFundo = new Color(50, 50, 50);
+    public static final Color cinzaClaro = new Color(90, 90, 90);
+    public static final Font tituloSAM = new Font("SansSerif", Font.BOLD, 21);
+    public static final Font fontePadrao = new Font("SansSerif", Font.PLAIN, 13);
+    public static final Font fonteTitulos = new Font("SansSerif", Font.PLAIN, 16);
+    public static final Dimension tamanhoBotao = new Dimension(165, 30);
+
     public static void painelCoordenacao() {
-        JFrame frame = new JFrame("Sistema de Cadastro e Gerenciamento de Mentores");
+        JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());
 
-        // TOPO VERDE
+        // TOPO
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 200, 100)); // Verde vibrante
-        topo.setPreferredSize(new Dimension(frame.getWidth(), 50));
-        JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORES");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        topo.setBackground(new Color(0, 128, 66));
+        topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
+        topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
+
+        JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
+        titulo.setFont(tituloSAM);
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
-        // PAINEL CENTRAL ESCURO
-        JPanel painelCentral = new JPanel();
-        painelCentral.setBackground(new Color(60, 60, 60));
-        painelCentral.setLayout(new BorderLayout());
+        // PAINEL CENTRAL
+        JPanel painelCentral = new JPanel(new BorderLayout());
+        painelCentral.setBackground(cinzaFundo);
         frame.add(painelCentral, BorderLayout.CENTER);
 
-        // PAINEL DE CONTROLES (TOP CENTRO)
-        // Painel de login
-        JPanel painel = new JPanel();
-        painel.setBackground(new Color(45, 45, 45));
-        painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
-        painel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(80, 80, 80));
+        painelCentral.add(desktopPane, BorderLayout.CENTER);
 
-        String[] opcoes = {"Listar Mentor"};
-        JComboBox<String> comboMentores = new JComboBox<>(opcoes);
-        JButton btnDesativar = new JButton("desativar mentor");
-        JButton btnProjetos = new JButton("listar projetos");
+        // PAINEL DE BOTÕES
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.setBackground(cinzaClaro);
+        painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
+        painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        painel.add(comboMentores);
-        painel.add(btnDesativar);
-        painel.add(btnProjetos);
+        String[] statusConta = {"Litar Mentor", "Ativo", "Inativo"};
+        JComboBox<String> comboBox = new JComboBox<>(statusConta);
+        comboBox.setMaximumSize(new Dimension(200, 30));
+        comboBox.setFont(fontePadrao);
+        comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        painelCentral.add(painel, BorderLayout.NORTH);
+        JButton btnDesativarMentor = new JButton("Desativar Mentor");
+        JButton btnListarProjetos = new JButton("Listar Projetos");
 
-        // ÁREA DE CONTEÚDO (onde podem aparecer cards, listas, etc)
-        JPanel painelConteudo = new JPanel();
-        painelConteudo.setBackground(new Color(80, 80, 80)); // cinza escuro
-        painelCentral.add(painelConteudo, BorderLayout.CENTER);
+        for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
+            btn.setMaximumSize(tamanhoBotao);
+            btn.setPreferredSize(tamanhoBotao);
+            btn.setFont(fontePadrao);
+            btn.setAlignmentX(Component.LEFT_ALIGNMENT);
+            painelBotoes.add(btn);
+            painelBotoes.add(Box.createVerticalStrut(15));
+        }
+
+        painelCentral.add(painelBotoes, BorderLayout.WEST);
+
+        // CONTROLLERS
+        EntityManager em = CustomizerFactory.getEntityManager();
+        MentorController mentorController = new MentorController(em);
+        ProjetoController projetoController = new ProjetoController(em);
+
+        // AÇÕES
+
+        comboBox.addActionListener(e -> {
+            String statusSelecionado = (String) comboBox.getSelectedItem();
+            if ("Ativo".equals(statusSelecionado)) {
+                List<MentorEntity> mentores = mentorController.listarMentoresPorStatus(StatusMentor.ATIVO);
+                MentorListView.mostrarMentoresNaTela(mentores, "Mentores Ativos", desktopPane);
+            } else if ("Inativo".equals(statusSelecionado)) {
+                List<MentorEntity> mentores = mentorController.listarMentoresPorStatus(StatusMentor.DESATIVO);
+                MentorListView.mostrarMentoresNaTela(mentores, "Mentores Inativos", desktopPane);
+            }
+        });
+
+        btnListarProjetos.addActionListener(ev -> {
+            List<ProjetoEntity> projetos = projetoController.listarTodosProjetos();
+            ProjetoListView.mostrarProjetosNaTela(projetos, "Lista de Projetos", desktopPane);
+        });
+
+        btnDesativarMentor.addActionListener(ev -> {
+            DesativarMentorView.abrirTelaDesativacao(desktopPane);
+        });
 
         frame.setVisible(true);
     }
