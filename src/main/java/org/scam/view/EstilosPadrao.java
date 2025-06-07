@@ -14,6 +14,7 @@ public class EstilosPadrao {
     public static Font tituloSAM = new Font("SansSerif", Font.BOLD, 20);
     public static Font fontePadrao = new Font("SansSerif", Font.PLAIN, 20);
     public static Font fonteTitulos = new Font("SansSerif", Font.PLAIN, 24);
+    public static Font fonteBotao = new Font("SansSerif", Font.PLAIN, 16);
 
     // Dimensões
     public static Dimension tamanhoBotao = new Dimension(165, 30);
