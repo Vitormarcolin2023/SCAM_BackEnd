@@ -7,12 +7,14 @@ import org.scam.model.repository.MentorRepository;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.text.ParseException;
 
 public class CadastroMentorPasso1View {
 
     public static void exibirTelaCadastroPasso1() {
-        JFrame telaCadastro = new JFrame("Cadastro de Mentor - Passo 1 de 2");
+        final JFrame telaCadastro = new JFrame("Cadastro de Mentor - Passo 1 de 2");
         telaCadastro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         telaCadastro.setExtendedState(JFrame.MAXIMIZED_BOTH);
         telaCadastro.setLayout(new BorderLayout());
@@ -53,56 +55,46 @@ public class CadastroMentorPasso1View {
         gbc.anchor = GridBagConstraints.CENTER;
         panelFormulario.add(titulo, gbc);
 
-        // Reset GridBagConstraints
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
         // --- Campos do Formulário ---
-        int y = 1; // Linha atual do grid
+        int y = 1;
 
-        // Nome
         panelFormulario.add(createLabel("Nome Completo:"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField nomeField = new JTextField(20);
+        final JTextField nomeField = new JTextField(20);
         panelFormulario.add(nomeField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // CPF
-        panelFormulario.add(createLabel("CPF (só números):"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField cpfField = new JTextField(20);
+        panelFormulario.add(createLabel("CPF:"), createGbc(0, y, GridBagConstraints.WEST));
+        final JFormattedTextField cpfField = createCpfField();
         panelFormulario.add(cpfField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // E-mail
         panelFormulario.add(createLabel("E-mail:"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField emailField = new JTextField(20);
+        final JTextField emailField = new JTextField(20);
         panelFormulario.add(emailField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Senha
         panelFormulario.add(createLabel("Senha:"), createGbc(0, y, GridBagConstraints.WEST));
-        JPasswordField senhaField = new JPasswordField(20);
+        final JPasswordField senhaField = new JPasswordField(20);
         panelFormulario.add(senhaField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Telefone
         panelFormulario.add(createLabel("Telefone:"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField telefoneField = new JTextField(20);
+        final JTextField telefoneField = new JTextField(20);
         panelFormulario.add(telefoneField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Tempo de Experiência
         panelFormulario.add(createLabel("Tempo de Experiência:"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField experienciaField = new JTextField(20);
+        final JTextField experienciaField = new JTextField(20);
         panelFormulario.add(experienciaField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Tipo de Vínculo
         panelFormulario.add(createLabel("Tipo de Vínculo (CLT, PJ...):"), createGbc(0, y, GridBagConstraints.WEST));
-        JTextField vinculoField = new JTextField(20);
+        final JTextField vinculoField = new JTextField(20);
         panelFormulario.add(vinculoField, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Área de Atuação
         panelFormulario.add(createLabel("Área de Atuação:"), createGbc(0, y, GridBagConstraints.WEST));
-        JComboBox<AreaDeAtuacao> areaAtuacaoBox = new JComboBox<>(AreaDeAtuacao.values());
+        final JComboBox<AreaDeAtuacao> areaAtuacaoBox = new JComboBox<>(AreaDeAtuacao.values());
         panelFormulario.add(areaAtuacaoBox, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // Tipo de Mentor
         panelFormulario.add(createLabel("Tipo de Mentor:"), createGbc(0, y, GridBagConstraints.WEST));
-        JComboBox<TipoMentor> tipoMentorBox = new JComboBox<>(TipoMentor.values());
+        final JComboBox<TipoMentor> tipoMentorBox = new JComboBox<>(TipoMentor.values());
         panelFormulario.add(tipoMentorBox, createGbc(1, y++, GridBagConstraints.EAST));
 
         // --- Botões ---
@@ -125,20 +117,26 @@ public class CadastroMentorPasso1View {
         // --- Ações dos Botões ---
         voltarButton.addActionListener(e -> {
             telaCadastro.dispose();
-            LoginOneMentorView.loginOne(); // Volta para a tela de login/cadastro inicial
+            LoginOneMentorView.loginOne();
         });
 
         proximoButton.addActionListener(e -> {
-            // Validações do backend antes de prosseguir
             EntityManager em = CustomizerFactory.getEntityManager();
             MentorRepository mentorRepo = new MentorRepository(em);
 
-            String cpf = cpfField.getText();
+            String cpf = cpfField.getText().replaceAll("[^0-9]", "");
             String email = emailField.getText();
             String telefone = telefoneField.getText();
 
-            if (cpf.isEmpty() || email.isEmpty() || nomeField.getText().isEmpty() || new String(senhaField.getPassword()).isEmpty()) {
+            if (nomeField.getText().trim().isEmpty() || email.trim().isEmpty() || new String(senhaField.getPassword()).isEmpty()) {
                 JOptionPane.showMessageDialog(telaCadastro, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+                em.close();
+                return;
+            }
+
+            if (cpf.length() != 11) {
+                JOptionPane.showMessageDialog(telaCadastro, "Por favor, preencha o CPF completamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                em.close();
                 return;
             }
 
@@ -160,7 +158,6 @@ public class CadastroMentorPasso1View {
 
             em.close();
 
-            // Se tudo estiver OK, avança para o próximo passo
             telaCadastro.dispose();
             CadastroMentorPasso2View.exibirTelaCadastroPasso2(
                     nomeField.getText(),
@@ -178,7 +175,17 @@ public class CadastroMentorPasso1View {
         telaCadastro.setVisible(true);
     }
 
-    // Helper para criar JLabels com a formatação padrão
+    private static JFormattedTextField createCpfField() {
+        try {
+            MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
+            cpfMask.setPlaceholderCharacter('_');
+            return new JFormattedTextField(cpfMask);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new JFormattedTextField();
+        }
+    }
+
     private static JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);
@@ -186,14 +193,13 @@ public class CadastroMentorPasso1View {
         return label;
     }
 
-    // Helper para criar GridBagConstraints de forma mais limpa
     private static GridBagConstraints createGbc(int x, int y, int anchor) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
         gbc.anchor = anchor;
         gbc.insets = new Insets(5, 5, 5, 5);
-        if (x == 1) { // Componente de input
+        if (x == 1) {
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.weightx = 1.0;
         }
