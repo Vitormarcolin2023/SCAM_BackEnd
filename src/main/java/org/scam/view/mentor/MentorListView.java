@@ -1,4 +1,4 @@
-package org.scam.view.coordenacao;
+package org.scam.view.mentor;
 
 import org.scam.model.entities.MentorEntity;
 
