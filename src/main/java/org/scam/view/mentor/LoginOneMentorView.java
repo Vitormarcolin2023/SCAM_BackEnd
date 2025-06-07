@@ -85,7 +85,7 @@ public class LoginOneMentorView {
         JButton loginButton = new JButton("Login");
         loginButton.setBackground(new Color(0, 200, 100));
         loginButton.setForeground(Color.BLACK);
-        loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        loginButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         loginButton.setPreferredSize(new Dimension(165, 30));
         panelGbc.insets = new Insets(2, 0, 15, 0);
         panel.add(loginButton, panelGbc);

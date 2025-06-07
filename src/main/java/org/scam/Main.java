@@ -2,9 +2,11 @@ package org.scam.view;
 
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
+import org.scam.view.coordenacao.LoginCoordenacaoView;
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
+import org.scam.view.mentor.TelaInicialMentorView;
 
 import java.util.Scanner;
 
@@ -12,10 +14,12 @@ public class Main {
     public static void main(String[] args) {
 
 
+
+    
         //DesativarContaMentorView.desativarContaM();
-        LoginOneMentorView.loginOne();
+        //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
-        //LoginViewCoordenação.loginCoordenacao(); - Coordenação
+        //LoginCoordenacaoView.loginCoordenacao();
         //LoginAlunoView.loginAluno(); - Aluno
 
         //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
@@ -87,7 +91,6 @@ public class Main {
             }
         }while (continuar != 4) ;*/
     }
-
 
 
     /*public static Credenciais menuLogin (int tipoUsuario) {
