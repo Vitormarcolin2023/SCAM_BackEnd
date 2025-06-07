@@ -79,6 +79,11 @@ public class LoginOneMentorView {
         panelGbc.insets = new Insets(5, 0, 4, 0);
         panel.add(cadastroButton, panelGbc);
 
+        cadastroButton.addActionListener(e -> {
+            telaLogin.dispose(); // fecha a tela atual
+            CadastroMentorPasso1View.exibirTelaCadastroPasso1(); // Chama o início do cadastro
+        });
+
 
         // Botão Login
         panelGbc.gridy++;
