@@ -46,8 +46,8 @@ public class ReuniaoView {
         labelFiltro.setFont(EstilosPadrao.fontePadrao);
         labelFiltro.setForeground(Color.WHITE);
 
-        JComboBox<String> filtroReuniao = new JComboBox<>(new String[]{"Agendada", "Realizada", "Cancelada"});
-        filtroReuniao.setFont(EstilosPadrao.fontePadrao);
+        JComboBox<String> filtroReuniao = new JComboBox<>(new String[]{"Agendada", "Aguardando Confirmação", "Realizada", "Cancelada"});
+        filtroReuniao.setFont(EstilosPadrao.fonteBotao);
         painelFiltro.add(labelFiltro);
         painelFiltro.add(filtroReuniao);
 
@@ -68,7 +68,7 @@ public class ReuniaoView {
 
             if(reunioes.isEmpty()){
                 JLabel msgSemReunioes = new JLabel("Sem reuniões");
-                msgSemReunioes.setForeground(EstilosPadrao.verdeUni);
+                msgSemReunioes.setForeground(Color.white);
                 msgSemReunioes.setFont(EstilosPadrao.fontePadrao);
                 msgSemReunioes.setAlignmentX(Component.CENTER_ALIGNMENT);
                 msgSemReunioes.setAlignmentY(Component.CENTER_ALIGNMENT);
