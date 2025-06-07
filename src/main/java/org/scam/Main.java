@@ -13,8 +13,8 @@ public class Main {
 
 
         //DesativarContaMentorView.desativarContaM();
-        //LoginOneMentorView.loginOne();
-        LoginTwoMentorView.loginTwo();
+        LoginOneMentorView.loginOne();
+        //LoginTwoMentorView.loginTwo();
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 

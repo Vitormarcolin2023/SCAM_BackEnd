@@ -46,6 +46,11 @@ public class LoginOneMentorView {
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(new Color(30, 30, 30)); // fundo escuro total
 
+        GridBagConstraints panelGbc = new GridBagConstraints();
+        panelGbc.insets = new Insets(5, 0, 15, 0);
+        panelGbc.gridx = 1;
+        panelGbc.fill = GridBagConstraints.HORIZONTAL;
+
         // Painel cinza com botões
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(45, 45, 45));
@@ -65,30 +70,22 @@ public class LoginOneMentorView {
 
         // Botão Cadastre-se
         JButton cadastroButton = new JButton("Cadastre-se");
+        panelGbc.gridy++;
+        cadastroButton.setBackground(Color.white);
+        cadastroButton.setForeground(Color.black);
+        cadastroButton.setPreferredSize(new Dimension(165, 30));
         cadastroButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        cadastroButton.setPreferredSize(new Dimension(165, 30)); // largura, altura
-        cadastroButton.setBackground(new Color(0, 200, 100));
-        cadastroButton.setForeground(Color.BLACK);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.insets = new Insets(10, 20, 10, 20);
+        panel.add(cadastroButton, panelGbc);
         panel.add(cadastroButton, gbc);
 
-        // Espaço entre os botões
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panel.add(Box.createHorizontalStrut(50), gbc);
-
         // Botão Login
+        panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
         loginButton.setBackground(new Color(0, 200, 100));
         loginButton.setForeground(Color.BLACK);
-        loginButton.setFont(new Font("SansSerif", Font.BOLD,16));
-        loginButton.setPreferredSize(new Dimension(165, 30)); // largura, altura
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel.add(loginButton, gbc);
+        loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        loginButton.setPreferredSize(new Dimension(165, 30));
+        panel.add(loginButton, panelGbc);
 
         //ação de ao clicar ir para a pagina login 2
         loginButton.addActionListener(e -> {
@@ -96,20 +93,14 @@ public class LoginOneMentorView {
             LoginTwoMentorView.loginTwo(); // abre a tela de login final
         });
 
-
         // Botão Voltar (abaixo e centralizado)
+        panelGbc.gridy++;
         JButton voltarButton = new JButton("Voltar");
         voltarButton.setBackground(Color.white);
         voltarButton.setForeground(Color.black);
-        voltarButton.setPreferredSize(new Dimension(165, 30)); // largura, altura
+        voltarButton.setPreferredSize(new Dimension(165, 30));
         voltarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(30, 0, 0, 0);
-        panel.add(voltarButton, gbc);
-
+        panel.add(voltarButton, panelGbc);
 
 
         voltarButton.addActionListener(e -> {
