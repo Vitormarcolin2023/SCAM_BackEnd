@@ -21,4 +21,8 @@ public class MentorController {
             return repository.listarMentoresDesativo();
         }
     }
+
+    public void desativarMentor(int idMentor, String motivo) {
+        repository.desativarPorId(idMentor, motivo);
+    }
 }

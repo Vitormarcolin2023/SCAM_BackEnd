@@ -121,4 +121,9 @@ public class MentorEntity implements UsuarioEntity{
     public Mentor toMentor(){
         return new Mentor(id, nome, cpf, email, senha, tipoDeUsuario, telefone, tempoDeExperiencia, tipoDeVinculo, areaDeAtuacao, endereco);
     }
+
+    @Override
+    public String toString() {
+        return nome + " - " + email;
+    }
 }
