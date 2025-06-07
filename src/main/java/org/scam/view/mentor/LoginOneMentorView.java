@@ -47,8 +47,9 @@ public class LoginOneMentorView {
         containerCentro.setBackground(new Color(30, 30, 30)); // fundo escuro total
 
         GridBagConstraints panelGbc = new GridBagConstraints();
-        panelGbc.insets = new Insets(5, 0, 15, 0);
+        panelGbc.insets = new Insets(2, 0, 4, 0);
         panelGbc.gridx = 1;
+        panelGbc.gridy = 0;
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Painel cinza com botões
@@ -56,17 +57,17 @@ public class LoginOneMentorView {
         panel.setBackground(new Color(45, 45, 45));
         panel.setBorder(BorderFactory.createEmptyBorder(40, 20, 40, 20));
         panel.setPreferredSize(new Dimension(320, 260));
-        GridBagConstraints gbc = new GridBagConstraints();
+
 
         // Título
         JLabel titulo = new JLabel("OLÁ MENTOR!");
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 0, 30, 0);
-        panel.add(titulo, gbc);
+        panelGbc.gridx = 0;
+        panelGbc.gridy = 0;
+        panelGbc.gridwidth = 3;
+        panelGbc.insets = new Insets(10, 0, 30, 0);
+        panel.add(titulo, panelGbc);
 
         // Botão Cadastre-se
         JButton cadastroButton = new JButton("Cadastre-se");
@@ -75,8 +76,9 @@ public class LoginOneMentorView {
         cadastroButton.setForeground(Color.black);
         cadastroButton.setPreferredSize(new Dimension(165, 30));
         cadastroButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+        panelGbc.insets = new Insets(5, 0, 4, 0);
         panel.add(cadastroButton, panelGbc);
-        panel.add(cadastroButton, gbc);
+
 
         // Botão Login
         panelGbc.gridy++;
@@ -85,6 +87,7 @@ public class LoginOneMentorView {
         loginButton.setForeground(Color.BLACK);
         loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
         loginButton.setPreferredSize(new Dimension(165, 30));
+        panelGbc.insets = new Insets(2, 0, 15, 0);
         panel.add(loginButton, panelGbc);
 
         //ação de ao clicar ir para a pagina login 2
@@ -100,6 +103,7 @@ public class LoginOneMentorView {
         voltarButton.setForeground(Color.black);
         voltarButton.setPreferredSize(new Dimension(165, 30));
         voltarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+        panelGbc.insets = new Insets(5, 0, 4, 0);
         panel.add(voltarButton, panelGbc);
 
 
