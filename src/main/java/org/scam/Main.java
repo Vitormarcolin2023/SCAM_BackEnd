@@ -7,7 +7,7 @@ import org.scam.view.aluno.CadastrarProjetosView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
 
-import org.scam.view.mentor.DesativarContaMentorView;
+
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
 //import org.scam.view.mentor.TelaInicialMentorView;
@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        //VisualizarProjetoMentorView.visualizarProjeto();
+        VisualizarProjetoMentorView.visualizarProjeto();
         //TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
