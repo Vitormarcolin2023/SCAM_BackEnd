@@ -130,15 +130,11 @@ public class LoginTwoMentorView {
 
                 if(mentor!=null){
                  JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
+                 TelaInicialMentor.telaMentor();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        });
-
-        // Ação botão login -demo
-        loginButton.addActionListener(e -> {
-            TelaInicialMentor.telaMentor();
         });
 
         // Adiciona painel central
