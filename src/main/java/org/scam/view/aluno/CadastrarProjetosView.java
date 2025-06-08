@@ -15,7 +15,7 @@ public class CadastrarProjetosView {
         telaLogin.setLayout(new BorderLayout());
         telaLogin.getContentPane().setBackground(new Color(30, 30, 30));
 
-        // Faixa superior verde
+        // FAIXA SUPEIOR VERDE
         JPanel topo = new JPanel();
         topo.setBackground(new Color(0, 200, 100));
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
@@ -26,100 +26,106 @@ public class CadastrarProjetosView {
         topo.add(tituloTopo);
         telaLogin.add(topo, BorderLayout.NORTH);
 
-        // Container central com GridBagLayout para centralizar
+        // CONTAINER CENTRAL
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(new Color(30, 30, 30)); // fundo escuro total
 
-        GridBagConstraints panelGbc = new GridBagConstraints();
-        panelGbc.insets = new Insets(8, 10, 8, 10);
-        panelGbc.fill = GridBagConstraints.BOTH;
-        panelGbc.anchor = GridBagConstraints.CENTER;
+            // PAINEL DO FORMULARIO
+            JPanel panel = new JPanel(new GridBagLayout());
+            panel.setBackground(new Color(45, 45, 45));
+            panel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
+            panel.setPreferredSize(new Dimension(500,600));
 
-        // Painel cinza com botões
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(45, 45, 45));
-        panel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
-        panel.setPreferredSize(new Dimension(400, 600));
-
-        GridBagConstraints formGbc = new GridBagConstraints();
-        formGbc.insets = new Insets(10,10,10,10);
-        formGbc.fill = GridBagConstraints.HORIZONTAL;
-        formGbc.weightx = 1.0;
-        formGbc.gridx = 0;
-        formGbc.gridwidth = 2;
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(10,10,5,10);
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridx = 0;
+            gbc.weightx = 1.0;
+            int row = 0;
 
 
-        // Título
-            JPanel tituloPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            tituloPanel.setBackground(new Color(45,45,45));
-
+        // TITULO
             JLabel titulo = new JLabel("Cadastro de Projetos");
             titulo.setForeground(Color.WHITE);
             titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
-            tituloPanel.add(titulo);
-        formGbc.gridx = 0;
-        formGbc.gridy = 0;
-            formGbc.gridwidth = 2;
-        formGbc.insets = new Insets(0,0,20,0);
-        panel.add(titulo, formGbc);
-
-        formGbc.insets = new Insets(5,10,5,10);
-        formGbc.anchor = GridBagConstraints.WEST;
+            gbc.gridy = row++;
+            gbc.gridwidth = 2;
+            gbc.anchor = GridBagConstraints.CENTER;
+            panel.add(titulo, gbc);
 
 
-        //Nome do Projeto
-            formGbc.gridy++;
-            formGbc.gridx = 0;
+        //NOME PROJETO
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridwidth = 2;
+            gbc.gridy = row++;
             JLabel nomeLabel = new JLabel("Nome do Projeto:");
             nomeLabel.setForeground(Color.WHITE);
-            panel.add(nomeLabel,formGbc);
+            panel.add(nomeLabel,gbc);
 
-            formGbc.gridx++;
-            formGbc.gridx = 0;
+            gbc.gridy = row++;
             JTextField nomeField = new JTextField();
-            panel.add(nomeField, formGbc);
+            nomeField.setPreferredSize(new Dimension(200,25));
+            panel.add(nomeField, gbc);
 
-            //Descricao
-            formGbc.gridy++;
-            formGbc.gridx = 0;
+            //DESCRICAO
+            gbc.gridy = row++;
             JLabel descricaoLabel = new JLabel("Descrição:");
             descricaoLabel.setForeground(Color.WHITE);
-            panel.add(descricaoLabel,formGbc);
+            panel.add(descricaoLabel,gbc);
 
-            formGbc.gridx++;
-            formGbc.gridx = 0;
-            JTextField descricaoField = new JTextField();
-            panel.add(descricaoField, formGbc);
+            gbc.gridy = row++;
+            JTextArea descricaoField = new JTextArea(4, 20); // 5 linhas, 20 colunas
+            descricaoField.setLineWrap(true);
+            descricaoField.setWrapStyleWord(true);
+            descricaoField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            panel.add(descricaoField, gbc);
 
-            //Area de atuacao
-            formGbc.gridy++;
-
+            //AAREA DE ATUACAO
+            gbc.gridy = row++;
             JLabel atuacaoLabel = new JLabel("Área de atuação:");
             atuacaoLabel.setForeground(Color.WHITE);
-            panel.add(atuacaoLabel, formGbc);
+            panel.add(atuacaoLabel, gbc);
 
-            formGbc.gridy++;
+            gbc.gridy = row++;
             String [] opcoesAtuacao = {"AGRÁRIAS E BIOLOGIA", "EDUCAÇÃO", "ENGENHARIA E ARQUITETURA", "GESTÃO","SAÚDE","SOCIAIS","TECNOLOGIA"};
             JComboBox<String> btnAtuacao = new JComboBox<>(opcoesAtuacao);
-            panel.add(btnAtuacao,formGbc);
+            panel.add(btnAtuacao,gbc);
 
-            //Botoes
-            formGbc.gridy++;
-            formGbc.insets = new Insets(20,10,10,10);
+            //SELECAO DO CURSO
+            gbc.gridy = row++;
+            JLabel cursoLabel = new JLabel("Seleção do curso:");
+            cursoLabel.setForeground(Color.WHITE);
+            panel.add(cursoLabel, gbc);
+
+            gbc.gridy = row++;
+            String [] opcoesCurso = { "ADMINISTRADOR", "AGRONOMIA", "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS", "ARQUITETURA E URBANISMO",
+                    "BIOMEDICINA", "CIÊNCIAS BIOLÓGICAS", "CIÊNCIAS CONTÁBEIS","DESIGN GRÁFICA DIGITAL", "DIREITO", "EDUCAÇÃO FÍSICA", "ENFERMAGEM",
+                    "ENGENHARIA CIVIL", "ENGENHARIA DE SOFTWARE", "ENGENHARIA ELÉTRICA", "ENGENHARIA MECÂNICA", "FARMÁCIA", "FISIOTERAPIA", "MEDICINA VETERINÁRIA",
+                    "NUTRIÇÃO", "PEDAGOGIA", "PSICOLOGIA", "PUBLICIDADE E PROPAGANDA"};
+            JComboBox<String> btnCurso = new JComboBox<>(opcoesCurso);
+            panel.add(btnCurso,gbc);
+
+            //BOTOES
+            gbc.gridy = row++;
+            gbc.insets = new Insets(20,10,10,10);
+
             JPanel botoesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             botoesPanel.setBackground(new Color(45,45,45));
 
-            JButton cadastroButton = new JButton("Cadastre-se");
             JButton voltarButton = new JButton("Voltar");
+            JButton cadastroButton = new JButton("Cadastre-se");
+
 
             cadastroButton.setPreferredSize(new Dimension(150,30));
             voltarButton.setPreferredSize(new Dimension(150,30));
 
             botoesPanel.add(voltarButton);
             botoesPanel.add(cadastroButton);
-            panel.add(botoesPanel,formGbc);
 
-            containerCentro.add(panel,panelGbc);
+            panel.add(botoesPanel,gbc);
+
+            containerCentro.add(panel);
             telaLogin.add(containerCentro,BorderLayout.CENTER);
             telaLogin.setVisible(true);
 
