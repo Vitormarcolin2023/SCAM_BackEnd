@@ -4,6 +4,8 @@ import org.scam.controller.cadastros.AreaDeAtuacao;
 import org.scam.controller.classes.TipoMentor;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
+import org.scam.view.EstilosPadrao;
+import org.scam.view.mentor.LoginOneMentorView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -18,26 +20,26 @@ public class CadastroMentorPasso1View {
         telaCadastro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         telaCadastro.setExtendedState(JFrame.MAXIMIZED_BOTH);
         telaCadastro.setLayout(new BorderLayout());
-        telaCadastro.getContentPane().setBackground(new Color(30, 30, 30));
+        telaCadastro.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
         // Topo
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 200, 100));
+        topo.setBackground(EstilosPadrao.verdeUni);
         topo.setPreferredSize(new Dimension(telaCadastro.getWidth(), 50));
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
-        tituloTopo.setFont(new Font("SansSerif", Font.BOLD, 21));
+        tituloTopo.setFont(EstilosPadrao.tituloSAM);
         topo.add(tituloTopo);
         telaCadastro.add(topo, BorderLayout.NORTH);
 
         // Container Central
         JPanel containerCentro = new JPanel(new GridBagLayout());
-        containerCentro.setBackground(new Color(30, 30, 30));
+        containerCentro.setBackground(EstilosPadrao.cinzaFundo);
         telaCadastro.add(containerCentro, BorderLayout.CENTER);
 
         // Painel do Formulário
         JPanel panelFormulario = new JPanel(new GridBagLayout());
-        panelFormulario.setBackground(new Color(45, 45, 45));
+        panelFormulario.setBackground(EstilosPadrao.cinzaClaro);
         panelFormulario.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         containerCentro.add(panelFormulario);
 
@@ -48,7 +50,7 @@ public class CadastroMentorPasso1View {
         // Título do Painel
         JLabel titulo = new JLabel("CADASTRO - DADOS PESSOAIS E PROFISSIONAIS");
         titulo.setForeground(Color.WHITE);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        titulo.setFont(EstilosPadrao.fonteTitulos);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -99,7 +101,7 @@ public class CadastroMentorPasso1View {
 
         // --- Botões ---
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
-        panelBotoes.setBackground(new Color(45, 45, 45));
+        panelBotoes.setBackground(EstilosPadrao.cinzaClaro);
         gbc.gridx = 0;
         gbc.gridy = y;
         gbc.gridwidth = 2;
@@ -108,8 +110,16 @@ public class CadastroMentorPasso1View {
         panelFormulario.add(panelBotoes, gbc);
 
         JButton voltarButton = new JButton("Voltar");
+        voltarButton.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        voltarButton.setForeground(Color.WHITE);
+
         JButton proximoButton = new JButton("Próximo");
-        proximoButton.setBackground(new Color(0, 200, 100));
+        proximoButton.setBackground(EstilosPadrao.verdeUni);
+        proximoButton.setFont(EstilosPadrao.fonteBotao);
+        proximoButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        proximoButton.setForeground(Color.WHITE);
 
         panelBotoes.add(voltarButton);
         panelBotoes.add(proximoButton);
@@ -133,13 +143,11 @@ public class CadastroMentorPasso1View {
                 em.close();
                 return;
             }
-
             if (cpf.length() != 11) {
                 JOptionPane.showMessageDialog(telaCadastro, "Por favor, preencha o CPF completamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                 em.close();
                 return;
             }
-
             if (mentorRepo.existePorCpf(cpf)) {
                 JOptionPane.showMessageDialog(telaCadastro, "Já existe um mentor cadastrado com este CPF.", "Erro", JOptionPane.ERROR_MESSAGE);
                 em.close();
@@ -155,18 +163,12 @@ public class CadastroMentorPasso1View {
                 em.close();
                 return;
             }
-
             em.close();
 
             telaCadastro.dispose();
             CadastroMentorPasso2View.exibirTelaCadastroPasso2(
-                    nomeField.getText(),
-                    cpf,
-                    email,
-                    new String(senhaField.getPassword()),
-                    telefone,
-                    experienciaField.getText(),
-                    vinculoField.getText(),
+                    nomeField.getText(), cpf, email, new String(senhaField.getPassword()),
+                    telefone, experienciaField.getText(), vinculoField.getText(),
                     (AreaDeAtuacao) areaAtuacaoBox.getSelectedItem(),
                     (TipoMentor) tipoMentorBox.getSelectedItem()
             );
@@ -189,7 +191,7 @@ public class CadastroMentorPasso1View {
     private static JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        label.setFont(EstilosPadrao.fontePadrao);
         return label;
     }
 
