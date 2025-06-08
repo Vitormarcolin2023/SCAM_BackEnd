@@ -17,22 +17,22 @@ import javax.persistence.EntityManager;
 
 public class Usuario {
 
-    private final EntityManager em = CustomizerFactory.getEntityManager();
-    private final AlunoRepository alunoRepository = new AlunoRepository(em);
-    private final MentorRepository mentorRepository = new MentorRepository(em);
-    private final CoordenacaoRepository coordenacaoRepository = new CoordenacaoRepository(em);
+    private static final EntityManager em = CustomizerFactory.getEntityManager();
+    private static final AlunoRepository alunoRepository = new AlunoRepository(em);
+    private static final MentorRepository mentorRepository = new MentorRepository(em);
+    private static final CoordenacaoRepository coordenacaoRepository = new CoordenacaoRepository(em);
 
-    public Aluno loginAluno(String email, String senha) {
+    public static Aluno loginAluno(String email, String senha) {
         AlunoEntity aluno = alunoRepository.login(email, senha);
         return (aluno!=null) ? aluno.toAluno() : null;
     }
 
-    public Coordenador loginCoordenador(String email, String senha){
+    public static Coordenador loginCoordenador(String email, String senha){
         CoordenacaoEntity coordenacao = coordenacaoRepository.login(email, senha);
         return (coordenacao!=null) ? coordenacao.toCoordenador() : null;
     }
 
-    public Mentor loginMentor(String email, String senha){
+    public static Mentor loginMentor(String email, String senha){
         MentorEntity mentor = mentorRepository.login(email, senha);
         return (mentor!=null) ? mentor.toMentor() : null;
     }

@@ -1,11 +1,11 @@
-
+package org.scam.view;
 
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
 import org.scam.view.TelaSelecaoUsuarioView;
-import org.scam.view.aluno.CadastrarProjetosView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
+<<<<<<< HEAD
 
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
@@ -13,31 +13,51 @@ import org.scam.view.mentor.LoginTwoMentorView;
 //import org.scam.view.mentor.TelaInicialMentorView;
 
 
+=======
+import org.scam.view.mentor.DesativarContaMentorView;
+import org.scam.view.mentor.LoginOneMentorView;
+import org.scam.view.mentor.LoginTwoMentorView;
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
 
 import java.util.Scanner;
 
 //public class Main {
     //public static void main(String[] args) {
 
+<<<<<<< HEAD
        // VisualizarProjetoMentorView.visualizarProjeto();
         //TelaInicialMentor.telaMentor();
+=======
+
+
+
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
+        //LoginTwoMentorView.loginTwo();
+        //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 
+<<<<<<< HEAD
 
        // TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
         //PainelPrincipalView.painelCoordenacao();
 
         //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+=======
+        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        //PainelPrincipalView.painelCoordenacao();
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
 
-        /*Scanner sc = new Scanner(System.in);
-        Usuario login = new Usuario(); // utilizada para validar as informações de login
+        //ProjetoCadastro projetoCadastro = new ProjetoCadastro();
+        //projetoCadastro.cadastrarProjeto();
 
-        int continuar = 0;
+        //MentorCadastro mentorCadastro = new MentorCadastro();
+        //mentorCadastro.cadastrarMentor();
 
+<<<<<<< HEAD
         do {
 
             System.out.println("======== SISTEMA DE MENTORIA ========");
@@ -115,5 +135,9 @@ import java.util.Scanner;
         return new Credenciais(email, senha);
     }*/
 
+=======
+    }
+}
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
 
 

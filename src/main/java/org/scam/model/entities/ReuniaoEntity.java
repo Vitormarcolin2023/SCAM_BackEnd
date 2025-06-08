@@ -31,6 +31,9 @@ public class ReuniaoEntity {
     @Column(name = "status_reuniao", nullable = false)
     private StatusReuniao statusReuniao = StatusReuniao.AGENDADA;
 
+    @Column(name = "confirmada", nullable = false)
+    private boolean reuniaoConfirmada;
+
     @ManyToOne
     @JoinColumn(name = "fk_mentor_id", nullable = false)
     private MentorEntity mentor;
