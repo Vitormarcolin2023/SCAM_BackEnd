@@ -12,7 +12,7 @@ public class VisualizarProjetoMentorView {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());
 
-        // Painel superior (barra verde com título)
+        // Painel superior
         JPanel topo = new JPanel();
         topo.setBackground(new Color(0, 128, 66));
         topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
@@ -24,7 +24,7 @@ public class VisualizarProjetoMentorView {
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
-        // Painel central (conteúdo principal)
+        // Painel central
         JPanel painelCentral = new JPanel(new BorderLayout());
         painelCentral.setBackground(new Color(60, 60, 60));
         frame.add(painelCentral, BorderLayout.CENTER);
@@ -53,7 +53,6 @@ public class VisualizarProjetoMentorView {
             painelBotoes.add(Box.createVerticalStrut(15));
         }
 
-        // Botão "Voltar" com estilo especial
         btnVoltar.setMaximumSize(botaoTamanho);
         btnVoltar.setPreferredSize(botaoTamanho);
         btnVoltar.setFont(fonteBotao);
@@ -66,17 +65,15 @@ public class VisualizarProjetoMentorView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // Área de trabalho (Desktop Pane) para janelas internas
+        // Área de trabalho (Desktop Pane) para JInternalFrames
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
-        // Ação do botão "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
             DesativarContaMentorView.abrirFormularioDesativacao(desktopPane);
         });
 
-        // Ação do botão "Voltar" para retornar à tela de login
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
@@ -84,26 +81,42 @@ public class VisualizarProjetoMentorView {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                frame.dispose(); // Fecha a janela atual
-                LoginOneMentorView.loginOne(); // Abre a tela de login
+                frame.dispose();
+                LoginOneMentorView.loginOne();
             }
         });
 
-        // Ação do botão "Visualizar Projetos"
-        btnVisuProjetos.addActionListener(e -> {
-            // Simulação de projetos com nome e descrição
-            String[][] projetos = {
-                    {"Projeto Alpha", "Mentorado: João Silva\nÁrea: IA\nStatus: Em andamento"},
-                    {"Projeto Beta", "Mentorado: Maria Souza\nÁrea: Web\nStatus: Concluído"},
-                    {"Projeto Gama", "Mentorado: Lucas Lima\nÁrea: Mobile\nStatus: Em planejamento"}
-            };
+        // Dados dos projetos com descrição e alunos
+        Object[][] projetos = {
+                {
+                        "Projeto Alpha",
+                        "IA",
+                        "Em andamento",
+                        "Projeto focado no desenvolvimento de algoritmos de inteligência artificial para reconhecimento de padrões.",
+                        new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}
+                },
+                {
+                        "Projeto Beta",
+                        "Web",
+                        "Concluído",
+                        "Desenvolvimento de uma aplicação web para gerenciamento de tarefas e colaboração em equipe.",
+                        new String[]{"Maria Souza", "Bruno Rocha"}
+                },
+                {
+                        "Projeto Gama",
+                        "Mobile",
+                        "Em planejamento",
+                        "Aplicativo móvel para monitoramento de saúde com integração a dispositivos wearable.",
+                        new String[]{"Lucas Lima"}
+                }
+        };
 
+        btnVisuProjetos.addActionListener(e -> {
             String[] nomesProjetos = new String[projetos.length];
             for (int i = 0; i < projetos.length; i++) {
-                nomesProjetos[i] = projetos[i][0];
+                nomesProjetos[i] = (String) projetos[i][0];
             }
 
-            // Mostra a lista de nomes em um JOptionPane com opção de seleção
             String projetoSelecionado = (String) JOptionPane.showInputDialog(
                     frame,
                     "Selecione um projeto para ver os detalhes:",
@@ -113,28 +126,41 @@ public class VisualizarProjetoMentorView {
                     nomesProjetos,
                     nomesProjetos[0]);
 
-            // Se o usuário escolheu um projeto (não clicou em Cancelar)
             if (projetoSelecionado != null) {
-                for (String[] projeto : projetos) {
+                for (Object[] projeto : projetos) {
                     if (projeto[0].equals(projetoSelecionado)) {
-                        // Criar o pop-up personalizado
-                        JDialog dialog = new JDialog(frame, "Detalhes do Projeto - " + projetoSelecionado, true);
-                        dialog.setSize(400, 250);
-                        dialog.setLocationRelativeTo(frame);
-                        dialog.setLayout(new BorderLayout());
+                        String nome = (String) projeto[0];
+                        String area = (String) projeto[1];
+                        String status = (String) projeto[2];
+                        String descricao = (String) projeto[3];
+                        String[] alunos = (String[]) projeto[4];
 
-                        // Painel estilizado
-                        JPanel painelDialogo = new JPanel();
-                        painelDialogo.setBackground(new Color(60, 60, 60));
-                        painelDialogo.setLayout(new BorderLayout(10, 10));
-                        painelDialogo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                        // Criar JInternalFrame com detalhes do projeto
+                        JInternalFrame internalFrame = new JInternalFrame("Detalhes do Projeto - " + nome, true, true, true, true);
+                        internalFrame.setSize(500, 350);
+                        internalFrame.setVisible(true);
+                        internalFrame.setLayout(new BorderLayout());
+                        internalFrame.getContentPane().setBackground(new Color(60, 60, 60));
 
-                        JLabel tituloDialog = new JLabel(projeto[0], SwingConstants.CENTER);
-                        tituloDialog.setFont(new Font("SansSerif", Font.BOLD, 18));
-                        tituloDialog.setForeground(Color.WHITE);
-                        painelDialogo.add(tituloDialog, BorderLayout.NORTH);
+                        JPanel painelConteudo = new JPanel(new BorderLayout(10, 10));
+                        painelConteudo.setBackground(new Color(60, 60, 60));
+                        painelConteudo.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-                        JTextArea detalhes = new JTextArea(projeto[1]);
+                        JLabel tituloProjeto = new JLabel(nome, SwingConstants.CENTER);
+                        tituloProjeto.setFont(new Font("SansSerif", Font.BOLD, 18));
+                        tituloProjeto.setForeground(Color.WHITE);
+                        painelConteudo.add(tituloProjeto, BorderLayout.NORTH);
+
+                        StringBuilder info = new StringBuilder();
+                        info.append("Área: ").append(area).append("\n");
+                        info.append("Status: ").append(status).append("\n\n");
+                        info.append("Descrição:\n").append(descricao).append("\n\n");
+                        info.append("Alunos vinculados:\n");
+                        for (String aluno : alunos) {
+                            info.append("- ").append(aluno).append("\n");
+                        }
+
+                        JTextArea detalhes = new JTextArea(info.toString());
                         detalhes.setFont(new Font("SansSerif", Font.PLAIN, 14));
                         detalhes.setEditable(false);
                         detalhes.setLineWrap(true);
@@ -145,29 +171,23 @@ public class VisualizarProjetoMentorView {
 
                         JScrollPane scroll = new JScrollPane(detalhes);
                         scroll.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100)));
-                        painelDialogo.add(scroll, BorderLayout.CENTER);
+                        painelConteudo.add(scroll, BorderLayout.CENTER);
 
-                        JButton fechar = new JButton("Fechar");
-                        fechar.setBackground(new Color(0, 128, 66));
-                        fechar.setForeground(Color.WHITE);
-                        fechar.setFocusPainted(false);
-                        fechar.addActionListener(ev -> dialog.dispose());
+                        internalFrame.add(painelConteudo, BorderLayout.CENTER);
 
-                        JPanel painelBotao = new JPanel();
-                        painelBotao.setBackground(new Color(60, 60, 60));
-                        painelBotao.add(fechar);
+                        desktopPane.add(internalFrame);
+                        try {
+                            internalFrame.setSelected(true);
+                        } catch (java.beans.PropertyVetoException ex) {
+                            ex.printStackTrace();
+                        }
 
-                        painelDialogo.add(painelBotao, BorderLayout.SOUTH);
-                        dialog.add(painelDialogo);
-
-                        dialog.setVisible(true);
                         break;
                     }
                 }
             }
         });
 
-        // Exibir a janela
         frame.setVisible(true);
     }
 }
