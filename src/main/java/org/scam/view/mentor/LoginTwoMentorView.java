@@ -116,6 +116,7 @@ public class LoginTwoMentorView {
             }
         });
 
+        /*
         // Ação botão login
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -143,6 +144,11 @@ public class LoginTwoMentorView {
 
                 em.close();
             }
+        });  */
+
+        // Ação botão login -demo
+        loginButton.addActionListener(e -> {
+            TelaInicialMentor.telaMentor();
         });
 
         // Adiciona painel central

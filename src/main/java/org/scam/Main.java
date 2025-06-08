@@ -22,10 +22,10 @@ public class Main {
 
 
         //VisualizarProjetoMentorView.visualizarProjeto();
-        TelaInicialMentor.telaMentor();
+        //TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
-        //LoginTwoMentorView.loginTwo();
+        LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
         //LoginAlunoView.loginAluno(); - Aluno
 
