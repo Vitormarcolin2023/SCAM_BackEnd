@@ -26,7 +26,7 @@ public class Main {
         //TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
-        //LoginTwoMentorView.loginTwo();
+        LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
         //LoginAlunoView.loginAluno();
 

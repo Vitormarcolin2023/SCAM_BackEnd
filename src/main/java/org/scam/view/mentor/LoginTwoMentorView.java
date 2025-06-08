@@ -118,6 +118,7 @@ public class LoginTwoMentorView {
             }
         });
 
+
         // Ação botão login
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -133,6 +134,11 @@ public class LoginTwoMentorView {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
+        });
+
+        // Ação botão login -demo
+        loginButton.addActionListener(e -> {
+            TelaInicialMentor.telaMentor();
         });
 
         // Adiciona painel central
