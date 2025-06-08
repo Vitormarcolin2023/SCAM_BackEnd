@@ -1,8 +1,6 @@
 package org.scam.view.mentor;
 
 import org.scam.view.EstilosPadrao;
-import org.scam.view.aluno.CadastrarReuniaoView;
-import org.scam.view.aluno.ReuniaoView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +79,7 @@ public class TelaInicialMentor {
         btnVoltar.setPreferredSize(botaoTamanho);
         btnVoltar.setFont(fonteBotao);
         btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
-        btnVoltar.setBackground(new Color(0, 128, 66));
+        btnVoltar.setBackground(EstilosPadrao.verdeBotaoVoltar);
         btnVoltar.setForeground(Color.WHITE);
         btnVoltar.setFocusPainted(false);
         painelBotoes.add(btnVoltar);
@@ -353,9 +351,9 @@ public class TelaInicialMentor {
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                internalFrame = ReuniaoView.visualizarReunioes();
+                internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
             } else if (posicaoBtnReuniao==2) {
-                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
+                internalFrame = AgendarReuniaoMtView.agendarReuniaoMentor();
             }
             desktopPane.add(internalFrame);
             internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,

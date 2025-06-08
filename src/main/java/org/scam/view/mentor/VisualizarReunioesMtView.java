@@ -1,21 +1,21 @@
-package org.scam.view.aluno;
+package org.scam.view.mentor;
 
 import org.scam.model.entities.ReuniaoEntity;
 import org.scam.model.services.ReuniaoService;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
-import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ReuniaoView {
+public class VisualizarReunioesMtView {
 
-    public static JInternalFrame visualizarReunioes() {
+    public static JInternalFrame visualizarReunioesMentor(){
 
+        // TROCAR LÓGICA PARA RECUPERAR PROJETOS EM QUE O MENTOR ESTÁ INSCRITO
         ReuniaoService reuniaoService = new ReuniaoService();
         List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
 

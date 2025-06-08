@@ -1,19 +1,14 @@
 package org.scam.view.aluno;
 
 
-import org.scam.model.repository.MentorRepository;
 import org.scam.view.EstilosPadrao;
-import org.scam.model.entities.MentorEntity;
 
-import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import org.scam.view.mentor.LoginOneMentorView;
-import org.scam.view.mentor.MentorListView;
 
 public class PrincipalAlunoView {
 
@@ -126,9 +121,9 @@ public class PrincipalAlunoView {
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                internalFrame = ReuniaoView.visualizarReunioes();
+                internalFrame = VisualizarReunioesAluView.visualizarReunioes();
             } else if (posicaoBtnReuniao==2) {
-                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
+                internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
             }
             desktopPane.add(internalFrame);
             internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
