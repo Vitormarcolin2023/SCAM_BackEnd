@@ -63,12 +63,15 @@ public class VisualizarProjetoMentorView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
+        // JDesktopPane para as internal frames
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
+        // Ação do botão "Desativar Conta" abre a tela dentro do desktopPane
         btnDesativarConta.addActionListener(e -> {
-            DesativarContaMentorView.desativarContaM();
+            // Chama a tela DesativarMentorDesktop dentro do JDesktopPane
+            DesktopDesativarMentor.abrirTelaDesativacao(desktopPane);
         });
 
         btnVoltar.addActionListener(e -> {
@@ -83,6 +86,7 @@ public class VisualizarProjetoMentorView {
             }
         });
 
+        // Dados dos projetos
         Object[][] projetos = {
                 {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA para reconhecimento de padrões.", new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}},
                 {"Projeto Beta", "Web", "Concluído", "App web para gerenciamento de tarefas.", new String[]{"Maria Souza", "Bruno Rocha"}},
