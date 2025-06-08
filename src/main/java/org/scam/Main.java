@@ -21,8 +21,8 @@ public class Main {
     public static void main(String[] args) {
 
 
-        VisualizarProjetoMentorView.visualizarProjeto();
-        //TelaInicialMentor.telaMentor();
+        //VisualizarProjetoMentorView.visualizarProjeto();
+        TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
