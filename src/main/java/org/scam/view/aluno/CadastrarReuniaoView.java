@@ -3,55 +3,156 @@ package org.scam.view.aluno;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
+import java.util.Date;
 
 public class CadastrarReuniaoView {
 
-    public static JInternalFrame cadastrarReuniao(){
+    public static JInternalFrame cadastrarReuniao() {
 
         JInternalFrame internalFrame = new JInternalFrame();
         internalFrame.setSize(1055, 585);
         internalFrame.setLayout(new BorderLayout());
         internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) internalFrame.getUI();
-        ui.setNorthPane(null); // remove a barra de título
+        ui.setNorthPane(null);
 
         JPanel painelPrincipal = new JPanel(new BorderLayout());
         painelPrincipal.setBackground(EstilosPadrao.cinzaFundo);
         painelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Título
         JLabel lblTitulo = new JLabel("Agendar reunião:");
         lblTitulo.setFont(EstilosPadrao.fonteTitulos);
         lblTitulo.setForeground(EstilosPadrao.verdeUni);
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         painelPrincipal.add(lblTitulo, BorderLayout.NORTH);
 
-        // Painel para agendamento de reunião
-        JPanel painelCadastro = new JPanel(new FlowLayout());
-        painelCadastro.setBackground(EstilosPadrao.cinzaFundo);
+        JPanel painelCentro = new JPanel(new GridBagLayout());
+        painelCentro.setBackground(EstilosPadrao.cinzaFundo);
+        painelCentro.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
 
-        JLabel motivoLable = new JLabel("Explique o motivo da reunião: ");
-        motivoLable.setFont(EstilosPadrao.fontePadrao);
-        motivoLable.setForeground(Color.WHITE);
-        painelCadastro.add(motivoLable);
-        painelCadastro.add(Box.createVerticalStrut(10));
-        motivoLable.setAlignmentX(0.0f);
+        GridBagConstraints g = new GridBagConstraints();
+        g.insets = new Insets(10, 10, 10, 10);
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.anchor = GridBagConstraints.WEST;
 
-        JTextArea motivoUser = new JTextArea(5, 30);
-        motivoUser.setLineWrap(true);
-        motivoUser.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(motivoUser);
+        // Label do motivo
+        g.gridx = 0;
+        g.gridy = 0;
+        g.gridwidth = 2;
+        JLabel motivoLabel = new JLabel("Explique o motivo da reunião:");
+        motivoLabel.setFont(EstilosPadrao.fontePadrao);
+        motivoLabel.setForeground(Color.WHITE);
+        painelCentro.add(motivoLabel, g);
 
-        painelCadastro.add(scrollPane);
+        // TextArea do motivo
+        g.gridy = 1;
+        JTextArea motivoArea = new JTextArea(6, 50); // mais larga
+        motivoArea.setLineWrap(true);
+        motivoArea.setWrapStyleWord(true);
+        motivoArea.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        JScrollPane scroll = new JScrollPane(motivoArea);
+        scroll.setPreferredSize(new Dimension(500, 130)); // mais largo e alto
+        painelCentro.add(scroll, g);
 
-        painelCadastro.add(motivoUser);
-        painelPrincipal.add(painelCadastro);
+        g.gridwidth = 1;
 
-        // Adiciona os componentes no internal frame
-        internalFrame.add(painelPrincipal);
+        // Data
+        g.gridx = 0;
+        g.gridy = 2;
+        JLabel dataLabel = new JLabel("Data:");
+        dataLabel.setFont(EstilosPadrao.fontePadrao);
+        dataLabel.setForeground(Color.WHITE);
+        painelCentro.add(dataLabel, g);
+
+        g.gridx = 1;
+        SpinnerDateModel dataModel = new SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH);
+        JSpinner dataSpinner = new JSpinner(dataModel);
+        dataSpinner.setEditor(new JSpinner.DateEditor(dataSpinner, "dd/MM/yyyy"));
+        dataSpinner.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        painelCentro.add(dataSpinner, g);
+
+        // Horário (ao lado da data)
+        g.gridx = 0;
+        g.gridy = 3;
+        JLabel horaLabel = new JLabel("Horário:");
+        horaLabel.setFont(EstilosPadrao.fontePadrao);
+        horaLabel.setForeground(Color.WHITE);
+        painelCentro.add(horaLabel, g);
+
+        g.gridx = 1;
+        SpinnerDateModel horaModel = new SpinnerDateModel(new Date(), null, null, java.util.Calendar.MINUTE);
+        JSpinner horaSpinner = new JSpinner(horaModel);
+        horaSpinner.setEditor(new JSpinner.DateEditor(horaSpinner, "HH:mm"));
+        horaSpinner.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        painelCentro.add(horaSpinner, g);
+
+        // Local
+        g.gridx = 0;
+        g.gridy = 4;
+        JLabel localLabel = new JLabel("Local:");
+        localLabel.setFont(EstilosPadrao.fontePadrao);
+        localLabel.setForeground(Color.WHITE);
+        painelCentro.add(localLabel, g);
+
+        g.gridx = 1;
+        JTextField localField = new JTextField(20);
+        localField.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        painelCentro.add(localField, g);
+
+        // Mentor
+        g.gridx = 0;
+        g.gridy = 5;
+        JLabel mentorLabel = new JLabel("Mentor:");
+        mentorLabel.setFont(EstilosPadrao.fontePadrao);
+        mentorLabel.setForeground(Color.WHITE);
+        painelCentro.add(mentorLabel, g);
+
+        g.gridx = 1;
+        JComboBox<String> comboMentores = new JComboBox<>();
+        comboMentores.setPreferredSize(new Dimension(200, 25));
+        comboMentores.setBorder(BorderFactory.createLineBorder(EstilosPadrao.verdeUni, 1));
+        comboMentores.addItem("Selecione um mentor...");
+        // criar for para carregar mentores
+        painelCentro.add(comboMentores, g);
+
+        // Botões
+        g.gridx = 0;
+        g.gridy = 8;
+        g.gridwidth = 2;
+        g.anchor = GridBagConstraints.WEST;
+
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        painelBotoes.setBackground(EstilosPadrao.cinzaFundo);
+
+        JButton btnSalvar = new JButton("Salvar");
+        btnSalvar.setBackground(EstilosPadrao.verdeUni);
+        btnSalvar.setForeground(Color.WHITE);
+        btnSalvar.addActionListener(e -> {
+            JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+            internalFrame.dispose();
+        });
+
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(EstilosPadrao.verdeUni);
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(internalFrame, "Tem certeza que deseja cancelar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                internalFrame.dispose();
+            }
+        });
+
+        painelBotoes.add(btnSalvar);
+        painelBotoes.add(btnCancelar);
+        painelCentro.add(painelBotoes, g);
+
+        painelPrincipal.add(painelCentro, BorderLayout.CENTER);
+        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
+
         return internalFrame;
     }
 }
