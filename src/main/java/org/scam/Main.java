@@ -4,6 +4,7 @@ import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
 import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.aluno.CadastrarProjetosView;
+import org.scam.view.aluno.LoginAlunoView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
 
@@ -22,15 +23,14 @@ public class Main {
 
 
         //VisualizarProjetoMentorView.visualizarProjeto();
-        TelaInicialMentor.telaMentor();
+        //TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
-        //LoginAlunoView.loginAluno(); - Aluno
+        //LoginAlunoView.loginAluno();
 
-
-       // TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
         //PainelPrincipalView.painelCoordenacao();
 
         //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu

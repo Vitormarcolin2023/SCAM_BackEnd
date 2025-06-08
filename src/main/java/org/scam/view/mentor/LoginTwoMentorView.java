@@ -1,6 +1,8 @@
 package org.scam.view.mentor;
 
 import org.scam.controller.classes.Coordenador;
+import org.scam.controller.classes.Mentor;
+import org.scam.controller.login.Usuario;
 import org.scam.controller.menus.MenuCoordenador;
 import org.scam.model.entities.CoordenacaoEntity;
 import org.scam.model.entities.UsuarioEntity;
@@ -123,25 +125,13 @@ public class LoginTwoMentorView {
                 String email = userField.getText().trim();
                 String senha = new String(passwordField.getPassword()).trim();
 
-                EntityManager em = CustomizerFactory.getEntityManager();
-                CoordenacaoRepository coordenacaoRepository = new CoordenacaoRepository(em);
+                Mentor mentor = Usuario.loginMentor(email, senha);
 
-                UsuarioEntity usuario = coordenacaoRepository.login(email, senha);
-
-                if (usuario != null && usuario instanceof CoordenacaoEntity) {
-                    CoordenacaoEntity coordenacaoEntity = (CoordenacaoEntity) usuario;
-                    Coordenador coordenador = coordenacaoEntity.toCoordenador();
-
-                    JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-                    telaLogin.dispose();
-
-                    MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
-                    PainelPrincipalView.painelCoordenacao();
+                if(mentor!=null){
+                 JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-
-                em.close();
             }
         });
 
