@@ -1,7 +1,11 @@
-package org.scam.view;
+package org.scam;
 
+import org.scam.controller.cadastros.MentorCadastro;
+import org.scam.controller.cadastros.ProjetoCadastro;
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
+import org.scam.view.TelaSelecaoUsuarioView;
+import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
@@ -14,11 +18,19 @@ public class Main {
 
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
-        LoginTwoMentorView.loginTwo();
+        //LoginTwoMentorView.loginTwo();
         //LoginViewCoordenação.loginCoordenacao(); - Coordenação
         //LoginAlunoView.loginAluno(); - Aluno
 
-        //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+        //PainelPrincipalView.painelCoordenacao();
+
+        //ProjetoCadastro projetoCadastro = new ProjetoCadastro();
+        //projetoCadastro.cadastrarProjeto();
+
+        //MentorCadastro mentorCadastro = new MentorCadastro();
+        //mentorCadastro.cadastrarMentor();
+
 
         /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
