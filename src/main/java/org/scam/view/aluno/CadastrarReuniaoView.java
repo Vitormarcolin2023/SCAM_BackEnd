@@ -52,7 +52,7 @@ public class CadastrarReuniaoView {
         JTextArea motivoArea = new JTextArea(6, 50); // mais larga
         motivoArea.setLineWrap(true);
         motivoArea.setWrapStyleWord(true);
-        motivoArea.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        motivoArea.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         JScrollPane scroll = new JScrollPane(motivoArea);
         scroll.setPreferredSize(new Dimension(500, 130)); // mais largo e alto
         painelCentro.add(scroll, g);
@@ -71,7 +71,7 @@ public class CadastrarReuniaoView {
         SpinnerDateModel dataModel = new SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH);
         JSpinner dataSpinner = new JSpinner(dataModel);
         dataSpinner.setEditor(new JSpinner.DateEditor(dataSpinner, "dd/MM/yyyy"));
-        dataSpinner.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        dataSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(dataSpinner, g);
 
         // Horário (ao lado da data)
@@ -86,7 +86,7 @@ public class CadastrarReuniaoView {
         SpinnerDateModel horaModel = new SpinnerDateModel(new Date(), null, null, java.util.Calendar.MINUTE);
         JSpinner horaSpinner = new JSpinner(horaModel);
         horaSpinner.setEditor(new JSpinner.DateEditor(horaSpinner, "HH:mm"));
-        horaSpinner.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        horaSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(horaSpinner, g);
 
         // Local
@@ -99,7 +99,7 @@ public class CadastrarReuniaoView {
 
         g.gridx = 1;
         JTextField localField = new JTextField(20);
-        localField.setBorder(new LineBorder(EstilosPadrao.verdeUni));
+        localField.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(localField, g);
 
         // Mentor
@@ -113,7 +113,7 @@ public class CadastrarReuniaoView {
         g.gridx = 1;
         JComboBox<String> comboMentores = new JComboBox<>();
         comboMentores.setPreferredSize(new Dimension(200, 25));
-        comboMentores.setBorder(BorderFactory.createLineBorder(EstilosPadrao.verdeUni, 1));
+        comboMentores.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
         comboMentores.addItem("Selecione um mentor...");
         // criar for para carregar mentores
         painelCentro.add(comboMentores, g);
