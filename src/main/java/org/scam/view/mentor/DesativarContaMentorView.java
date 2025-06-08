@@ -101,21 +101,20 @@ public class DesativarContaMentorView {
             painelDialog.add(Box.createVerticalStrut(10));
 
             JRadioButton btnSim = new JRadioButton("Sim");
-            JRadioButton btnNao = new JRadioButton("Não");
             btnSim.setBackground(new Color(50, 50, 50));
-            btnNao.setBackground(new Color(50, 50, 50));
+            btnSim.setFont(new Font("SansSerif", Font.PLAIN, 18));
             btnSim.setForeground(Color.WHITE);
-            btnNao.setForeground(Color.WHITE);
+
 
             ButtonGroup grupo = new ButtonGroup();
             grupo.add(btnSim);
-            grupo.add(btnNao);
+
 
             JPanel opcoes = new JPanel();
             opcoes.setBackground(new Color(50, 50, 50));
             opcoes.setLayout(new BoxLayout(opcoes, BoxLayout.Y_AXIS));
             opcoes.add(btnSim);
-            opcoes.add(btnNao);
+
             painelDialog.add(opcoes);
             painelDialog.add(Box.createVerticalStrut(20));
 
@@ -142,9 +141,9 @@ public class DesativarContaMentorView {
 
             btnConfirmar.addActionListener(ev -> {
                 // Validação antes de confirmar
-                if (!btnSim.isSelected() && !btnNao.isSelected()) {
+                if (!btnSim.isSelected()) {
                     JOptionPane.showMessageDialog(internalFrame,
-                            "Por favor, selecione uma opção: Sim ou Não.",
+                            "Por favor, clique na opção Sim para continuar",
                             "Erro",
                             JOptionPane.ERROR_MESSAGE);
                     return;
