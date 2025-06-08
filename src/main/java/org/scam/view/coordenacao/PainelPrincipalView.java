@@ -7,11 +7,9 @@ import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
 import org.scam.view.mentor.MentorListView;
-import org.scam.view.projeto.ProjetoListView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.util.List;
 
