@@ -8,7 +8,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.util.Date;
 
-public class CadastrarReuniaoView {
+public class AgendaReuniaoAluView {
 
     public static JInternalFrame cadastrarReuniao() {
 
