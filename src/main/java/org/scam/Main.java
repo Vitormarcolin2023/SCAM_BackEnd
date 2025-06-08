@@ -6,16 +6,20 @@ import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.aluno.CadastrarProjetosView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
-import org.scam.view.mentor.DesativarContaMentorView;
+
+
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
 //import org.scam.view.mentor.TelaInicialMentorView;
+
 import org.scam.view.mentor.*;
+
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
 
         VisualizarProjetoMentorView.visualizarProjeto();
         //TelaInicialMentor.telaMentor();
@@ -25,9 +29,12 @@ public class Main {
         //LoginCoordenacaoView.loginCoordenacao();
         //LoginAlunoView.loginAluno(); - Aluno
 
+
        // TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
         //PainelPrincipalView.painelCoordenacao();
+
         //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+
 
         /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
