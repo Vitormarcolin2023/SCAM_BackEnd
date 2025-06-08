@@ -231,6 +231,10 @@ public class TelaInicialMentor {
             }
         });
 
+        btnAtualizarConta.addActionListener(e -> {
+            EdicaoMentorPasso1View.exibirTelaEdicaoPasso1();
+        });
+
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame();

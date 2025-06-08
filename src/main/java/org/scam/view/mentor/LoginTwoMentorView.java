@@ -8,6 +8,7 @@ import org.scam.model.entities.CoordenacaoEntity;
 import org.scam.model.entities.UsuarioEntity;
 import org.scam.model.repository.CoordenacaoRepository;
 import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.services.Sessao;
 import org.scam.view.coordenacao.PainelPrincipalView;
 
 import javax.persistence.EntityManager;
@@ -129,7 +130,8 @@ public class LoginTwoMentorView {
                 Mentor mentor = Usuario.loginMentor(email, senha);
 
                 if(mentor!=null){
-                 JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
+                    Sessao.setMentorLogado(mentor);
+                    JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
                  telaLogin.dispose();
                  TelaInicialMentor.telaMentor();
                 } else {
