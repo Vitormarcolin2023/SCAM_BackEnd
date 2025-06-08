@@ -1,5 +1,9 @@
 package org.scam.view.mentor;
 
+import org.scam.view.EstilosPadrao;
+import org.scam.view.aluno.CadastrarReuniaoView;
+import org.scam.view.aluno.ReuniaoView;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -53,6 +57,25 @@ public class TelaInicialMentor {
             painelBotoes.add(Box.createVerticalStrut(15));
         }
 
+        // Botão para visualizar e cadastrar reuniões do Mentor
+        String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
+        JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
+        btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setAlignmentX(Component.LEFT_ALIGNMENT);
+        painelBotoes.add(btnReuniao);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
+        btnReuniao.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
+                return label;
+            }
+        });
+
         // Botão "Voltar" com estilo especial
         btnVoltar.setMaximumSize(botaoTamanho);
         btnVoltar.setPreferredSize(botaoTamanho);
@@ -63,6 +86,7 @@ public class TelaInicialMentor {
         btnVoltar.setFocusPainted(false);
         painelBotoes.add(btnVoltar);
         painelBotoes.add(Box.createVerticalStrut(15));
+
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
@@ -87,6 +111,23 @@ public class TelaInicialMentor {
                 frame.dispose(); // Fecha a janela atual
                 LoginOneMentorView.loginOne(); // Abre a tela de login
             }
+        });
+
+        // AÇÃO DO BOTÃO "btnReuniao"
+        btnReuniao.addActionListener(e -> {
+
+            JInternalFrame internalFrame = new JInternalFrame(); // cria o internal frame
+            int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
+            // Seleção com base no index para redirecionamento para telas
+            if(posicaoBtnReuniao==1) {
+                internalFrame = ReuniaoView.visualizarReunioes();
+            } else if (posicaoBtnReuniao==2) {
+                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
+            }
+            desktopPane.add(internalFrame);
+            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+            internalFrame.moveToFront();
         });
 
         // Exibir a janela

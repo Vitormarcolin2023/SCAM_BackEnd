@@ -1,5 +1,5 @@
 
-
+package org.scam;
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
 import org.scam.view.TelaSelecaoUsuarioView;

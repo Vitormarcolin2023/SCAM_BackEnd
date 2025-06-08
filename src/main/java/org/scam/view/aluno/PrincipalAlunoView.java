@@ -56,8 +56,7 @@ public class PrincipalAlunoView {
         JButton JBCadastrarProjeto = new JButton("Cadastrar Projeto");
         JBCadastrarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBCadastrarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
-        JBCadastrarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao); // largura, altura
-        JBCadastrarProjeto.setBackground(Color.white);
+        JBCadastrarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao); // largura, altur
         JBCadastrarProjeto.setForeground(Color.BLACK);
         JBCadastrarProjeto.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBotoes.add(JBCadastrarProjeto);
@@ -74,7 +73,6 @@ public class PrincipalAlunoView {
         JBGerenciarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBGerenciarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
         JBGerenciarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        JBGerenciarProjeto.setBackground(Color.white);
         JBGerenciarProjeto.setForeground(Color.BLACK);
         painelBotoes.add(JBGerenciarProjeto);
         painelBotoes.add(Box.createVerticalStrut(15));
@@ -90,7 +88,6 @@ public class PrincipalAlunoView {
         JBListMentores.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBListMentores.setMaximumSize(EstilosPadrao.tamanhoBotao);
         JBListMentores.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        JBListMentores.setBackground(Color.white);
         JBListMentores.setForeground(Color.BLACK);
         painelBotoes.add(JBListMentores);
         painelBotoes.add(Box.createVerticalStrut(15));
