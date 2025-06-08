@@ -6,7 +6,6 @@ import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.aluno.CadastrarProjetosView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
-<<<<<<< HEAD
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
