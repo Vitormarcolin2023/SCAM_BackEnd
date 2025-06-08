@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DesativarMentorView {
+public class DesativarMentorDesktop {
 
     public static void abrirTelaDesativacao(JDesktopPane desktopPane) {
         for (JInternalFrame frame : desktopPane.getAllFrames()) {

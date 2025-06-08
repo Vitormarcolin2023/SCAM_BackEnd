@@ -6,7 +6,8 @@ import org.scam.view.coordenacao.LoginCoordenacaoView;
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
-import org.scam.view.mentor.TelaInicialMentorView;
+import org.scam.view.mentor.TelaInicialMentor;
+
 
 import java.util.Scanner;
 
@@ -14,8 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-
-    
+        //TelaInicialMentor.telaInicial();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
