@@ -15,8 +15,8 @@ public class Main {
     public static void main(String[] args) {
 
 
-        //TelaInicialMentor.telaInicial();
-        DesativarContaMentorView.desativarContaM();
+        TelaInicialMentor.telaInicial();
+        //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
