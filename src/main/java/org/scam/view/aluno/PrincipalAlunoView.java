@@ -1,5 +1,6 @@
 package org.scam.view.aluno;
 
+
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
@@ -7,9 +8,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.scam.view.mentor.LoginOneMentorView;
+
 public class PrincipalAlunoView {
 
-    public static void main(String[] args){
+    public static void principal(){
         // CRIACAO DA JANELA PRINCIPAL
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,28 +42,35 @@ public class PrincipalAlunoView {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        // DESKTOP PANE para Internal Frames
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(80, 80, 80));
+        painelCentral.add(desktopPane, BorderLayout.CENTER);
+
 
         JButton JBCadastrarProjeto = new JButton("Cadastrar Projeto");
-        JBCadastrarProjeto.setFont(new Font("SansSerif", Font.BOLD, 16));
-        JBCadastrarProjeto.setPreferredSize(new Dimension(80, 30)); // largura, altura
-        JBCadastrarProjeto.setBackground(new Color(0, 200, 100));
+        JBCadastrarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBCadastrarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBCadastrarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao); // largura, altur
         JBCadastrarProjeto.setForeground(Color.BLACK);
+        JBCadastrarProjeto.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBotoes.add(JBCadastrarProjeto);
-        painelBotoes.add(Box.createRigidArea(new Dimension(100,30)));
+        painelBotoes.add(Box.createVerticalStrut(15));
         JBCadastrarProjeto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
-                cadastrarProjetosView.setVisible(true);
+                /*CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
+                cadastrarProjetosView.setVisible(true);*/
             }
         });
 
         JButton JBGerenciarProjeto = new JButton("Gerenciar Projeto");
-        JBGerenciarProjeto.setFont(new Font("SansSerif", Font.BOLD, 16));
-        JBGerenciarProjeto.setBackground(new Color(0, 200, 100));
+        JBGerenciarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBGerenciarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBGerenciarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao);
         JBGerenciarProjeto.setForeground(Color.BLACK);
         painelBotoes.add(JBGerenciarProjeto);
-        painelBotoes.add(Box.createRigidArea(new Dimension(165, 30)));
+        painelBotoes.add(Box.createVerticalStrut(15));
         JBGerenciarProjeto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,39 +80,39 @@ public class PrincipalAlunoView {
         });
 
         JButton JBListMentores = new JButton("Listar Mentores");
-        JBListMentores.setFont(new Font("SansSerif", Font.BOLD, 16));
-        JBListMentores.setBackground(new Color(0, 200, 100));
+        JBListMentores.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBListMentores.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBListMentores.setPreferredSize(EstilosPadrao.tamanhoBotao);
         JBListMentores.setForeground(Color.BLACK);
         painelBotoes.add(JBListMentores);
-        painelBotoes.add(Box.createRigidArea(new Dimension(100,30)));
+        painelBotoes.add(Box.createVerticalStrut(15));
         JBListMentores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ListMentoresView listMentoresView = new ListMentoresView();
-                listMentoresView.setVisible(true);
+
+
             }
         });
-
-
-        Dimension botaoTamanho = new Dimension(165, 30);
-        Font fonteBotao = new Font("SansSerif", Font.PLAIN, 14);
 
         // botão de reuniões - criar os demais aqui e depois adicionar no for para adicionar na barra lateral
         String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
         JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
-        btnReuniao.setFont(fonteBotao);
-        btnReuniao.setMaximumSize(botaoTamanho);
-        btnReuniao.setPreferredSize(botaoTamanho);
+        btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setPreferredSize(EstilosPadrao.tamanhoBotao);
         btnReuniao.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBotoes.add(btnReuniao);
         painelBotoes.add(Box.createVerticalStrut(15));
 
-        painelCentral.add(painelBotoes, BorderLayout.WEST);
+        btnReuniao.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
+                return label;
+            }
+        });
 
-        // DESKTOP PANE para Internal Frames
-        JDesktopPane desktopPane = new JDesktopPane();
-        desktopPane.setBackground(new Color(80, 80, 80));
-        painelCentral.add(desktopPane, BorderLayout.CENTER);
 
         // AÇÃO DO BOTÃO "btnReuniao"
         btnReuniao.addActionListener(e -> {
@@ -111,9 +121,9 @@ public class PrincipalAlunoView {
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                internalFrame = ReuniaoView.visualizarReunioes();
+                internalFrame = VisualizarReunioesAluView.visualizarReunioes();
             } else if (posicaoBtnReuniao==2) {
-                internalFrame = CadastrarReuniaoView.cadastrarReuniao();
+                internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
             }
             desktopPane.add(internalFrame);
             internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
@@ -121,6 +131,32 @@ public class PrincipalAlunoView {
             internalFrame.moveToFront();
         });
 
+        // Estilo especial para o botão "Voltar"
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnVoltar.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        btnVoltar.setForeground(Color.WHITE);
+        btnVoltar.setFocusPainted(false);
+        painelBotoes.add(btnVoltar);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
+        btnVoltar.addActionListener(e -> {
+            int confirmar = JOptionPane.showConfirmDialog(frame,
+                    "Tem certeza que deseja voltar para a tela de login?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                frame.dispose(); // Fecha a janela atual
+                LoginOneMentorView.loginOne(); // Abre a tela de login
+            }
+        });
+
+
+        painelCentral.add(painelBotoes, BorderLayout.WEST);
         // Exibir a Janela
         frame.setVisible(true);
     }

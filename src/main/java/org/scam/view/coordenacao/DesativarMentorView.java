@@ -4,6 +4,7 @@ import org.scam.controller.MentorController;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
+import org.scam.view.coordenacao.PainelPrincipalView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;

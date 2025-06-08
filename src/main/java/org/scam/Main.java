@@ -9,7 +9,6 @@ import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
 
-
 import java.util.Scanner;
 
 public class Main {

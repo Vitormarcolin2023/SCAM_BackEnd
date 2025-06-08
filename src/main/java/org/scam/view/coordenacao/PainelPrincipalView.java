@@ -11,6 +11,7 @@ import org.scam.view.projeto.ProjetoListView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.util.List;
 

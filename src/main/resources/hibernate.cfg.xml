@@ -21,5 +21,6 @@
         <mapping class="org.scam.model.entities.MentorEntity"/>
         <mapping class="org.scam.model.entities.EnderecoEntity"/>
         <mapping class="org.scam.model.entities.ProjetoEntity"/>
+        <mapping class="org.scam.model.entities.ReuniaoEntity"/>
     </session-factory>
 </hibernate-configuration>

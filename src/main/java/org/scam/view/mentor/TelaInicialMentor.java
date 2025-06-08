@@ -1,20 +1,20 @@
 package org.scam.view.mentor;
 
+import org.scam.view.EstilosPadrao;
+
 import javax.swing.*;
 import java.awt.*;
 
-import static org.scam.view.mentor.VisualizarProjetoMentorView.visualizarProjeto;
+public class TelaInicialMentor {
 
-public class DesativarContaMentorView {
-    public static void desativarContaM() {
-
-        // Criação da Janela Principal
+    public static void telaMentor() {
+        // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());
 
-        // TOPO VERDE COM TÍTULO
+        // Painel superior (barra verde com título)
         JPanel topo = new JPanel();
         topo.setBackground(new Color(0, 128, 66));
         topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
@@ -26,17 +26,18 @@ public class DesativarContaMentorView {
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
-        // PAINEL CENTRAL COM FUNDO CINZA ESCURO
+        // Painel central (conteúdo principal)
         JPanel painelCentral = new JPanel(new BorderLayout());
         painelCentral.setBackground(new Color(60, 60, 60));
         frame.add(painelCentral, BorderLayout.CENTER);
 
-        // PAINEL LATERAL COM BOTÕES
+        // Painel lateral com botões
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBackground(new Color(45, 45, 45));
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        // Botões
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
@@ -54,24 +55,43 @@ public class DesativarContaMentorView {
             painelBotoes.add(Box.createVerticalStrut(15));
         }
 
-        // Estilo especial para o botão "Voltar"
+        // Botão para visualizar e cadastrar reuniões do Mentor
+        String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
+        JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
+        btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setAlignmentX(Component.LEFT_ALIGNMENT);
+        painelBotoes.add(btnReuniao);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
+        btnReuniao.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
+                return label;
+            }
+        });
+
+        // Botão "Voltar" com estilo especial
         btnVoltar.setMaximumSize(botaoTamanho);
         btnVoltar.setPreferredSize(botaoTamanho);
         btnVoltar.setFont(fonteBotao);
         btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
-        btnVoltar.setBackground(new Color(0, 128, 66));
+        btnVoltar.setBackground(EstilosPadrao.verdeBotaoVoltar);
         btnVoltar.setForeground(Color.WHITE);
         btnVoltar.setFocusPainted(false);
         painelBotoes.add(btnVoltar);
         painelBotoes.add(Box.createVerticalStrut(15));
 
+
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // DESKTOP PANE para Internal Frames
+        // Área de trabalho (Desktop Pane) para janelas internas
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
-
 
         //botao para vosualizar projetos
         btnVisuProjetos.addActionListener(e -> {
@@ -211,8 +231,6 @@ public class DesativarContaMentorView {
             }
         });
 
-
-
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame();
@@ -313,7 +331,7 @@ public class DesativarContaMentorView {
             internalFrame.moveToFront();
         });
 
-        // AÇÃO DO BOTÃO "Voltar" para ir à tela de login
+        // Ação do botão "Voltar" para retornar à tela de login
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
@@ -326,11 +344,24 @@ public class DesativarContaMentorView {
             }
         });
 
+        // AÇÃO DO BOTÃO "btnReuniao"
+        btnReuniao.addActionListener(e -> {
 
+            JInternalFrame internalFrame = new JInternalFrame(); // cria o internal frame
+            int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
+            // Seleção com base no index para redirecionamento para telas
+            if(posicaoBtnReuniao==1) {
+                internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
+            } else if (posicaoBtnReuniao==2) {
+                internalFrame = AgendarReuniaoMtView.agendarReuniaoMentor();
+            }
+            desktopPane.add(internalFrame);
+            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+            internalFrame.moveToFront();
+        });
 
-
-
-        // Exibir a Janela
+        // Exibir a janela
         frame.setVisible(true);
     }
 }
