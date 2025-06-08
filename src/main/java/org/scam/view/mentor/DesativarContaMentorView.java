@@ -73,6 +73,7 @@ public class DesativarContaMentorView {
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
 
+        //botao para vosualizar projetos
         btnVisuProjetos.addActionListener(e -> {
             Object[][] projetos = {
                     {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA para reconhecimento de padrões.", new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}},

@@ -22,8 +22,8 @@ public class Main {
 
 
         //VisualizarProjetoMentorView.visualizarProjeto();
-        //TelaInicialMentor.telaMentor();
-        DesativarContaMentorView.desativarContaM();
+        TelaInicialMentor.telaMentor();
+        //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
         //LoginTwoMentorView.loginTwo();
         //LoginCoordenacaoView.loginCoordenacao();
