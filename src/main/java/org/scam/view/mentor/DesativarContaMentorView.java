@@ -3,6 +3,8 @@ package org.scam.view.mentor;
 import javax.swing.*;
 import java.awt.*;
 
+import static org.scam.view.mentor.VisualizarProjetoMentorView.visualizarProjeto;
+
 public class DesativarContaMentorView {
     public static void desativarContaM() {
 
@@ -69,6 +71,10 @@ public class DesativarContaMentorView {
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
+
+        //AÇÃO DO BOTÃO "Visualizar Projetos"
+
+
 
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
@@ -182,6 +188,10 @@ public class DesativarContaMentorView {
                 LoginOneMentorView.loginOne(); // Abre a tela de login
             }
         });
+
+
+
+
 
         // Exibir a Janela
         frame.setVisible(true);
