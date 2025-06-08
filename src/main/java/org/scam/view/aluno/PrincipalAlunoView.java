@@ -1,15 +1,21 @@
 package org.scam.view.aluno;
 
-import org.scam.view.EstilosPadrao;
 
+import org.scam.model.repository.MentorRepository;
+import org.scam.view.EstilosPadrao;
+import org.scam.model.entities.MentorEntity;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import org.scam.view.mentor.MentorListView;
 
 public class PrincipalAlunoView {
 
-    public static void main(String[] args){
+    public static void princiapal(){
         // CRIACAO DA JANELA PRINCIPAL
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,6 +45,11 @@ public class PrincipalAlunoView {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        // DESKTOP PANE para Internal Frames
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(80, 80, 80));
+        painelCentral.add(desktopPane, BorderLayout.CENTER);
+
 
         JButton JBCadastrarProjeto = new JButton("Cadastrar Projeto");
         JBCadastrarProjeto.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -50,8 +61,8 @@ public class PrincipalAlunoView {
         JBCadastrarProjeto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
-                cadastrarProjetosView.setVisible(true);
+                /*CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
+                cadastrarProjetosView.setVisible(true);*/
             }
         });
 
@@ -78,8 +89,8 @@ public class PrincipalAlunoView {
         JBListMentores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ListMentoresView listMentoresView = new ListMentoresView();
-                listMentoresView.setVisible(true);
+
+
             }
         });
 
@@ -99,10 +110,6 @@ public class PrincipalAlunoView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // DESKTOP PANE para Internal Frames
-        JDesktopPane desktopPane = new JDesktopPane();
-        desktopPane.setBackground(new Color(80, 80, 80));
-        painelCentral.add(desktopPane, BorderLayout.CENTER);
 
         // AÇÃO DO BOTÃO "btnReuniao"
         btnReuniao.addActionListener(e -> {
