@@ -73,7 +73,7 @@ public class TelaInicialMentor {
 
         // Ação do botão "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
-            DesativarContaMentorView.abrirFormularioDesativacao(desktopPane);
+            DesativarContaMentorView.desativarContaM();
         });
 
         // Ação do botão "Voltar" para retornar à tela de login

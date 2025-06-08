@@ -6,7 +6,6 @@ import java.awt.*;
 public class VisualizarProjetoMentorView {
     public static void visualizarProjeto() {
 
-        // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -19,7 +18,7 @@ public class VisualizarProjetoMentorView {
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 22));
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
@@ -35,14 +34,13 @@ public class VisualizarProjetoMentorView {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // Botões
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
         JButton btnVoltar = new JButton("Voltar");
 
-        Dimension botaoTamanho = new Dimension(165, 30);
-        Font fonteBotao = new Font("SansSerif", Font.PLAIN, 14);
+        Dimension botaoTamanho = new Dimension(180, 35);
+        Font fonteBotao = new Font("SansSerif", Font.PLAIN, 16);
 
         for (JButton btn : new JButton[]{btnVisuProjetos, btnAtualizarConta, btnDesativarConta}) {
             btn.setMaximumSize(botaoTamanho);
@@ -65,13 +63,12 @@ public class VisualizarProjetoMentorView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // Área de trabalho (Desktop Pane) para JInternalFrames
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
         btnDesativarConta.addActionListener(e -> {
-            DesativarContaMentorView.abrirFormularioDesativacao(desktopPane);
+            DesativarContaMentorView.desativarContaM();
         });
 
         btnVoltar.addActionListener(e -> {
@@ -86,30 +83,14 @@ public class VisualizarProjetoMentorView {
             }
         });
 
-        // Dados dos projetos com descrição e alunos
         Object[][] projetos = {
-                {
-                        "Projeto Alpha",
-                        "IA",
-                        "Em andamento",
-                        "Projeto focado no desenvolvimento de algoritmos de inteligência artificial para reconhecimento de padrões.",
-                        new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}
-                },
-                {
-                        "Projeto Beta",
-                        "Web",
-                        "Concluído",
-                        "Desenvolvimento de uma aplicação web para gerenciamento de tarefas e colaboração em equipe.",
-                        new String[]{"Maria Souza", "Bruno Rocha"}
-                },
-                {
-                        "Projeto Gama",
-                        "Mobile",
-                        "Em planejamento",
-                        "Aplicativo móvel para monitoramento de saúde com integração a dispositivos wearable.",
-                        new String[]{"Lucas Lima"}
-                }
+                {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA para reconhecimento de padrões.", new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}},
+                {"Projeto Beta", "Web", "Concluído", "App web para gerenciamento de tarefas.", new String[]{"Maria Souza", "Bruno Rocha"}},
+                {"Projeto Gama", "Mobile", "Em planejamento", "App de saúde com wearables.", new String[]{"Lucas Lima"}}
         };
+
+        Font fonteCampos = new Font("SansSerif", Font.PLAIN, 16);
+        Font fonteLabel = new Font("SansSerif", Font.BOLD, 16);
 
         btnVisuProjetos.addActionListener(e -> {
             String[] nomesProjetos = new String[projetos.length];
@@ -135,44 +116,95 @@ public class VisualizarProjetoMentorView {
                         String descricao = (String) projeto[3];
                         String[] alunos = (String[]) projeto[4];
 
-                        // Criar JInternalFrame com detalhes do projeto
                         JInternalFrame internalFrame = new JInternalFrame("Detalhes do Projeto - " + nome, true, true, true, true);
-                        internalFrame.setSize(500, 350);
+                        internalFrame.setSize(1055, 585);
                         internalFrame.setVisible(true);
-                        internalFrame.setLayout(new BorderLayout());
+                        internalFrame.setBorder(BorderFactory.createLineBorder(new Color(37, 36, 36), 2));
                         internalFrame.getContentPane().setBackground(new Color(60, 60, 60));
+
+                        javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+                        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                            basicUI.setNorthPane(null);
+                        }
 
                         JPanel painelConteudo = new JPanel(new BorderLayout(10, 10));
                         painelConteudo.setBackground(new Color(60, 60, 60));
                         painelConteudo.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
                         JLabel tituloProjeto = new JLabel(nome, SwingConstants.CENTER);
-                        tituloProjeto.setFont(new Font("SansSerif", Font.BOLD, 18));
+                        tituloProjeto.setFont(new Font("SansSerif", Font.BOLD, 24));
                         tituloProjeto.setForeground(Color.WHITE);
                         painelConteudo.add(tituloProjeto, BorderLayout.NORTH);
 
-                        StringBuilder info = new StringBuilder();
-                        info.append("Área: ").append(area).append("\n");
-                        info.append("Status: ").append(status).append("\n\n");
-                        info.append("Descrição:\n").append(descricao).append("\n\n");
-                        info.append("Alunos vinculados:\n");
-                        for (String aluno : alunos) {
-                            info.append("- ").append(aluno).append("\n");
-                        }
+                        JPanel formulario = new JPanel(new GridBagLayout());
+                        formulario.setBackground(new Color(60, 60, 60));
+                        GridBagConstraints gbc = new GridBagConstraints();
+                        gbc.insets = new Insets(5, 5, 5, 5);
+                        gbc.anchor = GridBagConstraints.WEST;
 
-                        JTextArea detalhes = new JTextArea(info.toString());
-                        detalhes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-                        detalhes.setEditable(false);
-                        detalhes.setLineWrap(true);
-                        detalhes.setWrapStyleWord(true);
-                        detalhes.setBackground(new Color(80, 80, 80));
-                        detalhes.setForeground(Color.WHITE);
-                        detalhes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                        // Área
+                        gbc.gridx = 0;
+                        gbc.gridy = 0;
+                        JLabel lblArea = new JLabel("Área:");
+                        lblArea.setForeground(Color.WHITE);
+                        lblArea.setFont(fonteLabel);
+                        formulario.add(lblArea, gbc);
 
-                        JScrollPane scroll = new JScrollPane(detalhes);
-                        scroll.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100)));
-                        painelConteudo.add(scroll, BorderLayout.CENTER);
+                        gbc.gridx = 1;
+                        JTextField txtArea = new JTextField(area, 30);
+                        txtArea.setEditable(false);
+                        txtArea.setFont(fonteCampos);
+                        formulario.add(txtArea, gbc);
 
+                        // Status
+                        gbc.gridx = 0;
+                        gbc.gridy++;
+                        JLabel lblStatus = new JLabel("Status:");
+                        lblStatus.setForeground(Color.WHITE);
+                        lblStatus.setFont(fonteLabel);
+                        formulario.add(lblStatus, gbc);
+
+                        gbc.gridx = 1;
+                        JTextField txtStatus = new JTextField(status, 30);
+                        txtStatus.setEditable(false);
+                        txtStatus.setFont(fonteCampos);
+                        formulario.add(txtStatus, gbc);
+
+                        // Descrição
+                        gbc.gridx = 0;
+                        gbc.gridy++;
+                        gbc.gridwidth = 2;
+                        JLabel lblDescricao = new JLabel("Descrição:");
+                        lblDescricao.setForeground(Color.WHITE);
+                        lblDescricao.setFont(fonteLabel);
+                        formulario.add(lblDescricao, gbc);
+
+                        gbc.gridy++;
+                        JTextArea txtDescricao = new JTextArea(descricao, 5, 40);
+                        txtDescricao.setLineWrap(true);
+                        txtDescricao.setWrapStyleWord(true);
+                        txtDescricao.setEditable(false);
+                        txtDescricao.setFont(fonteCampos);
+                        JScrollPane scrollDesc = new JScrollPane(txtDescricao);
+                        formulario.add(scrollDesc, gbc);
+
+                        // Alunos
+                        gbc.gridy++;
+                        JLabel lblAlunos = new JLabel("Alunos vinculados:");
+                        lblAlunos.setForeground(Color.WHITE);
+                        lblAlunos.setFont(fonteLabel);
+                        formulario.add(lblAlunos, gbc);
+
+                        gbc.gridy++;
+                        JTextArea txtAlunos = new JTextArea(String.join("\n", alunos), 5, 40);
+                        txtAlunos.setLineWrap(true);
+                        txtAlunos.setWrapStyleWord(true);
+                        txtAlunos.setEditable(false);
+                        txtAlunos.setFont(fonteCampos);
+                        JScrollPane scrollAlunos = new JScrollPane(txtAlunos);
+                        formulario.add(scrollAlunos, gbc);
+
+                        painelConteudo.add(formulario, BorderLayout.CENTER);
                         internalFrame.add(painelConteudo, BorderLayout.CENTER);
 
                         desktopPane.add(internalFrame);
