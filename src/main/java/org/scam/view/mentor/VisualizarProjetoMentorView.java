@@ -6,7 +6,6 @@ import java.awt.*;
 public class VisualizarProjetoMentorView {
     public static void visualizarProjeto() {
 
-        // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -19,7 +18,7 @@ public class VisualizarProjetoMentorView {
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 22));
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
@@ -40,7 +39,7 @@ public class VisualizarProjetoMentorView {
         JButton btnDesativarConta = new JButton("Desativar Conta");
         JButton btnVoltar = new JButton("Voltar");
 
-        Dimension botaoTamanho = new Dimension(165, 30);
+        Dimension botaoTamanho = new Dimension(160, 30);
         Font fonteBotao = new Font("SansSerif", Font.PLAIN, 14);
 
         for (JButton btn : new JButton[]{btnVisuProjetos, btnAtualizarConta, btnDesativarConta}) {
@@ -64,7 +63,7 @@ public class VisualizarProjetoMentorView {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // Área de trabalho
+        // JDesktopPane para as internal frames
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(new Color(80, 80, 80));
         painelCentral.add(desktopPane, BorderLayout.CENTER);
@@ -72,7 +71,7 @@ public class VisualizarProjetoMentorView {
         // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame();
-            internalFrame.setSize(1055, 585);
+            internalFrame.setSize(1060, 585);
             internalFrame.setLayout(new BorderLayout());
             internalFrame.setBorder(BorderFactory.createLineBorder(new Color(37, 36, 36), 2));
             javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
@@ -169,6 +168,7 @@ public class VisualizarProjetoMentorView {
             internalFrame.moveToFront();
         });
 
+        // Ação do botão "Voltar"
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
@@ -183,28 +183,13 @@ public class VisualizarProjetoMentorView {
 
         // Dados dos projetos
         Object[][] projetos = {
-                {
-                        "Projeto Alpha",
-                        "IA",
-                        "Em andamento",
-                        "Projeto focado no desenvolvimento de algoritmos de inteligência artificial para reconhecimento de padrões.",
-                        new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}
-                },
-                {
-                        "Projeto Beta",
-                        "Web",
-                        "Concluído",
-                        "Desenvolvimento de uma aplicação web para gerenciamento de tarefas e colaboração em equipe.",
-                        new String[]{"Maria Souza", "Bruno Rocha"}
-                },
-                {
-                        "Projeto Gama",
-                        "Mobile",
-                        "Em planejamento",
-                        "Aplicativo móvel para monitoramento de saúde com integração a dispositivos wearable.",
-                        new String[]{"Lucas Lima"}
-                }
+                {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA para reconhecimento de padrões.", new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}},
+                {"Projeto Beta", "Web", "Concluído", "App web para gerenciamento de tarefas.", new String[]{"Maria Souza", "Bruno Rocha"}},
+                {"Projeto Gama", "Mobile", "Em planejamento", "App de saúde com wearables.", new String[]{"Lucas Lima"}}
         };
+
+        Font fonteCampos = new Font("SansSerif", Font.PLAIN, 16);
+        Font fonteLabel = new Font("SansSerif", Font.BOLD, 16);
 
         btnVisuProjetos.addActionListener(e -> {
             String[] nomesProjetos = new String[projetos.length];
@@ -261,11 +246,13 @@ public class VisualizarProjetoMentorView {
                         gbc.gridy = 0;
                         JLabel lblArea = new JLabel("Área:");
                         lblArea.setForeground(Color.WHITE);
+                        lblArea.setFont(fonteLabel);
                         formulario.add(lblArea, gbc);
 
                         gbc.gridx = 1;
                         JTextField txtArea = new JTextField(area, 30);
                         txtArea.setEditable(false);
+                        txtArea.setFont(fonteCampos);
                         formulario.add(txtArea, gbc);
 
                         // Status
@@ -273,11 +260,13 @@ public class VisualizarProjetoMentorView {
                         gbc.gridy++;
                         JLabel lblStatus = new JLabel("Status:");
                         lblStatus.setForeground(Color.WHITE);
+                        lblStatus.setFont(fonteLabel);
                         formulario.add(lblStatus, gbc);
 
                         gbc.gridx = 1;
                         JTextField txtStatus = new JTextField(status, 30);
                         txtStatus.setEditable(false);
+                        txtStatus.setFont(fonteCampos);
                         formulario.add(txtStatus, gbc);
 
                         // Descrição
@@ -286,6 +275,7 @@ public class VisualizarProjetoMentorView {
                         gbc.gridwidth = 2;
                         JLabel lblDescricao = new JLabel("Descrição:");
                         lblDescricao.setForeground(Color.WHITE);
+                        lblDescricao.setFont(fonteLabel);
                         formulario.add(lblDescricao, gbc);
 
                         gbc.gridy++;
@@ -293,6 +283,7 @@ public class VisualizarProjetoMentorView {
                         txtDescricao.setLineWrap(true);
                         txtDescricao.setWrapStyleWord(true);
                         txtDescricao.setEditable(false);
+                        txtDescricao.setFont(fonteCampos);
                         JScrollPane scrollDesc = new JScrollPane(txtDescricao);
                         formulario.add(scrollDesc, gbc);
 
@@ -300,6 +291,7 @@ public class VisualizarProjetoMentorView {
                         gbc.gridy++;
                         JLabel lblAlunos = new JLabel("Alunos vinculados:");
                         lblAlunos.setForeground(Color.WHITE);
+                        lblAlunos.setFont(fonteLabel);
                         formulario.add(lblAlunos, gbc);
 
                         gbc.gridy++;
@@ -307,6 +299,7 @@ public class VisualizarProjetoMentorView {
                         txtAlunos.setLineWrap(true);
                         txtAlunos.setWrapStyleWord(true);
                         txtAlunos.setEditable(false);
+                        txtAlunos.setFont(fonteCampos);
                         JScrollPane scrollAlunos = new JScrollPane(txtAlunos);
                         formulario.add(scrollAlunos, gbc);
 
