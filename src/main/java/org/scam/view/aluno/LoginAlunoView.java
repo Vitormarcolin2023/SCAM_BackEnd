@@ -61,7 +61,7 @@ public class LoginAlunoView {
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Título
-        JLabel tituloLogin = new JLabel("LOGIN - MENTOR");
+        JLabel tituloLogin = new JLabel("LOGIN - ALUNO");
         tituloLogin.setForeground(Color.WHITE);
         tituloLogin.setFont(new Font("SansSerif", Font.BOLD, 18));
         tituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,6 +134,7 @@ public class LoginAlunoView {
 
                 if (aluno!=null){
                     JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + aluno.getNome());
+                    telaLogin.dispose();
                     PrincipalAlunoView.principal();
                 }
                 else {

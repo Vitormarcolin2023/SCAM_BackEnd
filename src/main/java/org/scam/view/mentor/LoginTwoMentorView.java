@@ -130,6 +130,7 @@ public class LoginTwoMentorView {
 
                 if(mentor!=null){
                  JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
+                 telaLogin.dispose();
                  TelaInicialMentor.telaMentor();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
