@@ -1,52 +1,48 @@
 package org.scam.view.aluno;
 
-import org.scam.model.entities.MentorEntity;
-
+import org.scam.view.EstilosPadrao;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.util.List;
 
-import static org.scam.view.coordenacao.PainelPrincipalView.fontePadrao;
-import static org.scam.view.coordenacao.PainelPrincipalView.verdeUni;
+
 
 public class ListMentoresView {
-    public static void mostrarMentoresNaTela(List<MentorEntity> mentores, String titulo, JDesktopPane desktopPane) {
-            for (JInternalFrame frame : desktopPane.getAllFrames()) frame.dispose();
+    public static JInternalFrame ListMentores() {
 
-            JInternalFrame internalFrame = new JInternalFrame(titulo, true, true, true, true);
-            internalFrame.setSize(900, 400);
-            internalFrame.setLayout(new BorderLayout());
+        String[] colunas = {"Nome", "Tempo como Mentor", "Experiência Profissional", "E-mail"};
+        Object[][] dados = {
+                {"Amanda Ribeiro Silva", "3 anos", "8 anos", "amanda.silva@mentorhub.com"},
+                {"Bruno Carvalho Mendes", "5 anos", "12 anos", "bruno.mendes@mentorhub.com"},
+                {"Camila Torres Azevedo", "2 anos", "6 anos", "camila.azevedo@mentorhub.com"},
+                {"Diego Martins Souza", "4 anos", "10 anos", "diego.souza@mentorhub.com"},
+                {"Elaine Costa Barreto", "1 ano", "5 anos", "elaine.barreto@mentorhub.com"},
+                {"Felipe Lima Cardoso", "6 anos", "15 anos", "felipe.cardoso@mentorhub.com"},
+                {"Gabriela Rocha Tavares", "3 anos", "9 anos", "gabriela.tavares@mentorhub.com"},
+                {"Henrique Dias Oliveira", "2 anos", "7 anos", "henrique.oliveira@mentorhub.com"},
+                {"Isabella Nunes Ferreira", "4 anos", "11 anos", "isabella.ferreira@mentorhub.com"},
+                {"João Pedro Almeida Leite", "5 anos", "13 anos", "joao.leite@mentorhub.com"}
 
-            String[] colunas = {"ID", "Nome", "CPF", "Email", "Telefone", "Área de Atuação", "Status"};
-            String[][] dados = new String[mentores.size()][colunas.length];
+        };
+        DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
+        JTable tabela = new JTable(modelo);
+        tabela.setRowHeight(30);
 
-            for (int i = 0; i < mentores.size(); i++) {
-                MentorEntity m = mentores.get(i);
-                dados[i][0] = String.valueOf(m.getIdMentor());
-                dados[i][1] = m.getNome();
-                dados[i][2] = m.getCpf();
-                dados[i][3] = m.getEmail();
-                dados[i][4] = m.getTelefone();
-                dados[i][5] = m.getAreaDeAtuacao().name();
-                dados[i][6] = m.getStatus().name();
-            }
+        //ESTILO DO CABECALHO
+        JTableHeader header = tabela.getTableHeader();
+        header.setBackground(EstilosPadrao.verdeUni);
+        header.setFont(new Font("Arial", Font.BOLD,14));
 
-            JTable tabela = new JTable(dados, colunas);
-            tabela.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
-            tabela.getTableHeader().setBackground(verdeUni);
-            tabela.getTableHeader().setForeground(Color.WHITE);
-            tabela.setFont(fontePadrao);
-            tabela.setRowHeight(22);
 
-            internalFrame.add(new JScrollPane(tabela), BorderLayout.CENTER);
-            internalFrame.setVisible(true);
-            desktopPane.add(internalFrame);
-            internalFrame.setLocation(
-                    (desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2
-            );
-            internalFrame.moveToFront();
-        }
+        JScrollPane scrollPane = new JScrollPane(tabela);
+
+        JInternalFrame frame = new JInternalFrame("Lista de Mentores",true,true,true,true);
+        frame.setSize(800,400);
+        frame.setLayout(new BorderLayout());
+        frame.add(scrollPane,BorderLayout.CENTER);
+        frame.setVisible(true);
+
+        return frame;
     }
-
-
+}
