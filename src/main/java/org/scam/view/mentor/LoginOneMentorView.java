@@ -48,7 +48,7 @@ public class LoginOneMentorView {
         panelGbc.gridy++;
         panelGbc.insets = new Insets(5, 0, 5, 0);
         JButton cadastroButton = new JButton("Cadastre-se");
-        styleSecondaryButton(cadastroButton);
+        stylePrimaryButton(cadastroButton);
         panel.add(cadastroButton, panelGbc);
 
         panelGbc.gridy++;
