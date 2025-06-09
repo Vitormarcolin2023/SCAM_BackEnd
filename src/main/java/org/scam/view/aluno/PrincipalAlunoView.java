@@ -1,29 +1,18 @@
 package org.scam.view.aluno;
 
-<<<<<<< HEAD
-import javax.swing.*;
-import java.awt.*;
-
-public class PrincipalAlunoView {
-
-    public static void principalAluno(){
-        // Janela principal
-=======
 
 import org.scam.view.EstilosPadrao;
+import org.scam.view.mentor.LoginOneMentorView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.scam.view.mentor.LoginOneMentorView;
-
 public class PrincipalAlunoView {
 
     public static void principal(){
         // CRIACAO DA JANELA PRINCIPAL
->>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -59,7 +48,7 @@ public class PrincipalAlunoView {
 
         //BOTOES
         JButton JBCadastrarProjeto = new JButton("Cadastrar Projeto");
-<<<<<<< HEAD
+
         JButton JBGerenciarProjeto = new JButton("Gerenciar Projeto");
         JButton JBListMentores = new JButton("Listar Mentores");
 
@@ -76,7 +65,6 @@ public class PrincipalAlunoView {
         }
 
 
-=======
         JBCadastrarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBCadastrarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
         JBCadastrarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao); // largura, altur
@@ -92,7 +80,7 @@ public class PrincipalAlunoView {
             }
         });
 
-        JButton JBGerenciarProjeto = new JButton("Gerenciar Projeto");
+        JButton jButtonGerenciarProjeto = new JButton("Gerenciar Projeto");
         JBGerenciarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBGerenciarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
         JBGerenciarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao);
@@ -107,7 +95,7 @@ public class PrincipalAlunoView {
             }
         });
 
-        JButton JBListMentores = new JButton("Listar Mentores");
+        JButton jBListMentores = new JButton("Listar Mentores");
         JBListMentores.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         JBListMentores.setMaximumSize(EstilosPadrao.tamanhoBotao);
         JBListMentores.setPreferredSize(EstilosPadrao.tamanhoBotao);
@@ -122,7 +110,6 @@ public class PrincipalAlunoView {
             }
         });
 
->>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
         // botão de reuniões - criar os demais aqui e depois adicionar no for para adicionar na barra lateral
         String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
         JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
@@ -195,7 +182,7 @@ public class PrincipalAlunoView {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose(); // Fecha a janela atual
-                LoginOneMentorView.loginOne(); // Abre a tela de login
+               LoginOneMentorView.loginOne(); // Abre a tela de login
             }
         });
 
