@@ -1,9 +1,9 @@
 package org.scam.view;
 
+import org.scam.view.EstilosPadrao;
 import org.scam.view.aluno.LoginAlunoView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
 import org.scam.view.mentor.LoginOneMentorView;
-import org.scam.view.mentor.LoginTwoMentorView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,65 +13,73 @@ import java.awt.event.ActionListener;
 public class TelaSelecaoUsuarioView {
 
     public static void exibirTelaSelecao() {
-        // Janela principal
-        JFrame frame = new JFrame("Bem-vindo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setLocationRelativeTo(null); // Centraliza
-        frame.setLayout(new BorderLayout());
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Bem-vindo ao SAM");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setLayout(new BorderLayout());
+            frame.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
-        // Painel central
-        JPanel painelCentral = new JPanel();
-        painelCentral.setBackground(new Color(45, 45, 45));
-        painelCentral.setLayout(new BoxLayout(painelCentral, BoxLayout.Y_AXIS));
-        painelCentral.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+            JPanel topo = new JPanel();
+            topo.setBackground(EstilosPadrao.verdeUni);
+            topo.setPreferredSize(new Dimension(0, 50));
+            JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
+            tituloTopo.setForeground(Color.WHITE);
+            tituloTopo.setFont(EstilosPadrao.tituloSAM);
+            topo.add(tituloTopo);
+            frame.add(topo, BorderLayout.NORTH);
 
-        JLabel titulo = new JLabel("BOAS VINDAS AO SAM");
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setForeground(Color.WHITE);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+            JPanel containerCentro = new JPanel(new GridBagLayout());
+            containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+            frame.add(containerCentro, BorderLayout.CENTER);
 
-        String[] opcoes = {"Aluno", "Mentor", "Coordenação"};
-        JComboBox<String> comboBox = new JComboBox<>(opcoes);
-        comboBox.setMaximumSize(new Dimension(200, 30));
-        comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+            JPanel painelSelecao = new JPanel(new GridBagLayout());
+            painelSelecao.setBackground(EstilosPadrao.cinzaClaro);
+            painelSelecao.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+            containerCentro.add(painelSelecao);
 
-        JButton btnContinuar = new JButton("Continuar");
-        btnContinuar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnContinuar.setBackground(new Color(0, 200, 100));
-        btnContinuar.setForeground(Color.BLACK);
-        btnContinuar.setFont(new Font("SansSerif", Font.BOLD, 14));
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.insets = new Insets(0, 0, 20, 0);
 
-        painelCentral.add(Box.createVerticalGlue());
-        painelCentral.add(titulo);
-        painelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
-        painelCentral.add(comboBox);
-        painelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
-        painelCentral.add(btnContinuar);
-        painelCentral.add(Box.createVerticalGlue());
+            JLabel titulo = new JLabel("BEM VINDO(A) AO SAM");
+            titulo.setFont(EstilosPadrao.fonteTitulos);
+            titulo.setForeground(Color.WHITE);
+            painelSelecao.add(titulo, gbc);
 
-        frame.add(painelCentral, BorderLayout.CENTER);
-        frame.setVisible(true);
+            String[] opcoes = {"Aluno", "Mentor", "Coordenação"};
+            JComboBox<String> comboBox = new JComboBox<>(opcoes);
+            comboBox.setFont(EstilosPadrao.fonteBotao);
+            comboBox.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            painelSelecao.add(comboBox, gbc);
 
-        // Ação do botão
-        btnContinuar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selecionado = (String) comboBox.getSelectedItem();
+            JButton btnContinuar = new JButton("Continuar");
+            btnContinuar.setBackground(EstilosPadrao.verdeUni);
+            // CORREÇÃO 1: Cor do texto igual aos outros botões.
+            btnContinuar.setForeground(Color.WHITE);
+            // CORREÇÃO 2: Fonte sem negrito, igual aos outros botões.
+            btnContinuar.setFont(EstilosPadrao.fonteBotao);
+            btnContinuar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            gbc.insets = new Insets(10, 0, 0, 0);
+            painelSelecao.add(btnContinuar, gbc);
 
-                frame.dispose(); // fecha esta tela
+            btnContinuar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selecionado = (String) comboBox.getSelectedItem();
+                    frame.dispose();
 
-                if ("Aluno".equals(selecionado)) {
-                    LoginAlunoView.loginAluno();
-                } else if ("Mentor".equals(selecionado)) {
-                    LoginOneMentorView.loginOne();
-                } else if ("Coordenação".equals(selecionado)) {
-                    LoginCoordenacaoView.loginCoordenacao();
+                    if ("Aluno".equals(selecionado)) {
+                        LoginAlunoView.loginAluno();
+                    } else if ("Mentor".equals(selecionado)) {
+                        LoginOneMentorView.loginOne();
+                    } else if ("Coordenação".equals(selecionado)) {
+                        LoginCoordenacaoView.loginCoordenacao();
+                    }
                 }
+            });
 
-
-            }
+            frame.setVisible(true);
         });
     }
 }
