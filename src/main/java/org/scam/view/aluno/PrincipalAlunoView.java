@@ -1,5 +1,6 @@
 package org.scam.view.aluno;
 
+<<<<<<< HEAD
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +8,22 @@ public class PrincipalAlunoView {
 
     public static void principalAluno(){
         // Janela principal
+=======
+
+import org.scam.view.EstilosPadrao;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import org.scam.view.mentor.LoginOneMentorView;
+
+public class PrincipalAlunoView {
+
+    public static void principal(){
+        // CRIACAO DA JANELA PRINCIPAL
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -42,6 +59,7 @@ public class PrincipalAlunoView {
 
         //BOTOES
         JButton JBCadastrarProjeto = new JButton("Cadastrar Projeto");
+<<<<<<< HEAD
         JButton JBGerenciarProjeto = new JButton("Gerenciar Projeto");
         JButton JBListMentores = new JButton("Listar Mentores");
 
@@ -58,17 +76,71 @@ public class PrincipalAlunoView {
         }
 
 
+=======
+        JBCadastrarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBCadastrarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBCadastrarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao); // largura, altur
+        JBCadastrarProjeto.setForeground(Color.BLACK);
+        JBCadastrarProjeto.setAlignmentX(Component.LEFT_ALIGNMENT);
+        painelBotoes.add(JBCadastrarProjeto);
+        painelBotoes.add(Box.createVerticalStrut(15));
+        JBCadastrarProjeto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
+                cadastrarProjetosView.setVisible(true);*/
+            }
+        });
+
+        JButton JBGerenciarProjeto = new JButton("Gerenciar Projeto");
+        JBGerenciarProjeto.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBGerenciarProjeto.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBGerenciarProjeto.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        JBGerenciarProjeto.setForeground(Color.BLACK);
+        painelBotoes.add(JBGerenciarProjeto);
+        painelBotoes.add(Box.createVerticalStrut(15));
+        JBGerenciarProjeto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GerenciarProjetosView gerenciarProjetosView = new GerenciarProjetosView();
+                gerenciarProjetosView.setVisible(true);
+            }
+        });
+
+        JButton JBListMentores = new JButton("Listar Mentores");
+        JBListMentores.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        JBListMentores.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        JBListMentores.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        JBListMentores.setForeground(Color.BLACK);
+        painelBotoes.add(JBListMentores);
+        painelBotoes.add(Box.createVerticalStrut(15));
+        JBListMentores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+        });
+
+>>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
         // botão de reuniões - criar os demais aqui e depois adicionar no for para adicionar na barra lateral
         String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
         JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
-        btnReuniao.setFont(fonteBotao);
-        btnReuniao.setMaximumSize(botaoTamanho);
-        btnReuniao.setPreferredSize(botaoTamanho);
+        btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnReuniao.setPreferredSize(EstilosPadrao.tamanhoBotao);
         btnReuniao.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBotoes.add(btnReuniao);
         painelBotoes.add(Box.createVerticalStrut(15));
 
-        painelCentral.add(painelBotoes, BorderLayout.WEST);
+        btnReuniao.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
+                return label;
+            }
+        });
 
         JBListMentores.addActionListener(e ->{
             JInternalFrame mentorFrame = ListMentoresView.ListMentores();
@@ -93,7 +165,7 @@ public class PrincipalAlunoView {
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
             // Seleção com base no index para redirecionamento para telas
             if(posicaoBtnReuniao==1) {
-                internalFrame =VisualizarReunioesAluView.visualizarReunioes();
+                internalFrame = VisualizarReunioesAluView.visualizarReunioes();
             } else if (posicaoBtnReuniao==2) {
                 internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
             }
@@ -103,8 +175,33 @@ public class PrincipalAlunoView {
             internalFrame.moveToFront();
         });
 
+        // Estilo especial para o botão "Voltar"
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+        btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnVoltar.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        btnVoltar.setForeground(Color.WHITE);
+        btnVoltar.setFocusPainted(false);
+        painelBotoes.add(btnVoltar);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
+        btnVoltar.addActionListener(e -> {
+            int confirmar = JOptionPane.showConfirmDialog(frame,
+                    "Tem certeza que deseja voltar para a tela de login?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                frame.dispose(); // Fecha a janela atual
+                LoginOneMentorView.loginOne(); // Abre a tela de login
+            }
+        });
+
+
+        painelCentral.add(painelBotoes, BorderLayout.WEST);
         // Exibir a Janela
         frame.setVisible(true);
     }
 }
-
