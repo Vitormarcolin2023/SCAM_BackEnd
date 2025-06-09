@@ -1,62 +1,55 @@
 package org.scam.view.mentor;
 
 import org.scam.view.EstilosPadrao;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class TelaInicialMentor {
 
     public static void telaMentor() {
-        // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());
 
-        // Painel superior (barra verde com título)
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 128, 66));
-        topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
+        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setPreferredSize(new Dimension(0, 60));
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setFont(EstilosPadrao.tituloSAM);
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
-        // Painel central (conteúdo principal)
         JPanel painelCentral = new JPanel(new BorderLayout());
-        painelCentral.setBackground(new Color(60, 60, 60));
+        painelCentral.setBackground(EstilosPadrao.cinzaFundo);
         frame.add(painelCentral, BorderLayout.CENTER);
 
-        // Painel lateral com botões
         JPanel painelBotoes = new JPanel();
-        painelBotoes.setBackground(new Color(45, 45, 45));
+        painelBotoes.setBackground(EstilosPadrao.cinzaFundo);
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // Botões
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
         JButton btnVoltar = new JButton("Voltar");
 
-        Dimension botaoTamanho = new Dimension(165, 30);
-        Font fonteBotao = new Font("SansSerif", Font.PLAIN, 14);
-
         for (JButton btn : new JButton[]{btnVisuProjetos, btnAtualizarConta, btnDesativarConta}) {
-            btn.setMaximumSize(botaoTamanho);
-            btn.setPreferredSize(botaoTamanho);
-            btn.setFont(fonteBotao);
+            btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
+            btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            btn.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+            btn.setBackground(EstilosPadrao.cinzaClaro);
+            btn.setForeground(Color.WHITE);
+            btn.setFocusPainted(false);
             btn.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelBotoes.add(btn);
             painelBotoes.add(Box.createVerticalStrut(15));
         }
 
-        // Botão para visualizar e cadastrar reuniões do Mentor
-        String opcoesReuniao[] = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
+        String[] opcoesReuniao = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
         JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
         btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
@@ -68,16 +61,15 @@ public class TelaInicialMentor {
         btnReuniao.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
-                return label;
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
             }
         });
 
-        // Botão "Voltar" com estilo especial
-        btnVoltar.setMaximumSize(botaoTamanho);
-        btnVoltar.setPreferredSize(botaoTamanho);
-        btnVoltar.setFont(fonteBotao);
+        btnVoltar.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnVoltar.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         btnVoltar.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnVoltar.setBackground(EstilosPadrao.verdeBotaoVoltar);
         btnVoltar.setForeground(Color.WHITE);
@@ -85,24 +77,17 @@ public class TelaInicialMentor {
         painelBotoes.add(btnVoltar);
         painelBotoes.add(Box.createVerticalStrut(15));
 
-
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        // Área de trabalho (Desktop Pane) para janelas internas
         JDesktopPane desktopPane = new JDesktopPane();
-        desktopPane.setBackground(new Color(80, 80, 80));
+        desktopPane.setBackground(EstilosPadrao.cinzaClaro);
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
-        //botao para vosualizar projetos
         btnVisuProjetos.addActionListener(e -> {
             Object[][] projetos = {
-                    {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA para reconhecimento de padrões.", new String[]{"João Silva", "Carlos Alberto", "Fernanda Lima"}},
-                    {"Projeto Beta", "Web", "Concluído", "App web para gerenciamento de tarefas.", new String[]{"Maria Souza", "Bruno Rocha"}},
-                    {"Projeto Gama", "Mobile", "Em planejamento", "App de saúde com wearables.", new String[]{"Lucas Lima"}}
+                    {"Projeto Alpha", "IA", "Em andamento", "Algoritmos de IA.", new String[]{"João Silva", "Carlos Alberto"}},
+                    {"Projeto Beta", "Web", "Concluído", "App web de tarefas.", new String[]{"Maria Souza", "Bruno Rocha"}},
             };
-
-            Font fonteCampos = new Font("SansSerif", Font.PLAIN, 16);
-            Font fonteLabel = new Font("SansSerif", Font.BOLD, 16);
 
             String[] nomesProjetos = new String[projetos.length];
             for (int i = 0; i < projetos.length; i++) {
@@ -110,13 +95,8 @@ public class TelaInicialMentor {
             }
 
             String projetoSelecionado = (String) JOptionPane.showInputDialog(
-                    frame,
-                    "Selecione um projeto para ver os detalhes:",
-                    "Projetos",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    nomesProjetos,
-                    nomesProjetos[0]);
+                    frame, "Selecione um projeto para ver os detalhes:", "Projetos",
+                    JOptionPane.PLAIN_MESSAGE, null, nomesProjetos, nomesProjetos[0]);
 
             if (projetoSelecionado != null) {
                 for (Object[] projeto : projetos) {
@@ -127,93 +107,78 @@ public class TelaInicialMentor {
                         String descricao = (String) projeto[3];
                         String[] alunos = (String[]) projeto[4];
 
-                        JInternalFrame internalFrame = new JInternalFrame("Detalhes do Projeto - " + nome, true, true, true, true);
+                        JInternalFrame internalFrame = new JInternalFrame("Detalhes do Projeto", true, true, true, true);
                         internalFrame.setSize(1055, 585);
                         internalFrame.setVisible(true);
-                        internalFrame.setBorder(BorderFactory.createLineBorder(new Color(37, 36, 36), 2));
-                        internalFrame.getContentPane().setBackground(new Color(60, 60, 60));
+                        internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 2));
+                        internalFrame.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
-                        javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
-                        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
-                            basicUI.setNorthPane(null);
+                        if (internalFrame.getUI() instanceof javax.swing.plaf.basic.BasicInternalFrameUI ui) {
+                            ui.setNorthPane(null);
                         }
 
                         JPanel painelConteudo = new JPanel(new BorderLayout(10, 10));
-                        painelConteudo.setBackground(new Color(60, 60, 60));
+                        painelConteudo.setBackground(EstilosPadrao.cinzaFundo);
                         painelConteudo.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
                         JLabel tituloProjeto = new JLabel(nome, SwingConstants.CENTER);
-                        tituloProjeto.setFont(new Font("SansSerif", Font.BOLD, 24));
+                        tituloProjeto.setFont(EstilosPadrao.fonteTitulos);
                         tituloProjeto.setForeground(Color.WHITE);
                         painelConteudo.add(tituloProjeto, BorderLayout.NORTH);
 
                         JPanel formulario = new JPanel(new GridBagLayout());
-                        formulario.setBackground(new Color(60, 60, 60));
+                        formulario.setBackground(EstilosPadrao.cinzaFundo);
                         GridBagConstraints gbc = new GridBagConstraints();
                         gbc.insets = new Insets(5, 5, 5, 5);
                         gbc.anchor = GridBagConstraints.WEST;
 
-                        // Área
-                        gbc.gridx = 0;
-                        gbc.gridy = 0;
+                        gbc.gridx = 0; gbc.gridy = 0;
                         JLabel lblArea = new JLabel("Área:");
                         lblArea.setForeground(Color.WHITE);
-                        lblArea.setFont(fonteLabel);
+                        lblArea.setFont(EstilosPadrao.fonteBotao);
                         formulario.add(lblArea, gbc);
 
                         gbc.gridx = 1;
                         JTextField txtArea = new JTextField(area, 30);
                         txtArea.setEditable(false);
-                        txtArea.setFont(fonteCampos);
+                        txtArea.setFont(EstilosPadrao.fontePadrao);
                         formulario.add(txtArea, gbc);
 
-                        // Status
-                        gbc.gridx = 0;
-                        gbc.gridy++;
+                        gbc.gridx = 0; gbc.gridy++;
                         JLabel lblStatus = new JLabel("Status:");
                         lblStatus.setForeground(Color.WHITE);
-                        lblStatus.setFont(fonteLabel);
+                        lblStatus.setFont(EstilosPadrao.fonteBotao);
                         formulario.add(lblStatus, gbc);
 
                         gbc.gridx = 1;
                         JTextField txtStatus = new JTextField(status, 30);
                         txtStatus.setEditable(false);
-                        txtStatus.setFont(fonteCampos);
+                        txtStatus.setFont(EstilosPadrao.fontePadrao);
                         formulario.add(txtStatus, gbc);
 
-                        // Descrição
-                        gbc.gridx = 0;
-                        gbc.gridy++;
-                        gbc.gridwidth = 2;
+                        gbc.gridx = 0; gbc.gridy++; gbc.gridwidth = 2;
                         JLabel lblDescricao = new JLabel("Descrição:");
                         lblDescricao.setForeground(Color.WHITE);
-                        lblDescricao.setFont(fonteLabel);
+                        lblDescricao.setFont(EstilosPadrao.fonteBotao);
                         formulario.add(lblDescricao, gbc);
 
                         gbc.gridy++;
                         JTextArea txtDescricao = new JTextArea(descricao, 5, 40);
-                        txtDescricao.setLineWrap(true);
-                        txtDescricao.setWrapStyleWord(true);
                         txtDescricao.setEditable(false);
-                        txtDescricao.setFont(fonteCampos);
-                        JScrollPane scrollDesc = new JScrollPane(txtDescricao);
-                        formulario.add(scrollDesc, gbc);
+                        txtDescricao.setFont(EstilosPadrao.fontePadrao);
+                        formulario.add(new JScrollPane(txtDescricao), gbc);
 
-                        // Alunos
                         gbc.gridy++;
                         JLabel lblAlunos = new JLabel("Alunos vinculados:");
                         lblAlunos.setForeground(Color.WHITE);
-                        lblAlunos.setFont(fonteLabel);
+                        lblAlunos.setFont(EstilosPadrao.fonteBotao);
                         formulario.add(lblAlunos, gbc);
 
                         gbc.gridy++;
                         JTextArea txtAlunos = new JTextArea(String.join("\n", alunos), 5, 40);
-                        txtAlunos.setLineWrap(true);
-                        txtAlunos.setWrapStyleWord(true);
                         txtAlunos.setEditable(false);
-                        txtAlunos.setFont(fonteCampos);
-                        JScrollPane scrollAlunos = new JScrollPane(txtAlunos);
-                        formulario.add(scrollAlunos, gbc);
+                        txtAlunos.setFont(EstilosPadrao.fontePadrao);
+                        formulario.add(new JScrollPane(txtAlunos), gbc);
 
                         painelConteudo.add(formulario, BorderLayout.CENTER);
                         internalFrame.add(painelConteudo, BorderLayout.CENTER);
@@ -224,104 +189,93 @@ public class TelaInicialMentor {
                         } catch (java.beans.PropertyVetoException ex) {
                             ex.printStackTrace();
                         }
-
                         break;
                     }
                 }
             }
         });
 
-        btnAtualizarConta.addActionListener(e -> {
-            EdicaoMentorPasso1View.exibirTelaEdicaoPasso1();
-        });
+        btnAtualizarConta.addActionListener(e -> EdicaoMentorPasso1View.exibirTelaEdicaoPasso1());
 
-        // AÇÃO DO BOTÃO "Desativar Conta"
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame();
             internalFrame.setSize(1055, 585);
             internalFrame.setLayout(new BorderLayout());
-            internalFrame.setBorder(BorderFactory.createLineBorder(new Color(37, 36, 36), 2));
-            javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
-            if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
-                basicUI.setNorthPane(null); // remove a barra de título
+            internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 2));
+
+            if (internalFrame.getUI() instanceof javax.swing.plaf.basic.BasicInternalFrameUI ui) {
+                ui.setNorthPane(null);
             }
 
             JPanel painelDialog = new JPanel();
-            painelDialog.setBackground(new Color(50, 50, 50));
+            painelDialog.setBackground(EstilosPadrao.cinzaFundo);
             painelDialog.setLayout(new BoxLayout(painelDialog, BoxLayout.Y_AXIS));
             painelDialog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
             JLabel lblTitulo = new JLabel("Desativação de Conta");
-            lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
-            lblTitulo.setForeground(new Color(0, 200, 100));
-            lblTitulo.setAlignmentX(0.0f);
+            lblTitulo.setFont(EstilosPadrao.fonteTitulos);
+            lblTitulo.setForeground(EstilosPadrao.verdeUni);
+            lblTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelDialog.add(lblTitulo);
             painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
             lblConfirma.setForeground(Color.WHITE);
-            lblConfirma.setFont(new Font("SansSerif", Font.PLAIN, 20));
-            lblConfirma.setAlignmentX(0.0f);
+            lblConfirma.setFont(EstilosPadrao.fontePadrao);
+            lblConfirma.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelDialog.add(lblConfirma);
             painelDialog.add(Box.createVerticalStrut(10));
 
             JRadioButton btnSim = new JRadioButton("Sim");
-            btnSim.setBackground(new Color(50, 50, 50));
-            btnSim.setFont(new Font("SansSerif", Font.PLAIN, 18));
+            btnSim.setBackground(EstilosPadrao.cinzaFundo);
+            btnSim.setFont(EstilosPadrao.fontePadrao);
             btnSim.setForeground(Color.WHITE);
-
 
             ButtonGroup grupo = new ButtonGroup();
             grupo.add(btnSim);
 
-
-            JPanel opcoes = new JPanel();
-            opcoes.setBackground(new Color(50, 50, 50));
-            opcoes.setLayout(new BoxLayout(opcoes, BoxLayout.Y_AXIS));
+            JPanel opcoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            opcoes.setBackground(EstilosPadrao.cinzaFundo);
             opcoes.add(btnSim);
-
+            opcoes.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelDialog.add(opcoes);
+
             painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblMotivo = new JLabel("Digite o motivo da desativação da conta:");
             lblMotivo.setForeground(Color.WHITE);
-            lblMotivo.setFont(new Font("SansSerif", Font.PLAIN, 20));
+            lblMotivo.setFont(EstilosPadrao.fontePadrao);
+            lblMotivo.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelDialog.add(lblMotivo);
             painelDialog.add(Box.createVerticalStrut(10));
-            lblMotivo.setAlignmentX(0.0f);
 
             JTextArea areaTexto = new JTextArea(5, 30);
-            areaTexto.setLineWrap(true);
-            areaTexto.setWrapStyleWord(true);
+            areaTexto.setFont(EstilosPadrao.fontePadrao);
             JScrollPane scroll = new JScrollPane(areaTexto);
+            scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelDialog.add(scroll);
             painelDialog.add(Box.createVerticalStrut(20));
 
             JButton btnConfirmar = new JButton("Confirmar");
-            btnConfirmar.setBackground(new Color(0, 200, 100));
+            btnConfirmar.setBackground(EstilosPadrao.verdeUni);
             btnConfirmar.setForeground(Color.WHITE);
             btnConfirmar.setFocusPainted(false);
-            btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 14));
-            btnConfirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnConfirmar.setFont(EstilosPadrao.fonteBotao);
+            btnConfirmar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             btnConfirmar.addActionListener(ev -> {
-                // Validação antes de confirmar
                 if (!btnSim.isSelected()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, clique na opção Sim para continuar",
-                            "Erro",
-                            JOptionPane.ERROR_MESSAGE);
+                            "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 if (areaTexto.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, informe o motivo da desativação.",
-                            "Erro",
-                            JOptionPane.ERROR_MESSAGE);
+                            "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
                 JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
                 internalFrame.dispose();
             });
@@ -335,37 +289,35 @@ public class TelaInicialMentor {
             internalFrame.moveToFront();
         });
 
-        // Ação do botão "Voltar" para retornar à tela de login
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
-                    "Confirmação",
-                    JOptionPane.YES_NO_OPTION);
+                    "Confirmação", JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                frame.dispose(); // Fecha a janela atual
-                LoginOneMentorView.loginOne(); // Abre a tela de login
+                frame.dispose();
+                LoginOneMentorView.loginOne();
             }
         });
 
-        // AÇÃO DO BOTÃO "btnReuniao"
         btnReuniao.addActionListener(e -> {
-
-            JInternalFrame internalFrame = new JInternalFrame(); // cria o internal frame
-            int posicaoBtnReuniao = btnReuniao.getSelectedIndex(); // pega o index da opção que o usuário selecionou
-            // Seleção com base no index para redirecionamento para telas
-            if(posicaoBtnReuniao==1) {
+            JInternalFrame internalFrame = null;
+            int posicaoBtnReuniao = btnReuniao.getSelectedIndex();
+            if (posicaoBtnReuniao == 1) {
                 internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
-            } else if (posicaoBtnReuniao==2) {
+            } else if (posicaoBtnReuniao == 2) {
                 internalFrame = AgendarReuniaoMtView.agendarReuniaoMentor();
             }
-            desktopPane.add(internalFrame);
-            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-            internalFrame.moveToFront();
+
+            if (internalFrame != null) {
+                desktopPane.add(internalFrame);
+                internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
+                        (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
+                internalFrame.moveToFront();
+                internalFrame.setVisible(true);
+            }
         });
 
-        // Exibir a janela
         frame.setVisible(true);
     }
 }

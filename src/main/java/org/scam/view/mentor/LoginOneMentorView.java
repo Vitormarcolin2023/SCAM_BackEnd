@@ -26,21 +26,18 @@ public class LoginOneMentorView {
         topo.add(tituloTopo);
         telaLogin.add(topo, BorderLayout.NORTH);
 
-        // Container central com GridBagLayout para centralizar
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(EstilosPadrao.cinzaFundo);
 
-        // Painel cinza com botões
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(EstilosPadrao.cinzaClaro);
         panel.setBorder(BorderFactory.createEmptyBorder(40, 20, 40, 20));
-        panel.setPreferredSize(new Dimension(320, 280)); // Aumentei um pouco a altura para melhor espaçamento
+        panel.setPreferredSize(new Dimension(320, 280));
 
         GridBagConstraints panelGbc = new GridBagConstraints();
         panelGbc.gridx = 0;
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título
         JLabel titulo = new JLabel("OLÁ MENTOR!");
         titulo.setForeground(Color.WHITE);
         titulo.setFont(EstilosPadrao.fonteTitulos);
@@ -48,49 +45,36 @@ public class LoginOneMentorView {
         panelGbc.insets = new Insets(10, 0, 30, 0);
         panel.add(titulo, panelGbc);
 
-        // Botão Cadastre-se
         panelGbc.gridy++;
-        panelGbc.insets = new Insets(5, 0, 5, 0); // Espaçamento uniforme
+        panelGbc.insets = new Insets(5, 0, 5, 0);
         JButton cadastroButton = new JButton("Cadastre-se");
-        styleSecondaryButton(cadastroButton);
+        stylePrimaryButton(cadastroButton);
         panel.add(cadastroButton, panelGbc);
 
-        // Botão Login
         panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
         stylePrimaryButton(loginButton);
         panel.add(loginButton, panelGbc);
 
-        // Botão Voltar
         panelGbc.gridy++;
-        panelGbc.insets = new Insets(15, 0, 5, 0); // Espaço antes do botão voltar
+        panelGbc.insets = new Insets(15, 0, 5, 0);
         JButton voltarButton = new JButton("Voltar");
         styleSecondaryButton(voltarButton);
         panel.add(voltarButton, panelGbc);
 
-        // Ação do botão Cadastre-se
         cadastroButton.addActionListener(e -> {
             telaLogin.dispose();
             CadastroMentorPasso1View.exibirTelaCadastroPasso1();
         });
 
-        // Ação do botão Login
         loginButton.addActionListener(e -> {
             telaLogin.dispose();
             LoginTwoMentorView.loginTwo();
         });
 
-        // Ação do botão Voltar
         voltarButton.addActionListener(e -> {
-            int confirmar = JOptionPane.showConfirmDialog(telaLogin,
-                    "Tem certeza que deseja voltar para a tela de seleção de usuário?",
-                    "Confirmação",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirmar == JOptionPane.YES_OPTION) {
-                telaLogin.dispose();
-                TelaSelecaoUsuarioView.exibirTelaSelecao();
-            }
+            telaLogin.dispose();
+            TelaSelecaoUsuarioView.exibirTelaSelecao();
         });
 
         containerCentro.add(panel);
