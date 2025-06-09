@@ -34,63 +34,74 @@ public class LoginTwoMentorView {
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(EstilosPadrao.cinzaClaro);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        panel.setPreferredSize(new Dimension(400, 400));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
-        GridBagConstraints panelGbc = new GridBagConstraints();
-        panelGbc.insets = new Insets(5, 0, 10, 0);
-        panelGbc.gridx = 0;
-        panelGbc.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         JLabel tituloLogin = new JLabel("LOGIN - MENTOR");
         tituloLogin.setForeground(Color.WHITE);
         tituloLogin.setFont(EstilosPadrao.fonteTitulos);
-        tituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        panelGbc.gridy = 0;
-        panel.add(tituloLogin, panelGbc);
-        panel.add(Box.createVerticalStrut(10), panelGbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 25, 5);
+        panel.add(tituloLogin, gbc);
 
-        panelGbc.gridy++;
-        JLabel emailLabel = new JLabel("Email");
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        JLabel emailLabel = new JLabel("Email:");
         emailLabel.setForeground(Color.WHITE);
         emailLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(emailLabel, panelGbc);
+        panel.add(emailLabel, gbc);
 
-        panelGbc.gridy++;
-        JTextField userField = new JTextField();
-        userField.setPreferredSize(new Dimension(250, 35));
-        panel.add(userField, panelGbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        JTextField userField = new JTextField(13);
+        panel.add(userField, gbc);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
 
-        panelGbc.gridy++;
-        JLabel senhaLabel = new JLabel("Senha");
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        JLabel senhaLabel = new JLabel("Senha:");
         senhaLabel.setForeground(Color.WHITE);
         senhaLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(senhaLabel, panelGbc);
+        panel.add(senhaLabel, gbc);
 
-        panelGbc.gridy++;
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(250, 35));
-        panel.add(passwordField, panelGbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        JPasswordField passwordField = new JPasswordField(13);
+        panel.add(passwordField, gbc);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
 
-        panelGbc.insets = new Insets(20, 0, 10, 0);
-        panelGbc.gridy++;
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(25, 5, 5, 5);
         JButton loginButton = new JButton("Login");
         stylePrimaryButton(loginButton);
-        panel.add(loginButton, panelGbc);
+        panel.add(loginButton, gbc);
 
-        panelGbc.insets = new Insets(5, 0, 10, 0);
-        panelGbc.gridy++;
+        gbc.gridy = 4;
+        gbc.insets = new Insets(5, 5, 5, 5);
         JButton voltarButton = new JButton("Voltar");
         styleSecondaryButton(voltarButton);
-        panel.add(voltarButton, panelGbc);
+        panel.add(voltarButton, gbc);
 
         voltarButton.addActionListener(e -> {
-            int confirmar = JOptionPane.showConfirmDialog(telaLogin, "Tem certeza que deseja voltar?",
-                    "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (confirmar == JOptionPane.YES_OPTION) {
-                telaLogin.dispose();
-                LoginOneMentorView.loginOne();
-            }
+            telaLogin.dispose();
+            LoginOneMentorView.loginOne();
         });
 
         loginButton.addMouseListener(new MouseAdapter() {
