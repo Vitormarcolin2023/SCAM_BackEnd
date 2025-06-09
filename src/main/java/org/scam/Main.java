@@ -1,11 +1,11 @@
-package org.scam.view;
+/*//package org.scam.view;
 
 import org.scam.controller.classes.Validacao;
 import org.scam.controller.login.Credenciais;
 import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
-<<<<<<< HEAD
+
 
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
@@ -13,11 +13,10 @@ import org.scam.view.mentor.LoginTwoMentorView;
 //import org.scam.view.mentor.TelaInicialMentorView;
 
 
-=======
+
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
->>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
 
 import java.util.Scanner;
 
@@ -118,11 +117,11 @@ import java.util.Scanner;
                     break;
                 }
             }
-        }while (continuar != 4) ;*/
+        }while (continuar != 4) ;
 
 
 
-    /*public static Credenciais menuLogin (int tipoUsuario) {
+    public static Credenciais menuLogin (int tipoUsuario) {
 
         Scanner sc = new Scanner(System.in);
         Validacao validacao = new Validacao(); // utilizada para validar os dados digitados pelo usuário para login
@@ -133,11 +132,6 @@ import java.util.Scanner;
         String senha = sc.nextLine();
 
         return new Credenciais(email, senha);
-    }*/
-
-=======
     }
-}
->>>>>>> 47cbd6c315a6b0594aac4041712ee6d8dd1b0c1f
 
-
+*/
