@@ -15,288 +15,132 @@ import javax.persistence.EntityTransaction;
 import java.util.Scanner;
 
 public class MentorCadastro {
-    public void cadastrarMentor() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("\n=== CADASTRO DE MENTOR ===");
 
-        // 1. Coletar DADOS PESSOAIS
-        System.out.println("\n[DADOS PESSOAIS]");
-        System.out.print("Nome completo: ");
-        String nome = scanner.nextLine();
+    public void salvarMentorPelaView(
+            String nome, String cpf, String email, String senha, String telefone,
+            String tempoExperiencia, String tipoVinculo, AreaDeAtuacao areaDeAtuacao, TipoMentor tipoMentor,
+            String cep, String rua, int numero, String bairro, String cidade, String estado
+    ) throws Exception {
 
-        // Persistência usando CustomizerFactory
         EntityManager em = CustomizerFactory.getEntityManager();
-        MentorRepository mentorRepo = new MentorRepository(em); // Instancia do repositório
-
-        System.out.print("CPF (somente números): ");
-        String cpf = scanner.nextLine();
-
-        // Verifica se já existe CPF cadastrado
-        if (mentorRepo.existePorCpf(cpf)) {
-            System.out.println("❌ Já existe um mentor cadastrado com esse CPF.");
-            em.close();
-            return;
-        }
-
-        System.out.print("E-mail: ");
-        String email = scanner.nextLine();
-
-        // Verifica se já existe e-mail cadastrado
-        if (mentorRepo.existePorEmail(email)) {
-            System.out.println("❌ Já existe um mentor cadastrado com esse e-mail.");
-            em.close();
-            return;
-        }
-
-
-        System.out.print("Senha: ");
-        String senha = scanner.nextLine();
-
-        System.out.print("Telefone: ");
-        String telefone = scanner.nextLine();
-
-        // Verifica se já existe telefone cadastrado
-        if (mentorRepo.existePorTelefone(telefone)) {
-            System.out.println("❌ Já existe um mentor cadastrado com esse telefone.");
-            em.close();
-            return;
-        }
-
-        // 2. Coletar INFORMAÇÕES PROFISSIONAIS
-        System.out.println("\n[INFORMAÇÕES PROFISSIONAIS]");
-        System.out.print("Tempo de experiência (ex: 5 anos): ");
-        String tempoExperiencia = scanner.nextLine();
-
-        System.out.print("Tipo de vínculo (ex: CLT, PJ): ");
-        String tipoVinculo = scanner.nextLine();
-
-        /*System.out.print("Área de atuação: ");
-        String areaAtuacao = scanner.nextLine();*/
-
-        System.out.println("\n[SELEÇÃO A ÁREA DE ATUAÇÃO]");
-        AreaDeAtuacao[] tiposA = AreaDeAtuacao.values();
-        for (int i = 0; i < tiposA.length; i++) {
-            System.out.printf("%d - %s%n", i + 1, tiposA[i].name());
-        }
-        System.out.print("Digite o número correspondente ao tipo: ");
-
-        int escolhaTipoA;
-        AreaDeAtuacao areaDeAtuacao = null;
-        try {
-            escolhaTipoA = Integer.parseInt(scanner.nextLine());
-            areaDeAtuacao = tiposA[escolhaTipoA - 1];
-        } catch (Exception e) {
-            System.out.println("Escolha inválida!.");
-        }
-
-        System.out.println("\n[SELEÇÃO DE TIPO DE MENTOR]");
-        TipoMentor[] tipos = TipoMentor.values();
-        for (int i = 0; i < tipos.length; i++) {
-            System.out.printf("%d - %s%n", i + 1, tipos[i].name());
-        }
-        System.out.print("Digite o número correspondente ao tipo: ");
-
-        int escolhaTipo;
-        TipoMentor tipoMentor;
-        try {
-            escolhaTipo = Integer.parseInt(scanner.nextLine());
-            tipoMentor = tipos[escolhaTipo - 1];
-        } catch (Exception e) {
-            System.out.println("Escolha inválida! Usando padrão 'Formado'.");
-            tipoMentor = TipoMentor.Formado;
-        }
-
-        // 3. Coletar ENDEREÇO
-        System.out.println("\n[ENDEREÇO]");
-
-        System.out.print("CEP: ");
-        String cep = scanner.nextLine();
-
-        BuscarCEP buscarCEP = new BuscarCEP();
-        Endereco endereco = buscarCEP.getEndereco(cep);
-        System.out.println(endereco.getLogradouro());
-
-        System.out.println("Informe o número: ");
-        int numero = scanner.nextInt();
-
-        // Persistência usando CustomizerFactory
-        EntityManager em2 = CustomizerFactory.getEntityManager();
-        EntityTransaction tx = em2.getTransaction();
+        EntityTransaction tx = em.getTransaction();
 
         try {
             tx.begin();
 
-            // Criar e persistir endereço
             EnderecoEntity enderecoEntity = new EnderecoEntity();
-            enderecoEntity.setRua(endereco.getLogradouro());
+            enderecoEntity.setRua(rua);
             enderecoEntity.setNumero(numero);
-            enderecoEntity.setBairro(endereco.getBairro());
-            enderecoEntity.setCidade(endereco.getLocalidade());
-            enderecoEntity.setEstado(endereco.getEstado());
-            enderecoEntity.setCep(endereco.getCep());
-            em2.persist(enderecoEntity);
+            enderecoEntity.setBairro(bairro);
+            enderecoEntity.setCidade(cidade);
+            enderecoEntity.setEstado(estado);
+            enderecoEntity.setCep(cep);
+            em.persist(enderecoEntity);
 
-            // Criar e persistir mentor
             MentorEntity mentor = new MentorEntity();
             mentor.setNome(nome);
             mentor.setCpf(cpf);
             mentor.setEmail(email);
             mentor.setSenha(senha);
-            mentor.setTipoDeUsuario(tipoMentor);
             mentor.setTelefone(telefone);
             mentor.setTempoExperiencia(tempoExperiencia);
             mentor.setTipoDeVinculo(tipoVinculo);
             mentor.setAreaDeAtuacao(areaDeAtuacao);
+            mentor.setTipoDeUsuario(tipoMentor);
             mentor.setEndereco(enderecoEntity);
-            em2.persist(mentor);
+            em.persist(mentor);
 
             tx.commit();
-
-            System.out.println("\n✅ Mentor cadastrado com sucesso! ID: ");
 
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            System.err.println("❌ Erro ao cadastrar mentor: " + e.getMessage());
-            e.printStackTrace();
+            throw new Exception("Erro ao salvar mentor no banco de dados: " + e.getMessage());
+
         } finally {
-            if (em2 != null && em2.isOpen()) {
-                em2.close();
+            if (em != null && em.isOpen()) {
+                em.close();
             }
         }
+    }
+
+    public void atualizarMentorPelaView(
+            // Dados do Passo 1
+            String novoNome, String novaSenha, String novoTelefone,
+            String novoTempoExperiencia, String novoTipoVinculo, AreaDeAtuacao novaAreaDeAtuacao,
+            // Dados do Passo 2 (Endereço)
+            String novoCep, String novaRua, int novoNumero, String novoBairro, String novaCidade, String novoEstado
+    ) throws Exception {
+
+        EntityManager em = CustomizerFactory.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            // 1. Pega o mentor que está logado na sessão
+            Mentor mentorLogado = Sessao.getMentorLogado();
+            if (mentorLogado == null) {
+                throw new IllegalStateException("Nenhum mentor está logado na sessão.");
+            }
+
+            tx.begin();
+
+            // 2. Busca a entidade completa do mentor no banco de dados para poder atualizá-la
+            MentorEntity mentorParaAtualizar = em.find(MentorEntity.class, mentorLogado.getId());
+            if (mentorParaAtualizar == null) {
+                throw new IllegalStateException("Mentor não encontrado no banco de dados para atualização.");
+            }
+
+            // 3. Atualiza os dados pessoais e profissionais
+            mentorParaAtualizar.setNome(novoNome);
+            mentorParaAtualizar.setTelefone(novoTelefone);
+            mentorParaAtualizar.setTempoExperiencia(novoTempoExperiencia);
+            mentorParaAtualizar.setTipoDeVinculo(novoTipoVinculo);
+            mentorParaAtualizar.setAreaDeAtuacao(novaAreaDeAtuacao);
+            // Apenas atualiza a senha se uma nova for fornecida
+            if (novaSenha != null && !novaSenha.isEmpty()) {
+                mentorParaAtualizar.setSenha(novaSenha);
+            }
+
+            // 4. Atualiza o endereço associado
+            EnderecoEntity enderecoParaAtualizar = mentorParaAtualizar.getEndereco();
+            if (enderecoParaAtualizar == null) { // Caso raro, mas seguro verificar
+                enderecoParaAtualizar = new EnderecoEntity();
+                mentorParaAtualizar.setEndereco(enderecoParaAtualizar);
+            }
+            enderecoParaAtualizar.setCep(novoCep);
+            enderecoParaAtualizar.setRua(novaRua);
+            enderecoParaAtualizar.setNumero(novoNumero);
+            enderecoParaAtualizar.setBairro(novoBairro);
+            enderecoParaAtualizar.setCidade(novaCidade);
+            enderecoParaAtualizar.setEstado(novoEstado);
+
+            // O JPA gerencia a atualização automaticamente no commit
+            tx.commit();
+
+            // 5. Atualiza também o objeto na sessão para refletir as mudanças imediatamente
+            //Sessao.atualizarMentorLogado(mentorParaAtualizar);
+
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            throw new Exception("Erro ao atualizar o mentor: " + e.getMessage());
+
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    public void cadastrarMentor() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n=== CADASTRO DE MENTOR ===");
     }
 
     public void editarMentor() {
         EntityManager em = CustomizerFactory.getEntityManager();
         MentorRepository repository = new MentorRepository(em);
-        Scanner scanner = new Scanner(System.in);
-
-        // Recupera o mentor logado da sessão
-        Mentor mentorLogado = Sessao.getMentorLogado();
-        if (mentorLogado == null) {
-            System.out.println("❌ Nenhum mentor logado.");
-            return;
-        }
-
-        // Recupera o mentor existente do banco pelo ID
-        MentorEntity mentorEntity = repository.buscarPorId(mentorLogado.getId());
-        if (mentorEntity == null) {
-            System.out.println("❌ Mentor não encontrado no banco de dados.");
-            return;
-        }
-
-
-        // Agora você já tem os dados do mentor na variável mentorEntity e pode editá-los
-
-        System.out.println("\n=== EDIÇÃO DE MENTOR ===");
-        System.out.println("Deixe o campo em branco para manter o valor atual.\n");
-
-        // Editar nome
-        System.out.print("Nome atual: " + mentorEntity.getNome() + "\nNovo nome: ");
-        String novoNome = scanner.nextLine();
-        if (!novoNome.trim().isEmpty()) {
-            mentorEntity.setNome(novoNome);
-        }
-
-        // Editar telefone
-        System.out.print("Telefone atual: " + mentorEntity.getTelefone() + "\nNovo telefone: ");
-        String novoTelefone = scanner.nextLine();
-        if (!novoTelefone.trim().isEmpty()) {
-            mentorEntity.setTelefone(novoTelefone);
-        }
-
-        // Editar senha
-        System.out.print("Senha atual: " + mentorEntity.getSenha() + "\nNova senha: ");
-        String novaSenha = scanner.nextLine();
-        if (!novaSenha.trim().isEmpty()) {
-            mentorEntity.setSenha(novaSenha);
-        }
-
-        // Editar tempo de experiência
-        System.out.print("Tempo de experiência atual: " + mentorEntity.getTempoDeExperiencia() + "\nNovo tempo: ");
-        String novaExperiencia = scanner.nextLine();
-        if (!novaExperiencia.trim().isEmpty()) {
-            mentorEntity.setTempoExperiencia(novaExperiencia);
-        }
-
-        // Editar tipo de vínculo
-        System.out.print("Tipo de vínculo atual: " + mentorEntity.getTipoDeVinculo() + "\nNovo vínculo: ");
-        String novoVinculo = scanner.nextLine();
-        if (!novoVinculo.trim().isEmpty()) {
-            mentorEntity.setTipoDeVinculo(novoVinculo);
-        }
-
-        // Editar área de atuação
-        System.out.println("Área de atuação atual: " + mentorEntity.getAreaDeAtuacao());
-
-        System.out.println("\n[SELEÇÃO DA NOVA ÁREA DE ATUAÇÃO]");
-        AreaDeAtuacao[] areas = AreaDeAtuacao.values();
-        for (int i = 0; i < areas.length; i++) {
-            System.out.printf("%d - %s%n", i + 1, areas[i].name());
-        }
-        System.out.print("Digite o número correspondente ou pressione Enter para manter: ");
-        String escolha = scanner.nextLine();
-        if (!escolha.trim().isEmpty()) {
-            try {
-                int indice = Integer.parseInt(escolha);
-                AreaDeAtuacao novaAreaEnum = areas[indice - 1];
-                mentorEntity.setAreaDeAtuacao(novaAreaEnum);
-            } catch (Exception e) {
-                System.out.println("❌ Escolha inválida. Área de atuação anterior mantida.");
-            }
-        }
-
-        // Se o endereço do mentor também precisar ser editado, você pode fazer isso aqui
-        EnderecoEntity endereco = mentorEntity.getEndereco();
-        if (endereco != null) {
-            System.out.println("\n--- Endereço ---");
-
-            System.out.print("Rua atual: " + endereco.getRua() + "\nNova rua: ");
-            String novaRua = scanner.nextLine();
-            if (!novaRua.trim().isEmpty()) {
-                endereco.setRua(novaRua);
-            }
-
-            System.out.print("Número atual: " + endereco.getNumero() + "\nNovo número: ");
-            String novoNumeroStr = scanner.nextLine();
-            if (!novoNumeroStr.trim().isEmpty()) {
-                try {
-                    int novoNumero = Integer.parseInt(novoNumeroStr);
-                    endereco.setNumero(novoNumero);
-                } catch (NumberFormatException e) {
-                    System.out.println("Número inválido. Valor anterior mantido.");
-                }
-            }
-
-            System.out.print("Bairro atual: " + endereco.getBairro() + "\nNovo bairro: ");
-            String novoBairro = scanner.nextLine();
-            if (!novoBairro.trim().isEmpty()) {
-                endereco.setBairro(novoBairro);
-            }
-
-            System.out.print("Cidade atual: " + endereco.getCidade() + "\nNova cidade: ");
-            String novaCidade = scanner.nextLine();
-            if (!novaCidade.trim().isEmpty()) {
-                endereco.setCidade(novaCidade);
-            }
-
-            System.out.print("Estado atual: " + endereco.getEstado() + "\nNovo estado: ");
-            String novoEstado = scanner.nextLine();
-            if (!novoEstado.trim().isEmpty()) {
-                endereco.setEstado(novoEstado);
-            }
-
-            System.out.print("CEP atual: " + endereco.getCep() + "\nNovo CEP: ");
-            String novoCep = scanner.nextLine();
-            if (!novoCep.trim().isEmpty()) {
-                endereco.setCep(novoCep);
-            }
-        }
-
-        // Atualizar os dados no repositório
-        repository.editarMentor(mentorEntity);
-        System.out.println("\n✅ Mentor atualizado com sucesso!");
     }
-
 }
