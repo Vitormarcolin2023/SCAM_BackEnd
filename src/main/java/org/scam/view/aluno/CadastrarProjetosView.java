@@ -30,40 +30,41 @@ public class CadastrarProjetosView {
             // PAINEL DO FORMULARIO
             JPanel panel = new JPanel(new GridBagLayout());
             panel.setBackground(new Color(45, 45, 45));
-            panel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
-            panel.setPreferredSize(new Dimension(500,600));
+            panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+           // panel.setPreferredSize(new Dimension(1000,900));
 
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(10,10,5,10);
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.WEST;
-            gbc.gridx = 0;
             gbc.weightx = 1.0;
             int row = 0;
 
 
         // TITULO
-            JLabel titulo = new JLabel("Cadastro de Projetos");
-            titulo.setForeground(Color.WHITE);
-            titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
+            gbc.gridx = 0;
             gbc.gridy = row++;
             gbc.gridwidth = 2;
             gbc.anchor = GridBagConstraints.CENTER;
+            JLabel titulo = new JLabel("Cadastro de Projetos");
+            titulo.setForeground(Color.WHITE);
+            titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
             panel.add(titulo, gbc);
 
-
-        //NOME PROJETO
+            gbc.gridwidth = 1;
             gbc.anchor = GridBagConstraints.WEST;
-            gbc.gridwidth = 2;
+
+           //NOME PROJETO
+
             gbc.gridy = row++;
+            gbc.gridx = 0;
             JLabel nomeLabel = new JLabel("Nome do Projeto:");
             nomeLabel.setForeground(Color.WHITE);
             panel.add(nomeLabel,gbc);
 
-            gbc.gridy = row++;
+            gbc.gridx = 1;
             JTextField nomeField = new JTextField();
-            nomeField.setPreferredSize(new Dimension(200,25));
-            panel.add(nomeField, gbc);
+            nomeField.setPreferredSize(new Dimension(20,30));
+            panel.add(nomeField,gbc);
 
             //DESCRICAO
             gbc.gridy = row++;
@@ -71,7 +72,7 @@ public class CadastrarProjetosView {
             descricaoLabel.setForeground(Color.WHITE);
             panel.add(descricaoLabel,gbc);
 
-            gbc.gridy = row++;
+            gbc.gridx = 1;
             JTextArea descricaoField = new JTextArea(4, 20); // 5 linhas, 20 colunas
             descricaoField.setLineWrap(true);
             descricaoField.setWrapStyleWord(true);
@@ -80,22 +81,24 @@ public class CadastrarProjetosView {
 
             //AAREA DE ATUACAO
             gbc.gridy = row++;
+            gbc.gridx = 0;
             JLabel atuacaoLabel = new JLabel("Área de atuação:");
             atuacaoLabel.setForeground(Color.WHITE);
             panel.add(atuacaoLabel, gbc);
 
-            gbc.gridy = row++;
+            gbc.gridx = 1;
             String [] opcoesAtuacao = {"AGRÁRIAS E BIOLOGIA", "EDUCAÇÃO", "ENGENHARIA E ARQUITETURA", "GESTÃO","SAÚDE","SOCIAIS","TECNOLOGIA"};
             JComboBox<String> btnAtuacao = new JComboBox<>(opcoesAtuacao);
             panel.add(btnAtuacao,gbc);
 
             //SELECAO DO CURSO
             gbc.gridy = row++;
+            gbc.gridx = 0;
             JLabel cursoLabel = new JLabel("Seleção do curso:");
             cursoLabel.setForeground(Color.WHITE);
             panel.add(cursoLabel, gbc);
 
-            gbc.gridy = row++;
+            gbc.gridx = 1;
             String [] opcoesCurso = { "ADMINISTRADOR", "AGRONOMIA", "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS", "ARQUITETURA E URBANISMO",
                     "BIOMEDICINA", "CIÊNCIAS BIOLÓGICAS", "CIÊNCIAS CONTÁBEIS","DESIGN GRÁFICA DIGITAL", "DIREITO", "EDUCAÇÃO FÍSICA", "ENFERMAGEM",
                     "ENGENHARIA CIVIL", "ENGENHARIA DE SOFTWARE", "ENGENHARIA ELÉTRICA", "ENGENHARIA MECÂNICA", "FARMÁCIA", "FISIOTERAPIA", "MEDICINA VETERINÁRIA",
@@ -103,8 +106,48 @@ public class CadastrarProjetosView {
             JComboBox<String> btnCurso = new JComboBox<>(opcoesCurso);
             panel.add(btnCurso,gbc);
 
+            gbc.gridy = row++;
+            gbc.gridx = 0;
+            JLabel dataInicioLabel = new JLabel("Data de início do projeto:");
+            dataInicioLabel.setForeground(Color.WHITE);
+            panel.add(dataInicioLabel,gbc);
+
+           gbc.gridx = 1;
+           JTextField dataInicioField = new JTextField();
+           dataInicioField.setPreferredSize(new Dimension(20,30));
+           panel.add(dataInicioField,gbc);
+
+           //PERIODO
+           gbc.gridy = row++;
+           gbc.gridx = 0;
+           JLabel periodoLabel = new JLabel("Período:");
+           periodoLabel.setForeground(Color.WHITE);
+           panel.add(periodoLabel,gbc);
+
+           gbc.gridx = 1;
+           String[] opcoesPeriodo = {
+                   "1º Período", "2º Período", "3º Período", "4º Período", "5º Período",
+                   "6º Período", "7º Período", "8º Período", "9º Período", "10º Período"
+           };
+           JComboBox<String> btnPeriodo = new JComboBox<>(opcoesPeriodo);
+            panel.add(btnPeriodo,gbc);
+
+            //RA ds Alunos
+            gbc.gridy = row++;
+            gbc.gridx = 0;
+            JLabel raLabel = new JLabel("RA dos alunos:");
+            raLabel.setForeground(Color.WHITE);
+            panel.add(raLabel,gbc);
+
+            gbc.gridx = 1;
+            JTextField raField = new JTextField();
+            raField.setPreferredSize(new Dimension(20,30));
+            panel.add(raField,gbc);
+
             //BOTOES
             gbc.gridy = row++;
+            gbc.gridx = 0;
+            gbc.gridwidth = 2;
             gbc.insets = new Insets(20,10,10,10);
 
             JPanel botoesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -122,11 +165,22 @@ public class CadastrarProjetosView {
 
             panel.add(botoesPanel,gbc);
 
+            // Adicionar o panel ao containerCentro com constraints para expandir
+            GridBagConstraints gbcContainer = new GridBagConstraints();
+            gbcContainer.gridx = 0;
+            gbcContainer.gridy = 0;
+            gbcContainer.weightx = 1.0;
+            gbcContainer.weighty = 1.0;
+            gbcContainer.fill = GridBagConstraints.BOTH;
+
+        containerCentro.add(panel, gbcContainer);
+
             containerCentro.add(panel);
             telaLogin.add(containerCentro,BorderLayout.CENTER);
             telaLogin.setVisible(true);
 
     }
-  }
 
+
+}
 

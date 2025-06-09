@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GerenciarProjetosView extends JFrame {
-    public static void principalAluno(){
+    public static void GerenciarProjeto() {
 
         // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -35,6 +35,11 @@ public class GerenciarProjetosView extends JFrame {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        // Janelas Internas
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setBackground(new Color(60, 60, 60));
+        painelCentral.add(desktopPane, BorderLayout.CENTER);
+
         // Botões
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnEditar = new JButton("Editar Projetos");
@@ -64,6 +69,41 @@ public class GerenciarProjetosView extends JFrame {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
+        btnVisuProjetos.addActionListener(e -> {
+            JInternalFrame mentorFrame = VisualizarProjView.ListProjeto();
+            desktopPane.add(mentorFrame);
+            mentorFrame.setLocation(
+                    (desktopPane.getWidth() - mentorFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - mentorFrame.getHeight()) / 2
+            );
+            try {
+                mentorFrame.setSelected(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnEditar.addActionListener(e -> {
+            JInternalFrame editarFrame = EditarCadProjetoView.EditarProjeto();
+            desktopPane.add(editarFrame);
+            editarFrame.setLocation(
+                    (desktopPane.getWidth() - editarFrame.getWidth()) / 2,
+                    (desktopPane.getHeight() - editarFrame.getHeight()) / 2
+            );
+            try {
+                editarFrame.setSelected(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
+
+
         frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> GerenciarProjetosView.GerenciarProjeto());
     }
 }
