@@ -1,10 +1,13 @@
 package org.scam.view.aluno;
 
+import net.bytebuddy.asm.Advice;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class CadastrarProjetosView {
-    public static void cadastrarProjeto (){
+
+        public static void main(String[] args) {
         JFrame telaLogin = new JFrame("Cadastro de Projetos");
         telaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         telaLogin.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -127,6 +130,5 @@ public class CadastrarProjetosView {
             telaLogin.setVisible(true);
 
     }
-  }
-
+}
 

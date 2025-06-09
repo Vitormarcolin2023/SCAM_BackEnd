@@ -6,20 +6,21 @@ import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.aluno.CadastrarProjetosView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
-
+<<<<<<< HEAD
 import org.scam.view.mentor.DesativarContaMentorView;
 import org.scam.view.mentor.LoginOneMentorView;
 import org.scam.view.mentor.LoginTwoMentorView;
 //import org.scam.view.mentor.TelaInicialMentorView;
-
-
+=======
+import org.scam.view.mentor.*;
+>>>>>>> 119de26e5d309636a0c19939310449563fd69845
 
 import java.util.Scanner;
 
-//public class Main {
-    //public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) {
 
-       // VisualizarProjetoMentorView.visualizarProjeto();
+        VisualizarProjetoMentorView.visualizarProjeto();
         //TelaInicialMentor.telaMentor();
         //DesativarContaMentorView.desativarContaM();
         //LoginOneMentorView.loginOne();
@@ -27,11 +28,12 @@ import java.util.Scanner;
         //LoginCoordenacaoView.loginCoordenacao();
         //LoginAlunoView.loginAluno(); - Aluno
 
-
+<<<<<<< HEAD
        // TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
         //PainelPrincipalView.painelCoordenacao();
-
+=======
         //TelaSelecaoUsuarioView.exibirTelaSelecao(); // Ja o menu
+>>>>>>> 119de26e5d309636a0c19939310449563fd69845
 
         /*Scanner sc = new Scanner(System.in);
         Usuario login = new Usuario(); // utilizada para validar as informações de login
@@ -99,7 +101,7 @@ import java.util.Scanner;
                 }
             }
         }while (continuar != 4) ;*/
-
+    }
 
 
     /*public static Credenciais menuLogin (int tipoUsuario) {
@@ -114,6 +116,6 @@ import java.util.Scanner;
 
         return new Credenciais(email, senha);
     }*/
-
+}
 
 
