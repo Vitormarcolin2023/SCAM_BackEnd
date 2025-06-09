@@ -1,4 +1,4 @@
-package org.scam.view.coordenacao;
+package org.scam.view.mentor;
 
 import org.scam.controller.MentorController;
 import org.scam.model.entities.MentorEntity;
@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DesativarMentorView {
+public class DesativarMentorDesktop {
 
     public static void abrirTelaDesativacao(JDesktopPane desktopPane) {
         for (JInternalFrame frame : desktopPane.getAllFrames()) {

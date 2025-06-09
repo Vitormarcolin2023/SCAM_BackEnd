@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GerenciarProjetosView extends JFrame {
-    public static void principalAluno(){
+    public static void main(String[] args){
 
         // Janela principal
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");

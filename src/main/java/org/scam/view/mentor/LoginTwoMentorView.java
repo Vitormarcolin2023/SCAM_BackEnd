@@ -1,10 +1,14 @@
 package org.scam.view.mentor;
 
-import org.scam.controller.classes.Mentor;
-import org.scam.controller.login.Usuario;
-import org.scam.model.services.Sessao;
-import org.scam.view.EstilosPadrao;
+import org.scam.controller.classes.Coordenador;
+import org.scam.controller.menus.MenuCoordenador;
+import org.scam.model.entities.CoordenacaoEntity;
+import org.scam.model.entities.UsuarioEntity;
+import org.scam.model.repository.CoordenacaoRepository;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.view.coordenacao.PainelPrincipalView;
 
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -17,119 +21,134 @@ public class LoginTwoMentorView {
         telaLogin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         telaLogin.setLocationRelativeTo(null);
         telaLogin.setLayout(new BorderLayout());
-        telaLogin.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
+        telaLogin.getContentPane().setBackground(new Color(30, 30, 30));
 
+        // Faixa superior verde
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(new Color(0, 200, 100));
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
-        tituloTopo.setFont(EstilosPadrao.tituloSAM);
+        tituloTopo.setFont(new Font("SansSerif", Font.BOLD, 21));
         topo.add(tituloTopo);
         telaLogin.add(topo, BorderLayout.NORTH);
 
+        // Container central com GridBagLayout
         JPanel containerCentro = new JPanel(new GridBagLayout());
-        containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+        containerCentro.setBackground(new Color(30, 30, 30));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Painel de login com GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(EstilosPadrao.cinzaClaro);
+        panel.setBackground(new Color(45, 45, 45));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        panel.setPreferredSize(new Dimension(400, 400));
 
         GridBagConstraints panelGbc = new GridBagConstraints();
         panelGbc.insets = new Insets(5, 0, 10, 0);
         panelGbc.gridx = 0;
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Título
         JLabel tituloLogin = new JLabel("LOGIN - MENTOR");
         tituloLogin.setForeground(Color.WHITE);
-        tituloLogin.setFont(EstilosPadrao.fonteTitulos);
+        tituloLogin.setFont(new Font("SansSerif", Font.BOLD, 18));
         tituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
         panelGbc.gridy = 0;
         panel.add(tituloLogin, panelGbc);
-        panel.add(Box.createVerticalStrut(10), panelGbc);
+        panel.add(Box.createVerticalStrut(10), panelGbc); // Espaço de 30px
 
+
+        // Email
         panelGbc.gridy++;
-        JLabel emailLabel = new JLabel("Email");
-        emailLabel.setForeground(Color.WHITE);
-        emailLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(emailLabel, panelGbc);
+        JLabel email = new JLabel("Email");
+        email.setForeground(Color.WHITE);
+        email.setFont(new Font("SansSerif", Font.BOLD, 15));
+        panel.add(email, panelGbc);
 
         panelGbc.gridy++;
         JTextField userField = new JTextField();
-        userField.setPreferredSize(new Dimension(250, 35));
+        userField.setPreferredSize(new Dimension(250, 25));
         panel.add(userField, panelGbc);
 
+        // Senha
         panelGbc.gridy++;
-        JLabel senhaLabel = new JLabel("Senha");
-        senhaLabel.setForeground(Color.WHITE);
-        senhaLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(senhaLabel, panelGbc);
+        JLabel senha = new JLabel("Senha");
+        senha.setForeground(Color.WHITE);
+        senha.setFont(new Font("SansSerif", Font.BOLD, 15));
+        panel.add(senha, panelGbc);
 
         panelGbc.gridy++;
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(250, 35));
+        passwordField.setPreferredSize(new Dimension(250, 25));
         panel.add(passwordField, panelGbc);
 
-        panelGbc.insets = new Insets(20, 0, 10, 0);
+        // Botão Login
         panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
-        stylePrimaryButton(loginButton);
+        loginButton.setBackground(new Color(0, 200, 100));
+        loginButton.setForeground(Color.BLACK);
+        loginButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+        loginButton.setPreferredSize(new Dimension(165, 30));
         panel.add(loginButton, panelGbc);
 
-        panelGbc.insets = new Insets(5, 0, 10, 0);
+        // Botão Voltar
         panelGbc.gridy++;
         JButton voltarButton = new JButton("Voltar");
-        styleSecondaryButton(voltarButton);
+        voltarButton.setBackground(Color.white);
+        voltarButton.setForeground(Color.black);
+        voltarButton.setPreferredSize(new Dimension(165, 30));
+        voltarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         panel.add(voltarButton, panelGbc);
 
+        // Ação botão voltar
         voltarButton.addActionListener(e -> {
-            int confirmar = JOptionPane.showConfirmDialog(telaLogin, "Tem certeza que deseja voltar?",
-                    "Confirmação", JOptionPane.YES_NO_OPTION);
+            int confirmar = JOptionPane.showConfirmDialog(telaLogin,
+                    "Tem certeza que deseja voltar?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
             if (confirmar == JOptionPane.YES_OPTION) {
                 telaLogin.dispose();
                 LoginOneMentorView.loginOne();
             }
         });
 
+        // Ação botão login
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 String email = userField.getText().trim();
                 String senha = new String(passwordField.getPassword()).trim();
 
-                Mentor mentor = Usuario.loginMentor(email, senha);
+                EntityManager em = CustomizerFactory.getEntityManager();
+                CoordenacaoRepository coordenacaoRepository = new CoordenacaoRepository(em);
 
-                if (mentor != null) {
-                    Sessao.setMentorLogado(mentor);
-                    JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
+                UsuarioEntity usuario = coordenacaoRepository.login(email, senha);
+
+                if (usuario != null && usuario instanceof CoordenacaoEntity) {
+                    CoordenacaoEntity coordenacaoEntity = (CoordenacaoEntity) usuario;
+                    Coordenador coordenador = coordenacaoEntity.toCoordenador();
+
+                    JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
                     telaLogin.dispose();
-                    TelaInicialMentor.telaMentor();
+
+                    MenuCoordenador menuCoordenador = new MenuCoordenador(coordenador);
+                    PainelPrincipalView.painelCoordenacao();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+
+                em.close();
             }
         });
 
-        containerCentro.add(panel);
+        // Adiciona painel central
+        gbc.gridy = 0;
+        containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
-    }
-
-    private static void stylePrimaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeUni);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
-    }
-
-    private static void styleSecondaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeBotaoVoltar);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
     }
 }

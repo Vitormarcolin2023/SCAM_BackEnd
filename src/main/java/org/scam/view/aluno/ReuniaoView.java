@@ -1,4 +1,4 @@
-package org.scam.view.mentor;
+package org.scam.view.aluno;
 
 import org.scam.model.entities.ReuniaoEntity;
 import org.scam.model.services.ReuniaoService;
@@ -7,15 +7,12 @@ import org.scam.view.EstilosPadrao;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
-public class VisualizarReunioesMtView {
+public class ReuniaoView {
 
-    public static JInternalFrame visualizarReunioesMentor(){
+    public static JInternalFrame visualizarReunioes() {
 
-        // TROCAR LÓGICA PARA RECUPERAR PROJETOS EM QUE O MENTOR ESTÁ INSCRITO
         ReuniaoService reuniaoService = new ReuniaoService();
         List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
 
@@ -102,31 +99,12 @@ public class VisualizarReunioesMtView {
         filtroReuniao.addActionListener(e -> atualizarLista.run());
 
         painelPrincipal.add(painelCentro, BorderLayout.CENTER);
-
+        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
 
         // Carrega inicialmente com Agendadas
         filtroReuniao.setSelectedItem("Agendada");
         atualizarLista.run();
 
-        JPanel painelFechar = new JPanel(new BorderLayout());
-        painelFechar.setBackground(EstilosPadrao.cinzaFundo);
-        painelFechar.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
-        JButton fechar = new JButton("Fechar");
-        fechar.setSize(EstilosPadrao.tamanhoBotao);
-        fechar.setBackground(EstilosPadrao.verdeUni);
-        fechar.setForeground(Color.white);
-        painelFechar.add(fechar, BorderLayout.WEST);
-
-        fechar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                internalFrame.dispose();
-            }
-        });
-
-        painelPrincipal.add(painelFechar, BorderLayout.SOUTH);
-
-        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
         return internalFrame;
     }

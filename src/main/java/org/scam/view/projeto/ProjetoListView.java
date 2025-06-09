@@ -1,4 +1,4 @@
-package org.scam.view.coordenacao;
+package org.scam.view.projeto;
 
 import org.scam.model.entities.ProjetoEntity;
 

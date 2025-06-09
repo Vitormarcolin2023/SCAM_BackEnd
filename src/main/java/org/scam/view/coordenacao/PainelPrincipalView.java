@@ -6,7 +6,9 @@ import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
+import org.scam.view.mentor.DesativarMentorDesktop;
 import org.scam.view.mentor.MentorListView;
+import org.scam.view.projeto.ProjetoListView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -101,7 +103,7 @@ public class PainelPrincipalView {
         });
 
         btnDesativarMentor.addActionListener(ev -> {
-            DesativarMentorView.abrirTelaDesativacao(desktopPane);
+            DesativarMentorDesktop.abrirTelaDesativacao(desktopPane);
         });
 
         frame.setVisible(true);
