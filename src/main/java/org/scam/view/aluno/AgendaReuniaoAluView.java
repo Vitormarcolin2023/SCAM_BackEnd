@@ -1,5 +1,7 @@
 package org.scam.view.aluno;
 
+import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.services.ReuniaoService;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.util.Date;
+import java.util.List;
 
 public class AgendaReuniaoAluView {
 
@@ -41,7 +44,7 @@ public class AgendaReuniaoAluView {
         // Label do motivo
         g.gridx = 0;
         g.gridy = 0;
-        g.gridwidth = 2;
+        g.gridwidth = 3;
         JLabel motivoLabel = new JLabel("Explique o motivo da reunião:");
         motivoLabel.setFont(EstilosPadrao.fontePadrao);
         motivoLabel.setForeground(Color.WHITE);
@@ -49,14 +52,18 @@ public class AgendaReuniaoAluView {
 
         // TextArea do motivo
         g.gridy = 1;
-        JTextArea motivoArea = new JTextArea(6, 50); // mais larga
+        JTextArea motivoArea = new JTextArea(6, 50);
         motivoArea.setLineWrap(true);
         motivoArea.setWrapStyleWord(true);
         motivoArea.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         JScrollPane scroll = new JScrollPane(motivoArea);
-        scroll.setPreferredSize(new Dimension(500, 130)); // mais largo e alto
+        scroll.setPreferredSize(new Dimension(500, 130));
+        g.weighty = 0.2;
+        g.fill = GridBagConstraints.BOTH;
         painelCentro.add(scroll, g);
 
+        g.weighty = 0;
+        g.fill = GridBagConstraints.HORIZONTAL;
         g.gridwidth = 1;
 
         // Data
@@ -74,7 +81,7 @@ public class AgendaReuniaoAluView {
         dataSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(dataSpinner, g);
 
-        // Horário (ao lado da data)
+        // Horário
         g.gridx = 0;
         g.gridy = 3;
         JLabel horaLabel = new JLabel("Horário:");
@@ -89,9 +96,24 @@ public class AgendaReuniaoAluView {
         horaSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(horaSpinner, g);
 
-        // Local
+        // Tipo de reunião
         g.gridx = 0;
         g.gridy = 4;
+        JLabel tipoLabel = new JLabel("Tipo de reunião:");
+        tipoLabel.setFont(EstilosPadrao.fontePadrao);
+        tipoLabel.setForeground(Color.WHITE);
+        painelCentro.add(tipoLabel, g);
+
+        g.gridx = 1;
+        String[] tipos = {"Presencial", "Online"};
+        JComboBox<String> tipoCombo = new JComboBox<>(tipos);
+        tipoCombo.setPreferredSize(new Dimension(200, 25));
+        tipoCombo.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        painelCentro.add(tipoCombo, g);
+
+        // Local (visível apenas se for "Presencial")
+        g.gridx = 0;
+        g.gridy = 5;
         JLabel localLabel = new JLabel("Local:");
         localLabel.setFont(EstilosPadrao.fontePadrao);
         localLabel.setForeground(Color.WHITE);
@@ -102,25 +124,38 @@ public class AgendaReuniaoAluView {
         localField.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(localField, g);
 
-        // Mentor
+        // Exibir ou ocultar campo local com base na escolha
+        tipoCombo.addActionListener(e -> {
+            String selecionado = (String) tipoCombo.getSelectedItem();
+            boolean presencial = "Presencial".equals(selecionado);
+            localLabel.setVisible(presencial);
+            localField.setVisible(presencial);
+            painelCentro.revalidate();
+            painelCentro.repaint();
+        });
+
+
+        // Projeto
         g.gridx = 0;
-        g.gridy = 5;
-        JLabel mentorLabel = new JLabel("Mentor:");
-        mentorLabel.setFont(EstilosPadrao.fontePadrao);
-        mentorLabel.setForeground(Color.WHITE);
-        painelCentro.add(mentorLabel, g);
+        g.gridy = 6;
+        JLabel buscarProjeto = new JLabel("Selecione o projeto: ");
+        buscarProjeto.setForeground(Color.white);
+        buscarProjeto.setFont(EstilosPadrao.fontePadrao);
+        painelCentro.add(buscarProjeto, g);
 
         g.gridx = 1;
-        JComboBox<String> comboMentores = new JComboBox<>();
-        comboMentores.setPreferredSize(new Dimension(200, 25));
-        comboMentores.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
-        comboMentores.addItem("Selecione um mentor...");
-        // criar for para carregar mentores
-        painelCentro.add(comboMentores, g);
+        List<ProjetoEntity> listaProjetos = ReuniaoService.buscarProjetos(80554);
+        JComboBox<String> comboProjetos = new JComboBox<>();
+        comboProjetos.setPreferredSize(new Dimension(200, 25));
+        comboProjetos.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        for (ProjetoEntity projeto : listaProjetos) {
+            comboProjetos.addItem(projeto.getNomeDoProjeto());
+        }
+        painelCentro.add(comboProjetos, g);
 
         // Botões
         g.gridx = 0;
-        g.gridy = 8;
+        g.gridy = 7;
         g.gridwidth = 2;
         g.anchor = GridBagConstraints.WEST;
 
@@ -152,6 +187,9 @@ public class AgendaReuniaoAluView {
         painelPrincipal.add(painelCentro, BorderLayout.CENTER);
         internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
+
+        // Oculta o campo local inicialmente, se não for "Presencial"
+        tipoCombo.setSelectedItem("Online");
 
         return internalFrame;
     }
