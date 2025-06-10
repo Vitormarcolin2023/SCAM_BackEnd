@@ -20,4 +20,5 @@ public class EstilosPadrao {
 
     // Dimensões
     public static Dimension tamanhoBotao = new Dimension(165, 30);
+    public static Dimension tamanhoInternalFrame = new Dimension(1055, 585);
 }
