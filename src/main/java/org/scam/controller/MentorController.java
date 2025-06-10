@@ -25,4 +25,18 @@ public class MentorController {
     public void desativarMentor(int idMentor, String motivo) {
         repository.desativarPorId(idMentor, motivo);
     }
+
+    public boolean desativarMentorPorEmail(String email, String motivo) {
+        try {
+            // código que desativa o mentor no banco
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
 }

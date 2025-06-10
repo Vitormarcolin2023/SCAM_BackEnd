@@ -138,4 +138,16 @@ public class MentorRepository {
         return query.getResultList();
     }
 
+    public void desativarPorEmail(String email, String motivo) {
+        MentorEntity mentor = buscarPorEmail(email);
+        if (mentor != null) {
+            mentor.setStatus(StatusMentor.DESATIVO);
+            mentor.setMotivoDesativacao(motivo);
+            em.getTransaction().begin();
+            em.merge(mentor);
+            em.getTransaction().commit();
+        }
+    }
+
+
 }
