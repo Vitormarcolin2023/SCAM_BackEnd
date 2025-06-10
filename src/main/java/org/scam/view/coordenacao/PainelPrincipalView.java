@@ -6,7 +6,7 @@ import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
-import org.scam.view.mentor.MentorListView;
+import org.scam.view.EstilosPadrao;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -14,15 +14,6 @@ import java.awt.*;
 import java.util.List;
 
 public class PainelPrincipalView {
-
-    // Cores e fontes padrão
-    public static final Color verdeUni = new Color(0, 200, 100);
-    public static final Color cinzaFundo = new Color(50, 50, 50);
-    public static final Color cinzaClaro = new Color(90, 90, 90);
-    public static final Font tituloSAM = new Font("SansSerif", Font.BOLD, 21);
-    public static final Font fontePadrao = new Font("SansSerif", Font.PLAIN, 13);
-    public static final Font fonteTitulos = new Font("SansSerif", Font.PLAIN, 16);
-    public static final Dimension tamanhoBotao = new Dimension(165, 30);
 
     public static void painelCoordenacao() {
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
@@ -37,14 +28,14 @@ public class PainelPrincipalView {
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
         JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
-        titulo.setFont(tituloSAM);
+        titulo.setFont(EstilosPadrao.tituloSAM);
         titulo.setForeground(Color.WHITE);
         topo.add(titulo);
         frame.add(topo, BorderLayout.NORTH);
 
         // PAINEL CENTRAL
         JPanel painelCentral = new JPanel(new BorderLayout());
-        painelCentral.setBackground(cinzaFundo);
+        painelCentral.setBackground(EstilosPadrao.cinzaFundo);
         frame.add(painelCentral, BorderLayout.CENTER);
 
         JDesktopPane desktopPane = new JDesktopPane();
@@ -53,23 +44,23 @@ public class PainelPrincipalView {
 
         // PAINEL DE BOTÕES
         JPanel painelBotoes = new JPanel();
-        painelBotoes.setBackground(cinzaClaro);
+        painelBotoes.setBackground(EstilosPadrao.cinzaClaro);
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         String[] statusConta = {"Litar Mentor", "Ativo", "Inativo"};
         JComboBox<String> comboBox = new JComboBox<>(statusConta);
         comboBox.setMaximumSize(new Dimension(200, 30));
-        comboBox.setFont(fontePadrao);
+        comboBox.setFont(EstilosPadrao.fontePadrao);
         comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton btnDesativarMentor = new JButton("Desativar Mentor");
         JButton btnListarProjetos = new JButton("Listar Projetos");
 
         for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
-            btn.setMaximumSize(tamanhoBotao);
-            btn.setPreferredSize(tamanhoBotao);
-            btn.setFont(fontePadrao);
+            btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
+            btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            btn.setFont(EstilosPadrao.fontePadrao);
             btn.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelBotoes.add(btn);
             painelBotoes.add(Box.createVerticalStrut(15));

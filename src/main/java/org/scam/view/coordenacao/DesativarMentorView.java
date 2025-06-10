@@ -4,6 +4,7 @@ import org.scam.controller.MentorController;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
+import org.scam.view.EstilosPadrao;
 import org.scam.view.coordenacao.PainelPrincipalView;
 
 import javax.persistence.EntityManager;
@@ -28,26 +29,26 @@ public class DesativarMentorView {
 
         JPanel painel = new JPanel();
         painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
-        painel.setBackground(PainelPrincipalView.cinzaFundo);
+        painel.setBackground(EstilosPadrao.cinzaFundo);
         painel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel lblSelecione = new JLabel("Selecione o mentor:");
         lblSelecione.setForeground(Color.WHITE);
-        lblSelecione.setFont(PainelPrincipalView.fonteTitulos);
+        lblSelecione.setFont(EstilosPadrao.fonteTitulos);
         painel.add(lblSelecione);
 
         JComboBox<MentorEntity> comboMentores = new JComboBox<>();
         for (MentorEntity mentor : mentoresAtivos) {
             comboMentores.addItem(mentor);
         }
-        comboMentores.setFont(PainelPrincipalView.fontePadrao);
+        comboMentores.setFont(EstilosPadrao.fontePadrao);
         comboMentores.setMaximumSize(new Dimension(400, 30));
         painel.add(comboMentores);
         painel.add(Box.createVerticalStrut(15));
 
         JLabel lblMotivo = new JLabel("Motivo da desativação:");
         lblMotivo.setForeground(Color.WHITE);
-        lblMotivo.setFont(PainelPrincipalView.fonteTitulos);
+        lblMotivo.setFont(EstilosPadrao.fonteTitulos);
         painel.add(lblMotivo);
 
         JTextArea areaMotivo = new JTextArea(4, 30);
@@ -58,9 +59,9 @@ public class DesativarMentorView {
         painel.add(Box.createVerticalStrut(20));
 
         JButton btnDesativar = new JButton("Desativar");
-        btnDesativar.setBackground(PainelPrincipalView.verdeUni);
+        btnDesativar.setBackground(EstilosPadrao.verdeUni);
         btnDesativar.setForeground(Color.WHITE);
-        btnDesativar.setFont(PainelPrincipalView.fontePadrao);
+        btnDesativar.setFont(EstilosPadrao.fontePadrao);
         btnDesativar.setFocusPainted(false);
         btnDesativar.setAlignmentX(Component.CENTER_ALIGNMENT);
         painel.add(btnDesativar);
