@@ -1,12 +1,11 @@
-package org.scam.view.mentor;
+package org.scam.view.coordenacao;
 
 import org.scam.model.entities.MentorEntity;
+import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-
-import static org.scam.view.coordenacao.PainelPrincipalView.*;
 
 public class MentorListView {
 
@@ -33,9 +32,9 @@ public class MentorListView {
 
         JTable tabela = new JTable(dados, colunas);
         tabela.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
-        tabela.getTableHeader().setBackground(verdeUni);
+        tabela.getTableHeader().setBackground(EstilosPadrao.verdeUni);
         tabela.getTableHeader().setForeground(Color.WHITE);
-        tabela.setFont(fontePadrao);
+        tabela.setFont(EstilosPadrao.fontePadrao);
         tabela.setRowHeight(22);
 
         internalFrame.add(new JScrollPane(tabela), BorderLayout.CENTER);
