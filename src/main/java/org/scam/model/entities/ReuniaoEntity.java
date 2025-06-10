@@ -1,6 +1,7 @@
 package org.scam.model.entities;
 
 import org.scam.model.repository.StatusReuniao;
+import org.scam.model.repository.TipoReuniao;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,7 +26,10 @@ public class ReuniaoEntity {
     @Column(name = "horario_reuniao", nullable = false)
     private LocalTime horarioReuniao;
 
-    @Column(name = "local_reuniao", nullable = false, length = 100)
+    @Column(name = "tipo_reuniao", nullable = false)
+    private TipoReuniao tipoReuniao;
+
+    @Column(name = "local_reuniao", length = 100)
     private String localReuniao;
 
     @Column(name = "status_reuniao", nullable = false)
@@ -35,21 +39,21 @@ public class ReuniaoEntity {
     private boolean reuniaoConfirmada;
 
     @ManyToOne
-    @JoinColumn(name = "fk_mentor_id", nullable = false)
-    private MentorEntity mentor;
-
-    @ManyToOne
     @JoinColumn(name = "fk_projeto_id") // nome da coluna no banco
     private ProjetoEntity projeto;
 
     public ReuniaoEntity(){}
 
-    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, String localReuniao, MentorEntity mentor, ProjetoEntity projeto) {
+    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, LocalTime horarioReuniao, TipoReuniao tipoReuniao,
+                         String localReuniao, StatusReuniao statusReuniao, boolean reuniaoConfirmada, ProjetoEntity projeto) {
         this.id = id;
         this.motivoReuniao = motivoReuniao;
         this.dataReuniao = dataReuniao;
+        this.horarioReuniao = horarioReuniao;
+        this.tipoReuniao = tipoReuniao;
         this.localReuniao = localReuniao;
-        this.mentor = mentor;
+        this.statusReuniao = statusReuniao;
+        this.reuniaoConfirmada = reuniaoConfirmada;
         this.projeto = projeto;
     }
 
@@ -85,15 +89,13 @@ public class ReuniaoEntity {
         this.localReuniao = localReuniao;
     }
 
-    public MentorEntity getMentor() {
-        return mentor;
+    public TipoReuniao getTipoReuniao() {
+        return tipoReuniao;
     }
 
-    public void setMentor(MentorEntity mentor) {
-        this.mentor = mentor;
+    public void setTipoReuniao(TipoReuniao tipoReuniao) {
+        this.tipoReuniao = tipoReuniao;
     }
-
-
 
     public StatusReuniao getStatusReuniao() {
         return statusReuniao;

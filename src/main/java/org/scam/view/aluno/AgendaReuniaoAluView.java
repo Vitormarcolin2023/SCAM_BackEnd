@@ -1,6 +1,7 @@
 package org.scam.view.aluno;
 
 import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.repository.TipoReuniao;
 import org.scam.model.services.ReuniaoService;
 import org.scam.view.EstilosPadrao;
 
@@ -8,15 +9,24 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
 public class AgendaReuniaoAluView {
 
+    private static TipoReuniao tipoReuniao;
+    private static ProjetoEntity projeto;
+
     public static JInternalFrame cadastrarReuniao() {
 
         JInternalFrame internalFrame = new JInternalFrame();
-        internalFrame.setSize(1055, 585);
+        internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
         internalFrame.setLayout(new BorderLayout());
         internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) internalFrame.getUI();
@@ -111,7 +121,7 @@ public class AgendaReuniaoAluView {
         tipoCombo.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
         painelCentro.add(tipoCombo, g);
 
-        // Local (visível apenas se for "Presencial")
+        // Local
         g.gridx = 0;
         g.gridy = 5;
         JLabel localLabel = new JLabel("Local:");
@@ -124,15 +134,25 @@ public class AgendaReuniaoAluView {
         localField.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(localField, g);
 
-        // Exibir ou ocultar campo local com base na escolha
+        // Lógica para desabilitar/habilitar o campo Local sem alterar layout
         tipoCombo.addActionListener(e -> {
-            String selecionado = (String) tipoCombo.getSelectedItem();
-            boolean presencial = "Presencial".equals(selecionado);
-            localLabel.setVisible(presencial);
-            localField.setVisible(presencial);
-            painelCentro.revalidate();
-            painelCentro.repaint();
+            boolean presencial = tipoCombo.getSelectedItem().equals("Presencial");
+            localLabel.setEnabled(presencial);
+            localField.setEnabled(presencial);
+
+            // Opcional: limpa o campo quando for online
+            if (!presencial) {
+                localField.setText("");
+                tipoReuniao = TipoReuniao.ONLINE;
+            }
+            else {
+                tipoReuniao = TipoReuniao.PRESENCIAL;
+            }
         });
+
+        boolean inicialPresencial = tipoCombo.getSelectedItem().equals("Presencial");
+        localLabel.setEnabled(inicialPresencial);
+        localField.setEnabled(inicialPresencial);
 
 
         // Projeto
@@ -148,10 +168,24 @@ public class AgendaReuniaoAluView {
         JComboBox<String> comboProjetos = new JComboBox<>();
         comboProjetos.setPreferredSize(new Dimension(200, 25));
         comboProjetos.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        comboProjetos.addItem("Selecione o projeto...");
         for (ProjetoEntity projeto : listaProjetos) {
             comboProjetos.addItem(projeto.getNomeDoProjeto());
         }
         painelCentro.add(comboProjetos, g);
+
+        // Ação para seleção do projeto
+        comboProjetos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = comboProjetos.getSelectedIndex();
+                if (index > 0) {
+                    projeto = listaProjetos.get(index-1); // index-1 porque a listagem começa com um item que não é um projeto
+                } else {
+                    projeto = null;
+                }
+            }
+        });
 
         // Botões
         g.gridx = 0;
@@ -166,7 +200,25 @@ public class AgendaReuniaoAluView {
         btnSalvar.setBackground(EstilosPadrao.verdeUni);
         btnSalvar.setForeground(Color.WHITE);
         btnSalvar.addActionListener(e -> {
-            JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+            Date dataSelecionada = (Date) dataSpinner.getValue();
+            LocalDate data = dataSelecionada.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            // Pega a hora selecionada no horaSpinner (como java.util.Date)
+            Date horaSelecionada = (Date) horaSpinner.getValue();
+            LocalTime hora = horaSelecionada.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalTime()
+                    .withSecond(0)
+                    .withNano(0); // zera segundos e nanos
+
+            boolean isAgendada = ReuniaoService.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto);
+            if(isAgendada) {
+                JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+            } else {
+                JOptionPane.showMessageDialog(internalFrame, "Algo deu errado, tente novamente mais tarde");
+            }
             internalFrame.dispose();
         });
 
@@ -187,10 +239,6 @@ public class AgendaReuniaoAluView {
         painelPrincipal.add(painelCentro, BorderLayout.CENTER);
         internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
-
-        // Oculta o campo local inicialmente, se não for "Presencial"
-        tipoCombo.setSelectedItem("Online");
-
         return internalFrame;
     }
 }

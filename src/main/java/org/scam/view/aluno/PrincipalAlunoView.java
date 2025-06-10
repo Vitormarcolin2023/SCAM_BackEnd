@@ -133,8 +133,8 @@ public class PrincipalAlunoView {
                 }
             });
 
-            reuniaoCombo.addActionListener(e -> {
-                int selectedIndex = reuniaoCombo.getSelectedIndex();
+            btnReuniao.addActionListener(e -> {
+                int selectedIndex = btnReuniao.getSelectedIndex();
                 JInternalFrame internalFrame = null; // Inicia como nulo
 
                 // Verifica qual opção foi selecionada para criar a janela correspondente

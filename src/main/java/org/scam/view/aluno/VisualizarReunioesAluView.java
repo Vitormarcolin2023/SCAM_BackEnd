@@ -19,7 +19,7 @@ public class VisualizarReunioesAluView {
         List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
 
         JInternalFrame internalFrame = new JInternalFrame();
-        internalFrame.setSize(1055, 585);
+        internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
         internalFrame.setLayout(new BorderLayout());
         internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) internalFrame.getUI();

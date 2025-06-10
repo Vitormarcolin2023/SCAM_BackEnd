@@ -141,6 +141,8 @@ public class LoginAlunoView {
                 }
                 else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
+                userField.setText(" ");
+                passwordField.setText(" ");
                 }
             }
         });

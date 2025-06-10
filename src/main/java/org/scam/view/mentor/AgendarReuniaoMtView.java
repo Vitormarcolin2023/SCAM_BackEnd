@@ -10,34 +10,33 @@ import java.util.Date;
 
 public class AgendarReuniaoMtView {
 
-    public static JInternalFrame agendarReuniaoMentor(){
+    public static JInternalFrame agendarReuniaoMentor() {
         JInternalFrame internalFrame = new JInternalFrame();
-        internalFrame.setSize(1055, 585);
+        internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
         internalFrame.setLayout(new BorderLayout());
+        internalFrame.setBackground(EstilosPadrao.cinzaFundo);
         internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) internalFrame.getUI();
         ui.setNorthPane(null);
-
-        JPanel painelPrincipal = new JPanel(new BorderLayout());
-        painelPrincipal.setBackground(EstilosPadrao.cinzaFundo);
-        painelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel lblTitulo = new JLabel("Agendar reunião:");
         lblTitulo.setFont(EstilosPadrao.fonteTitulos);
         lblTitulo.setForeground(EstilosPadrao.verdeUni);
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        painelPrincipal.add(lblTitulo, BorderLayout.NORTH);
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+        internalFrame.add(lblTitulo, BorderLayout.NORTH);
 
         JPanel painelCentro = new JPanel(new GridBagLayout());
         painelCentro.setBackground(EstilosPadrao.cinzaFundo);
         painelCentro.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
+        internalFrame.add(painelCentro, BorderLayout.CENTER);
 
         GridBagConstraints g = new GridBagConstraints();
         g.insets = new Insets(10, 10, 10, 10);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.WEST;
 
-        // Label do motivo
+        // Motivo
         g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 2;
@@ -48,14 +47,18 @@ public class AgendarReuniaoMtView {
 
         // TextArea do motivo
         g.gridy = 1;
-        JTextArea motivoArea = new JTextArea(6, 50); // mais larga
+        JTextArea motivoArea = new JTextArea(6, 50);
         motivoArea.setLineWrap(true);
         motivoArea.setWrapStyleWord(true);
         motivoArea.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         JScrollPane scroll = new JScrollPane(motivoArea);
-        scroll.setPreferredSize(new Dimension(500, 130)); // mais largo e alto
+        scroll.setPreferredSize(new Dimension(500, 130));
+        g.weighty = 0.2;
+        g.fill = GridBagConstraints.BOTH;
         painelCentro.add(scroll, g);
 
+        g.weighty = 0;
+        g.fill = GridBagConstraints.HORIZONTAL;
         g.gridwidth = 1;
 
         // Data
@@ -73,7 +76,7 @@ public class AgendarReuniaoMtView {
         dataSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(dataSpinner, g);
 
-        // Horário (ao lado da data)
+        // Horário
         g.gridx = 0;
         g.gridy = 3;
         JLabel horaLabel = new JLabel("Horário:");
@@ -88,9 +91,25 @@ public class AgendarReuniaoMtView {
         horaSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(horaSpinner, g);
 
-        // Local
+        // Tipo de Reunião
         g.gridx = 0;
         g.gridy = 4;
+        JLabel tipoReuniaoLabel = new JLabel("Tipo de reunião:");
+        tipoReuniaoLabel.setFont(EstilosPadrao.fontePadrao);
+        tipoReuniaoLabel.setForeground(Color.WHITE);
+        painelCentro.add(tipoReuniaoLabel, g);
+
+        g.gridx = 1;
+        JComboBox<String> comboTipo = new JComboBox<>();
+        comboTipo.addItem("Presencial");
+        comboTipo.addItem("Online");
+        comboTipo.setPreferredSize(new Dimension(200, 25));
+        comboTipo.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        painelCentro.add(comboTipo, g);
+
+        // Local
+        g.gridx = 0;
+        g.gridy = 5;
         JLabel localLabel = new JLabel("Local:");
         localLabel.setFont(EstilosPadrao.fontePadrao);
         localLabel.setForeground(Color.WHITE);
@@ -101,20 +120,19 @@ public class AgendarReuniaoMtView {
         localField.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(localField, g);
 
-        // Projeto - localiza todos os aluno inclusos no projeto
+        // Projeto
         g.gridx = 0;
-        g.gridy = 5;
-        JLabel projetoLable = new JLabel("Projeto:");
-        projetoLable.setFont(EstilosPadrao.fontePadrao);
-        projetoLable.setForeground(Color.WHITE);
-        painelCentro.add(projetoLable, g);
+        g.gridy = 6;
+        JLabel projetoLabel = new JLabel("Projeto:");
+        projetoLabel.setFont(EstilosPadrao.fontePadrao);
+        projetoLabel.setForeground(Color.WHITE);
+        painelCentro.add(projetoLabel, g);
 
         g.gridx = 1;
         JComboBox<String> comboProjeto = new JComboBox<>();
         comboProjeto.setPreferredSize(new Dimension(200, 25));
         comboProjeto.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
-        comboProjeto.addItem("Selecione um mentor...");
-        // criar for para carregar projetos
+        comboProjeto.addItem("Selecione um projeto...");
         painelCentro.add(comboProjeto, g);
 
         // Botões
@@ -148,10 +166,24 @@ public class AgendarReuniaoMtView {
         painelBotoes.add(btnCancelar);
         painelCentro.add(painelBotoes, g);
 
-        painelPrincipal.add(painelCentro, BorderLayout.CENTER);
-        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
-        internalFrame.setVisible(true);
+        // Lógica para desabilitar/habilitar o campo Local sem alterar layout
+        comboTipo.addActionListener(e -> {
+            boolean presencial = comboTipo.getSelectedItem().equals("Presencial");
+            localLabel.setEnabled(presencial);
+            localField.setEnabled(presencial);
 
+            // Opcional: limpa o campo quando for online
+            if (!presencial) {
+                localField.setText("");
+            }
+        });
+
+        boolean inicialPresencial = comboTipo.getSelectedItem().equals("Presencial");
+        localLabel.setEnabled(inicialPresencial);
+        localField.setEnabled(inicialPresencial);
+
+
+        internalFrame.setVisible(true);
         return internalFrame;
     }
 }

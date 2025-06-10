@@ -1,19 +1,19 @@
 package org.scam.model.services;
 
+import jdk.dynalink.NamedOperation;
 import org.scam.controller.classes.Mentor;
 import org.scam.model.entities.AlunoEntity;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.entities.ReuniaoEntity;
-import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.repository.ProjetoRepository;
-import org.scam.model.repository.ReuniaoRepository;
-import org.scam.model.repository.StatusReuniao;
+import org.scam.model.repository.*;
 
 import javax.persistence.EntityManager;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public class ReuniaoService {
@@ -32,7 +32,7 @@ public class ReuniaoService {
         return projetos;
     }
 
-    public void agendarReuniao(String motivo, LocalDate data, LocalTime hora, String local, MentorEntity mentor, ProjetoEntity projeto){
+    public static boolean agendarReuniao(String motivo, LocalDate data, LocalTime hora, String local, TipoReuniao tipo, ProjetoEntity projeto){
 
         ReuniaoEntity novaReuniao = new ReuniaoEntity();
 
@@ -40,8 +40,16 @@ public class ReuniaoService {
         novaReuniao.setDataReuniao(data);
         novaReuniao.setHorarioReuniao(hora);
         novaReuniao.setLocalReuniao(local);
-        novaReuniao.setMentor(mentor);
+        novaReuniao.setTipoReuniao(tipo);
         novaReuniao.setProjeto(projeto);
         novaReuniao.setStatusReuniao(StatusReuniao.AGUARDANDO_CONFIRMACAO);
+        novaReuniao.setReuniaoConfirmada(false);
+
+        if(reuniaoRepository.salvar(novaReuniao)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
