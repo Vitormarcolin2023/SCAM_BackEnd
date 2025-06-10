@@ -65,13 +65,23 @@ public class PrincipalAlunoView {
                 painelBotoes.add(Box.createVerticalStrut(15)); // Espaçamento
             }
 
-            // Estilização do ComboBox de Reuniões
-            reuniaoCombo.setFont(EstilosPadrao.fonteBtnAcaoLateral);
-            reuniaoCombo.setMaximumSize(EstilosPadrao.tamanhoBotao);
-            reuniaoCombo.setPreferredSize(EstilosPadrao.tamanhoBotao);
-            reuniaoCombo.setAlignmentX(Component.LEFT_ALIGNMENT);
-            painelBotoes.add(reuniaoCombo);
+            // botão de reuniões - criar os demais aqui e depois adicionar no for para adicionar na barra lateralMore actions
+            JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
+            btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+            btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
+            btnReuniao.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            btnReuniao.setAlignmentX(Component.LEFT_ALIGNMENT);
+            painelBotoes.add(btnReuniao);
             painelBotoes.add(Box.createVerticalStrut(15));
+
+            btnReuniao.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                    JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    label.setHorizontalAlignment(SwingConstants.CENTER); // centraliza itens da lista
+                    return label;
+                }
+            });
 
             // Estilização especial para o botão "Voltar"
             voltarBtn.setMaximumSize(EstilosPadrao.tamanhoBotao);
@@ -82,7 +92,7 @@ public class PrincipalAlunoView {
             voltarBtn.setForeground(Color.WHITE);
             voltarBtn.setFocusPainted(false);
             // Adicionar mais espaço antes do botão voltar para separá-lo dos outros
-            painelBotoes.add(Box.createVerticalGlue()); // Empurra o botão "Voltar" para baixo
+            //painelBotoes.add(Box.createVerticalGlue()); // Empurra o botão "Voltar" para baixo - melhor para cima
             painelBotoes.add(voltarBtn);
 
 
