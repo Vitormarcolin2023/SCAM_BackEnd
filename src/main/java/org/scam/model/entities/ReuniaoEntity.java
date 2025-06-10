@@ -38,21 +38,19 @@ public class ReuniaoEntity {
     @JoinColumn(name = "fk_mentor_id", nullable = false)
     private MentorEntity mentor;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "tb_reuniao_aluno",
-            joinColumns = @JoinColumn(name = "id_reuniao"),
-            inverseJoinColumns = @JoinColumn(name = "ra_aluno")
-    )
-    private List<AlunoEntity> alunos = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "fk_projeto_id") // nome da coluna no banco
+    private ProjetoEntity projeto;
 
-    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, String localReuniao, MentorEntity mentor, List<AlunoEntity> alunos) {
+    public ReuniaoEntity(){}
+
+    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, String localReuniao, MentorEntity mentor, ProjetoEntity projeto) {
         this.id = id;
         this.motivoReuniao = motivoReuniao;
         this.dataReuniao = dataReuniao;
         this.localReuniao = localReuniao;
         this.mentor = mentor;
-        this.alunos = alunos;
+        this.projeto = projeto;
     }
 
     public int getId() {
@@ -95,13 +93,7 @@ public class ReuniaoEntity {
         this.mentor = mentor;
     }
 
-    public List<AlunoEntity> getAlunos() {
-        return alunos;
-    }
 
-    public void setAlunos(List<AlunoEntity> alunos) {
-        this.alunos = alunos;
-    }
 
     public StatusReuniao getStatusReuniao() {
         return statusReuniao;
@@ -110,4 +102,29 @@ public class ReuniaoEntity {
     public void setStatusReuniao(StatusReuniao statusReuniao) {
         this.statusReuniao = statusReuniao;
     }
+
+    public LocalTime getHorarioReuniao() {
+        return horarioReuniao;
+    }
+
+    public void setHorarioReuniao(LocalTime horarioReuniao) {
+        this.horarioReuniao = horarioReuniao;
+    }
+
+    public boolean isReuniaoConfirmada() {
+        return reuniaoConfirmada;
+    }
+
+    public void setReuniaoConfirmada(boolean reuniaoConfirmada) {
+        this.reuniaoConfirmada = reuniaoConfirmada;
+    }
+
+    public ProjetoEntity getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(ProjetoEntity projeto) {
+        this.projeto = projeto;
+    }
 }
+
