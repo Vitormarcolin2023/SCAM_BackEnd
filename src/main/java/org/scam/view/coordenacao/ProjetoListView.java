@@ -1,6 +1,7 @@
 package org.scam.view.coordenacao;
 
 import org.scam.model.entities.ProjetoEntity;
+import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,9 +39,9 @@ public class ProjetoListView {
 
         JTable tabela = new JTable(dados, colunas);
         tabela.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
-        tabela.getTableHeader().setBackground(verdeUni);
+        tabela.getTableHeader().setBackground(EstilosPadrao.verdeUni);
         tabela.getTableHeader().setForeground(Color.WHITE);
-        tabela.setFont(fontePadrao);
+        tabela.setFont(EstilosPadrao.fontePadrao);
         tabela.setRowHeight(22);
 
         internalFrame.add(new JScrollPane(tabela), BorderLayout.CENTER);
