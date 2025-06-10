@@ -12,6 +12,7 @@ import org.scam.model.repository.AlunoRepository;
 import org.scam.model.repository.CoordenacaoRepository;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.services.Sessao;
+import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.mentor.LoginOneMentorView;
 
@@ -120,6 +121,7 @@ public class LoginAlunoView {
                     JOptionPane.YES_NO_OPTION);
             if (confirmar == JOptionPane.YES_OPTION) {
                 telaLogin.dispose();
+                TelaSelecaoUsuarioView.exibirTelaSelecao();
             }
         });
 
