@@ -162,16 +162,16 @@ public class DesativarContaMentorView {
                             "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if (areaTexto.getText().trim().isEmpty()) {
+
+                String motivo = areaTexto.getText().trim();
+                if (motivo.isEmpty()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, informe o motivo da desativação.",
                             "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                // Recuperar e-mail do mentor logado
                 String emailMentor = SessaoMentor.getEmail();
-
                 if (emailMentor == null) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Erro: Nenhum mentor logado.",
@@ -179,23 +179,26 @@ public class DesativarContaMentorView {
                     return;
                 }
 
-                // Criar o EntityManager e o controller com ele
                 EntityManager em = CustomizerFactory.getEntityManager();
                 MentorController controller = new MentorController(em);
 
-                //Chamar o método que retorna boolean para indicar sucesso ou falha
-                boolean desativado = controller.desativarMentorPorEmail(emailMentor, areaTexto.getText().trim());
 
+                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
                 if (desativado) {
-                    JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
-                    internalFrame.dispose();
-                    // Aqui você pode também encerrar a sessão ou redirecionar para o login, se quiser
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Conta desativada com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(internalFrame,
-                            "Não foi possível desativar a conta. Tente novamente.",
+                            "Erro ao desativar conta.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
+                    // Não fecha a janela para o usuário tentar novamente
                 }
+                em.close();
+
             });
+
 
             painelDialog.add(btnConfirmar);
             internalFrame.add(painelDialog);

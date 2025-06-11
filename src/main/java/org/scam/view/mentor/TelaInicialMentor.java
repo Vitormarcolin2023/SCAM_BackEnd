@@ -1,6 +1,11 @@
 package org.scam.view.mentor;
 
+import org.scam.controller.MentorController;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.services.SessaoMentor;
 import org.scam.view.EstilosPadrao;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -266,27 +271,57 @@ public class TelaInicialMentor {
             btnConfirmar.addActionListener(ev -> {
                 if (!btnSim.isSelected()) {
                     JOptionPane.showMessageDialog(internalFrame,
-                            "Por favor, clique na opção Sim para continuar",
-                            "Erro", JOptionPane.ERROR_MESSAGE);
+                            "Por favor, clique na opção 'Sim' para continuar.",
+                            "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if (areaTexto.getText().trim().isEmpty()) {
+
+                String motivo = areaTexto.getText().trim();
+                if (motivo.isEmpty()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, informe o motivo da desativação.",
+                            "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String emailMentor = SessaoMentor.getEmail();
+                if (emailMentor == null) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro: Nenhum mentor logado.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
-                internalFrame.dispose();
+
+                EntityManager em = CustomizerFactory.getEntityManager();
+                MentorController controller = new MentorController(em);
+
+
+                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+                if (desativado) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Conta desativada com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro ao desativar conta.",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    // Não fecha a janela para o usuário tentar novamente
+                }
+                em.close();
+
             });
 
+
             painelDialog.add(btnConfirmar);
-            internalFrame.add(painelDialog, BorderLayout.CENTER);
+            internalFrame.add(painelDialog);
             internalFrame.setVisible(true);
             desktopPane.add(internalFrame);
-            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-            internalFrame.moveToFront();
+            try {
+                internalFrame.setSelected(true);
+            } catch (java.beans.PropertyVetoException pve) {
+                pve.printStackTrace();
+            }
         });
 
         btnVoltar.addActionListener(e -> {
