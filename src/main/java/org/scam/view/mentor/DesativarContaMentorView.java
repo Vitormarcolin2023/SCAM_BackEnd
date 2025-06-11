@@ -2,7 +2,6 @@ package org.scam.view.mentor;
 
 import org.scam.controller.MentorController;
 import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.services.SessaoMentor;
 import org.scam.view.EstilosPadrao;
 
 import javax.persistence.EntityManager;

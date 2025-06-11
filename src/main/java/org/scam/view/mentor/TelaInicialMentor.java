@@ -1,11 +1,8 @@
 package org.scam.view.mentor;
 
-import org.scam.controller.MentorController;
-import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.services.SessaoMentor;
+import org.scam.controller.classes.Mentor;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
-
-import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -284,19 +281,17 @@ public class TelaInicialMentor {
                     return;
                 }
 
-                String emailMentor = SessaoMentor.getEmail();
-                if (emailMentor == null) {
+                Mentor mentorLogado = Sessao.getMentorLogado();
+                if (mentorLogado == null) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Erro: Nenhum mentor logado.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                EntityManager em = CustomizerFactory.getEntityManager();
-                MentorController controller = new MentorController(em);
+                String emailMentor = mentorLogado.getEmail();
 
 
-                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+                boolean desativado = MentorController.desativarMentorPorEmail(email, motivo);
                 if (desativado) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Conta desativada com sucesso!",
@@ -323,6 +318,8 @@ public class TelaInicialMentor {
                 pve.printStackTrace();
             }
         });
+
+
 
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,
