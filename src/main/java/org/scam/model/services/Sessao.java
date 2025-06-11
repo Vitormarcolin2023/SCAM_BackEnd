@@ -27,4 +27,12 @@ public class Sessao {
         raAluno = Integer.parseInt(null);
         mentorLogado = null;
     }
+
+    public static String getEmail() {
+        if (mentorLogado != null) {
+            return mentorLogado.getEmail();
+        }
+        return null;
+    }
+
 }

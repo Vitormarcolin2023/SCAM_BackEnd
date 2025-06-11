@@ -1,8 +1,12 @@
 package org.scam.view.mentor;
 
+import org.scam.controller.MentorController;
 import org.scam.controller.classes.Mentor;
+import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -200,13 +204,14 @@ public class TelaInicialMentor {
         btnAtualizarConta.addActionListener(e -> EdicaoMentorPasso1View.exibirTelaEdicaoPasso1());
 
         btnDesativarConta.addActionListener(e -> {
-            JInternalFrame internalFrame = new JInternalFrame();
+            JInternalFrame internalFrame = new JInternalFrame("Desativar Conta", false, false, false, false);
             internalFrame.setSize(1055, 585);
             internalFrame.setLayout(new BorderLayout());
             internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 2));
 
-            if (internalFrame.getUI() instanceof javax.swing.plaf.basic.BasicInternalFrameUI ui) {
-                ui.setNorthPane(null);
+            javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+            if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                basicUI.setNorthPane(null);
             }
 
             JPanel painelDialog = new JPanel();
@@ -240,8 +245,8 @@ public class TelaInicialMentor {
             opcoes.setBackground(EstilosPadrao.cinzaFundo);
             opcoes.add(btnSim);
             opcoes.setAlignmentX(Component.LEFT_ALIGNMENT);
-            painelDialog.add(opcoes);
 
+            painelDialog.add(opcoes);
             painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblMotivo = new JLabel("Digite o motivo da desativação da conta:");
@@ -252,6 +257,8 @@ public class TelaInicialMentor {
             painelDialog.add(Box.createVerticalStrut(10));
 
             JTextArea areaTexto = new JTextArea(5, 30);
+            areaTexto.setLineWrap(true);
+            areaTexto.setWrapStyleWord(true);
             areaTexto.setFont(EstilosPadrao.fontePadrao);
             JScrollPane scroll = new JScrollPane(areaTexto);
             scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -281,17 +288,20 @@ public class TelaInicialMentor {
                     return;
                 }
 
-                Mentor mentorLogado = Sessao.getMentorLogado();
-                if (mentorLogado == null) {
+                String emailMentor = Sessao.getEmail(); // CERTO
+
+                if (emailMentor == null) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Erro: Nenhum mentor logado.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                String emailMentor = mentorLogado.getEmail();
+
+                EntityManager em = CustomizerFactory.getEntityManager();
+                MentorController controller = new MentorController(em);
 
 
-                boolean desativado = MentorController.desativarMentorPorEmail(email, motivo);
+                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
                 if (desativado) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Conta desativada com sucesso!",
@@ -318,8 +328,6 @@ public class TelaInicialMentor {
                 pve.printStackTrace();
             }
         });
-
-
 
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,

@@ -2,6 +2,7 @@ package org.scam.view.mentor;
 
 import org.scam.controller.MentorController;
 import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
 import javax.persistence.EntityManager;
@@ -170,7 +171,8 @@ public class DesativarContaMentorView {
                     return;
                 }
 
-                String emailMentor = SessaoMentor.getEmail();
+                String emailMentor = Sessao.getEmail(); // CERTO
+
                 if (emailMentor == null) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Erro: Nenhum mentor logado.",
