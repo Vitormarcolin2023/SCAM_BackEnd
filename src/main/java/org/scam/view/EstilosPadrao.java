@@ -5,6 +5,7 @@ import java.awt.*;
 public class EstilosPadrao {
 
     // Cores padrão
+    public static Color verdeSAM = new Color(0, 128, 66);
     public static Color verdeUni = new Color(0, 200, 100);
     public static Color cinzaFundo = new Color(30, 30, 30);
     public static Color cinzaClaro = new Color(45, 45, 45);
