@@ -24,7 +24,7 @@ public class PainelPrincipalView {
 
         // TOPO
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(EstilosPadrao.verdeSAM);
         topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
