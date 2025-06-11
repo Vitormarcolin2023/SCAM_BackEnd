@@ -1,6 +1,7 @@
 package org.scam.view.mentor;
 
 import org.scam.view.EstilosPadrao;
+import org.scam.view.TelaSelecaoUsuarioView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,8 +117,7 @@ public class TelaInicialMentor {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose();
-                // Supondo que esta view exista
-                // LoginOneMentorView.loginOne();
+                TelaSelecaoUsuarioView.exibirTelaSelecao();
             }
         });
 
