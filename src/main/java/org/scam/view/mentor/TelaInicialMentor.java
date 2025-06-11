@@ -89,7 +89,7 @@ public class TelaInicialMentor {
         });
 
         btnAtualizarConta.addActionListener(e -> {
-            // EdicaoMentorPasso1View.exibirTelaEdicaoPasso1(desktopPane);
+            EdicaoMentorPasso1View.exibirTelaEdicaoPasso1();
         });
 
         btnDesativarConta.addActionListener(e -> {
