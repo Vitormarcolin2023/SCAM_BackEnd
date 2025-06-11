@@ -203,6 +203,7 @@ public class TelaInicialMentor {
 
         btnAtualizarConta.addActionListener(e -> EdicaoMentorPasso1View.exibirTelaEdicaoPasso1());
 
+        //btn desativar conta
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame("Desativar Conta", false, false, false, false);
             internalFrame.setSize(1055, 585);
@@ -226,24 +227,9 @@ public class TelaInicialMentor {
             painelDialog.add(lblTitulo);
             painelDialog.add(Box.createVerticalStrut(20));
 
-            JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
-            lblConfirma.setForeground(Color.WHITE);
-            lblConfirma.setFont(EstilosPadrao.fontePadrao);
-            lblConfirma.setAlignmentX(Component.LEFT_ALIGNMENT);
-            painelDialog.add(lblConfirma);
-            painelDialog.add(Box.createVerticalStrut(10));
-
-            JRadioButton btnSim = new JRadioButton("Sim");
-            btnSim.setBackground(EstilosPadrao.cinzaFundo);
-            btnSim.setFont(EstilosPadrao.fontePadrao);
-            btnSim.setForeground(Color.WHITE);
-
-            ButtonGroup grupo = new ButtonGroup();
-            grupo.add(btnSim);
 
             JPanel opcoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             opcoes.setBackground(EstilosPadrao.cinzaFundo);
-            opcoes.add(btnSim);
             opcoes.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             painelDialog.add(opcoes);
@@ -272,13 +258,8 @@ public class TelaInicialMentor {
             btnConfirmar.setFont(EstilosPadrao.fonteBotao);
             btnConfirmar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+            //btn para confirmar a desativação
             btnConfirmar.addActionListener(ev -> {
-                if (!btnSim.isSelected()) {
-                    JOptionPane.showMessageDialog(internalFrame,
-                            "Por favor, clique na opção 'Sim' para continuar.",
-                            "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
 
                 String motivo = areaTexto.getText().trim();
                 if (motivo.isEmpty()) {
@@ -315,8 +296,7 @@ public class TelaInicialMentor {
                 }
                 em.close();
 
-            });
-
+            }); //fim do action event do btnConfirmar
 
             painelDialog.add(btnConfirmar);
             internalFrame.add(painelDialog);
@@ -327,7 +307,8 @@ public class TelaInicialMentor {
             } catch (java.beans.PropertyVetoException pve) {
                 pve.printStackTrace();
             }
-        });
+        }); //fim do action event do btnDesativarConta
+
 
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,

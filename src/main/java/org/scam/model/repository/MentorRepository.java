@@ -138,7 +138,7 @@ public class MentorRepository {
         return query.getResultList();
     }
 
-    // MentorRepository.java
+
     public void desativarMentorPorEmail(String email, String motivo) {
         MentorEntity mentor = buscarPorEmail(email);
 
