@@ -185,4 +185,11 @@ public class ProjetoEntity {
         }
     }
 
+    // Dentro da classe ProjetoEntity.java
+
+    @Override
+    public String toString() {
+        return this.getNomeDoProjeto(); // Retorna o nome do projeto, que aparecerá na lista de seleção.
+    }
+
 }
