@@ -1,3 +1,4 @@
+/*
 package org.scam.view.mentor;
 
 import org.scam.controller.MentorController;
@@ -227,3 +228,6 @@ public class DesativarContaMentorView {
         frame.setVisible(true);
     }
 }
+
+
+ */
