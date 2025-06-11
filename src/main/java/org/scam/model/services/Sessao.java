@@ -29,11 +29,5 @@ public class Sessao {
         mentorLogado = null;
     }
 
-    public static String getEmail() {
-        if (mentorLogado != null) {
-            return mentorLogado.getEmail();
-        }
-        return null;
-    }
 
 }

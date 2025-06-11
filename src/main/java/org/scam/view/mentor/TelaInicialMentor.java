@@ -260,7 +260,6 @@ public class TelaInicialMentor {
             btnConfirmar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             //btn para confirmar a desativação
-
             btnConfirmar.addActionListener(ev -> {
 
                 String motivo = areaTexto.getText().trim();
@@ -271,9 +270,9 @@ public class TelaInicialMentor {
                     return;
                 }
 
-                String emailMentor = Sessao.getEmail(); // CERTO
+                String mentorLogado = Sessao.getMentorLogado().getEmail(); // CERTO
 
-                if (emailMentor == null) {
+                if (mentorLogado == null) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Erro: Nenhum mentor logado.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
@@ -285,7 +284,7 @@ public class TelaInicialMentor {
                 try {
                     MentorController controller = new MentorController(em);
 
-                    boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+                    boolean desativado = controller.desativarMentorPorEmail(mentorLogado, motivo);
 
                     if (desativado) {
                         JOptionPane.showMessageDialog(internalFrame,

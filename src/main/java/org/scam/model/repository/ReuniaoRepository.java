@@ -13,10 +13,10 @@ public class ReuniaoRepository {
         this.em = em;
     }
 
-    public List<ReuniaoEntity> buscarReunioes(int ra){
+    public List<ReuniaoEntity> buscarReunioes(int id){
             return em.createQuery(
                 "SELECT r FROM ReuniaoEntity r JOIN r.alunos a WHERE a.ra = :ra", ReuniaoEntity.class)
-                    .setParameter("ra", ra)
+                    .setParameter("id", id)
                     .getResultList();
     }
 
