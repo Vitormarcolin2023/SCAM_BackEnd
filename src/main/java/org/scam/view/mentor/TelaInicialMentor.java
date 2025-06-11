@@ -3,6 +3,7 @@ package org.scam.view.mentor;
 import org.scam.controller.MentorController;
 import org.scam.controller.classes.Mentor;
 import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.repository.MentorRepository;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
@@ -259,6 +260,7 @@ public class TelaInicialMentor {
             btnConfirmar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             //btn para confirmar a desativação
+
             btnConfirmar.addActionListener(ev -> {
 
                 String motivo = areaTexto.getText().trim();
@@ -279,24 +281,35 @@ public class TelaInicialMentor {
                 }
 
                 EntityManager em = CustomizerFactory.getEntityManager();
-                MentorController controller = new MentorController(em);
 
+                try {
+                    MentorController controller = new MentorController(em);
 
-                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
-                if (desativado) {
+                    boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+
+                    if (desativado) {
+                        JOptionPane.showMessageDialog(internalFrame,
+                                "Conta desativada com sucesso!",
+                                "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(internalFrame,
+                                "Erro ao desativar conta.",
+                                "Erro", JOptionPane.ERROR_MESSAGE);
+                        // Não fecha a janela para o usuário tentar novamente
+                    }
+                } catch (Exception ex) { // nome diferente para evitar conflito
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(internalFrame,
-                            "Conta desativada com sucesso!",
-                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(internalFrame,
-                            "Erro ao desativar conta.",
+                            "Erro inesperado: " + ex.getMessage(),
                             "Erro", JOptionPane.ERROR_MESSAGE);
-                    // Não fecha a janela para o usuário tentar novamente
+                } finally {
+                    if (em.isOpen()) {
+                        em.close();
+                    }
                 }
-                em.close();
-
-            }); //fim do action event do btnConfirmar
+            });
+            //fim do action event do btnConfirmar
 
             painelDialog.add(btnConfirmar);
             internalFrame.add(painelDialog);
