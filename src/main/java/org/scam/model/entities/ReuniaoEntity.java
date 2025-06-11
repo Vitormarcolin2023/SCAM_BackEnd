@@ -26,13 +26,13 @@ public class ReuniaoEntity {
     @Column(name = "horario_reuniao", nullable = false)
     private LocalTime horarioReuniao;
 
-    @Column(name = "tipo_reuniao", nullable = false)
+    @Column(name = "tipo_reuniao", nullable = false, length = 30)
     private TipoReuniao tipoReuniao;
 
     @Column(name = "local_reuniao", length = 100)
     private String localReuniao;
 
-    @Column(name = "status_reuniao", nullable = false)
+    @Column(name = "status_reuniao", nullable = false, length = 30)
     private StatusReuniao statusReuniao = StatusReuniao.AGENDADA;
 
     @Column(name = "confirmada", nullable = false)

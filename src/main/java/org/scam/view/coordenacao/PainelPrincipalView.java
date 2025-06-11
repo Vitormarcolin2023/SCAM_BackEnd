@@ -7,6 +7,7 @@ import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.StatusMentor;
 import org.scam.view.EstilosPadrao;
+import org.scam.view.TelaSelecaoUsuarioView;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class PainelPrincipalView {
 
         // TOPO
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 128, 66));
+        topo.setBackground(EstilosPadrao.verdeUni);
         topo.setPreferredSize(new Dimension(frame.getWidth(), 60));
         topo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 15));
 
@@ -56,6 +57,8 @@ public class PainelPrincipalView {
 
         JButton btnDesativarMentor = new JButton("Desativar Mentor");
         JButton btnListarProjetos = new JButton("Listar Projetos");
+        //JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor"); - A criar
+        JButton btnLogof = new JButton("LogOf");
 
         for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
             btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
@@ -65,6 +68,16 @@ public class PainelPrincipalView {
             painelBotoes.add(btn);
             painelBotoes.add(Box.createVerticalStrut(15));
         }
+
+
+        btnLogof.setMaximumSize(EstilosPadrao.tamanhoBotao);
+        btnLogof.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnLogof.setFont(EstilosPadrao.fontePadrao);
+        btnLogof.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        btnLogof.setAlignmentX(Component.LEFT_ALIGNMENT);
+        painelBotoes.add(btnLogof);
+        painelBotoes.add(Box.createVerticalStrut(15));
+
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
@@ -93,6 +106,11 @@ public class PainelPrincipalView {
 
         btnDesativarMentor.addActionListener(ev -> {
             DesativarMentorView.abrirTelaDesativacao(desktopPane);
+        });
+
+        btnLogof.addActionListener(ev ->{
+            TelaSelecaoUsuarioView.exibirTelaSelecao();
+            frame.dispose();
         });
 
         frame.setVisible(true);
