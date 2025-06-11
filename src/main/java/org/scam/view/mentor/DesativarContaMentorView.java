@@ -1,6 +1,11 @@
 package org.scam.view.mentor;
 
+import org.scam.controller.MentorController;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -61,12 +66,24 @@ public class DesativarContaMentorView {
         desktopPane.setBackground(EstilosPadrao.cinzaClaro);
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
+        // Corrigido: ação completa para btnVisuProjetos
         btnVisuProjetos.addActionListener(e -> {
             JInternalFrame internalFrame = new JInternalFrame("Detalhes do Projeto", true, true, true, true);
             internalFrame.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
+
             JLabel tituloProjeto = new JLabel("Nome do Projeto", SwingConstants.CENTER);
             tituloProjeto.setFont(EstilosPadrao.fonteTitulos);
             tituloProjeto.setForeground(Color.WHITE);
+            internalFrame.add(tituloProjeto, BorderLayout.CENTER);
+
+            internalFrame.setSize(600, 400);
+            internalFrame.setVisible(true);
+            desktopPane.add(internalFrame);
+            try {
+                internalFrame.setSelected(true);
+            } catch (java.beans.PropertyVetoException pve) {
+                pve.printStackTrace();
+            }
         });
 
         btnDesativarConta.addActionListener(e -> {
@@ -145,15 +162,44 @@ public class DesativarContaMentorView {
                             "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if (areaTexto.getText().trim().isEmpty()) {
+
+                String motivo = areaTexto.getText().trim();
+                if (motivo.isEmpty()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, informe o motivo da desativação.",
                             "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
-                internalFrame.dispose();
+
+                String emailMentor = Sessao.getEmail(); // CERTO
+
+                if (emailMentor == null) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro: Nenhum mentor logado.",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                EntityManager em = CustomizerFactory.getEntityManager();
+                MentorController controller = new MentorController(em);
+
+
+                boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+                if (desativado) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Conta desativada com sucesso!",
+                            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro ao desativar conta.",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                    // Não fecha a janela para o usuário tentar novamente
+                }
+                em.close();
+
             });
+
 
             painelDialog.add(btnConfirmar);
             internalFrame.add(painelDialog);

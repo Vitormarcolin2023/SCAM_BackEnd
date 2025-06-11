@@ -1,6 +1,13 @@
 package org.scam.view.mentor;
 
+import org.scam.controller.MentorController;
+import org.scam.controller.classes.Mentor;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.repository.MentorRepository;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
+
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -197,14 +204,16 @@ public class TelaInicialMentor {
 
         btnAtualizarConta.addActionListener(e -> EdicaoMentorPasso1View.exibirTelaEdicaoPasso1());
 
+        //btn desativar conta
         btnDesativarConta.addActionListener(e -> {
-            JInternalFrame internalFrame = new JInternalFrame();
+            JInternalFrame internalFrame = new JInternalFrame("Desativar Conta", false, false, false, false);
             internalFrame.setSize(1055, 585);
             internalFrame.setLayout(new BorderLayout());
             internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 2));
 
-            if (internalFrame.getUI() instanceof javax.swing.plaf.basic.BasicInternalFrameUI ui) {
-                ui.setNorthPane(null);
+            javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+            if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                basicUI.setNorthPane(null);
             }
 
             JPanel painelDialog = new JPanel();
@@ -219,27 +228,12 @@ public class TelaInicialMentor {
             painelDialog.add(lblTitulo);
             painelDialog.add(Box.createVerticalStrut(20));
 
-            JLabel lblConfirma = new JLabel("Tem certeza que deseja desativar sua conta?");
-            lblConfirma.setForeground(Color.WHITE);
-            lblConfirma.setFont(EstilosPadrao.fontePadrao);
-            lblConfirma.setAlignmentX(Component.LEFT_ALIGNMENT);
-            painelDialog.add(lblConfirma);
-            painelDialog.add(Box.createVerticalStrut(10));
-
-            JRadioButton btnSim = new JRadioButton("Sim");
-            btnSim.setBackground(EstilosPadrao.cinzaFundo);
-            btnSim.setFont(EstilosPadrao.fontePadrao);
-            btnSim.setForeground(Color.WHITE);
-
-            ButtonGroup grupo = new ButtonGroup();
-            grupo.add(btnSim);
 
             JPanel opcoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             opcoes.setBackground(EstilosPadrao.cinzaFundo);
-            opcoes.add(btnSim);
             opcoes.setAlignmentX(Component.LEFT_ALIGNMENT);
-            painelDialog.add(opcoes);
 
+            painelDialog.add(opcoes);
             painelDialog.add(Box.createVerticalStrut(20));
 
             JLabel lblMotivo = new JLabel("Digite o motivo da desativação da conta:");
@@ -250,6 +244,8 @@ public class TelaInicialMentor {
             painelDialog.add(Box.createVerticalStrut(10));
 
             JTextArea areaTexto = new JTextArea(5, 30);
+            areaTexto.setLineWrap(true);
+            areaTexto.setWrapStyleWord(true);
             areaTexto.setFont(EstilosPadrao.fontePadrao);
             JScrollPane scroll = new JScrollPane(areaTexto);
             scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -263,31 +259,69 @@ public class TelaInicialMentor {
             btnConfirmar.setFont(EstilosPadrao.fonteBotao);
             btnConfirmar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+            //btn para confirmar a desativação
+
             btnConfirmar.addActionListener(ev -> {
-                if (!btnSim.isSelected()) {
-                    JOptionPane.showMessageDialog(internalFrame,
-                            "Por favor, clique na opção Sim para continuar",
-                            "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (areaTexto.getText().trim().isEmpty()) {
+
+                String motivo = areaTexto.getText().trim();
+                if (motivo.isEmpty()) {
                     JOptionPane.showMessageDialog(internalFrame,
                             "Por favor, informe o motivo da desativação.",
+                            "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String emailMentor = Sessao.getEmail(); // CERTO
+
+                if (emailMentor == null) {
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro: Nenhum mentor logado.",
                             "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                JOptionPane.showMessageDialog(frame, "Conta desativada com sucesso!");
-                internalFrame.dispose();
+
+                EntityManager em = CustomizerFactory.getEntityManager();
+
+                try {
+                    MentorController controller = new MentorController(em);
+
+                    boolean desativado = controller.desativarMentorPorEmail(emailMentor, motivo);
+
+                    if (desativado) {
+                        JOptionPane.showMessageDialog(internalFrame,
+                                "Conta desativada com sucesso!",
+                                "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(internalFrame,
+                                "Erro ao desativar conta.",
+                                "Erro", JOptionPane.ERROR_MESSAGE);
+                        // Não fecha a janela para o usuário tentar novamente
+                    }
+                } catch (Exception ex) { // nome diferente para evitar conflito
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(internalFrame,
+                            "Erro inesperado: " + ex.getMessage(),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    if (em.isOpen()) {
+                        em.close();
+                    }
+                }
             });
+            //fim do action event do btnConfirmar
 
             painelDialog.add(btnConfirmar);
-            internalFrame.add(painelDialog, BorderLayout.CENTER);
+            internalFrame.add(painelDialog);
             internalFrame.setVisible(true);
             desktopPane.add(internalFrame);
-            internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                    (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-            internalFrame.moveToFront();
-        });
+            try {
+                internalFrame.setSelected(true);
+            } catch (java.beans.PropertyVetoException pve) {
+                pve.printStackTrace();
+            }
+        }); //fim do action event do btnDesativarConta
+
 
         btnVoltar.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(frame,

@@ -1,34 +1,55 @@
 package org.scam.model.services;
 
+import jdk.dynalink.NamedOperation;
+import org.scam.controller.classes.Mentor;
+import org.scam.model.entities.AlunoEntity;
 import org.scam.model.entities.MentorEntity;
+import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.entities.ReuniaoEntity;
-import org.scam.model.repository.CustomizerFactory;
-import org.scam.model.repository.ReuniaoRepository;
+import org.scam.model.repository.*;
 
 import javax.persistence.EntityManager;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public class ReuniaoService {
 
-    EntityManager em = CustomizerFactory.getEntityManager();
-    ReuniaoRepository reuniaoRepository = new ReuniaoRepository(em);
+    private static EntityManager em = CustomizerFactory.getEntityManager();
+    private static ReuniaoRepository reuniaoRepository = new ReuniaoRepository(em);
+    private static ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
     public List<ReuniaoEntity> getReunioes(int ra){
         List<ReuniaoEntity> reunioes = reuniaoRepository.buscarReunioes(ra);
         return reunioes;
     }
 
+    public static List<ProjetoEntity> buscarProjetos(int ra){
+        List<ProjetoEntity> projetos = projetoRepository.buscarTodos(ra);
+        return projetos;
+    }
 
-    public DefaultTableModel gerarTableModel(List<ReuniaoEntity> reunioes){
-        String[] colunas = {"ID", "Nome"};
-        DefaultTableModel modelo =new DefaultTableModel(colunas, 0);
+    public static boolean agendarReuniao(String motivo, LocalDate data, LocalTime hora, String local, TipoReuniao tipo, ProjetoEntity projeto){
 
-        for (ReuniaoEntity reuniao : reunioes){
-            Object[] linha = {reuniao.getId()};
-            modelo.addRow(linha);
+        ReuniaoEntity novaReuniao = new ReuniaoEntity();
+
+        novaReuniao.setMotivoReuniao(motivo);
+        novaReuniao.setDataReuniao(data);
+        novaReuniao.setHorarioReuniao(hora);
+        novaReuniao.setLocalReuniao(local);
+        novaReuniao.setTipoReuniao(tipo);
+        novaReuniao.setProjeto(projeto);
+        novaReuniao.setStatusReuniao(StatusReuniao.AGUARDANDO_CONFIRMACAO);
+        novaReuniao.setReuniaoConfirmada(false);
+
+        if(reuniaoRepository.salvar(novaReuniao)){
+            return true;
         }
-        return modelo;
+        else {
+            return false;
+        }
     }
 }

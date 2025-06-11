@@ -1,6 +1,7 @@
 package org.scam.model.entities;
 
 import org.scam.model.repository.StatusReuniao;
+import org.scam.model.repository.TipoReuniao;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,7 +26,10 @@ public class ReuniaoEntity {
     @Column(name = "horario_reuniao", nullable = false)
     private LocalTime horarioReuniao;
 
-    @Column(name = "local_reuniao", nullable = false, length = 100)
+    @Column(name = "tipo_reuniao", nullable = false)
+    private TipoReuniao tipoReuniao;
+
+    @Column(name = "local_reuniao", length = 100)
     private String localReuniao;
 
     @Column(name = "status_reuniao", nullable = false)
@@ -35,24 +39,22 @@ public class ReuniaoEntity {
     private boolean reuniaoConfirmada;
 
     @ManyToOne
-    @JoinColumn(name = "fk_mentor_id", nullable = false)
-    private MentorEntity mentor;
+    @JoinColumn(name = "fk_projeto_id") // nome da coluna no banco
+    private ProjetoEntity projeto;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "tb_reuniao_aluno",
-            joinColumns = @JoinColumn(name = "id_reuniao"),
-            inverseJoinColumns = @JoinColumn(name = "ra_aluno")
-    )
-    private List<AlunoEntity> alunos = new ArrayList<>();
+    public ReuniaoEntity(){}
 
-    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, String localReuniao, MentorEntity mentor, List<AlunoEntity> alunos) {
+    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, LocalTime horarioReuniao, TipoReuniao tipoReuniao,
+                         String localReuniao, StatusReuniao statusReuniao, boolean reuniaoConfirmada, ProjetoEntity projeto) {
         this.id = id;
         this.motivoReuniao = motivoReuniao;
         this.dataReuniao = dataReuniao;
+        this.horarioReuniao = horarioReuniao;
+        this.tipoReuniao = tipoReuniao;
         this.localReuniao = localReuniao;
-        this.mentor = mentor;
-        this.alunos = alunos;
+        this.statusReuniao = statusReuniao;
+        this.reuniaoConfirmada = reuniaoConfirmada;
+        this.projeto = projeto;
     }
 
     public int getId() {
@@ -87,20 +89,12 @@ public class ReuniaoEntity {
         this.localReuniao = localReuniao;
     }
 
-    public MentorEntity getMentor() {
-        return mentor;
+    public TipoReuniao getTipoReuniao() {
+        return tipoReuniao;
     }
 
-    public void setMentor(MentorEntity mentor) {
-        this.mentor = mentor;
-    }
-
-    public List<AlunoEntity> getAlunos() {
-        return alunos;
-    }
-
-    public void setAlunos(List<AlunoEntity> alunos) {
-        this.alunos = alunos;
+    public void setTipoReuniao(TipoReuniao tipoReuniao) {
+        this.tipoReuniao = tipoReuniao;
     }
 
     public StatusReuniao getStatusReuniao() {
@@ -110,4 +104,29 @@ public class ReuniaoEntity {
     public void setStatusReuniao(StatusReuniao statusReuniao) {
         this.statusReuniao = statusReuniao;
     }
+
+    public LocalTime getHorarioReuniao() {
+        return horarioReuniao;
+    }
+
+    public void setHorarioReuniao(LocalTime horarioReuniao) {
+        this.horarioReuniao = horarioReuniao;
+    }
+
+    public boolean isReuniaoConfirmada() {
+        return reuniaoConfirmada;
+    }
+
+    public void setReuniaoConfirmada(boolean reuniaoConfirmada) {
+        this.reuniaoConfirmada = reuniaoConfirmada;
+    }
+
+    public ProjetoEntity getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(ProjetoEntity projeto) {
+        this.projeto = projeto;
+    }
 }
+

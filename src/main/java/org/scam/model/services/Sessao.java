@@ -5,6 +5,7 @@ import org.scam.controller.classes.Mentor;
 public class Sessao {
     private static int raAluno;
     private static Mentor mentorLogado;
+    private static String email;
 
 
     public static void setRaAluno(int ra) {
@@ -27,4 +28,12 @@ public class Sessao {
         raAluno = Integer.parseInt(null);
         mentorLogado = null;
     }
+
+    public static String getEmail() {
+        if (mentorLogado != null) {
+            return mentorLogado.getEmail();
+        }
+        return null;
+    }
+
 }

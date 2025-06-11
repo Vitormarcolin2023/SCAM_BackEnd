@@ -1,19 +1,32 @@
 package org.scam.view.aluno;
 
+import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.repository.TipoReuniao;
+import org.scam.model.services.ReuniaoService;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 public class AgendaReuniaoAluView {
+
+    private static TipoReuniao tipoReuniao;
+    private static ProjetoEntity projeto;
 
     public static JInternalFrame cadastrarReuniao() {
 
         JInternalFrame internalFrame = new JInternalFrame();
-        internalFrame.setSize(1055, 585);
+        internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
         internalFrame.setLayout(new BorderLayout());
         internalFrame.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) internalFrame.getUI();
@@ -41,7 +54,7 @@ public class AgendaReuniaoAluView {
         // Label do motivo
         g.gridx = 0;
         g.gridy = 0;
-        g.gridwidth = 2;
+        g.gridwidth = 3;
         JLabel motivoLabel = new JLabel("Explique o motivo da reunião:");
         motivoLabel.setFont(EstilosPadrao.fontePadrao);
         motivoLabel.setForeground(Color.WHITE);
@@ -49,14 +62,18 @@ public class AgendaReuniaoAluView {
 
         // TextArea do motivo
         g.gridy = 1;
-        JTextArea motivoArea = new JTextArea(6, 50); // mais larga
+        JTextArea motivoArea = new JTextArea(6, 50);
         motivoArea.setLineWrap(true);
         motivoArea.setWrapStyleWord(true);
         motivoArea.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         JScrollPane scroll = new JScrollPane(motivoArea);
-        scroll.setPreferredSize(new Dimension(500, 130)); // mais largo e alto
+        scroll.setPreferredSize(new Dimension(500, 130));
+        g.weighty = 0.2;
+        g.fill = GridBagConstraints.BOTH;
         painelCentro.add(scroll, g);
 
+        g.weighty = 0;
+        g.fill = GridBagConstraints.HORIZONTAL;
         g.gridwidth = 1;
 
         // Data
@@ -74,7 +91,7 @@ public class AgendaReuniaoAluView {
         dataSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(dataSpinner, g);
 
-        // Horário (ao lado da data)
+        // Horário
         g.gridx = 0;
         g.gridy = 3;
         JLabel horaLabel = new JLabel("Horário:");
@@ -89,9 +106,24 @@ public class AgendaReuniaoAluView {
         horaSpinner.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(horaSpinner, g);
 
-        // Local
+        // Tipo de reunião
         g.gridx = 0;
         g.gridy = 4;
+        JLabel tipoLabel = new JLabel("Tipo de reunião:");
+        tipoLabel.setFont(EstilosPadrao.fontePadrao);
+        tipoLabel.setForeground(Color.WHITE);
+        painelCentro.add(tipoLabel, g);
+
+        g.gridx = 1;
+        String[] tipos = {"Presencial", "Online"};
+        JComboBox<String> tipoCombo = new JComboBox<>(tipos);
+        tipoCombo.setPreferredSize(new Dimension(200, 25));
+        tipoCombo.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        painelCentro.add(tipoCombo, g);
+
+        // Local
+        g.gridx = 0;
+        g.gridy = 5;
         JLabel localLabel = new JLabel("Local:");
         localLabel.setFont(EstilosPadrao.fontePadrao);
         localLabel.setForeground(Color.WHITE);
@@ -102,25 +134,62 @@ public class AgendaReuniaoAluView {
         localField.setBorder(new LineBorder(EstilosPadrao.cinzaFundo));
         painelCentro.add(localField, g);
 
-        // Mentor
+        // Lógica para desabilitar/habilitar o campo Local sem alterar layout
+        tipoCombo.addActionListener(e -> {
+            boolean presencial = tipoCombo.getSelectedItem().equals("Presencial");
+            localLabel.setEnabled(presencial);
+            localField.setEnabled(presencial);
+
+            // Opcional: limpa o campo quando for online
+            if (!presencial) {
+                localField.setText("");
+                tipoReuniao = TipoReuniao.ONLINE;
+            }
+            else {
+                tipoReuniao = TipoReuniao.PRESENCIAL;
+            }
+        });
+
+        boolean inicialPresencial = tipoCombo.getSelectedItem().equals("Presencial");
+        localLabel.setEnabled(inicialPresencial);
+        localField.setEnabled(inicialPresencial);
+
+
+        // Projeto
         g.gridx = 0;
-        g.gridy = 5;
-        JLabel mentorLabel = new JLabel("Mentor:");
-        mentorLabel.setFont(EstilosPadrao.fontePadrao);
-        mentorLabel.setForeground(Color.WHITE);
-        painelCentro.add(mentorLabel, g);
+        g.gridy = 6;
+        JLabel buscarProjeto = new JLabel("Selecione o projeto: ");
+        buscarProjeto.setForeground(Color.white);
+        buscarProjeto.setFont(EstilosPadrao.fontePadrao);
+        painelCentro.add(buscarProjeto, g);
 
         g.gridx = 1;
-        JComboBox<String> comboMentores = new JComboBox<>();
-        comboMentores.setPreferredSize(new Dimension(200, 25));
-        comboMentores.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
-        comboMentores.addItem("Selecione um mentor...");
-        // criar for para carregar mentores
-        painelCentro.add(comboMentores, g);
+        List<ProjetoEntity> listaProjetos = ReuniaoService.buscarProjetos(80554);
+        JComboBox<String> comboProjetos = new JComboBox<>();
+        comboProjetos.setPreferredSize(new Dimension(200, 25));
+        comboProjetos.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
+        comboProjetos.addItem("Selecione o projeto...");
+        for (ProjetoEntity projeto : listaProjetos) {
+            comboProjetos.addItem(projeto.getNomeDoProjeto());
+        }
+        painelCentro.add(comboProjetos, g);
+
+        // Ação para seleção do projeto
+        comboProjetos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = comboProjetos.getSelectedIndex();
+                if (index > 0) {
+                    projeto = listaProjetos.get(index-1); // index-1 porque a listagem começa com um item que não é um projeto
+                } else {
+                    projeto = null;
+                }
+            }
+        });
 
         // Botões
         g.gridx = 0;
-        g.gridy = 8;
+        g.gridy = 7;
         g.gridwidth = 2;
         g.anchor = GridBagConstraints.WEST;
 
@@ -131,7 +200,25 @@ public class AgendaReuniaoAluView {
         btnSalvar.setBackground(EstilosPadrao.verdeUni);
         btnSalvar.setForeground(Color.WHITE);
         btnSalvar.addActionListener(e -> {
-            JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+            Date dataSelecionada = (Date) dataSpinner.getValue();
+            LocalDate data = dataSelecionada.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            // Pega a hora selecionada no horaSpinner (como java.util.Date)
+            Date horaSelecionada = (Date) horaSpinner.getValue();
+            LocalTime hora = horaSelecionada.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalTime()
+                    .withSecond(0)
+                    .withNano(0); // zera segundos e nanos
+
+            boolean isAgendada = ReuniaoService.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto);
+            if(isAgendada) {
+                JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+            } else {
+                JOptionPane.showMessageDialog(internalFrame, "Algo deu errado, tente novamente mais tarde");
+            }
             internalFrame.dispose();
         });
 
@@ -152,7 +239,6 @@ public class AgendaReuniaoAluView {
         painelPrincipal.add(painelCentro, BorderLayout.CENTER);
         internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
-
         return internalFrame;
     }
 }
