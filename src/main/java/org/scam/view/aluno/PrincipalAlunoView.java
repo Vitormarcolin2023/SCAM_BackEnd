@@ -22,7 +22,7 @@ public class PrincipalAlunoView {
 
             // 2. PAINEL SUPERIOR (TÍTULO)
             JPanel topo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
-            topo.setBackground(new Color(0, 128, 66));
+            topo.setBackground(EstilosPadrao.verdeSAM);
             topo.setPreferredSize(new Dimension(0, 60)); // A largura é gerenciada pelo BorderLayout
 
             JLabel titulo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
@@ -32,15 +32,15 @@ public class PrincipalAlunoView {
 
             // 3. PAINEL CENTRAL E DESKTOP PANE PARA JANELAS INTERNAS
             JPanel painelCentral = new JPanel(new BorderLayout());
-            painelCentral.setBackground(new Color(60, 60, 60));
+            painelCentral.setBackground(EstilosPadrao.cinzaFundo);
 
             JDesktopPane desktopPane = new JDesktopPane();
-            desktopPane.setBackground(new Color(60, 60, 60));
+            desktopPane.setBackground(EstilosPadrao.cinzaClaro);
             painelCentral.add(desktopPane, BorderLayout.CENTER);
 
             // 4. PAINEL LATERAL DE BOTÕES
             JPanel painelBotoes = new JPanel();
-            painelBotoes.setBackground(new Color(45, 45, 45));
+            painelBotoes.setBackground(EstilosPadrao.cinzaFundo);
             painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
             painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
