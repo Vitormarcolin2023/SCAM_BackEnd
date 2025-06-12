@@ -125,12 +125,9 @@ public class TelaInicialMentor {
             JInternalFrame internalFrame = null;
             int posicaoBtnReuniao = btnReuniao.getSelectedIndex();
             if (posicaoBtnReuniao == 1) {
-<<<<<<< HEAD
                // internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
-=======
                 // Supondo que esta view exista
                 // internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
->>>>>>> 3467b79282d9a3a97812318bf606ef22d5f3b3e6
             } else if (posicaoBtnReuniao == 2) {
                 // Supondo que esta view exista
                 // internalFrame = AgendarReuniaoMtView.agendarReuniaoMentor();
