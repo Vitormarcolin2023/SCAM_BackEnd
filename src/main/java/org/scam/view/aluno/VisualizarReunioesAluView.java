@@ -1,7 +1,10 @@
 package org.scam.view.aluno;
 
+import org.scam.controller.classes.Aluno;
+import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.entities.ReuniaoEntity;
 import org.scam.model.services.ReuniaoService;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
@@ -13,10 +16,12 @@ import java.util.List;
 
 public class VisualizarReunioesAluView {
 
+    private static ReuniaoService reuniaoService = new ReuniaoService();
+
     public static JInternalFrame visualizarReunioes() {
 
-        ReuniaoService reuniaoService = new ReuniaoService();
-        List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
+        List<ProjetoEntity> projetos = reuniaoService.buscarProjetos(Sessao.getRaAluno());
+        List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(projetos);
 
         JInternalFrame internalFrame = new JInternalFrame();
         internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
@@ -86,9 +91,12 @@ public class VisualizarReunioesAluView {
                         btn.setBackground(EstilosPadrao.cinzaClaro);
                         btn.setForeground(Color.WHITE);
                         btn.setFont(EstilosPadrao.fontePadrao);
+                        JLabel label = new JLabel();
+                        label.setText(r.getMotivoReuniao());
 
                         // btn.addActionListener(e -> mostrarDetalhes(r, painelLista));
                         painelLista.add(btn);
+                        painelLista.add(label);
                         painelLista.add(Box.createVerticalStrut(10));
                     }
                 }

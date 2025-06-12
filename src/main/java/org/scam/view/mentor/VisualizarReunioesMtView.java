@@ -13,11 +13,11 @@ import java.util.List;
 
 public class VisualizarReunioesMtView {
 
-    public static JInternalFrame visualizarReunioesMentor(){
+    public static void visualizarReunioesMentor(){
 
-        // TROCAR LÓGICA PARA RECUPERAR PROJETOS EM QUE O MENTOR ESTÁ INSCRITO
+      /*  // TROCAR LÓGICA PARA RECUPERAR PROJETOS EM QUE O MENTOR ESTÁ INSCRITO
         ReuniaoService reuniaoService = new ReuniaoService();
-        List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
+        //List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(80554);
 
         JInternalFrame internalFrame = new JInternalFrame();
         internalFrame.setSize(1055, 585);
@@ -128,6 +128,6 @@ public class VisualizarReunioesMtView {
 
         internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
-        return internalFrame;
+        return internalFrame;*/
     }
 }

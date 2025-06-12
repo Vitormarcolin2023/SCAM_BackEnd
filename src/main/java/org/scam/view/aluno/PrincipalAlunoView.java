@@ -1,6 +1,7 @@
 package org.scam.view.aluno;
 
 import org.scam.view.EstilosPadrao;
+import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.view.mentor.LoginOneMentorView;
 
 import javax.swing.*;
@@ -164,7 +165,7 @@ public class PrincipalAlunoView {
 
                 if (confirmar == JOptionPane.YES_OPTION) {
                     frame.dispose(); // Fecha a janela atual
-                    LoginOneMentorView.loginOne(); // Abre a tela de login
+                    TelaSelecaoUsuarioView.exibirTelaSelecao(); // Abre a tela de login
                 }
             });
 

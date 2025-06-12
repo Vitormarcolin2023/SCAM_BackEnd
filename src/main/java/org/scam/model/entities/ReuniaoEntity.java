@@ -15,7 +15,7 @@ public class ReuniaoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "motivo_reuniao", nullable = false, length = 500)
     private String motivoReuniao;
@@ -26,12 +26,14 @@ public class ReuniaoEntity {
     @Column(name = "horario_reuniao", nullable = false)
     private LocalTime horarioReuniao;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_reuniao", nullable = false, length = 30)
     private TipoReuniao tipoReuniao;
 
     @Column(name = "local_reuniao", length = 100)
     private String localReuniao;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_reuniao", nullable = false, length = 30)
     private StatusReuniao statusReuniao = StatusReuniao.AGENDADA;
 
@@ -44,7 +46,7 @@ public class ReuniaoEntity {
 
     public ReuniaoEntity(){}
 
-    public ReuniaoEntity(int id, String motivoReuniao, LocalDate dataReuniao, LocalTime horarioReuniao, TipoReuniao tipoReuniao,
+    public ReuniaoEntity(Long id, String motivoReuniao, LocalDate dataReuniao, LocalTime horarioReuniao, TipoReuniao tipoReuniao,
                          String localReuniao, StatusReuniao statusReuniao, boolean reuniaoConfirmada, ProjetoEntity projeto) {
         this.id = id;
         this.motivoReuniao = motivoReuniao;
@@ -57,11 +59,11 @@ public class ReuniaoEntity {
         this.projeto = projeto;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

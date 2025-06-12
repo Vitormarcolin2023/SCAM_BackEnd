@@ -137,6 +137,7 @@ public class LoginAlunoView {
                 if (aluno!=null){
                     JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + aluno.getNome());
                     telaLogin.dispose();
+                    Sessao.setRaAluno(aluno.getRa());
                     PrincipalAlunoView.principal();
                 }
                 else {

@@ -13,36 +13,14 @@ public class ReuniaoRepository {
         this.em = em;
     }
 
-    public List<ReuniaoEntity> buscarReunioes(int id){
-            return em.createQuery(
-                "SELECT r FROM ReuniaoEntity r JOIN r.alunos a WHERE a.ra = :ra", ReuniaoEntity.class)
-                    .setParameter("id", id)
-                    .getResultList();
+    public List<ReuniaoEntity> buscarReunioes(Long id){
+        return em.createQuery(
+                        "SELECT r FROM ReuniaoEntity r WHERE r.projeto.id = :id", ReuniaoEntity.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 
-    public List<ReuniaoEntity> buscarReunioesMentor(int idMentor){
-        try {
-            return em.createQuery(
-                    "SELECT r FROM ReuniaoEntity r WHERE r.mentor = :idMentor", ReuniaoEntity.class)
-                    .setParameter("idMentor", idMentor)
-                    .getResultList();
-        }catch (Exception e){
-            return null;
-        }
-    }
 
-    public ReuniaoEntity buscarUmaReuniao(int id, int ra){
-        try{
-            return em.createQuery(
-                    "SELECT r FROM ReuniaoEntity r JOIN r.alunos a" +
-                            "WHERE r.id = :id AND a.ra = :ra", ReuniaoEntity.class)
-                    .setParameter("id", id)
-                    .setParameter("ra", ra)
-                    .getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     public void cancelarPorId(int id, String motivo){
         ReuniaoEntity reuniao = em.find(ReuniaoEntity.class, id);
