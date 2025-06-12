@@ -1,5 +1,6 @@
 package org.scam.model.repository;
 
+import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 
 import javax.persistence.EntityManager;
@@ -89,5 +90,12 @@ public class ProjetoRepository {
             em.remove(projeto);
             em.getTransaction().commit();
         }
+    }
+
+    public List<ProjetoEntity> findByMentor(MentorEntity mentor) {
+        String jpql = "SELECT p FROM ProjetoEntity p WHERE p.mentor = :mentor";
+        return em.createQuery(jpql, ProjetoEntity.class)
+                .setParameter("mentor", mentor)
+                .getResultList();
     }
 }
