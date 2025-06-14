@@ -92,7 +92,7 @@ public class TelaAnaliseMentor {
         btnAprovar.setFont(EstilosPadrao.fonteBotao);
         btnAprovar.setPreferredSize(EstilosPadrao.tamanhoBotao);
 
-        btnNegar.setBackground(Color.RED.darker());
+        btnNegar.setBackground(EstilosPadrao.vermelhoBotao);
         btnNegar.setForeground(Color.WHITE);
         btnNegar.setFont(EstilosPadrao.fonteBotao);
         btnNegar.setPreferredSize(EstilosPadrao.tamanhoBotao);
