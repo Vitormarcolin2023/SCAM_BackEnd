@@ -87,10 +87,15 @@ public class LoginOneMentorView {
         });
 
         voltarButton.addActionListener(e -> {
-            telaLogin.dispose();
-            TelaSelecaoUsuarioView.exibirTelaSelecao();
+            int confirmar = JOptionPane.showConfirmDialog(telaLogin,
+                    "Tem certeza que deseja voltar?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                telaLogin.dispose();
+                TelaSelecaoUsuarioView.exibirTelaSelecao();
+            }
         });
-
         containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
