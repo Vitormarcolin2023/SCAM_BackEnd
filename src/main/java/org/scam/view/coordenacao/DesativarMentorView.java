@@ -26,6 +26,12 @@ public class DesativarMentorView {
         JInternalFrame frame = new JInternalFrame("Desativar Mentor", true, true, true, true);
         frame.setSize(600, 350);
         frame.setLayout(new BorderLayout());
+        javax.swing.plaf.InternalFrameUI ui = frame.getUI();
+        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+            basicUI.setNorthPane(null);
+        }
+        //borda
+        frame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         JPanel painel = new JPanel();
         painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
@@ -35,6 +41,7 @@ public class DesativarMentorView {
         JLabel lblSelecione = new JLabel("Selecione o mentor:");
         lblSelecione.setForeground(Color.WHITE);
         lblSelecione.setFont(EstilosPadrao.fonteTitulos);
+        lblSelecione.setAlignmentX(Component.CENTER_ALIGNMENT);
         painel.add(lblSelecione);
 
         JComboBox<MentorEntity> comboMentores = new JComboBox<>();
@@ -49,6 +56,7 @@ public class DesativarMentorView {
         JLabel lblMotivo = new JLabel("Motivo da desativação:");
         lblMotivo.setForeground(Color.WHITE);
         lblMotivo.setFont(EstilosPadrao.fonteTitulos);
+        lblMotivo.setAlignmentX(Component.CENTER_ALIGNMENT);
         painel.add(lblMotivo);
 
         JTextArea areaMotivo = new JTextArea(4, 30);

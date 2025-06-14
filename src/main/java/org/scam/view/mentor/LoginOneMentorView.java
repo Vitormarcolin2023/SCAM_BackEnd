@@ -17,7 +17,7 @@ public class LoginOneMentorView {
         telaLogin.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(EstilosPadrao.verdeSAM);
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
@@ -87,10 +87,15 @@ public class LoginOneMentorView {
         });
 
         voltarButton.addActionListener(e -> {
-            telaLogin.dispose();
-            TelaSelecaoUsuarioView.exibirTelaSelecao();
+            int confirmar = JOptionPane.showConfirmDialog(telaLogin,
+                    "Tem certeza que deseja voltar?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                telaLogin.dispose();
+                TelaSelecaoUsuarioView.exibirTelaSelecao();
+            }
         });
-
         containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);

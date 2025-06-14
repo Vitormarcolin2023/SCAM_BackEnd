@@ -49,7 +49,7 @@ public class PainelPrincipalView {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        String[] statusConta = {"Litar Mentor", "Ativo", "Inativo"};
+        String[] statusConta = {"Listar Mentor", "Ativo", "Inativo"};
         JComboBox<String> comboBox = new JComboBox<>(statusConta);
         comboBox.setMaximumSize(new Dimension(200, 30));
         comboBox.setFont(EstilosPadrao.fontePadrao);
@@ -57,13 +57,13 @@ public class PainelPrincipalView {
 
         JButton btnDesativarMentor = new JButton("Desativar Mentor");
         JButton btnListarProjetos = new JButton("Listar Projetos");
-        //JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor"); - A criar
-        JButton btnLogof = new JButton("LogOf");
+        JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor");
+        JButton btnLogof = new JButton("Sair");
 
-        for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
+        for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos, btnTelaAprvarMentor}) {
             btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
             btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
-            btn.setFont(EstilosPadrao.fontePadrao);
+            btn.setFont(EstilosPadrao.fonteBtnAcaoLateral);
             btn.setAlignmentX(Component.LEFT_ALIGNMENT);
             painelBotoes.add(btn);
             painelBotoes.add(Box.createVerticalStrut(15));
@@ -72,7 +72,7 @@ public class PainelPrincipalView {
 
         btnLogof.setMaximumSize(EstilosPadrao.tamanhoBotao);
         btnLogof.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        btnLogof.setFont(EstilosPadrao.fontePadrao);
+        btnLogof.setFont(EstilosPadrao.fonteBtnAcaoLateral);
         btnLogof.setBackground(EstilosPadrao.verdeBotaoVoltar);
         btnLogof.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBotoes.add(btnLogof);
@@ -106,6 +106,10 @@ public class PainelPrincipalView {
 
         btnDesativarMentor.addActionListener(ev -> {
             DesativarMentorView.abrirTelaDesativacao(desktopPane);
+        });
+
+        btnTelaAprvarMentor.addActionListener(ev -> {
+          TelaAnaliseMentor.mostrarMentoresPendentes(desktopPane);
         });
 
         btnLogof.addActionListener(ev ->{

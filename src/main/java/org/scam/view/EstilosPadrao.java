@@ -10,6 +10,7 @@ public class EstilosPadrao {
     public static Color cinzaFundo = new Color(30, 30, 30);
     public static Color cinzaClaro = new Color(45, 45, 45);
     public static Color verdeBotaoVoltar = new Color(0, 128, 66);
+    public static Color vermelhoBotao = new Color(200, 60, 60);
 
     // Fontes e tamanhos padrão
     //título: SISTEMA DE ACOMPANHAMENTO DE MENTORIAS

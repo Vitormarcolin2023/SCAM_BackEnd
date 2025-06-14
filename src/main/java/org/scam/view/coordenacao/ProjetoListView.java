@@ -17,6 +17,12 @@ public class ProjetoListView {
         JInternalFrame internalFrame = new JInternalFrame(titulo, true, true, true, true);
         internalFrame.setSize(1000, 400);
         internalFrame.setLayout(new BorderLayout());
+        javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+            basicUI.setNorthPane(null);
+        }
+        //borda
+        internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         String[] colunas = {
                 "ID", "Nome", "Área", "Curso", "Período",

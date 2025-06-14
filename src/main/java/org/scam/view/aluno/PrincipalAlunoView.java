@@ -89,11 +89,17 @@ public class PrincipalAlunoView {
             cadastrarProjetoBtn.addActionListener(e -> {
                 CadastrarProjetosView cadastroFrame = new CadastrarProjetosView();
 
+                cadastroFrame.setResizable(false);
                 desktopPane.add(cadastroFrame);
-
                 Dimension desktopSize = desktopPane.getSize();
                 Dimension frameSize = cadastroFrame.getSize();
                 cadastroFrame.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
+                javax.swing.plaf.InternalFrameUI ui = cadastroFrame.getUI();
+                if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+                    basicUI.setNorthPane(null);
+                }
+                //borda
+                cadastroFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
                 cadastroFrame.setVisible(true);
 
