@@ -1,22 +1,11 @@
 package org.scam.view.aluno;
 
 import org.scam.controller.classes.Aluno;
-import org.scam.controller.classes.Coordenador;
 import org.scam.controller.login.Usuario;
-import org.scam.controller.menus.MenuAluno;
-import org.scam.controller.menus.MenuCoordenador;
-import org.scam.model.entities.AlunoEntity;
-import org.scam.model.entities.CoordenacaoEntity;
-import org.scam.model.entities.UsuarioEntity;
-import org.scam.model.repository.AlunoRepository;
-import org.scam.model.repository.CoordenacaoRepository;
-import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.services.Sessao;
+import org.scam.view.EstilosPadrao;
 import org.scam.view.TelaSelecaoUsuarioView;
-import org.scam.view.coordenacao.PainelPrincipalView;
-import org.scam.view.mentor.LoginOneMentorView;
 
-import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -30,30 +19,27 @@ public class LoginAlunoView {
         telaLogin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         telaLogin.setLocationRelativeTo(null);
         telaLogin.setLayout(new BorderLayout());
-        telaLogin.getContentPane().setBackground(new Color(30, 30, 30));
+        telaLogin.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
-        // Faixa superior verde
         JPanel topo = new JPanel();
-        topo.setBackground(new Color(0, 200, 100));
+        topo.setBackground(EstilosPadrao.verdeUni);
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
-        tituloTopo.setFont(new Font("SansSerif", Font.BOLD, 21));
+        tituloTopo.setFont(EstilosPadrao.tituloSAM);
         topo.add(tituloTopo);
         telaLogin.add(topo, BorderLayout.NORTH);
 
-        // Container central com GridBagLayout
         JPanel containerCentro = new JPanel(new GridBagLayout());
-        containerCentro.setBackground(new Color(30, 30, 30));
+        containerCentro.setBackground(EstilosPadrao.cinzaFundo);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 0, 10, 0);
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Painel de login com GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(45, 45, 45));
+        panel.setBackground(EstilosPadrao.cinzaClaro);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         GridBagConstraints panelGbc = new GridBagConstraints();
@@ -61,59 +47,55 @@ public class LoginAlunoView {
         panelGbc.gridx = 0;
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título
         JLabel tituloLogin = new JLabel("LOGIN - ALUNO");
         tituloLogin.setForeground(Color.WHITE);
-        tituloLogin.setFont(new Font("SansSerif", Font.BOLD, 18));
+        tituloLogin.setFont(EstilosPadrao.fonteTitulos);
         tituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
         panelGbc.gridy = 0;
         panel.add(tituloLogin, panelGbc);
-        panel.add(Box.createVerticalStrut(10), panelGbc); // Espaço de 30px
+        panel.add(Box.createVerticalStrut(10), panelGbc);
 
-
-        // Email
         panelGbc.gridy++;
         JLabel email = new JLabel("Email");
         email.setForeground(Color.WHITE);
-        email.setFont(new Font("SansSerif", Font.BOLD, 15));
+        email.setFont(EstilosPadrao.fontePadrao);
         panel.add(email, panelGbc);
 
         panelGbc.gridy++;
         JTextField userField = new JTextField();
-        userField.setPreferredSize(new Dimension(250, 25));
+        userField.setPreferredSize(new Dimension(250, 30));
         panel.add(userField, panelGbc);
 
-        // Senha
         panelGbc.gridy++;
         JLabel senha = new JLabel("Senha");
         senha.setForeground(Color.WHITE);
-        senha.setFont(new Font("SansSerif", Font.BOLD, 15));
+        senha.setFont(EstilosPadrao.fontePadrao);
         panel.add(senha, panelGbc);
 
         panelGbc.gridy++;
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(250, 25));
+        passwordField.setPreferredSize(new Dimension(250, 30));
         panel.add(passwordField, panelGbc);
 
-        // Botão Login
+        panelGbc.gridy++;
+        panel.add(Box.createVerticalStrut(15), panelGbc);
+
         panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
-        loginButton.setBackground(new Color(0, 200, 100));
+        loginButton.setBackground(EstilosPadrao.verdeUni);
         loginButton.setForeground(Color.BLACK);
-        loginButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        loginButton.setPreferredSize(new Dimension(165, 30));
+        loginButton.setFont(EstilosPadrao.fonteBotao);
+        loginButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(loginButton, panelGbc);
 
-        // Botão Voltar
         panelGbc.gridy++;
         JButton voltarButton = new JButton("Voltar");
-        voltarButton.setBackground(Color.white);
-        voltarButton.setForeground(Color.black);
-        voltarButton.setPreferredSize(new Dimension(165, 30));
-        voltarButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+        voltarButton.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        voltarButton.setForeground(Color.WHITE);
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(voltarButton, panelGbc);
 
-        // Ação botão voltar
         voltarButton.addActionListener(e -> {
             int confirmar = JOptionPane.showConfirmDialog(telaLogin,
                     "Tem certeza que deseja voltar?",
@@ -125,7 +107,6 @@ public class LoginAlunoView {
             }
         });
 
-        // Ação botão login
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -134,25 +115,22 @@ public class LoginAlunoView {
 
                 Aluno aluno = Usuario.loginAluno(email, senha);
 
-                if (aluno!=null){
+                if (aluno != null) {
                     JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + aluno.getNome());
                     telaLogin.dispose();
                     Sessao.setRaAluno(aluno.getRa());
                     PrincipalAlunoView.principal();
-                }
-                else {
-                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
-                userField.setText(" ");
-                passwordField.setText(" ");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
+                    userField.setText("");
+                    passwordField.setText("");
                 }
             }
         });
 
-        // Adiciona painel central
         gbc.gridy = 0;
         containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
     }
 }
-
