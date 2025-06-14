@@ -6,6 +6,8 @@ import org.scam.view.EstilosPadrao;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.util.List;
 
@@ -14,9 +16,12 @@ public class TelaAnaliseMentor {
     public static void mostrarMentoresPendentes(JDesktopPane desktopPane) {
         for (JInternalFrame frame : desktopPane.getAllFrames()) frame.dispose();
 
-        JInternalFrame internalFrame = new JInternalFrame("Análise de Mentores Pendentes", true, true, true, true);
+        JInternalFrame internalFrame = new JInternalFrame("Análise de Mentores Pendentes", false, true, false, false);
         internalFrame.setSize(1000, 400);
         internalFrame.setLayout(new BorderLayout());
+        internalFrame.setBorder(new LineBorder(EstilosPadrao.verdeUni, 2));
+
+
 
         EntityManager em = org.scam.model.repository.CustomizerFactory.getEntityManager();
         MentorAprovacaoController controller = new MentorAprovacaoController(em);

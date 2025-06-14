@@ -15,6 +15,12 @@ public class MentorListView {
         JInternalFrame internalFrame = new JInternalFrame(titulo, true, true, true, true);
         internalFrame.setSize(900, 400);
         internalFrame.setLayout(new BorderLayout());
+        javax.swing.plaf.InternalFrameUI ui = internalFrame.getUI();
+        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+            basicUI.setNorthPane(null);
+        }
+        //borda
+        internalFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         String[] colunas = {"ID", "Nome", "CPF", "Email", "Telefone", "Área de Atuação", "Status"};
         String[][] dados = new String[mentores.size()][colunas.length];
