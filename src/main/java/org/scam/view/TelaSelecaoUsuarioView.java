@@ -1,14 +1,11 @@
 package org.scam.view;
 
-import org.scam.view.EstilosPadrao;
 import org.scam.view.aluno.LoginAlunoView;
 import org.scam.view.coordenacao.LoginCoordenacaoView;
 import org.scam.view.mentor.LoginOneMentorView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TelaSelecaoUsuarioView {
 
@@ -31,51 +28,52 @@ public class TelaSelecaoUsuarioView {
 
             JPanel containerCentro = new JPanel(new GridBagLayout());
             containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+            GridBagConstraints gbc = new GridBagConstraints();
             frame.add(containerCentro, BorderLayout.CENTER);
 
             JPanel painelSelecao = new JPanel(new GridBagLayout());
             painelSelecao.setBackground(EstilosPadrao.cinzaClaro);
             painelSelecao.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
-            containerCentro.add(painelSelecao);
+            containerCentro.add(painelSelecao, gbc);
 
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.insets = new Insets(0, 0, 20, 0);
+            GridBagConstraints panelGbc = new GridBagConstraints();
+            panelGbc.gridx = 0;
+            panelGbc.gridy = 0;
+            panelGbc.insets = new Insets(5, 0, 10, 0);
 
-            JLabel titulo = new JLabel("BEM VINDO(A) AO SAM");
+            JLabel titulo = new JLabel("BEM-VINDO(A) AO SAM");
             titulo.setFont(EstilosPadrao.fonteTitulos);
             titulo.setForeground(Color.WHITE);
-            painelSelecao.add(titulo, gbc);
+            painelSelecao.add(titulo, panelGbc);
 
+            panelGbc.gridy++;
+            painelSelecao.add(Box.createVerticalStrut(15), panelGbc);
+
+            panelGbc.gridy++;
             String[] opcoes = {"Aluno", "Mentor", "Coordenação"};
             JComboBox<String> comboBox = new JComboBox<>(opcoes);
-            comboBox.setFont(EstilosPadrao.fonteBotao);
-            comboBox.setPreferredSize(EstilosPadrao.tamanhoBotao);
-            painelSelecao.add(comboBox, gbc);
+            comboBox.setFont(EstilosPadrao.fontePadrao);
+            comboBox.setPreferredSize(new Dimension(250, 35));
+            painelSelecao.add(comboBox, panelGbc);
 
+            panelGbc.gridy++;
             JButton btnContinuar = new JButton("Continuar");
             btnContinuar.setBackground(EstilosPadrao.verdeUni);
-            // CORREÇÃO 1: Cor do texto igual aos outros botões.
-            btnContinuar.setForeground(Color.WHITE);
-            // CORREÇÃO 2: Fonte sem negrito, igual aos outros botões.
+            btnContinuar.setForeground(Color.BLACK);
             btnContinuar.setFont(EstilosPadrao.fonteBotao);
             btnContinuar.setPreferredSize(EstilosPadrao.tamanhoBotao);
-            gbc.insets = new Insets(10, 0, 0, 0);
-            painelSelecao.add(btnContinuar, gbc);
+            painelSelecao.add(btnContinuar, panelGbc);
 
-            btnContinuar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selecionado = (String) comboBox.getSelectedItem();
-                    frame.dispose();
+            btnContinuar.addActionListener(e -> {
+                String selecionado = (String) comboBox.getSelectedItem();
+                frame.dispose();
 
-                    if ("Aluno".equals(selecionado)) {
-                        LoginAlunoView.loginAluno();
-                    } else if ("Mentor".equals(selecionado)) {
-                        LoginOneMentorView.loginOne();
-                    } else if ("Coordenação".equals(selecionado)) {
-                        LoginCoordenacaoView.loginCoordenacao();
-                    }
+                if ("Aluno".equals(selecionado)) {
+                    LoginAlunoView.loginAluno();
+                } else if ("Mentor".equals(selecionado)) {
+                    LoginOneMentorView.loginOne();
+                } else if ("Coordenação".equals(selecionado)) {
+                    LoginCoordenacaoView.loginCoordenacao();
                 }
             });
 

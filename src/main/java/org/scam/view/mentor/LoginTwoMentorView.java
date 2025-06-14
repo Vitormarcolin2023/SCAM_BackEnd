@@ -31,73 +31,68 @@ public class LoginTwoMentorView {
 
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(EstilosPadrao.cinzaClaro);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.insets = new Insets(5, 5, 5, 5);
+        GridBagConstraints panelGbc = new GridBagConstraints();
+        panelGbc.insets = new Insets(5, 0, 10, 0);
+        panelGbc.gridx = 0;
+        panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel tituloLogin = new JLabel("LOGIN - MENTOR");
         tituloLogin.setForeground(Color.WHITE);
         tituloLogin.setFont(EstilosPadrao.fonteTitulos);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 5, 25, 5);
-        panel.add(tituloLogin, gbc);
+        tituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
+        panelGbc.gridy = 0;
+        panel.add(tituloLogin, panelGbc);
+        panel.add(Box.createVerticalStrut(10), panelGbc);
 
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        panelGbc.gridy++;
+        JLabel email = new JLabel("Email");
+        email.setForeground(Color.WHITE);
+        email.setFont(EstilosPadrao.fontePadrao);
+        panel.add(email, panelGbc);
 
-        gbc.gridy = 1;
-        gbc.gridx = 0;
-        JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setForeground(Color.WHITE);
-        emailLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(emailLabel, gbc);
+        panelGbc.gridy++;
+        JTextField userField = new JTextField();
+        userField.setPreferredSize(new Dimension(250, 30));
+        panel.add(userField, panelGbc);
 
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        JTextField userField = new JTextField(13);
-        panel.add(userField, gbc);
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
+        panelGbc.gridy++;
+        JLabel senha = new JLabel("Senha");
+        senha.setForeground(Color.WHITE);
+        senha.setFont(EstilosPadrao.fontePadrao);
+        panel.add(senha, panelGbc);
 
-        gbc.gridy = 2;
-        gbc.gridx = 0;
-        JLabel senhaLabel = new JLabel("Senha:");
-        senhaLabel.setForeground(Color.WHITE);
-        senhaLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(senhaLabel, gbc);
+        panelGbc.gridy++;
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setPreferredSize(new Dimension(250, 30));
+        panel.add(passwordField, panelGbc);
 
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        JPasswordField passwordField = new JPasswordField(13);
-        panel.add(passwordField, gbc);
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
+        panelGbc.gridy++;
+        panel.add(Box.createVerticalStrut(15), panelGbc);
 
-        gbc.gridy = 3;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(25, 5, 5, 5);
+        panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
-        stylePrimaryButton(loginButton);
-        panel.add(loginButton, gbc);
+        loginButton.setBackground(EstilosPadrao.verdeUni);
+        loginButton.setForeground(Color.BLACK);
+        loginButton.setFont(EstilosPadrao.fonteBotao);
+        loginButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        panel.add(loginButton, panelGbc);
 
-        gbc.gridy = 4;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        panelGbc.gridy++;
         JButton voltarButton = new JButton("Voltar");
-        styleSecondaryButton(voltarButton);
-        panel.add(voltarButton, gbc);
+        voltarButton.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        voltarButton.setForeground(Color.WHITE);
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        panel.add(voltarButton, panelGbc);
 
         voltarButton.addActionListener(e -> {
             telaLogin.dispose();
@@ -119,28 +114,14 @@ public class LoginTwoMentorView {
                     TelaInicialMentor.telaMentor();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
+                    userField.setText("");
+                    passwordField.setText("");
                 }
             }
         });
 
-        containerCentro.add(panel);
+        containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
-    }
-
-    private static void stylePrimaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeUni);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
-    }
-
-    private static void styleSecondaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeBotaoVoltar);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
     }
 }

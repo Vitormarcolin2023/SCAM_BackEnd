@@ -22,10 +22,10 @@ public class LoginCoordenacaoView {
         telaLogin.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeSAM);
+        topo.setBackground(EstilosPadrao.verdeUni);
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
-        JLabel tituloTopo = new JLabel("SISTEMA DE CADASTRO E GERENCIAMENTO DE MENTORES");
+        JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
         tituloTopo.setFont(EstilosPadrao.tituloSAM);
         topo.add(tituloTopo);
@@ -33,11 +33,14 @@ public class LoginCoordenacaoView {
 
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(EstilosPadrao.cinzaClaro);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        panel.setPreferredSize(new Dimension(400, 400));
 
         GridBagConstraints panelGbc = new GridBagConstraints();
         panelGbc.insets = new Insets(5, 0, 10, 0);
@@ -53,37 +56,44 @@ public class LoginCoordenacaoView {
         panel.add(Box.createVerticalStrut(10), panelGbc);
 
         panelGbc.gridy++;
-        JLabel emailLabel = new JLabel("Email");
-        emailLabel.setForeground(Color.WHITE);
-        emailLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(emailLabel, panelGbc);
+        JLabel email = new JLabel("Email");
+        email.setForeground(Color.WHITE);
+        email.setFont(EstilosPadrao.fontePadrao);
+        panel.add(email, panelGbc);
 
         panelGbc.gridy++;
         JTextField userField = new JTextField();
-        userField.setPreferredSize(new Dimension(250, 35));
+        userField.setPreferredSize(new Dimension(250, 30));
         panel.add(userField, panelGbc);
 
         panelGbc.gridy++;
-        JLabel senhaLabel = new JLabel("Senha");
-        senhaLabel.setForeground(Color.WHITE);
-        senhaLabel.setFont(EstilosPadrao.fontePadrao);
-        panel.add(senhaLabel, panelGbc);
+        JLabel senha = new JLabel("Senha");
+        senha.setForeground(Color.WHITE);
+        senha.setFont(EstilosPadrao.fontePadrao);
+        panel.add(senha, panelGbc);
 
         panelGbc.gridy++;
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(250, 35));
+        passwordField.setPreferredSize(new Dimension(250, 30));
         panel.add(passwordField, panelGbc);
 
-        panelGbc.insets = new Insets(20, 0, 10, 0);
+        panelGbc.gridy++;
+        panel.add(Box.createVerticalStrut(15), panelGbc);
+
         panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
-        stylePrimaryButton(loginButton);
+        loginButton.setBackground(EstilosPadrao.verdeUni);
+        loginButton.setForeground(Color.BLACK);
+        loginButton.setFont(EstilosPadrao.fonteBotao);
+        loginButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(loginButton, panelGbc);
 
-        panelGbc.insets = new Insets(5, 0, 10, 0);
         panelGbc.gridy++;
         JButton voltarButton = new JButton("Voltar");
-        styleSecondaryButton(voltarButton);
+        voltarButton.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        voltarButton.setForeground(Color.WHITE);
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(voltarButton, panelGbc);
 
         voltarButton.addActionListener(e -> {
@@ -111,28 +121,14 @@ public class LoginCoordenacaoView {
                     PainelPrincipalView.painelCoordenacao();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
+                    userField.setText("");
+                    passwordField.setText("");
                 }
             }
         });
 
-        containerCentro.add(panel);
+        containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
-    }
-
-    private static void stylePrimaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeUni);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
-    }
-
-    private static void styleSecondaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeBotaoVoltar);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
     }
 }
