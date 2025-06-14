@@ -22,25 +22,30 @@ public class ReuniaoRepository {
 
 
 
-    public void cancelarPorId(int id, String motivo){
+    public boolean cancelarPorId(long id, String motivo){
         ReuniaoEntity reuniao = em.find(ReuniaoEntity.class, id);
-        if (reuniao != null && reuniao.getStatusReuniao() == StatusReuniao.AGENDADA){
+        try {
             em.getTransaction().begin();
             reuniao.setStatusReuniao(StatusReuniao.CANCELADA);
-            reuniao.setMotivoReuniao(motivo);
+            reuniao.setMotivoCancelamento(motivo);
             em.merge(reuniao);
             em.getTransaction().commit();
+            return true;
+        } catch (Exception e){
+            return false;
         }
     }
 
-    public void reuniaoConcluida(int id){
+    public boolean alterarStatus(long id, StatusReuniao novoStatus){
         ReuniaoEntity reuniao = em.find(ReuniaoEntity.class, id);
-        if (reuniao != null && reuniao.getStatusReuniao() == StatusReuniao.AGENDADA){
+        try {
             em.getTransaction().begin();
-            reuniao.setStatusReuniao(StatusReuniao.REALIZADA);
-
+            reuniao.setStatusReuniao(novoStatus);
             em.merge(reuniao);
             em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 

@@ -20,7 +20,7 @@ public class VisualizarReunioesAluView {
 
     private static ReuniaoService reuniaoService = new ReuniaoService();
 
-    public static JInternalFrame visualizarReunioes() {
+    public static JInternalFrame visualizarReunioes(JDesktopPane desktop) {
 
         List<ProjetoEntity> projetos = reuniaoService.buscarProjetos(Sessao.getRaAluno());
         List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(projetos);
@@ -83,29 +83,28 @@ public class VisualizarReunioesAluView {
             String filtro = (String) filtroReuniao.getSelectedItem();
             StatusReuniao statusSelecionado = mapStatus.get(filtro);
 
-            if(reunioes.isEmpty()){
+            if (reunioes.isEmpty()) {
                 JLabel msgSemReunioes = new JLabel("Sem reuniões");
                 msgSemReunioes.setForeground(Color.white);
                 msgSemReunioes.setFont(EstilosPadrao.fontePadrao);
                 msgSemReunioes.setAlignmentX(Component.CENTER_ALIGNMENT);
-                msgSemReunioes.setAlignmentY(Component.CENTER_ALIGNMENT);
                 painelLista.add(msgSemReunioes);
-            }
-
-            else {
+            } else {
                 boolean encontrou = false;
                 for (ReuniaoEntity r : reunioes) {
                     if (r.getStatusReuniao().equals(statusSelecionado)) {
                         encontrou = true;
 
-                        JPanel painelReuniao = new JPanel();
-                        painelReuniao.setLayout(new GridLayout(2, 1));
+                        JPanel painelReuniao = new JPanel(new BorderLayout());
                         painelReuniao.setBackground(EstilosPadrao.cinzaClaro);
-                        painelReuniao.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+                        painelReuniao.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
                         painelReuniao.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                        JPanel linhaInfo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                        JPanel linhaInfo = new JPanel(new BorderLayout());
                         linhaInfo.setBackground(EstilosPadrao.cinzaClaro);
+
+                        JPanel painelLabels = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                        painelLabels.setBackground(EstilosPadrao.cinzaClaro);
 
                         JLabel lblId = new JLabel("ID: " + r.getId());
                         lblId.setForeground(Color.WHITE);
@@ -115,67 +114,23 @@ public class VisualizarReunioesAluView {
                         lblMotivo.setForeground(Color.WHITE);
                         lblMotivo.setFont(EstilosPadrao.fontePadrao);
 
-                        linhaInfo.add(lblId);
-                        linhaInfo.add(Box.createHorizontalStrut(20));
-                        linhaInfo.add(lblMotivo);
-
-                        JPanel linhaBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                        linhaBotoes.setBackground(EstilosPadrao.cinzaClaro);
+                        painelLabels.add(lblId);
+                        painelLabels.add(Box.createHorizontalStrut(20));
+                        painelLabels.add(lblMotivo);
 
                         JButton btnDetalhes = new JButton("Detalhes");
-                        JButton btnRealizar = new JButton("Realizar");
-                        JButton btnAceitar = new JButton("Aceitar");
-                        JButton btnCancelar = new JButton("Cancelar");
+                        btnDetalhes.setBackground(EstilosPadrao.verdeUni);
+                        btnDetalhes.setForeground(Color.WHITE);
+                        btnDetalhes.setFocusPainted(false);
+                        btnDetalhes.setFont(EstilosPadrao.fonteBotao);
+                        btnDetalhes.setPreferredSize(EstilosPadrao.tamanhoBotao);
 
-                        JButton[] botoes = {btnDetalhes, btnRealizar, btnAceitar, btnCancelar};
-                        for (JButton btn : botoes) {
-                            btn.setBackground(EstilosPadrao.verdeUni);
-                            btn.setForeground(Color.WHITE);
-                            btn.setFocusPainted(false);
-                            btn.setFont(EstilosPadrao.fontePadrao);
-                            linhaBotoes.add(btn);
-                        }
+                        btnDetalhes.addActionListener(e -> mostrarDetalhesReuniao(r, desktop, statusSelecionado));
 
-                        // Ação para abrir os detalhes
-                        btnDetalhes.addActionListener(e -> {
-                            String detalhes = """
-                        ID: %d
-                        Motivo: %s
-                        Status: %s
-                        Data: %s
-                        Hora: %s
-                        Formato: %s
-                        """
-                                    .formatted(
-                                            r.getId(),
-                                            r.getMotivoReuniao(),
-                                            r.getStatusReuniao().name(),
-                                            r.getDataReuniao(), // ajuste conforme seu campo real
-                                            r.getHorarioReuniao(),
-                                            r.getTipoReuniao().toString()
-                                    );
+                        linhaInfo.add(painelLabels, BorderLayout.WEST);
+                        linhaInfo.add(btnDetalhes, BorderLayout.EAST);
 
-                            JOptionPane.showMessageDialog(null, detalhes, "Detalhes da Reunião", JOptionPane.INFORMATION_MESSAGE);
-                        });
-
-                        // Exemplos de ação
-                        btnRealizar.addActionListener(e -> {
-                            JOptionPane.showMessageDialog(null, "Reunião " + r.getId() + " marcada como realizada!");
-                            // reuniaoService.marcarComoRealizada(r);
-                        });
-
-                        btnAceitar.addActionListener(e -> {
-                            JOptionPane.showMessageDialog(null, "Reunião " + r.getId() + " aceita!");
-                            // reuniaoService.aceitarReuniao(r);
-                        });
-
-                        btnCancelar.addActionListener(e -> {
-                            JOptionPane.showMessageDialog(null, "Reunião " + r.getId() + " cancelada!");
-                            // reuniaoService.cancelarReuniao(r);
-                        });
-
-                        painelReuniao.add(linhaInfo);
-                        painelReuniao.add(linhaBotoes);
+                        painelReuniao.add(linhaInfo, BorderLayout.CENTER);
 
                         painelLista.add(painelReuniao);
                         painelLista.add(Box.createVerticalStrut(10));
@@ -191,7 +146,6 @@ public class VisualizarReunioesAluView {
                 }
             }
 
-
             painelLista.revalidate();
             painelLista.repaint();
         };
@@ -199,7 +153,6 @@ public class VisualizarReunioesAluView {
         filtroReuniao.addActionListener(e -> atualizarLista.run());
 
         painelPrincipal.add(painelCentro, BorderLayout.CENTER);
-
 
         // Carrega inicialmente com Agendadas
         filtroReuniao.setSelectedItem("Agendada");
@@ -227,4 +180,166 @@ public class VisualizarReunioesAluView {
         internalFrame.setVisible(true);
         return internalFrame;
     }
+
+    private static void mostrarDetalhesReuniao(ReuniaoEntity r, JDesktopPane desktop, StatusReuniao statusReuniao) {
+        JInternalFrame detalhesFrame = new JInternalFrame("Detalhes da Reunião", true, true, true, true);
+        detalhesFrame.setSize(700, 250);
+        detalhesFrame.setLayout(new BorderLayout());
+        detalhesFrame.setLocation(120, 120);
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) detalhesFrame.getUI();
+        ui.setNorthPane(null); // remove a barra de título
+
+        JPanel painel = new JPanel();
+        painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        painel.setBackground(EstilosPadrao.cinzaFundo);
+
+        Font fonte = EstilosPadrao.fontePadrao;
+        Color cor = Color.WHITE;
+
+        painel.add(criarLabel("Projeto: " + r.getProjeto(), fonte, cor));
+        painel.add(criarLabel("Motivo: " + r.getMotivoReuniao(), fonte, cor));
+        painel.add(criarLabel("Status: " + r.getStatusReuniao().name(), fonte, cor));
+        painel.add(criarLabel("Data: " + r.getDataReuniao(), fonte, cor));
+        painel.add(criarLabel("Hora: " + r.getHorarioReuniao(), fonte, cor));
+        painel.add(criarLabel("Formato: " + r.getTipoReuniao(), fonte, cor));
+        if(r.getStatusReuniao() == StatusReuniao.CANCELADA){
+            painel.add(criarLabel("Motivo Cancelamento: " + r.getMotivoCancelamento(), fonte, cor));
+        }
+
+        // PAINEL DE BOTÕES
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelBotoes.setBackground(EstilosPadrao.cinzaFundo);
+        painelBotoes.setAlignmentX(Component.LEFT_ALIGNMENT);
+        Dimension tamanho = new Dimension(110, 25);
+
+        // Botão Fechar
+        JButton fechar = new JButton("Fechar");
+        fechar.setBackground(EstilosPadrao.verdeUni);
+        fechar.setForeground(Color.white);
+        fechar.setFont(EstilosPadrao.fonteBotao);
+        fechar.setPreferredSize(tamanho);
+        fechar.addActionListener(e -> detalhesFrame.dispose());
+
+        // Botão Cancelar
+        JButton cancelar = new JButton("Cancelar");
+        cancelar.setBackground(EstilosPadrao.verdeUni);
+        cancelar.setForeground(Color.white);
+        cancelar.setFont(EstilosPadrao.fonteBotao);
+        cancelar.setPreferredSize(tamanho);
+
+        cancelar.addActionListener(e -> {
+            String motivoCancelamento = JOptionPane.showInputDialog(
+                    detalhesFrame,
+                    "Informe o motivo do cancelamento:",
+                    "Cancelar Reunião",
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (motivoCancelamento != null && !motivoCancelamento.trim().isEmpty()) {
+                boolean sucesso = ReuniaoService.cancelarReuniao(r.getId(), motivoCancelamento.trim());
+
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(
+                            detalhesFrame,
+                            "Reunião cancelada com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    detalhesFrame.dispose();
+                    // Atualiza a tela principal
+                    desktop.removeAll();
+                    desktop.add(visualizarReunioes(desktop));
+                    desktop.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(
+                            detalhesFrame,
+                            "Erro ao cancelar a reunião.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } else {
+                JOptionPane.showMessageDialog(
+                        detalhesFrame,
+                        "Cancelamento abortado: é necessário informar um motivo.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+        });
+
+        // Verifica se deve mostrar "Confirmar" ou "Realizada"
+        if (r.getStatusReuniao() == StatusReuniao.AGUARDANDO_CONFIRMACAO) {
+            JButton confirmar = new JButton("Confirmar");
+            confirmar.setBackground(EstilosPadrao.verdeUni);
+            confirmar.setForeground(Color.white);
+            confirmar.setFont(EstilosPadrao.fonteBotao);
+            confirmar.setPreferredSize(tamanho);
+            confirmar.addActionListener(e -> {
+                if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.AGENDADA)) {
+                    JOptionPane.showMessageDialog(null, "Reunião confirmada!");
+                    detalhesFrame.dispose();
+                    desktop.removeAll();
+                    desktop.add(visualizarReunioes(desktop));
+                    desktop.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Algo deu errado, tente novamente");
+                }
+            });
+            painelBotoes.add(confirmar);
+            painelBotoes.add(cancelar);
+        } else if (r.getStatusReuniao() == StatusReuniao.AGENDADA) {
+            JButton realizada = new JButton("Realizada");
+            realizada.setBackground(EstilosPadrao.verdeUni);
+            realizada.setForeground(Color.white);
+            realizada.setFont(EstilosPadrao.fonteBotao);
+            realizada.setPreferredSize(tamanho);
+            realizada.addActionListener(e -> {
+                if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.REALIZADA)) {
+                    JOptionPane.showMessageDialog(null, "Reunião marcada como realizada!");
+                    detalhesFrame.dispose();
+                    desktop.removeAll();
+                    desktop.add(visualizarReunioes(desktop));
+                    desktop.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Algo deu errado, tente novamente");
+                }
+            });
+            painelBotoes.add(realizada);
+            painelBotoes.add(cancelar);
+        }
+
+        // Desabilita "Cancelar" se a reunião já foi realizada
+        if (r.getStatusReuniao() == StatusReuniao.REALIZADA) {
+            cancelar.setEnabled(false);
+            cancelar.setToolTipText("Não é possível cancelar uma reunião já realizada.");
+        }
+
+        //painelBotoes.add(cancelar);*/
+        painelBotoes.add(fechar);
+
+        painel.add(Box.createVerticalStrut(20));
+        painel.add(painelBotoes);
+
+        detalhesFrame.add(painel, BorderLayout.CENTER);
+        detalhesFrame.setVisible(true);
+        desktop.add(detalhesFrame);
+        try {
+            detalhesFrame.setSelected(true);
+        } catch (java.beans.PropertyVetoException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    private static JLabel criarLabel(String texto, Font fonte, Color cor) {
+        JLabel label = new JLabel(texto);
+        label.setFont(fonte);
+        label.setForeground(cor);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT); // Essencial para alinhar no BoxLayout
+        return label;
+    }
+
 }

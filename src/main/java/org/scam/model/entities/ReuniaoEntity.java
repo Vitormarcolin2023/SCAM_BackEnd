@@ -37,8 +37,8 @@ public class ReuniaoEntity {
     @Column(name = "status_reuniao", nullable = false, length = 30)
     private StatusReuniao statusReuniao = StatusReuniao.AGENDADA;
 
-    @Column(name = "confirmada", nullable = false)
-    private boolean reuniaoConfirmada;
+    @Column(name = "motivo_cancelamento")
+    private String motivoCancelamento;
 
     @ManyToOne
     @JoinColumn(name = "fk_projeto_id") // nome da coluna no banco
@@ -47,7 +47,8 @@ public class ReuniaoEntity {
     public ReuniaoEntity(){}
 
     public ReuniaoEntity(Long id, String motivoReuniao, LocalDate dataReuniao, LocalTime horarioReuniao, TipoReuniao tipoReuniao,
-                         String localReuniao, StatusReuniao statusReuniao, boolean reuniaoConfirmada, ProjetoEntity projeto) {
+                         String localReuniao, StatusReuniao statusReuniao, String motivoCancelamento,
+                         ProjetoEntity projeto) {
         this.id = id;
         this.motivoReuniao = motivoReuniao;
         this.dataReuniao = dataReuniao;
@@ -55,7 +56,7 @@ public class ReuniaoEntity {
         this.tipoReuniao = tipoReuniao;
         this.localReuniao = localReuniao;
         this.statusReuniao = statusReuniao;
-        this.reuniaoConfirmada = reuniaoConfirmada;
+        this.motivoCancelamento = motivoCancelamento;
         this.projeto = projeto;
     }
 
@@ -115,20 +116,20 @@ public class ReuniaoEntity {
         this.horarioReuniao = horarioReuniao;
     }
 
-    public boolean isReuniaoConfirmada() {
-        return reuniaoConfirmada;
-    }
-
-    public void setReuniaoConfirmada(boolean reuniaoConfirmada) {
-        this.reuniaoConfirmada = reuniaoConfirmada;
-    }
-
     public ProjetoEntity getProjeto() {
         return projeto;
     }
 
     public void setProjeto(ProjetoEntity projeto) {
         this.projeto = projeto;
+    }
+
+    public String getMotivoCancelamento() {
+        return motivoCancelamento;
+    }
+
+    public void setMotivoCancelamento(String motivoCancelamento) {
+        this.motivoCancelamento = motivoCancelamento;
     }
 }
 

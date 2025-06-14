@@ -127,21 +127,33 @@ public class PrincipalAlunoView {
 
             btnReuniao.addActionListener(e -> {
                 int selectedIndex = btnReuniao.getSelectedIndex();
-                JInternalFrame internalFrame = null;
-                if (selectedIndex == 1) {
-                    internalFrame = VisualizarReunioesAluView.visualizarReunioes();
-                } else if (selectedIndex == 2) {
-                    internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
-                }
-                if (internalFrame != null) {
-                    desktopPane.add(internalFrame);
-                    internalFrame.setLocation(
-                            (desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                            (desktopPane.getHeight() - internalFrame.getHeight()) / 2
-                    );
-                    internalFrame.setVisible(true);
-                    internalFrame.moveToFront();
-                }
+
+                // Evita executar ao selecionar "Reuniões"
+                if (selectedIndex == 0) return;
+
+                SwingUtilities.invokeLater(() -> {
+                    JInternalFrame internalFrame = null;
+
+                    if (selectedIndex == 1) { // "Visualizar Reuniões"
+                        internalFrame = VisualizarReunioesAluView.visualizarReunioes(desktopPane);
+                    } else if (selectedIndex == 2) { // "Agendar Reunião"
+                        internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
+                    }
+
+                    if (internalFrame != null) {
+                        desktopPane.add(internalFrame);
+                        int x = (desktopPane.getWidth() - internalFrame.getWidth()) / 2;
+                        int y = (desktopPane.getHeight() - internalFrame.getHeight()) / 2;
+                        internalFrame.setLocation(x, y);
+                        internalFrame.setVisible(true);
+                        internalFrame.moveToFront();
+                        try {
+                            internalFrame.setSelected(true);
+                        } catch (java.beans.PropertyVetoException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
             });
 
             voltarBtn.addActionListener(e -> {

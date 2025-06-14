@@ -44,7 +44,7 @@
             novaReuniao.setTipoReuniao(tipo);
             novaReuniao.setProjeto(projeto);
             novaReuniao.setStatusReuniao(StatusReuniao.AGUARDANDO_CONFIRMACAO);
-            novaReuniao.setReuniaoConfirmada(false);
+            novaReuniao.setMotivoCancelamento(null);
 
             if(reuniaoRepository.salvar(novaReuniao)){
                 return true;
@@ -52,5 +52,19 @@
             else {
                 return false;
             }
+        }
+
+        public static boolean alterarStatus(long idProjeto, StatusReuniao novoStatus){
+            if(reuniaoRepository.alterarStatus(idProjeto, novoStatus)){
+                return true;
+            }
+            return false;
+        }
+
+        public static boolean cancelarReuniao(long id, String motivo){
+            if(reuniaoRepository.cancelarPorId(id, motivo)){
+                return true;
+            }
+            else return false;
         }
     }
