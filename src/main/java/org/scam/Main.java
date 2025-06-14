@@ -1,6 +1,7 @@
 package org.scam;
 
 import org.scam.view.TelaSelecaoUsuarioView;
+import org.scam.view.aluno.PrincipalAlunoView;
 import org.scam.view.coordenacao.PainelPrincipalView;
 import org.scam.view.mentor.TelaInicialMentor;
 

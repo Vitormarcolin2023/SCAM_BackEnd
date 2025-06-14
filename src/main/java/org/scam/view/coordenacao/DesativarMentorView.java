@@ -41,6 +41,7 @@ public class DesativarMentorView {
         JLabel lblSelecione = new JLabel("Selecione o mentor:");
         lblSelecione.setForeground(Color.WHITE);
         lblSelecione.setFont(EstilosPadrao.fonteTitulos);
+        lblSelecione.setAlignmentX(Component.CENTER_ALIGNMENT);
         painel.add(lblSelecione);
 
         JComboBox<MentorEntity> comboMentores = new JComboBox<>();
@@ -55,6 +56,7 @@ public class DesativarMentorView {
         JLabel lblMotivo = new JLabel("Motivo da desativação:");
         lblMotivo.setForeground(Color.WHITE);
         lblMotivo.setFont(EstilosPadrao.fonteTitulos);
+        lblMotivo.setAlignmentX(Component.CENTER_ALIGNMENT);
         painel.add(lblMotivo);
 
         JTextArea areaMotivo = new JTextArea(4, 30);
