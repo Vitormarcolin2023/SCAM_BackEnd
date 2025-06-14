@@ -111,12 +111,22 @@ public class MentorRepository {
     }
 
     public void editarMentor(MentorEntity mentor) {
+        boolean novaTransacao = false;
+
         try {
-            em.getTransaction().begin();
-            em.merge(mentor); // atualiza o objeto no banco
-            em.getTransaction().commit();
+            // Só começa se não estiver ativa
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+                novaTransacao = true;
+            }
+
+            em.merge(mentor);
+
+            if (novaTransacao) {
+                em.getTransaction().commit();
+            }
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
+            if (novaTransacao && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
             e.printStackTrace();
