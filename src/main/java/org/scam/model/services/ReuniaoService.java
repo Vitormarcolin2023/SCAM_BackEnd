@@ -1,5 +1,6 @@
     package org.scam.model.services;
 
+    import org.scam.model.entities.MentorEntity;
     import org.scam.model.entities.ProjetoEntity;
     import org.scam.model.entities.ReuniaoEntity;
     import org.scam.model.repository.*;
@@ -28,12 +29,18 @@
             return reunioes;
         }
 
-        public static List<ProjetoEntity> buscarProjetos(int ra){
+        public static List<ProjetoEntity> buscarProjetosAluno(int ra){
             List<ProjetoEntity> projetos = projetoRepository.buscarTodos(ra);
             return projetos;
         }
 
-        public static boolean agendarReuniao(String motivo, LocalDate data, LocalTime hora, String local, TipoReuniao tipo, ProjetoEntity projeto){
+        public static List<ProjetoEntity> buscarProjetosMentor(int id){
+            MentorEntity mentorEntity = em.find(MentorEntity.class, id);
+            List<ProjetoEntity> projetos = projetoRepository.findByMentor(mentorEntity);
+            return projetos;
+        }
+
+        public static boolean agendarReuniao(String motivo, LocalDate data, LocalTime hora, String local, TipoReuniao tipo, ProjetoEntity projeto, TipoUsuario tipoUsuario){
 
             ReuniaoEntity novaReuniao = new ReuniaoEntity();
 
@@ -45,6 +52,7 @@
             novaReuniao.setProjeto(projeto);
             novaReuniao.setStatusReuniao(StatusReuniao.AGUARDANDO_CONFIRMACAO);
             novaReuniao.setMotivoCancelamento(null);
+            novaReuniao.setSolicitante(tipoUsuario);
 
             if(reuniaoRepository.salvar(novaReuniao)){
                 return true;
