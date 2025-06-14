@@ -57,10 +57,10 @@ public class PainelPrincipalView {
 
         JButton btnDesativarMentor = new JButton("Desativar Mentor");
         JButton btnListarProjetos = new JButton("Listar Projetos");
-        //JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor"); - A criar
+        JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor");
         JButton btnLogof = new JButton("Sair");
 
-        for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
+        for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos, btnTelaAprvarMentor}) {
             btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
             btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
             btn.setFont(EstilosPadrao.fontePadrao);
@@ -106,6 +106,10 @@ public class PainelPrincipalView {
 
         btnDesativarMentor.addActionListener(ev -> {
             DesativarMentorView.abrirTelaDesativacao(desktopPane);
+        });
+
+        btnTelaAprvarMentor.addActionListener(ev -> {
+          TelaAnaliseMentor.mostrarMentoresPendentes(desktopPane);
         });
 
         btnLogof.addActionListener(ev ->{
