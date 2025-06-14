@@ -1,6 +1,9 @@
 package org.scam.view.mentor;
 
+import org.scam.model.repository.TipoUsuario;
 import org.scam.view.EstilosPadrao;
+import org.scam.view.Reuniao.AgendaReuniaoView;
+import org.scam.view.Reuniao.VisualizarReunioesView;
 import org.scam.view.TelaSelecaoUsuarioView;
 
 import javax.swing.*;
@@ -122,24 +125,35 @@ public class TelaInicialMentor {
         });
 
         btnReuniao.addActionListener(e -> {
-            JInternalFrame internalFrame = null;
-            int posicaoBtnReuniao = btnReuniao.getSelectedIndex();
-            if (posicaoBtnReuniao == 1) {
-               // internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
-                // Supondo que esta view exista
-                // internalFrame = VisualizarReunioesMtView.visualizarReunioesMentor();
-            } else if (posicaoBtnReuniao == 2) {
-                // Supondo que esta view exista
-                // internalFrame = AgendarReuniaoMtView.agendarReuniaoMentor();
-            }
+            int selectedIndex = btnReuniao.getSelectedIndex();
 
-            if (internalFrame != null) {
-                desktopPane.add(internalFrame);
-                internalFrame.setLocation((desktopPane.getWidth() - internalFrame.getWidth()) / 2,
-                        (desktopPane.getHeight() - internalFrame.getHeight()) / 2);
-                internalFrame.moveToFront();
-                internalFrame.setVisible(true);
-            }
+            // Evita executar ao selecionar "Reuniões"
+            if (selectedIndex == 0) return;
+
+            SwingUtilities.invokeLater(() -> {
+                JInternalFrame internalFrame = null;
+
+                if (selectedIndex == 1) { // "Visualizar Reuniões"
+                    internalFrame = VisualizarReunioesView.visualizarReunioes(desktopPane, TipoUsuario.MENTOR);
+                } else if (selectedIndex == 2) { // "Agendar Reunião"
+                    AgendaReuniaoView.setTipoUsuario(TipoUsuario.MENTOR);
+                    internalFrame = AgendaReuniaoView.cadastrarReuniao();
+                }
+
+                if (internalFrame != null) {
+                    desktopPane.add(internalFrame);
+                    int x = (desktopPane.getWidth() - internalFrame.getWidth()) / 2;
+                    int y = (desktopPane.getHeight() - internalFrame.getHeight()) / 2;
+                    internalFrame.setLocation(x, y);
+                    internalFrame.setVisible(true);
+                    internalFrame.moveToFront();
+                    try {
+                        internalFrame.setSelected(true);
+                    } catch (java.beans.PropertyVetoException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
         });
 
         frame.setVisible(true);

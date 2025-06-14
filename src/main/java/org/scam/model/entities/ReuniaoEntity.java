@@ -2,6 +2,7 @@ package org.scam.model.entities;
 
 import org.scam.model.repository.StatusReuniao;
 import org.scam.model.repository.TipoReuniao;
+import org.scam.model.repository.TipoUsuario;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -39,6 +40,10 @@ public class ReuniaoEntity {
 
     @Column(name = "motivo_cancelamento")
     private String motivoCancelamento;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "solicitante")
+    private TipoUsuario solicitante;
 
     @ManyToOne
     @JoinColumn(name = "fk_projeto_id") // nome da coluna no banco
@@ -130,6 +135,14 @@ public class ReuniaoEntity {
 
     public void setMotivoCancelamento(String motivoCancelamento) {
         this.motivoCancelamento = motivoCancelamento;
+    }
+
+    public TipoUsuario getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(TipoUsuario solicitante) {
+        this.solicitante = solicitante;
     }
 }
 

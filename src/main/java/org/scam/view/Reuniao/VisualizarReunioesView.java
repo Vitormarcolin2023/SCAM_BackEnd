@@ -1,9 +1,9 @@
-package org.scam.view.aluno;
+package org.scam.view.Reuniao;
 
-import org.scam.controller.classes.Aluno;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.entities.ReuniaoEntity;
 import org.scam.model.repository.StatusReuniao;
+import org.scam.model.repository.TipoUsuario;
 import org.scam.model.services.ReuniaoService;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
@@ -13,16 +13,27 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VisualizarReunioesAluView {
+public class VisualizarReunioesView {
 
     private static ReuniaoService reuniaoService = new ReuniaoService();
 
-    public static JInternalFrame visualizarReunioes(JDesktopPane desktop) {
+    public static JInternalFrame visualizarReunioes(JDesktopPane desktop, TipoUsuario tipoUsuario) {
 
-        List<ProjetoEntity> projetos = reuniaoService.buscarProjetos(Sessao.getRaAluno());
+        List<ProjetoEntity> projetosTemp = new ArrayList<>();
+        if (tipoUsuario.equals(TipoUsuario.ALUNO)) {
+            projetosTemp = ReuniaoService.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
+        } else if (tipoUsuario.equals(TipoUsuario.MENTOR)) {
+            projetosTemp = ReuniaoService.buscarProjetosMentor(Sessao.getMentorLogado().getId());
+        }
+
+        final List<ProjetoEntity> projetos = projetosTemp; // efetivamente final agora
+
         List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(projetos);
 
         JInternalFrame internalFrame = new JInternalFrame();
@@ -106,7 +117,7 @@ public class VisualizarReunioesAluView {
                         JPanel painelLabels = new JPanel(new FlowLayout(FlowLayout.LEFT));
                         painelLabels.setBackground(EstilosPadrao.cinzaClaro);
 
-                        JLabel lblId = new JLabel("ID: " + r.getId());
+                        JLabel lblId = new JLabel("Solicitante: " + r.getSolicitante());
                         lblId.setForeground(Color.WHITE);
                         lblId.setFont(EstilosPadrao.fontePadrao);
 
@@ -125,7 +136,7 @@ public class VisualizarReunioesAluView {
                         btnDetalhes.setFont(EstilosPadrao.fonteBotao);
                         btnDetalhes.setPreferredSize(EstilosPadrao.tamanhoBotao);
 
-                        btnDetalhes.addActionListener(e -> mostrarDetalhesReuniao(r, desktop, statusSelecionado));
+                        btnDetalhes.addActionListener(e -> mostrarDetalhesReuniao(r, desktop, tipoUsuario));
 
                         linhaInfo.add(painelLabels, BorderLayout.WEST);
                         linhaInfo.add(btnDetalhes, BorderLayout.EAST);
@@ -181,7 +192,7 @@ public class VisualizarReunioesAluView {
         return internalFrame;
     }
 
-    private static void mostrarDetalhesReuniao(ReuniaoEntity r, JDesktopPane desktop, StatusReuniao statusReuniao) {
+    private static void mostrarDetalhesReuniao(ReuniaoEntity r, JDesktopPane desktop, TipoUsuario tipoUsuario) {
         JInternalFrame detalhesFrame = new JInternalFrame("Detalhes da Reunião", true, true, true, true);
         detalhesFrame.setSize(700, 250);
         detalhesFrame.setLayout(new BorderLayout());
@@ -197,10 +208,15 @@ public class VisualizarReunioesAluView {
         Font fonte = EstilosPadrao.fontePadrao;
         Color cor = Color.WHITE;
 
+        LocalDate data = r.getDataReuniao();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataFormatada = data.format(formatter);
+
         painel.add(criarLabel("Projeto: " + r.getProjeto(), fonte, cor));
+        painel.add(criarLabel("Solicitante: " + r.getSolicitante(), fonte, cor));
         painel.add(criarLabel("Motivo: " + r.getMotivoReuniao(), fonte, cor));
         painel.add(criarLabel("Status: " + r.getStatusReuniao().name(), fonte, cor));
-        painel.add(criarLabel("Data: " + r.getDataReuniao(), fonte, cor));
+        painel.add(criarLabel("Data: " + dataFormatada, fonte, cor));
         painel.add(criarLabel("Hora: " + r.getHorarioReuniao(), fonte, cor));
         painel.add(criarLabel("Formato: " + r.getTipoReuniao(), fonte, cor));
         if(r.getStatusReuniao() == StatusReuniao.CANCELADA){
@@ -246,11 +262,7 @@ public class VisualizarReunioesAluView {
                             "Sucesso",
                             JOptionPane.INFORMATION_MESSAGE
                     );
-                    detalhesFrame.dispose();
-                    // Atualiza a tela principal
-                    desktop.removeAll();
-                    desktop.add(visualizarReunioes(desktop));
-                    desktop.repaint();
+                    atualizaTela(detalhesFrame, desktop, tipoUsuario);
                 } else {
                     JOptionPane.showMessageDialog(
                             detalhesFrame,
@@ -279,10 +291,7 @@ public class VisualizarReunioesAluView {
             confirmar.addActionListener(e -> {
                 if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.AGENDADA)) {
                     JOptionPane.showMessageDialog(null, "Reunião confirmada!");
-                    detalhesFrame.dispose();
-                    desktop.removeAll();
-                    desktop.add(visualizarReunioes(desktop));
-                    desktop.repaint();
+                    atualizaTela(detalhesFrame, desktop, tipoUsuario);
                 } else {
                     JOptionPane.showMessageDialog(null, "Algo deu errado, tente novamente");
                 }
@@ -298,10 +307,8 @@ public class VisualizarReunioesAluView {
             realizada.addActionListener(e -> {
                 if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.REALIZADA)) {
                     JOptionPane.showMessageDialog(null, "Reunião marcada como realizada!");
-                    detalhesFrame.dispose();
-                    desktop.removeAll();
-                    desktop.add(visualizarReunioes(desktop));
-                    desktop.repaint();
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Algo deu errado, tente novamente");
                 }
@@ -314,6 +321,7 @@ public class VisualizarReunioesAluView {
         if (r.getStatusReuniao() == StatusReuniao.REALIZADA) {
             cancelar.setEnabled(false);
             cancelar.setToolTipText("Não é possível cancelar uma reunião já realizada.");
+            atualizaTela(detalhesFrame, desktop, tipoUsuario);
         }
 
         //painelBotoes.add(cancelar);*/
@@ -342,4 +350,18 @@ public class VisualizarReunioesAluView {
         return label;
     }
 
+    private static void atualizaTela(JInternalFrame detalhesFrame, JDesktopPane desktop, TipoUsuario tipoUsuario){
+        detalhesFrame.dispose();
+        desktop.removeAll();
+
+        // Adiciona o novo frame
+        JInternalFrame internalFrame = VisualizarReunioesView.visualizarReunioes(desktop, tipoUsuario);
+        desktop.add(internalFrame);
+        desktop.repaint();
+
+        // Centraliza o novo frame
+        int x = (desktop.getWidth() - internalFrame.getWidth()) / 2;
+        int y = (desktop.getHeight() - internalFrame.getHeight()) / 2;
+        internalFrame.setLocation(x, y);
+    }
 }

@@ -1,8 +1,10 @@
-package org.scam.view.aluno;
+package org.scam.view.Reuniao;
 
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.TipoReuniao;
+import org.scam.model.repository.TipoUsuario;
 import org.scam.model.services.ReuniaoService;
+import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
 import javax.swing.*;
@@ -11,17 +13,18 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AgendaReuniaoAluView {
+public class AgendaReuniaoView {
 
     private static TipoReuniao tipoReuniao;
     private static ProjetoEntity projeto;
+    private static TipoUsuario tipoUsuario;
 
     public static JInternalFrame cadastrarReuniao() {
 
@@ -165,7 +168,16 @@ public class AgendaReuniaoAluView {
         painelCentro.add(buscarProjeto, g);
 
         g.gridx = 1;
-        List<ProjetoEntity> listaProjetos = ReuniaoService.buscarProjetos(80554);
+
+        List<ProjetoEntity> projetosTemp = new ArrayList<>();
+        if (tipoUsuario.equals(TipoUsuario.ALUNO)) {
+            projetosTemp = ReuniaoService.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
+        } else if (tipoUsuario.equals(TipoUsuario.MENTOR)) {
+            projetosTemp = ReuniaoService.buscarProjetosMentor(Sessao.getMentorLogado().getId());
+        }
+
+        final List<ProjetoEntity> listaProjetos = projetosTemp; // efetivamente final agora
+
         JComboBox<String> comboProjetos = new JComboBox<>();
         comboProjetos.setPreferredSize(new Dimension(200, 25));
         comboProjetos.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
@@ -214,9 +226,16 @@ public class AgendaReuniaoAluView {
                     .withSecond(0)
                     .withNano(0); // zera segundos e nanos
 
-            boolean isAgendada = ReuniaoService.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto);
+            boolean isAgendada = ReuniaoService.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto, tipoUsuario);
             if(isAgendada) {
-                JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada ao mentor para confirmação.");
+                String usuarioAprovacao;
+                if(tipoUsuario.equals(TipoUsuario.ALUNO)){
+                    usuarioAprovacao = "ao mentor";
+                }
+                else {
+                    usuarioAprovacao = "aos alunos";
+                }
+                JOptionPane.showMessageDialog(internalFrame, "Solicitação de reunião enviada "  + usuarioAprovacao + " para confirmação.");
             } else {
                 JOptionPane.showMessageDialog(internalFrame, "Algo deu errado, tente novamente mais tarde");
             }
@@ -241,5 +260,13 @@ public class AgendaReuniaoAluView {
         internalFrame.add(painelPrincipal, BorderLayout.CENTER);
         internalFrame.setVisible(true);
         return internalFrame;
+    }
+
+    public static TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public static void setTipoUsuario(TipoUsuario tipoUsuario) {
+        AgendaReuniaoView.tipoUsuario = tipoUsuario;
     }
 }

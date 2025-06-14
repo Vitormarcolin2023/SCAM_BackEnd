@@ -1,6 +1,9 @@
 package org.scam.view.aluno;
 
+import org.scam.model.repository.TipoUsuario;
 import org.scam.view.EstilosPadrao;
+import org.scam.view.Reuniao.AgendaReuniaoView;
+import org.scam.view.Reuniao.VisualizarReunioesView;
 import org.scam.view.TelaSelecaoUsuarioView;
 
 import javax.swing.*;
@@ -135,9 +138,10 @@ public class PrincipalAlunoView {
                     JInternalFrame internalFrame = null;
 
                     if (selectedIndex == 1) { // "Visualizar Reuniões"
-                        internalFrame = VisualizarReunioesAluView.visualizarReunioes(desktopPane);
+                        internalFrame = VisualizarReunioesView.visualizarReunioes(desktopPane, TipoUsuario.ALUNO);
                     } else if (selectedIndex == 2) { // "Agendar Reunião"
-                        internalFrame = AgendaReuniaoAluView.cadastrarReuniao();
+                        AgendaReuniaoView.setTipoUsuario(TipoUsuario.ALUNO);
+                        internalFrame = AgendaReuniaoView.cadastrarReuniao();
                     }
 
                     if (internalFrame != null) {
