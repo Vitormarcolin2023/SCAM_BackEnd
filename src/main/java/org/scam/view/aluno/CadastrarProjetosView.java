@@ -9,6 +9,7 @@ import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
 import org.scam.model.repository.ProjetoRepository;
 import org.scam.model.services.Sessao;
+import org.scam.view.EstilosPadrao;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -37,7 +38,6 @@ public class CadastrarProjetosView extends JInternalFrame {
     private JButton adicionarAlunoButton, cadastrarButton, voltarButton;
     private JComboBox<Integer> diaComboBox, mesComboBox, anoComboBox;
 
-
     public CadastrarProjetosView() {
         this.em = CustomizerFactory.getEntityManager();
         this.mentorRepository = new MentorRepository(em);
@@ -62,7 +62,7 @@ public class CadastrarProjetosView extends JInternalFrame {
 
     private void initComponents() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(45, 45, 45));
+        panel.setBackground(EstilosPadrao.cinzaClaro);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -76,7 +76,7 @@ public class CadastrarProjetosView extends JInternalFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         JLabel titulo = new JLabel("Cadastro de Novos Projetos");
         titulo.setForeground(Color.WHITE);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titulo.setFont(EstilosPadrao.fonteTitulos);
         panel.add(titulo, gbc);
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.gridwidth = 1;
@@ -87,7 +87,6 @@ public class CadastrarProjetosView extends JInternalFrame {
         panel.add(createWhiteLabel("Nome do Projeto:"), gbc);
         gbc.gridx = 1;
         nomeField = new JTextField(30);
-        nomeField.setPreferredSize(new Dimension(20, 30));
         panel.add(nomeField, gbc);
 
         gbc.gridy = ++row;
@@ -129,9 +128,9 @@ public class CadastrarProjetosView extends JInternalFrame {
         diaComboBox.setSelectedItem(hoje.getDayOfMonth());
         mesComboBox.setSelectedItem(hoje.getMonthValue());
         anoComboBox.setSelectedItem(hoje.getYear());
-        dataPanel.add(new JLabel("Dia:")); dataPanel.add(diaComboBox);
-        dataPanel.add(new JLabel("Mês:")); dataPanel.add(mesComboBox);
-        dataPanel.add(new JLabel("Ano:")); dataPanel.add(anoComboBox);
+        dataPanel.add(createWhiteLabel("Dia:")); dataPanel.add(diaComboBox);
+        dataPanel.add(createWhiteLabel("Mês:")); dataPanel.add(mesComboBox);
+        dataPanel.add(createWhiteLabel("Ano:")); dataPanel.add(anoComboBox);
         panel.add(dataPanel, gbc);
 
         gbc.gridy = ++row;
@@ -149,8 +148,8 @@ public class CadastrarProjetosView extends JInternalFrame {
         JPanel raPanel = new JPanel(new BorderLayout(5, 0));
         raPanel.setOpaque(false);
         raField = new JTextField();
-        raField.setPreferredSize(new Dimension(20, 30));
         adicionarAlunoButton = new JButton("Adicionar");
+        adicionarAlunoButton.setFont(EstilosPadrao.fonteBotao);
         raPanel.add(raField, BorderLayout.CENTER);
         raPanel.add(adicionarAlunoButton, BorderLayout.EAST);
         panel.add(raPanel, gbc);
@@ -160,7 +159,6 @@ public class CadastrarProjetosView extends JInternalFrame {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.BOTH;
         alunosList = new JList<>(alunosListModel);
-        // MUDANÇA: Estilo e renderizador da lista
         alunosList.setBackground(new Color(60, 63, 65));
         alunosList.setForeground(Color.WHITE);
         alunosList.setCellRenderer(new AlunoMentorCellRenderer());
@@ -178,6 +176,7 @@ public class CadastrarProjetosView extends JInternalFrame {
         mentoresScrollPane.setBorder(createTitledBorder("Mentores Disponíveis (Selecione um)"));
         mentoresScrollPane.setPreferredSize(new Dimension(400, 120));
         panel.add(mentoresScrollPane, gbc);
+
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 1;
 
@@ -186,11 +185,16 @@ public class CadastrarProjetosView extends JInternalFrame {
         gbc.gridwidth = 2;
         gbc.insets = new Insets(20, 10, 10, 10);
         JPanel botoesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        botoesPanel.setBackground(new Color(45, 45, 45));
+        botoesPanel.setBackground(EstilosPadrao.cinzaClaro);
         voltarButton = new JButton("Cancelar");
         cadastrarButton = new JButton("Cadastrar Projeto");
+
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        cadastrarButton.setFont(EstilosPadrao.fonteBotao);
+
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         cadastrarButton.setPreferredSize(new Dimension(180, 30));
-        voltarButton.setPreferredSize(new Dimension(150, 30));
+
         botoesPanel.add(voltarButton);
         botoesPanel.add(cadastrarButton);
         panel.add(botoesPanel, gbc);
