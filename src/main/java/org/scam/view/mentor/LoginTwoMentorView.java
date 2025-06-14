@@ -148,7 +148,7 @@ public class LoginTwoMentorView {
                             controller.reativarMentor(mentor);
                             Sessao.setMentorLogado(mentor.toMentor());
                             telaLogin.dispose();
-                            TelaInicialMentor.telaMentor();
+                           CadastroMentorPasso1View.exibirTelaCadastroPasso1();
                         } else {
                             telaLogin.dispose();
                             TelaSelecaoUsuarioView.exibirTelaSelecao();
