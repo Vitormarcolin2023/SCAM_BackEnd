@@ -2,5 +2,7 @@ package org.scam.model.repository;
 
 public enum StatusMentor {
     ATIVO,
-    DESATIVO
+    DESATIVO,
+    PENDENTE,
+    NEGADO
 }
