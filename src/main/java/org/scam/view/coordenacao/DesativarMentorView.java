@@ -26,6 +26,12 @@ public class DesativarMentorView {
         JInternalFrame frame = new JInternalFrame("Desativar Mentor", true, true, true, true);
         frame.setSize(600, 350);
         frame.setLayout(new BorderLayout());
+        javax.swing.plaf.InternalFrameUI ui = frame.getUI();
+        if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
+            basicUI.setNorthPane(null);
+        }
+        //borda
+        frame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         JPanel painel = new JPanel();
         painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));

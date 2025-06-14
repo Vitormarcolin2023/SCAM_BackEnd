@@ -49,7 +49,7 @@ public class PainelPrincipalView {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        String[] statusConta = {"Litar Mentor", "Ativo", "Inativo"};
+        String[] statusConta = {"Listar Mentor", "Ativo", "Inativo"};
         JComboBox<String> comboBox = new JComboBox<>(statusConta);
         comboBox.setMaximumSize(new Dimension(200, 30));
         comboBox.setFont(EstilosPadrao.fontePadrao);
