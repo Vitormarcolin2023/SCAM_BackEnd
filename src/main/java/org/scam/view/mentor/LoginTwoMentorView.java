@@ -124,15 +124,8 @@ public class LoginTwoMentorView {
 
                 switch (status) {
                     case PENDENTE:
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Sua reativação está pendente de aprovação pela coordenação. Aguarde o contato.",
-                            "Reativação Pendente",
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                    telaLogin.dispose();
-                    TelaSelecaoUsuarioView.exibirTelaSelecao();
-                    break;
+                        JOptionPane.showMessageDialog(null, "Seu perfil ainda está em análise pela coordenação. Aguarde a aprovação.");
+                        break;
 
                     case NEGADO:
                         String motivo = controller.obterMotivoNegacao(mentor);
