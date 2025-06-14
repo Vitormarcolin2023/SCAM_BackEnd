@@ -26,7 +26,7 @@ public class LoginTwoMentorView {
         telaLogin.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(EstilosPadrao.verdeSAM);
         topo.setPreferredSize(new Dimension(telaLogin.getWidth(), 50));
 
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
