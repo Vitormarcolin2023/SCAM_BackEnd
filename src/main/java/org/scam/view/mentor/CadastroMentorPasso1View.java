@@ -22,9 +22,8 @@ public class CadastroMentorPasso1View {
         telaCadastro.setLayout(new BorderLayout());
         telaCadastro.getContentPane().setBackground(EstilosPadrao.cinzaFundo);
 
-        // Topo
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(EstilosPadrao.verdeSAM);
         topo.setPreferredSize(new Dimension(telaCadastro.getWidth(), 50));
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
@@ -32,12 +31,10 @@ public class CadastroMentorPasso1View {
         topo.add(tituloTopo);
         telaCadastro.add(topo, BorderLayout.NORTH);
 
-        // Container Central
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(EstilosPadrao.cinzaFundo);
         telaCadastro.add(containerCentro, BorderLayout.CENTER);
 
-        // Painel do Formulário
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBackground(EstilosPadrao.cinzaClaro);
         panelFormulario.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
@@ -47,7 +44,6 @@ public class CadastroMentorPasso1View {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título do Painel
         JLabel titulo = new JLabel("CADASTRO - DADOS PESSOAIS E PROFISSIONAIS");
         titulo.setForeground(Color.WHITE);
         titulo.setFont(EstilosPadrao.fonteTitulos);
@@ -60,7 +56,6 @@ public class CadastroMentorPasso1View {
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
-        // --- Campos do Formulário ---
         int y = 1;
 
         panelFormulario.add(createLabel("Nome Completo:"), createGbc(0, y, GridBagConstraints.WEST));
@@ -93,13 +88,32 @@ public class CadastroMentorPasso1View {
 
         panelFormulario.add(createLabel("Área de Atuação:"), createGbc(0, y, GridBagConstraints.WEST));
         final JComboBox<AreaDeAtuacao> areaAtuacaoBox = new JComboBox<>(AreaDeAtuacao.values());
+        areaAtuacaoBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof AreaDeAtuacao) {
+                    setText(((AreaDeAtuacao) value).getDescricao());
+                }
+                return this;
+            }
+        });
         panelFormulario.add(areaAtuacaoBox, createGbc(1, y++, GridBagConstraints.EAST));
 
         panelFormulario.add(createLabel("Tipo de Mentor:"), createGbc(0, y, GridBagConstraints.WEST));
         final JComboBox<TipoMentor> tipoMentorBox = new JComboBox<>(TipoMentor.values());
+        tipoMentorBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TipoMentor) {
+                    setText(((TipoMentor) value).getDescricao());
+                }
+                return this;
+            }
+        });
         panelFormulario.add(tipoMentorBox, createGbc(1, y++, GridBagConstraints.EAST));
 
-        // --- Botões ---
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         panelBotoes.setBackground(EstilosPadrao.cinzaClaro);
         gbc.gridx = 0;
@@ -124,7 +138,6 @@ public class CadastroMentorPasso1View {
         panelBotoes.add(voltarButton);
         panelBotoes.add(proximoButton);
 
-        // --- Ações dos Botões ---
         voltarButton.addActionListener(e -> {
             telaCadastro.dispose();
             LoginOneMentorView.loginOne();
