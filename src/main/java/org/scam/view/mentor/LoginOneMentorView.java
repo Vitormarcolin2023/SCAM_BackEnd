@@ -28,38 +28,52 @@ public class LoginOneMentorView {
 
         JPanel containerCentro = new JPanel(new GridBagLayout());
         containerCentro.setBackground(EstilosPadrao.cinzaFundo);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(EstilosPadrao.cinzaClaro);
-        panel.setBorder(BorderFactory.createEmptyBorder(40, 20, 40, 20));
-        panel.setPreferredSize(new Dimension(320, 280));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         GridBagConstraints panelGbc = new GridBagConstraints();
+        panelGbc.insets = new Insets(5, 0, 10, 0);
         panelGbc.gridx = 0;
         panelGbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel titulo = new JLabel("OLÁ MENTOR!");
+        JLabel titulo = new JLabel("OLÁ, MENTOR!");
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(EstilosPadrao.fonteTitulos);
         panelGbc.gridy = 0;
-        panelGbc.insets = new Insets(10, 0, 30, 0);
         panel.add(titulo, panelGbc);
 
         panelGbc.gridy++;
-        panelGbc.insets = new Insets(5, 0, 5, 0);
+        panel.add(Box.createVerticalStrut(15), panelGbc);
+
+        panelGbc.gridy++;
         JButton cadastroButton = new JButton("Cadastre-se");
-        stylePrimaryButton(cadastroButton);
+        cadastroButton.setBackground(EstilosPadrao.verdeUni);
+        cadastroButton.setForeground(Color.BLACK);
+        cadastroButton.setFont(EstilosPadrao.fonteBotao);
+        cadastroButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(cadastroButton, panelGbc);
 
         panelGbc.gridy++;
         JButton loginButton = new JButton("Login");
-        stylePrimaryButton(loginButton);
+        loginButton.setBackground(EstilosPadrao.verdeUni);
+        loginButton.setForeground(Color.BLACK);
+        loginButton.setFont(EstilosPadrao.fonteBotao);
+        loginButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(loginButton, panelGbc);
 
         panelGbc.gridy++;
-        panelGbc.insets = new Insets(15, 0, 5, 0);
         JButton voltarButton = new JButton("Voltar");
-        styleSecondaryButton(voltarButton);
+        voltarButton.setBackground(EstilosPadrao.verdeBotaoVoltar);
+        voltarButton.setForeground(Color.WHITE);
+        voltarButton.setFont(EstilosPadrao.fonteBotao);
+        voltarButton.setPreferredSize(EstilosPadrao.tamanhoBotao);
         panel.add(voltarButton, panelGbc);
 
         cadastroButton.addActionListener(e -> {
@@ -77,24 +91,8 @@ public class LoginOneMentorView {
             TelaSelecaoUsuarioView.exibirTelaSelecao();
         });
 
-        containerCentro.add(panel);
+        containerCentro.add(panel, gbc);
         telaLogin.add(containerCentro, BorderLayout.CENTER);
         telaLogin.setVisible(true);
-    }
-
-    private static void stylePrimaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeUni);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
-    }
-
-    private static void styleSecondaryButton(JButton button) {
-        button.setBackground(EstilosPadrao.verdeBotaoVoltar);
-        button.setForeground(Color.WHITE);
-        button.setFont(EstilosPadrao.fonteBotao);
-        button.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        button.setFocusPainted(false);
     }
 }

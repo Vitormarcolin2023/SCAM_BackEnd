@@ -15,17 +15,40 @@ public class ProjetoRepository {
         this.em = em;
     }
 
+    public boolean salvar(ProjetoEntity projeto) {
+        if (!em.getTransaction().isActive()) {
+            em.getTransaction().begin();
+        }
+
+        try {
+            em.persist(projeto);
+
+            em.getTransaction().commit();
+
+            return true; // Sucesso
+
+        } catch (Exception e) {
+            System.err.println("!!!!!!!!!! ERRO AO SALVAR PROJETO NO REPOSITÓRIO !!!!!!!!!!");
+            e.printStackTrace();
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            return false; // Falha
+        }
+    }
+
     public ProjetoEntity buscarPorId(Long id){
         return em.find(ProjetoEntity.class, id);
     }
 
     public List<ProjetoEntity> buscarTodos(int ra) {
         return em.createQuery(
-                "SELECT p FROM ProjetoEntity p JOIN p.alunos a WHERE a.ra = :ra", ProjetoEntity.class)
+                        "SELECT p FROM ProjetoEntity p JOIN p.alunos a WHERE a.ra = :ra", ProjetoEntity.class)
                 .setParameter("ra", ra)
                 .getResultList();
     }
-
 
     public List<ProjetoEntity> buscarTodosMentor(String fk, int id) {
         String buscarBanco = "SELECT p FROM ProjetoEntity p WHERE p." + fk + " = :id";
@@ -34,7 +57,6 @@ public class ProjetoRepository {
         return query.getResultList();
     }
 
-    // utilizado no menu do coordenador
     public List<ProjetoEntity> listarTodosProjetos(){
         String buscarBanco = "SELECT p FROM ProjetoEntity p";
         TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
@@ -54,7 +76,6 @@ public class ProjetoRepository {
         }
     }
 
-
     public ProjetoEntity buscarUmProjetoMentor(long idProjeto, int id){
         try{
             return em.createQuery("SELECT p FROM ProjetoEntity p WHERE p.id = :idProjeto AND fk_mentor_id = :id", ProjetoEntity.class)
@@ -63,17 +84,6 @@ public class ProjetoRepository {
                     .getSingleResult();
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    public boolean salvar(ProjetoEntity projeto){
-        try {
-            em.getTransaction().begin();
-            em.persist(projeto);
-            em.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 
