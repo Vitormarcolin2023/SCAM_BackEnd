@@ -134,6 +134,7 @@ public class MentorRepository {
         }
     }
 
+
     public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(AreaDeAtuacao area) {
         return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area AND m.status = :status", MentorEntity.class)
                 .setParameter("area", area)

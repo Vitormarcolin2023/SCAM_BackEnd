@@ -146,14 +146,23 @@ public class LoginTwoMentorView {
                         );
                         if (opcao == JOptionPane.YES_OPTION) {
                             controller.reativarMentor(mentor);
+                            mentor.setStatus(StatusMentor.PENDENTE); // Atualiza localmente também
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Solicitação de reativação enviada. A coordenação deverá aprovar sua reativação para ativar sua conta.",
+                                    "Reativação Pendente",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
                             Sessao.setMentorLogado(mentor.toMentor());
                             telaLogin.dispose();
-                            TelaInicialMentor.telaMentor();
+                            TelaSelecaoUsuarioView.exibirTelaSelecao();
                         } else {
                             telaLogin.dispose();
                             TelaSelecaoUsuarioView.exibirTelaSelecao();
                         }
                         break;
+
+
 
                     case ATIVO:
                         MentorDTO mentorDTO = new MentorDTO(

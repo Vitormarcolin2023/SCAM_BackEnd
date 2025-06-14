@@ -38,4 +38,12 @@ public class MentorAprovacaoController {
         mentorRepository.editarMentor(mentor);
         em.getTransaction().commit();
     }
+
+    public void reativarMentor(MentorEntity mentor) {
+        em.getTransaction().begin();
+        mentor.setStatus(StatusMentor.PENDENTE);
+        mentor.setMotivoDesativacao(null); // Limpa motivo, pois vai para pendente
+        mentorRepository.editarMentor(mentor);
+        em.getTransaction().commit();
+    }
 }
