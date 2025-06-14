@@ -102,7 +102,7 @@ public class MentorRepository {
 
     public MentorEntity buscarPorEmail(String email) {
         try {
-            return em.createQuery("SELECT m FROM MentorEntity m WHERE m.email = :email", MentorEntity.class)
+            return em.createQuery("SELECT m FROM tb_mentor m WHERE m.email = :email", MentorEntity.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
