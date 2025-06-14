@@ -1,10 +1,16 @@
 package org.scam.view.mentor;
 
-import org.scam.controller.classes.Mentor;
-import org.scam.controller.login.Usuario;
+import org.scam.controller.LoginMentorController;
+import org.scam.model.entities.MentorEntity;
+import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.repository.StatusMentor;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
+import org.scam.view.TelaSelecaoUsuarioView;
+import org.scam.controller.classes.Mentor;
+import org.scam.controller.dto.MentorDTO;
 
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -96,7 +102,7 @@ public class LoginTwoMentorView {
 
         voltarButton.addActionListener(e -> {
             telaLogin.dispose();
-            LoginOneMentorView.loginOne();
+            TelaSelecaoUsuarioView.exibirTelaSelecao();
         });
 
         loginButton.addMouseListener(new MouseAdapter() {
@@ -105,18 +111,79 @@ public class LoginTwoMentorView {
                 String email = userField.getText().trim();
                 String senha = new String(passwordField.getPassword()).trim();
 
-                Mentor mentor = Usuario.loginMentor(email, senha);
+                EntityManager em = CustomizerFactory.getEntityManager();
+                LoginMentorController controller = new LoginMentorController(em);
+                MentorEntity mentor = controller.autenticar(email, senha);
 
-                if (mentor != null) {
-                    Sessao.setMentorLogado(mentor);
-                    JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentor.getNome());
-                    telaLogin.dispose();
-                    TelaInicialMentor.telaMentor();
-                } else {
+                if (mentor == null) {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
-                    userField.setText("");
-                    passwordField.setText("");
+                    return;
                 }
+
+                StatusMentor status = controller.verificarStatus(mentor);
+
+                switch (status) {
+                    case PENDENTE:
+                        JOptionPane.showMessageDialog(null, "Seu perfil ainda está em análise pela coordenação. Aguarde a aprovação.");
+                        break;
+
+                    case NEGADO:
+                        String motivo = controller.obterMotivoNegacao(mentor);
+                        JOptionPane.showMessageDialog(null, "Seu cadastro foi negado.\nMotivo: " + motivo + "\nVocê poderá reenviar seu cadastro agora.");
+                        controller.reenviarCadastro(mentor);
+                        break;
+
+                    case DESATIVO:
+                        int opcao = JOptionPane.showOptionDialog(
+                                null,
+                                "Sua conta está desativada. Deseja reativar?",
+                                "Conta Desativada",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                new String[]{"Ativar Conta", "Sair"},
+                                "Sair"
+                        );
+                        if (opcao == JOptionPane.YES_OPTION) {
+                            controller.reativarMentor(mentor);
+                            Sessao.setMentorLogado(mentor.toMentor());
+                            telaLogin.dispose();
+                            TelaInicialMentor.telaMentor();
+                        } else {
+                            telaLogin.dispose();
+                            TelaSelecaoUsuarioView.exibirTelaSelecao();
+                        }
+                        break;
+
+                    case ATIVO:
+                        MentorDTO mentorDTO = new MentorDTO(
+                                mentor.getIdMentor(), // tipo int compatível com o seu DTO
+                                mentor.getNome(),
+                                mentor.getEmail()
+                        );
+
+                        Mentor mentorObj = new Mentor(
+                                mentorDTO.getId(),
+                                mentorDTO.getNome(),
+                                mentor.getCpf(),
+                                mentorDTO.getEmail(),
+                                mentor.getSenha(),
+                                mentor.getTipoDeUsuario(),
+                                mentor.getTelefone(),
+                                mentor.getTempoDeExperiencia(),
+                                mentor.getTipoDeVinculo(),
+                                mentor.getAreaDeAtuacao(),
+                                mentor.getEndereco()
+                        );
+
+                        Sessao.setMentorLogado(mentorObj);
+                        JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + mentorObj.getNome());
+                        telaLogin.dispose();
+                        TelaInicialMentor.telaMentor();
+                        break;
+                }
+
+                em.close();
             }
         });
 
