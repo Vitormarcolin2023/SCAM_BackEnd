@@ -58,7 +58,7 @@ public class PainelPrincipalView {
         JButton btnDesativarMentor = new JButton("Desativar Mentor");
         JButton btnListarProjetos = new JButton("Listar Projetos");
         //JButton btnTelaAprvarMentor = new JButton("Aprovar Mentor"); - A criar
-        JButton btnLogof = new JButton("LogOf");
+        JButton btnLogof = new JButton("Sair");
 
         for (JComponent btn : new JComponent[]{comboBox, btnDesativarMentor, btnListarProjetos}) {
             btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
