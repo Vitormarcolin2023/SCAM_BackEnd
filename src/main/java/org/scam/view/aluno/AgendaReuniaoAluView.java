@@ -120,6 +120,7 @@ public class AgendaReuniaoAluView {
         tipoCombo.setPreferredSize(new Dimension(200, 25));
         tipoCombo.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 1));
         painelCentro.add(tipoCombo, g);
+        tipoReuniao = TipoReuniao.PRESENCIAL; // valor padrão inicial
 
         // Local
         g.gridx = 0;
