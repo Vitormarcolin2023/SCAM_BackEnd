@@ -147,15 +147,15 @@ public class EdicaoMentorPasso2View {
                         bairroField.getText(), cidadeField.getText(), estadoField.getText() // Dados do passo 2
                 );
 
-                JOptionPane.showMessageDialog(telaEdicao, "✅ Perfil atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(telaEdicao, "Perfil atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 telaEdicao.dispose();
                 // O ideal aqui é atualizar a tela principal, se ela estiver aberta
                 // TelaPrincipalView.atualizarDados();
 
             } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(telaEdicao, "❌ O campo 'Número' deve ser um valor numérico.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(telaEdicao, "O campo 'Número' deve ser um valor numérico.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(telaEdicao, "❌ Erro ao atualizar perfil: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(telaEdicao, "Erro ao atualizar perfil: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
         });

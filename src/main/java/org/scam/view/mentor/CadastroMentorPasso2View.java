@@ -160,7 +160,7 @@ public class CadastroMentorPasso2View {
                         bairroField.getText(), cidadeField.getText(), estadoField.getText()
                 );
 
-                JOptionPane.showMessageDialog(telaCadastro, "✅ Mentor cadastrado com sucesso!",
+                JOptionPane.showMessageDialog(telaCadastro, "Mentor cadastrado com sucesso!",
                         "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
                 telaCadastro.dispose();
