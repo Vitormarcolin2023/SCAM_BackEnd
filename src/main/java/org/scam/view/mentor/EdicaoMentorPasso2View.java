@@ -37,7 +37,7 @@ public class EdicaoMentorPasso2View {
 
         // --- Topo (reutilizado) ---
         JPanel topo = new JPanel();
-        topo.setBackground(EstilosPadrao.verdeUni);
+        topo.setBackground(EstilosPadrao.verdeSAM);
         topo.setPreferredSize(new Dimension(telaEdicao.getWidth(), 50));
         JLabel tituloTopo = new JLabel("SISTEMA DE ACOMPANHAMENTO DE MENTORIAS");
         tituloTopo.setForeground(Color.WHITE);
