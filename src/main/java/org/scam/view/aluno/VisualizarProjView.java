@@ -14,6 +14,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class VisualizarProjView {
@@ -30,15 +31,53 @@ public class VisualizarProjView {
         painelPrincipal.setBackground(EstilosPadrao.cinzaFundo);
         painelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        List<ProjetoEntity> projetos = AlunoController.projetosAluno(Sessao.getAlunoLogado().getRa());
+        // Painel que será atualizado dinamicamente
+        JPanel painelListaContainer = new JPanel(new BorderLayout());
+        painelListaContainer.setBackground(EstilosPadrao.cinzaFundo);
 
+        // Metodo para atualizar a lista de projetos
+        Consumer<List<ProjetoEntity>> atualizarLista = projetos -> {
+            JPanel novaLista = criarPainelProjetos(projetos, desktop);
+            painelListaContainer.removeAll();
+            painelListaContainer.add(novaLista, BorderLayout.CENTER);
+            painelListaContainer.revalidate();
+            painelListaContainer.repaint();
+        };
+
+        // Registra como observer
+        AlunoController.addObserver(atualizarLista);
+
+        // Carrega a lista inicial
+        List<ProjetoEntity> projetosIniciais = AlunoController.projetosAluno(Sessao.getAlunoLogado().getRa());
+        painelListaContainer.add(criarPainelProjetos(projetosIniciais, desktop), BorderLayout.CENTER);
+
+        // Botão de fechar (remove o observer ao fechar)
+        JButton fechar = new JButton("Fechar");
+        fechar.setBackground(EstilosPadrao.verdeUni);
+        fechar.setForeground(Color.WHITE);
+        fechar.setFont(EstilosPadrao.fonteBotao);
+        fechar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        fechar.addActionListener(e -> {
+            AlunoController.removeObserver(atualizarLista); // Remove o observer
+            internalFrame.dispose();
+        });
+
+        JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelBotao.setBackground(EstilosPadrao.cinzaFundo);
+        painelBotao.add(fechar);
+
+        painelPrincipal.add(painelListaContainer, BorderLayout.CENTER);
+        painelPrincipal.add(painelBotao, BorderLayout.SOUTH);
+
+        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
+        return internalFrame;
+    }
+
+    // Metodo auxiliar para criar o painel de projetos
+    private static JPanel criarPainelProjetos(List<ProjetoEntity> projetos, JDesktopPane desktop) {
         JPanel painelLista = new JPanel();
         painelLista.setLayout(new BoxLayout(painelLista, BoxLayout.Y_AXIS));
         painelLista.setBackground(EstilosPadrao.cinzaFundo);
-
-        JScrollPane scroll = new JScrollPane(painelLista);
-        scroll.setBorder(null);
-        painelPrincipal.add(scroll, BorderLayout.CENTER);
 
         if (projetos.isEmpty()) {
             JLabel avisoP = new JLabel("Nenhum projeto cadastrado");
@@ -48,55 +87,40 @@ public class VisualizarProjView {
             painelLista.add(avisoP);
         } else {
             for (ProjetoEntity projeto : projetos) {
-                JPanel painelProjetos = new JPanel(new BorderLayout());
-                painelProjetos.setBackground(EstilosPadrao.cinzaClaro);
-                painelProjetos.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
-                painelProjetos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-                JPanel painelLabels = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                painelLabels.setBackground(EstilosPadrao.cinzaClaro);
-
-                JLabel lblMotivo = new JLabel("Projeto: " + projeto.getNomeDoProjeto());
-                lblMotivo.setForeground(Color.WHITE);
-                lblMotivo.setFont(EstilosPadrao.fontePadrao);
-
-                painelLabels.add(lblMotivo);
-
-                JButton btnDetalhes = new JButton("Detalhes");
-                btnDetalhes.setBackground(EstilosPadrao.verdeUni);
-                btnDetalhes.setForeground(Color.WHITE);
-                btnDetalhes.setFocusPainted(false);
-                btnDetalhes.setFont(EstilosPadrao.fonteBotao);
-                btnDetalhes.setPreferredSize(EstilosPadrao.tamanhoBotao);
-
-                btnDetalhes.addActionListener(e -> {
-                    detalhesProjeto(projeto, desktop);
-                });
-
-                painelProjetos.add(painelLabels, BorderLayout.WEST);
-                painelProjetos.add(btnDetalhes, BorderLayout.EAST);
-
-                painelLista.add(painelProjetos);
+                JPanel painelProjeto = criarItemProjeto(projeto, desktop);
+                painelLista.add(painelProjeto);
                 painelLista.add(Box.createVerticalStrut(10));
             }
         }
 
-        // Botão de fechar
-        JButton fechar = new JButton("Fechar");
-        fechar.setBackground(EstilosPadrao.verdeUni);
-        fechar.setForeground(Color.WHITE);
-        fechar.setFont(EstilosPadrao.fonteBotao);
-        fechar.setPreferredSize(EstilosPadrao.tamanhoBotao);
-        fechar.addActionListener(e -> internalFrame.dispose());
-
-        JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        painelBotao.setBackground(EstilosPadrao.cinzaFundo);
-        painelBotao.add(fechar);
-        painelPrincipal.add(painelBotao, BorderLayout.SOUTH);
-
-        internalFrame.add(painelPrincipal, BorderLayout.CENTER);
-        return internalFrame;
+        return painelLista;
     }
+
+    // Metodo auxiliar para criar cada item de projeto
+    private static JPanel criarItemProjeto(ProjetoEntity projeto, JDesktopPane desktop) {
+        JPanel painelProjeto = new JPanel(new BorderLayout());
+        painelProjeto.setBackground(EstilosPadrao.cinzaClaro);
+        painelProjeto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+        painelProjeto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel lblNomeProjeto = new JLabel("Projeto: " + projeto.getNomeDoProjeto());
+        lblNomeProjeto.setForeground(Color.WHITE);
+        lblNomeProjeto.setFont(EstilosPadrao.fontePadrao);
+
+        JButton btnDetalhes = new JButton("Detalhes");
+        btnDetalhes.setBackground(EstilosPadrao.verdeUni);
+        btnDetalhes.setForeground(Color.WHITE);
+        btnDetalhes.setFocusPainted(false);
+        btnDetalhes.setFont(EstilosPadrao.fonteBotao);
+        btnDetalhes.setPreferredSize(EstilosPadrao.tamanhoBotao);
+        btnDetalhes.addActionListener(e -> detalhesProjeto(projeto, desktop));
+
+        painelProjeto.add(lblNomeProjeto, BorderLayout.WEST);
+        painelProjeto.add(btnDetalhes, BorderLayout.EAST);
+
+        return painelProjeto;
+    }
+
 
     private static void detalhesProjeto(ProjetoEntity projeto, JDesktopPane desktop) {
         JInternalFrame detalhesFrame = new JInternalFrame("Detalhes da Reunião", true, true, true, true);
@@ -164,6 +188,7 @@ public class VisualizarProjView {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setBackground(EstilosPadrao.cinzaFundo);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(EstilosPadrao.cinzaFundo);
 
         detalhesFrame.add(scrollPane, BorderLayout.CENTER);

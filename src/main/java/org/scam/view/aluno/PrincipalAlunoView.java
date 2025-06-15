@@ -107,13 +107,34 @@ public class PrincipalAlunoView {
                 if (index == 0) {
                     return;
                 } else if (index == 1) {
-                    // internalFrame = CadastrarProjetosView
+                    CadastrarProjetosView cadastrarProjetosView = new CadastrarProjetosView();
+                    desktopPane.add(cadastrarProjetosView);
+                    cadastrarProjetosView.setVisible(true);
+                    cadastrarProjetosView.setLocation(
+                            (desktopPane.getWidth() - cadastrarProjetosView.getWidth()) / 2,
+                            (desktopPane.getHeight() - cadastrarProjetosView.getHeight()) / 2
+                    );
+                    try {
+                        cadastrarProjetosView.setSelected(true);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 } else if (index == 2) {
                     internalFrame = VisualizarProjView.ListProjeto(desktopPane);
                     desktopPane.add(internalFrame); // adiciona só aqui
                 } else {
-                    internalFrame = EditarCadProjetoView.EditarProjeto();
-                    desktopPane.add(internalFrame); // e aqui
+                    EditarProjetoView editarView = new EditarProjetoView();
+                    desktopPane.add(editarView);
+                    editarView.setVisible(true);
+                    editarView.setLocation(
+                            (desktopPane.getWidth() - editarView.getWidth()) / 2,
+                            (desktopPane.getHeight() - editarView.getHeight()) / 2
+                    );
+                    try {
+                        editarView.setSelected(true);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
                 if (internalFrame != null) {
@@ -132,7 +153,8 @@ public class PrincipalAlunoView {
 
 
             listarMentoresBtn.addActionListener(e -> {
-                JInternalFrame mentorFrame = ListMentoresView.ListMentores();
+                ListMentoresView.ListMentores(desktopPane);
+                JInternalFrame mentorFrame = ListMentoresView.ListMentores(desktopPane);
                 desktopPane.add(mentorFrame);
                 mentorFrame.setLocation(
                         (desktopPane.getWidth() - mentorFrame.getWidth()) / 2,
