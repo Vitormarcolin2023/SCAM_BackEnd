@@ -3,15 +3,11 @@ package org.scam.view.aluno;
 import org.scam.controller.AlunoController;
 import org.scam.model.entities.AlunoEntity;
 import org.scam.model.entities.ProjetoEntity;
-import org.scam.model.repository.StatusReuniao;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,11 +27,9 @@ public class VisualizarProjView {
         painelPrincipal.setBackground(EstilosPadrao.cinzaFundo);
         painelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Painel que será atualizado dinamicamente
         JPanel painelListaContainer = new JPanel(new BorderLayout());
         painelListaContainer.setBackground(EstilosPadrao.cinzaFundo);
 
-        // Metodo para atualizar a lista de projetos
         Consumer<List<ProjetoEntity>> atualizarLista = projetos -> {
             JPanel novaLista = criarPainelProjetos(projetos, desktop);
             painelListaContainer.removeAll();
@@ -44,21 +38,18 @@ public class VisualizarProjView {
             painelListaContainer.repaint();
         };
 
-        // Registra como observer
         AlunoController.addObserver(atualizarLista);
 
-        // Carrega a lista inicial
         List<ProjetoEntity> projetosIniciais = AlunoController.projetosAluno(Sessao.getAlunoLogado().getRa());
         painelListaContainer.add(criarPainelProjetos(projetosIniciais, desktop), BorderLayout.CENTER);
 
-        // Botão de fechar (remove o observer ao fechar)
         JButton fechar = new JButton("Fechar");
         fechar.setBackground(EstilosPadrao.verdeUni);
         fechar.setForeground(Color.WHITE);
         fechar.setFont(EstilosPadrao.fonteBotao);
         fechar.setPreferredSize(EstilosPadrao.tamanhoBotao);
         fechar.addActionListener(e -> {
-            AlunoController.removeObserver(atualizarLista); // Remove o observer
+            AlunoController.removeObserver(atualizarLista);
             internalFrame.dispose();
         });
 
@@ -73,14 +64,13 @@ public class VisualizarProjView {
         return internalFrame;
     }
 
-    // Metodo auxiliar para criar o painel de projetos
     private static JPanel criarPainelProjetos(List<ProjetoEntity> projetos, JDesktopPane desktop) {
         JPanel painelLista = new JPanel();
         painelLista.setLayout(new BoxLayout(painelLista, BoxLayout.Y_AXIS));
         painelLista.setBackground(EstilosPadrao.cinzaFundo);
 
         if (projetos.isEmpty()) {
-            JLabel avisoP = new JLabel("Nenhum projeto cadastrado");
+            JLabel avisoP = new JLabel("Nenhum projeto APROVADO para exibir");
             avisoP.setFont(EstilosPadrao.fontePadrao);
             avisoP.setForeground(Color.WHITE);
             avisoP.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -96,7 +86,6 @@ public class VisualizarProjView {
         return painelLista;
     }
 
-    // Metodo auxiliar para criar cada item de projeto
     private static JPanel criarItemProjeto(ProjetoEntity projeto, JDesktopPane desktop) {
         JPanel painelProjeto = new JPanel(new BorderLayout());
         painelProjeto.setBackground(EstilosPadrao.cinzaClaro);
@@ -123,7 +112,7 @@ public class VisualizarProjView {
 
 
     private static void detalhesProjeto(ProjetoEntity projeto, JDesktopPane desktop) {
-        JInternalFrame detalhesFrame = new JInternalFrame("Detalhes da Reunião", true, true, true, true);
+        JInternalFrame detalhesFrame = new JInternalFrame("Detalhes do Projeto", true, true, true, true);
         detalhesFrame.setSize(700, 400);
         detalhesFrame.setLayout(new BorderLayout());
         detalhesFrame.setLocation(200, 120);
@@ -145,7 +134,6 @@ public class VisualizarProjView {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        // Títulos e valores
         adicionarLinhaTabela("Nome do projeto:", projeto.getNomeDoProjeto(), painel, gbc, corTitulo, corTexto, fonte);
         adicionarLinhaTabela("Descrição:", projeto.getDescricao(), painel, gbc, corTitulo, corTexto, fonte);
         adicionarLinhaTabela("Área de atuação:", projeto.getAreaDeAtuacao().toString(), painel, gbc, corTitulo, corTexto, fonte);
@@ -153,8 +141,8 @@ public class VisualizarProjView {
         adicionarLinhaTabela("Data de término:", projeto.getDataFinalProjeto().format(formatter), painel, gbc, corTitulo, corTexto, fonte);
         adicionarLinhaTabela("Mentor:", projeto.getMentor().getNome(), painel, gbc, corTitulo, corTexto, fonte);
         adicionarLinhaTabela("Grupo:", projeto.getTamanhoDoGrupo() + " integrantes", painel, gbc, corTitulo, corTexto, fonte);
+        adicionarLinhaTabela("Status:", projeto.getStatus().toString(), painel, gbc, corTitulo, corTexto, fonte);
 
-        // Alunos
         JLabel lblAlunos = new JLabel("Alunos:");
         lblAlunos.setFont(fonte);
         lblAlunos.setForeground(corTitulo);
@@ -162,16 +150,15 @@ public class VisualizarProjView {
         gbc.gridy++;
         painel.add(lblAlunos, gbc);
 
+        gbc.gridx = 1;
         for (AlunoEntity aluno : projeto.getAlunos()) {
             JLabel lblNome = new JLabel(aluno.getNome());
             lblNome.setFont(fonte);
             lblNome.setForeground(corTexto);
-            gbc.gridx = 1;
             painel.add(lblNome, gbc);
             gbc.gridy++;
         }
 
-        // Botão fechar
         JButton fechar = new JButton("Fechar");
         fechar.setBackground(EstilosPadrao.verdeUni);
         fechar.setForeground(Color.WHITE);
@@ -203,7 +190,6 @@ public class VisualizarProjView {
             ex.printStackTrace();
         }
     }
-
 
     private static void adicionarLinhaTabela(String titulo, String conteudo, JPanel painel, GridBagConstraints gbc, Color corTitulo, Color corTexto, Font fonte) {
         JLabel lblTitulo = new JLabel(titulo);
@@ -239,6 +225,4 @@ public class VisualizarProjView {
 
         gbc.gridy++;
     }
-
-
 }

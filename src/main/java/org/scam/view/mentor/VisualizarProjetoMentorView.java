@@ -1,11 +1,12 @@
 package org.scam.view.mentor;
 
 import org.scam.controller.ProjetoController;
-import org.scam.controller.classes.Mentor; // Usado para obter o objeto da Sessão
+import org.scam.controller.classes.Mentor;
 import org.scam.model.entities.AlunoEntity;
-import org.scam.model.entities.MentorEntity; // Usado para a consulta ao banco
+import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
+import org.scam.model.repository.StatusProjeto;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
@@ -29,25 +30,23 @@ public class VisualizarProjetoMentorView {
                 return;
             }
 
-            // CORREÇÃO: Busca a MentorEntity a partir do ID do mentor da sessão
-            // Isso garante que estamos usando a entidade correta para a consulta JPQL
             MentorEntity mentorEntity = em.find(MentorEntity.class, mentorDaSessao.getId());
             if (mentorEntity == null) {
                 JOptionPane.showMessageDialog(parentFrame, "Erro ao carregar dados do mentor.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            List<ProjetoEntity> projetosDoMentor = projetoController.listarProjetosPorMentor(mentorEntity);
+            List<ProjetoEntity> projetosDoMentor = projetoController.listarProjetosPorMentorEStatus(mentorEntity, StatusProjeto.APROVADO);
 
             if (projetosDoMentor.isEmpty()) {
-                JOptionPane.showMessageDialog(parentFrame, "Você não está vinculado a nenhum projeto.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(parentFrame, "Você não está vinculado a nenhum projeto APROVADO.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             ProjetoEntity[] projetosArray = projetosDoMentor.toArray(new ProjetoEntity[0]);
 
             ProjetoEntity projetoSelecionado = (ProjetoEntity) JOptionPane.showInputDialog(
-                    parentFrame, "Selecione um projeto para ver os detalhes:", "Meus Projetos",
+                    parentFrame, "Selecione um projeto para ver os detalhes:", "Meus Projetos Aprovados",
                     JOptionPane.PLAIN_MESSAGE, null, projetosArray, projetosArray[0]);
 
             if (projetoSelecionado != null) {
@@ -64,7 +63,6 @@ public class VisualizarProjetoMentorView {
                 painelConteudo.setBackground(EstilosPadrao.cinzaFundo);
                 painelConteudo.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-                // CORREÇÃO: Usando getNomeDoProjeto()
                 JLabel tituloProjeto = new JLabel(projetoSelecionado.getNomeDoProjeto(), SwingConstants.CENTER);
                 tituloProjeto.setFont(EstilosPadrao.fonteTitulos);
                 tituloProjeto.setForeground(Color.WHITE);
@@ -77,16 +75,11 @@ public class VisualizarProjetoMentorView {
                 gbc.anchor = GridBagConstraints.WEST;
                 gbc.fill = GridBagConstraints.HORIZONTAL;
 
-                // Área de Atuação
                 gbc.gridx = 0; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE;
                 formulario.add(new JLabel("Área de Atuação:") {{ setForeground(Color.WHITE); setFont(EstilosPadrao.fonteBotao); }}, gbc);
                 gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-                // CORREÇÃO: Usando getAreaDeAtuacao().toString() para converter o Enum para String
                 formulario.add(new JTextField(projetoSelecionado.getAreaDeAtuacao().toString(), 30) {{ setEditable(false); setFont(EstilosPadrao.fontePadrao); }}, gbc);
 
-                // REMOÇÃO: O campo 'Status' foi removido pois não existe na entidade.
-
-                // Descrição
                 gbc.gridx = 0; gbc.gridy++; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.NORTHWEST;
                 formulario.add(new JLabel("Descrição:") {{ setForeground(Color.WHITE); setFont(EstilosPadrao.fonteBotao); }}, gbc);
                 gbc.gridy++; gbc.anchor = GridBagConstraints.WEST;
@@ -97,18 +90,16 @@ public class VisualizarProjetoMentorView {
                 txtDescricao.setWrapStyleWord(true);
                 formulario.add(new JScrollPane(txtDescricao), gbc);
 
-                // Alunos
                 gbc.gridy++; gbc.anchor = GridBagConstraints.NORTHWEST;
                 formulario.add(new JLabel("Alunos vinculados:") {{ setForeground(Color.WHITE); setFont(EstilosPadrao.fonteBotao); }}, gbc);
                 gbc.gridy++; gbc.anchor = GridBagConstraints.WEST;
                 String nomesAlunos = projetoSelecionado.getAlunos().stream()
-                        .map(AlunoEntity::getNome) // Mantido, assumindo que AlunoEntity tem getNome()
+                        .map(AlunoEntity::getNome)
                         .collect(Collectors.joining("\n"));
                 JTextArea txtAlunos = new JTextArea(nomesAlunos, 5, 40);
                 txtAlunos.setEditable(false);
                 txtAlunos.setFont(EstilosPadrao.fontePadrao);
                 formulario.add(new JScrollPane(txtAlunos), gbc);
-
 
                 painelConteudo.add(formulario, BorderLayout.CENTER);
                 internalFrame.add(painelConteudo);

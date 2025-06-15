@@ -3,6 +3,7 @@ package org.scam.controller;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.ProjetoRepository;
+import org.scam.model.repository.StatusProjeto;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -24,5 +25,12 @@ public class ProjetoController {
             return Collections.emptyList();
         }
         return repository.findByMentor(mentor);
+    }
+
+    public List<ProjetoEntity> listarProjetosPorMentorEStatus(MentorEntity mentor, StatusProjeto status) {
+        if (mentor == null) {
+            return Collections.emptyList();
+        }
+        return repository.findByMentorAndStatus(mentor, status);
     }
 }
