@@ -1,4 +1,4 @@
-    package org.scam.model.services;
+    package org.scam.controller;
 
     import org.scam.model.entities.MentorEntity;
     import org.scam.model.entities.ProjetoEntity;
@@ -11,7 +11,7 @@
     import java.util.ArrayList;
     import java.util.List;
 
-    public class ReuniaoService {
+    public class ReuniaoController {
 
         private static EntityManager em = CustomizerFactory.getEntityManager();
         private static ReuniaoRepository reuniaoRepository = new ReuniaoRepository(em);

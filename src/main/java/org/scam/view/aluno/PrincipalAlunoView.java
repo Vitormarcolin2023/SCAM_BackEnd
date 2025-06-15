@@ -39,16 +39,27 @@ public class PrincipalAlunoView {
             painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
             painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-            JButton cadastrarProjetoBtn = new JButton("Cadastrar Projeto");
-            JButton gerenciarProjetoBtn = new JButton("Gerenciar Projeto");
-            JButton listarMentoresBtn = new JButton("Listar Mentores");
+            String[] opcoesProjeto = {"Projetos", "Cadastrar Projeto", "Visualizar Projetos", "Editar Projeto"};
+            JComboBox<String> comboProjetos = new JComboBox<>(opcoesProjeto);
+            comboProjetos.setPreferredSize(EstilosPadrao.tamanhoBotao);
+            comboProjetos.setMaximumSize(EstilosPadrao.tamanhoBotao);
+            comboProjetos.setFont(EstilosPadrao.fonteBtnAcaoLateral);
+            comboProjetos.setAlignmentX(Component.LEFT_ALIGNMENT);
+            comboProjetos.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                    JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    label.setHorizontalAlignment(SwingConstants.CENTER);
+                    return label;
+                }
+            });
 
-            String[] opcoesReuniao = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
-            JComboBox<String> reuniaoCombo = new JComboBox<>(opcoesReuniao);
+
+            JButton listarMentoresBtn = new JButton("Listar Mentores");
 
             JButton voltarBtn = new JButton("Voltar");
 
-            for (JButton btn : new JButton[]{cadastrarProjetoBtn, gerenciarProjetoBtn, listarMentoresBtn}) {
+            for (JButton btn : new JButton[]{listarMentoresBtn}) {
                 btn.setFont(EstilosPadrao.fonteBtnAcaoLateral);
                 btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
                 btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
@@ -57,7 +68,10 @@ public class PrincipalAlunoView {
                 painelBotoes.add(btn);
                 painelBotoes.add(Box.createVerticalStrut(15));
             }
+            painelBotoes.add(comboProjetos);
+            painelBotoes.add(Box.createVerticalStrut(15));
 
+            String[] opcoesReuniao = {"Reuniões", "Visualizar Reuniões", "Agendar Reunião"};
             JComboBox<String> btnReuniao = new JComboBox<>(opcoesReuniao);
             btnReuniao.setFont(EstilosPadrao.fonteBtnAcaoLateral);
             btnReuniao.setMaximumSize(EstilosPadrao.tamanhoBotao);
@@ -86,38 +100,33 @@ public class PrincipalAlunoView {
             painelBotoes.add(voltarBtn);
 
 
-            cadastrarProjetoBtn.addActionListener(e -> {
-                CadastrarProjetosView cadastroFrame = new CadastrarProjetosView();
+            comboProjetos.addActionListener(e -> {
+                JInternalFrame internalFrame = new JInternalFrame();
+                int index = comboProjetos.getSelectedIndex();
 
-                cadastroFrame.setResizable(false);
-                desktopPane.add(cadastroFrame);
-                Dimension desktopSize = desktopPane.getSize();
-                Dimension frameSize = cadastroFrame.getSize();
-                cadastroFrame.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
-                javax.swing.plaf.InternalFrameUI ui = cadastroFrame.getUI();
-                if (ui instanceof javax.swing.plaf.basic.BasicInternalFrameUI basicUI) {
-                    basicUI.setNorthPane(null);
+                if(index==0){
+                    return;
+                } else if(index==1){
+                   // internalFrame = CadastrarProjetosView
+                } else if (index==2){
+                    internalFrame = VisualizarProjView.ListProjeto();
+                }else {
+                    internalFrame = EditarCadProjetoView.EditarProjeto();
                 }
-                //borda
-                cadastroFrame.setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
-                cadastroFrame.setVisible(true);
-
-                try {
-                    cadastroFrame.setSelected(true);
-                } catch (java.beans.PropertyVetoException ex) {
-                    ex.printStackTrace();
+                if (internalFrame != null) {
+                    desktopPane.add(internalFrame);
+                    int x = (desktopPane.getWidth() - internalFrame.getWidth()) / 2;
+                    int y = (desktopPane.getHeight() - internalFrame.getHeight()) / 2;
+                    internalFrame.setLocation(x, y);
+                    internalFrame.setVisible(true);
+                    internalFrame.moveToFront();
+                    try {
+                        internalFrame.setSelected(true);
+                    } catch (java.beans.PropertyVetoException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            });
-
-            gerenciarProjetoBtn.addActionListener(e -> {
-                GerenciarProjetosView gerenciarProjetosView = new GerenciarProjetosView();
-                desktopPane.add(gerenciarProjetosView);
-                gerenciarProjetosView.setLocation(
-                        (desktopPane.getWidth() - gerenciarProjetosView.getWidth()) /2,
-                        (desktopPane.getHeight() - gerenciarProjetosView.getHeight()) /2
-                );
-                gerenciarProjetosView.setVisible(true);
             });
 
             listarMentoresBtn.addActionListener(e -> {

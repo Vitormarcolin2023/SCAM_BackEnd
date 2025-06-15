@@ -1,16 +1,5 @@
 package org.scam.view.mentor;
 
-import org.scam.model.entities.ReuniaoEntity;
-import org.scam.model.services.ReuniaoService;
-import org.scam.view.EstilosPadrao;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
 public class VisualizarReunioesMtView {
 
     public static void visualizarReunioesMentor(){

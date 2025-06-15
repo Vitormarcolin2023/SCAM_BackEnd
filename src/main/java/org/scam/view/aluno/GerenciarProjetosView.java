@@ -69,7 +69,7 @@ public class GerenciarProjetosView extends JFrame {
 
         painelCentral.add(painelBotoes, BorderLayout.WEST);
 
-        btnVisuProjetos.addActionListener(e -> {
+       /* btnVisuProjetos.addActionListener(e -> {
             JInternalFrame mentorFrame = VisualizarProjView.ListProjeto();
             desktopPane.add(mentorFrame);
             mentorFrame.setLocation(
@@ -81,7 +81,7 @@ public class GerenciarProjetosView extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        });
+        });*/
 
         btnEditar.addActionListener(e -> {
             JInternalFrame editarFrame = EditarCadProjetoView.EditarProjeto();

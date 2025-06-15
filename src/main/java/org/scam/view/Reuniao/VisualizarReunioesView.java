@@ -4,7 +4,7 @@ import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.entities.ReuniaoEntity;
 import org.scam.model.repository.StatusReuniao;
 import org.scam.model.repository.TipoUsuario;
-import org.scam.model.services.ReuniaoService;
+import org.scam.controller.ReuniaoController;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
@@ -21,20 +21,20 @@ import java.util.List;
 
 public class VisualizarReunioesView {
 
-    private static ReuniaoService reuniaoService = new ReuniaoService();
+    private static ReuniaoController reuniaoController = new ReuniaoController();
 
     public static JInternalFrame visualizarReunioes(JDesktopPane desktop, TipoUsuario tipoUsuario) {
 
         List<ProjetoEntity> projetosTemp = new ArrayList<>();
         if (tipoUsuario.equals(TipoUsuario.ALUNO)) {
-            projetosTemp = ReuniaoService.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
+            projetosTemp = ReuniaoController.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
         } else if (tipoUsuario.equals(TipoUsuario.MENTOR)) {
-            projetosTemp = ReuniaoService.buscarProjetosMentor(Sessao.getMentorLogado().getId());
+            projetosTemp = ReuniaoController.buscarProjetosMentor(Sessao.getMentorLogado().getId());
         }
 
         final List<ProjetoEntity> projetos = projetosTemp; // efetivamente final agora
 
-        List<ReuniaoEntity> reunioes = reuniaoService.getReunioes(projetos);
+        List<ReuniaoEntity> reunioes = reuniaoController.getReunioes(projetos);
 
         JInternalFrame internalFrame = new JInternalFrame();
         internalFrame.setSize(EstilosPadrao.tamanhoInternalFrame);
@@ -253,7 +253,7 @@ public class VisualizarReunioesView {
             );
 
             if (motivoCancelamento != null && !motivoCancelamento.trim().isEmpty()) {
-                boolean sucesso = ReuniaoService.cancelarReuniao(r.getId(), motivoCancelamento.trim());
+                boolean sucesso = ReuniaoController.cancelarReuniao(r.getId(), motivoCancelamento.trim());
 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(
@@ -289,7 +289,7 @@ public class VisualizarReunioesView {
             confirmar.setFont(EstilosPadrao.fonteBotao);
             confirmar.setPreferredSize(tamanho);
             confirmar.addActionListener(e -> {
-                if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.AGENDADA)) {
+                if (ReuniaoController.alterarStatus(r.getId(), StatusReuniao.AGENDADA)) {
                     JOptionPane.showMessageDialog(null, "Reunião confirmada!");
                     atualizaTela(detalhesFrame, desktop, tipoUsuario);
                 } else {
@@ -305,7 +305,7 @@ public class VisualizarReunioesView {
             realizada.setFont(EstilosPadrao.fonteBotao);
             realizada.setPreferredSize(tamanho);
             realizada.addActionListener(e -> {
-                if (ReuniaoService.alterarStatus(r.getId(), StatusReuniao.REALIZADA)) {
+                if (ReuniaoController.alterarStatus(r.getId(), StatusReuniao.REALIZADA)) {
                     JOptionPane.showMessageDialog(null, "Reunião marcada como realizada!");
 
 

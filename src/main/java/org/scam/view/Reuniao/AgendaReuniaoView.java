@@ -3,7 +3,7 @@ package org.scam.view.Reuniao;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.TipoReuniao;
 import org.scam.model.repository.TipoUsuario;
-import org.scam.model.services.ReuniaoService;
+import org.scam.controller.ReuniaoController;
 import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 
@@ -171,9 +171,9 @@ public class AgendaReuniaoView {
 
         List<ProjetoEntity> projetosTemp = new ArrayList<>();
         if (tipoUsuario.equals(TipoUsuario.ALUNO)) {
-            projetosTemp = ReuniaoService.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
+            projetosTemp = ReuniaoController.buscarProjetosAluno(Sessao.getAlunoLogado().getRa());
         } else if (tipoUsuario.equals(TipoUsuario.MENTOR)) {
-            projetosTemp = ReuniaoService.buscarProjetosMentor(Sessao.getMentorLogado().getId());
+            projetosTemp = ReuniaoController.buscarProjetosMentor(Sessao.getMentorLogado().getId());
         }
 
         final List<ProjetoEntity> listaProjetos = projetosTemp; // efetivamente final agora
@@ -226,7 +226,7 @@ public class AgendaReuniaoView {
                     .withSecond(0)
                     .withNano(0); // zera segundos e nanos
 
-            boolean isAgendada = ReuniaoService.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto, tipoUsuario);
+            boolean isAgendada = ReuniaoController.agendarReuniao(motivoArea.getText(), data, hora, localField.getText(), tipoReuniao, projeto, tipoUsuario);
             if(isAgendada) {
                 String usuarioAprovacao;
                 if(tipoUsuario.equals(TipoUsuario.ALUNO)){
