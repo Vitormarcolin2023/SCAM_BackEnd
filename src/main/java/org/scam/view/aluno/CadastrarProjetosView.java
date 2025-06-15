@@ -48,14 +48,15 @@ public class CadastrarProjetosView extends JInternalFrame {
 
         setTitle("Cadastro de Novo Projeto");
         setClosable(true);
-        setResizable(true);
-        setMaximizable(true);
+        setResizable(false);
+        setMaximizable(false);
         setIconifiable(true);
 
         // tamanho padrão de todos os internal Frames
         this.setSize(EstilosPadrao.tamanhoInternalFrame);
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
+        setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         initComponents();
         initListeners();
