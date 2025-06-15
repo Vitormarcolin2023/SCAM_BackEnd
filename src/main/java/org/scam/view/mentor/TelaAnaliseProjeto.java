@@ -57,14 +57,32 @@ public class TelaAnaliseProjeto {
         });
 
         tabela.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
-        tabela.setRowHeight(25);
+        tabela.getTableHeader().setBackground(EstilosPadrao.verdeUni);
+        tabela.getTableHeader().setForeground(Color.WHITE);
+        tabela.setFont(EstilosPadrao.fontePadrao);
+        tabela.setRowHeight(22);
 
         JScrollPane scroll = new JScrollPane(tabela);
 
         JPanel painelAcoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelAcoes.setBackground(EstilosPadrao.cinzaClaro);
+        painelAcoes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         JButton btnAprovar = new JButton("Aprovar Projeto");
         JButton btnNegar = new JButton("Recusar Projeto");
+
+        btnAprovar.setBackground(EstilosPadrao.verdeUni);
+        btnAprovar.setForeground(Color.WHITE);
+        btnAprovar.setFont(EstilosPadrao.fonteBotao);
+        btnAprovar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+
+        btnNegar.setBackground(EstilosPadrao.vermelhoBotao);
+        btnNegar.setForeground(Color.WHITE);
+        btnNegar.setFont(EstilosPadrao.fonteBotao);
+        btnNegar.setPreferredSize(EstilosPadrao.tamanhoBotao);
+
         painelAcoes.add(btnAprovar);
+        painelAcoes.add(Box.createHorizontalStrut(10));
         painelAcoes.add(btnNegar);
 
         btnAprovar.addActionListener(ev -> {
