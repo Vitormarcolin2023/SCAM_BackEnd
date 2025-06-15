@@ -104,6 +104,8 @@ public class PrincipalAlunoView {
                 JInternalFrame internalFrame = null;
                 int index = comboProjetos.getSelectedIndex();
 
+                fecharFramesAbertos(desktopPane);
+
                 if (index == 0) {
                     return;
                 } else if (index == 1) {
@@ -153,6 +155,7 @@ public class PrincipalAlunoView {
 
 
             listarMentoresBtn.addActionListener(e -> {
+                fecharFramesAbertos(desktopPane);
                 ListMentoresView.ListMentores(desktopPane);
                 JInternalFrame mentorFrame = ListMentoresView.ListMentores(desktopPane);
                 desktopPane.add(mentorFrame);
@@ -172,6 +175,8 @@ public class PrincipalAlunoView {
 
                 // Evita executar ao selecionar "Reuniões"
                 if (selectedIndex == 0) return;
+
+                fecharFramesAbertos(desktopPane);
 
                 SwingUtilities.invokeLater(() -> {
                     JInternalFrame internalFrame = null;
@@ -218,4 +223,12 @@ public class PrincipalAlunoView {
             frame.setVisible(true);
         });
     }
+
+    private static void fecharFramesAbertos(JDesktopPane desktopPane) {
+        for (JInternalFrame frame : desktopPane.getAllFrames()) {
+            frame.dispose(); // Fecha todos os JInternalFrames abertos
+        }
+    }
+
+
 }
