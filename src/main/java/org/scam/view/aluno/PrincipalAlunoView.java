@@ -101,21 +101,22 @@ public class PrincipalAlunoView {
 
 
             comboProjetos.addActionListener(e -> {
-                JInternalFrame internalFrame = new JInternalFrame();
+                JInternalFrame internalFrame = null;
                 int index = comboProjetos.getSelectedIndex();
 
-                if(index==0){
+                if (index == 0) {
                     return;
-                } else if(index==1){
-                   // internalFrame = CadastrarProjetosView
-                } else if (index==2){
-                    internalFrame = VisualizarProjView.ListProjeto();
-                }else {
+                } else if (index == 1) {
+                    // internalFrame = CadastrarProjetosView
+                } else if (index == 2) {
+                    internalFrame = VisualizarProjView.ListProjeto(desktopPane);
+                    desktopPane.add(internalFrame); // adiciona só aqui
+                } else {
                     internalFrame = EditarCadProjetoView.EditarProjeto();
+                    desktopPane.add(internalFrame); // e aqui
                 }
 
                 if (internalFrame != null) {
-                    desktopPane.add(internalFrame);
                     int x = (desktopPane.getWidth() - internalFrame.getWidth()) / 2;
                     int y = (desktopPane.getHeight() - internalFrame.getHeight()) / 2;
                     internalFrame.setLocation(x, y);
@@ -128,6 +129,7 @@ public class PrincipalAlunoView {
                     }
                 }
             });
+
 
             listarMentoresBtn.addActionListener(e -> {
                 JInternalFrame mentorFrame = ListMentoresView.ListMentores();
