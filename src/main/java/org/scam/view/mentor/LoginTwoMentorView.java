@@ -8,6 +8,7 @@ import org.scam.model.services.Sessao;
 import org.scam.view.EstilosPadrao;
 import org.scam.view.TelaSelecaoUsuarioView;
 import org.scam.controller.classes.Mentor;
+import org.scam.controller.MentorAprovacaoController;
 import org.scam.controller.dto.MentorDTO;
 
 import javax.persistence.EntityManager;
@@ -145,7 +146,7 @@ public class LoginTwoMentorView {
                                 "Sair"
                         );
                         if (opcao == JOptionPane.YES_OPTION) {
-                            controller.reativarMentor(mentor);
+                            controller.reenviarCadastro(mentor);
                             mentor.setStatus(StatusMentor.PENDENTE); // Atualiza localmente também
                             JOptionPane.showMessageDialog(
                                     null,
@@ -153,7 +154,7 @@ public class LoginTwoMentorView {
                                     "Reativação Pendente",
                                     JOptionPane.INFORMATION_MESSAGE
                             );
-                            Sessao.setMentorLogado(mentor.toMentor());
+                            //Sessao.setMentorLogado(mentor.toMentor());
                             telaLogin.dispose();
                             TelaSelecaoUsuarioView.exibirTelaSelecao();
                         } else {
