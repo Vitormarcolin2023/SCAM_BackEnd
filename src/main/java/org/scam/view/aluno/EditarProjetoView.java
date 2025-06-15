@@ -44,8 +44,8 @@ public class EditarProjetoView extends JInternalFrame {
         controller = new EditarProjetoController(this);
         setTitle("Editar Projeto");
         setClosable(true);
-        setResizable(true);
-        setMaximizable(true);
+        setResizable(false);
+        setMaximizable(false);
         setIconifiable(true);
         initComponents();
         initListeners();
@@ -53,6 +53,7 @@ public class EditarProjetoView extends JInternalFrame {
         pack();
         setSize(EstilosPadrao.tamanhoInternalFrame);
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
         ui.setNorthPane(null);
     }
 
