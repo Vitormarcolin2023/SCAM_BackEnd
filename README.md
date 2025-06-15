@@ -24,15 +24,15 @@ As instituições de ensino superior, como a UniAmérica, enfrentam desafios na 
 
 Para resolver esse problema, foi desenvolvido um **sistema desktop multiplataforma** com as seguintes tecnologias:
 
-- *Java (JDK 17)* – linguagem principal do projeto  
-- *Java Swing* – construção da interface gráfica (GUI)  
-- *Hibernate* – mapeamento objeto-relacional  
-- *PostgreSQL* – banco de dados relacional  
-- *DBeaver* – ferramenta de administração do banco  
-- *Git e GitHub* – controle de versão e colaboração  
-- *API ViaCEP* – consulta automática de endereço no cadastro  
-- *Figma* – prototipação da interface  
-- *Scrum + Trello* – metodologia ágil e gestão de tarefas
+- **Java (JDK 17)** – linguagem principal do projeto  
+- **Java Swing** – construção da interface gráfica (GUI)  
+- **Hibernate** – mapeamento objeto-relacional  
+- **PostgreSQL** – banco de dados relacional  
+- **DBeaver** – ferramenta de administração do banco  
+- **Git e GitHub** – controle de versão e colaboração  
+- **API ViaCEP** – consulta automática de endereço no cadastro  
+- **Figma** – prototipação da interface  
+- **Scrum + Trello** – metodologia ágil e gestão de tarefas
 
 ## 🛠️ Forma de Implementação
 
