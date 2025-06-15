@@ -22,6 +22,7 @@ public class ProjetoCadastro {
         MentorRepository mentorRepository = new MentorRepository(em);
         ProjetoRepository projetoRepository = new ProjetoRepository(em);
         AlunoEntity alunoEntity = new AlunoEntity();
+        ProjetoEntity novoProjeto = new ProjetoEntity();
 
         System.out.print("Nome do projeto: ");
         String nomeProjeto = scanner.nextLine();
@@ -29,7 +30,7 @@ public class ProjetoCadastro {
         System.out.print("Descrição do projeto: ");
         String descricaoProjeto = scanner.nextLine();
 
-        System.out.println("\n[SELEÇÃO A ÁREA DE ATUAÇÃO]");
+        System.out.println("\n[SELEÇÃO ÁREA DE ATUAÇÃO]");
         AreaDeAtuacao[] tiposA = AreaDeAtuacao.values();
         for (int i = 0; i < tiposA.length; i++) {
             System.out.printf("%d - %s%n", i + 1, tiposA[i].name());
@@ -48,11 +49,9 @@ public class ProjetoCadastro {
         System.out.print("Data de início do projeto (yyyy-MM-dd): ");
         String dataInicio = scanner.next();
 
-        System.out.print("Data de término do projeto (yyyy-MM-dd): ");
-        String dataFinal = scanner.next();
-
-        System.out.print("Quantidade de integrantes: ");
-        int qtdParticipante = scanner.nextInt();
+        // calcula data de término automaticamente
+        LocalDate inicioInformado = LocalDate.parse(dataInicio);
+        LocalDate dataTermino = inicioInformado.plusMonths(5);
 
         //Utiliza enum para apresentar os cursos
         System.out.println("\n[SELEÇÃO O CURSO]");
@@ -80,14 +79,41 @@ public class ProjetoCadastro {
         System.out.print("Período: ");
         String periodo = scanner.nextLine();
 
-        //RA automatico
-        int ra = Sessao.getRaAluno();
+        // adiciona o aluno que está cadastrando o projeto
+        AlunoEntity alunoPrincipal = em.find(AlunoEntity.class, Sessao.getRaAluno());
+        novoProjeto.getAlunos().add(alunoPrincipal);
+
+        // Para adicionar vários alunos no projeto por RA - adiciona dinamicamente
+        int qtdParticipante = 0; // contador para alunos adicionados no projeto
+        while (true) {
+            System.out.print("Digite o RA do aluno para adicionar ao projeto (ou 0 para finalizar): ");
+            int ra = scanner.nextInt();
+            scanner.nextLine();
+
+            if (ra == 0) {
+                break;
+            }
+
+            AlunoEntity aluno = em.find(AlunoEntity.class, ra);
+            if (aluno != null) {
+                if (!novoProjeto.getAlunos().contains(aluno)) {
+                    novoProjeto.getAlunos().add(aluno);
+                    System.out.println("Aluno adicionado.");
+                    qtdParticipante++;
+                } else {
+                    System.out.println("Este aluno já foi adicionado.");
+                }
+            } else {
+                System.out.println("Aluno com RA " + ra + " não encontrado.");
+            }
+        }
+
 
         // Buscar e listar mentores da mesma área
         List<MentorEntity> mentoresDisponiveis = mentorRepository.buscarMentoresPorAreaDeAtuacao(areaDeAtuacao);
 
         if (mentoresDisponiveis.isEmpty()) {
-            System.out.println("Nenhum mentor disponível para essa área de atuação.");
+            System.out.println("Nenhum mentor disponível para essa área de atuação.\nNão é possível cadastrar o projeto.");
             return;
         }
 
@@ -105,17 +131,23 @@ public class ProjetoCadastro {
         System.out.print("ID do mentor: ");
         int mentor = scanner.nextInt();
 
-        ProjetoEntity novoProjeto = new ProjetoEntity();
+        MentorEntity mentorSelecionado = em.find(MentorEntity.class, mentor);
+        if (mentorSelecionado != null) {
+            novoProjeto.setMentor(mentorSelecionado);
+        } else {
+            System.out.println("Mentor não encontrado.");
+            return;
+        }
+
+
         novoProjeto.setNomeDoProjeto(nomeProjeto);
         novoProjeto.setDescricao(descricaoProjeto);
         novoProjeto.setAreaDeAtuacao(areaDeAtuacao);
         novoProjeto.setDataInicioProjeto(LocalDate.parse(dataInicio));
-        novoProjeto.setDataFinalProjeto(LocalDate.parse(dataFinal));
+        novoProjeto.setDataFinalProjeto(dataTermino);
         novoProjeto.setTamanhoDoGrupo(qtdParticipante);
         novoProjeto.setCurso(cursoEscolhido);
         novoProjeto.setPeriodo(periodo);
-        novoProjeto.setRaAluno(ra);
-        novoProjeto.setIdMentor(mentor);
 
         // Valida se não houve erro no cadastro
         if(projetoRepository.salvar(novoProjeto)){

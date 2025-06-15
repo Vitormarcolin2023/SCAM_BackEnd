@@ -4,8 +4,10 @@ import org.scam.controller.cadastros.MentorCadastro;
 import org.scam.controller.classes.Mentor;
 
 import org.scam.model.entities.ProjetoEntity;
+import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
 import org.scam.model.repository.ProjetoRepository;
+import org.scam.model.services.Sessao;
 
 import java.util.List;
 import java.util.Scanner;
@@ -14,20 +16,19 @@ import javax.persistence.EntityManager;
 
 public class MenuMentor {
     private Mentor mentor;
-    private EntityManager em;
+    private final EntityManager em = CustomizerFactory.getEntityManager();
 
     ProjetoRepository projetoRepository = new ProjetoRepository(em);
 
-    public MenuMentor(Mentor mentor, EntityManager em){
+    public MenuMentor(Mentor mentor){
         this.mentor = mentor;
-        this.em = em;
         this.projetoRepository = new ProjetoRepository(em);
     }
 
 
     public MenuMentor(){}
 
-    public void menu() {
+    public boolean menu() {
         Scanner sc = new Scanner(System.in);
         int continuar = 0;
        do{
@@ -42,10 +43,10 @@ public class MenuMentor {
 
            switch (continuar){
                case 1:
-                   return;
+                   return true;
                case 2:
                    new MentorCadastro().cadastrarMentor();
-                   break;
+                   return false;
                case 3:
                    break;
                default:
@@ -53,12 +54,15 @@ public class MenuMentor {
                    break;
            }
        }while (continuar != 3);
+       return false;
     }
 
     public void exibirMenu() {
 
         Scanner sc = new Scanner(System.in);
         int opcao;
+
+        Sessao.setMentorLogado(mentor);
 
         do{
             System.out.println("========= PAINEL DO MENTOR =============");

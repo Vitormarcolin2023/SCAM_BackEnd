@@ -3,11 +3,13 @@ import org.scam.controller.cadastros.AreaDeAtuacao;
 import org.scam.controller.cadastros.Curso;
 import org.scam.controller.cadastros.ProjetoCadastro;
 import org.scam.controller.classes.Aluno;
+import org.scam.model.entities.AlunoEntity;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CustomizerFactory;
 import org.scam.model.repository.MentorRepository;
 import org.scam.model.repository.ProjetoRepository;
+import org.scam.model.services.Sessao;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -29,10 +31,13 @@ public class MenuAluno {
     }
 
     public void exibirMenu() {
+
+        Sessao.setRaAluno(aluno.ra);
+
         int opcao;
 
         do {
-            System.out.println("\n=========== MENU DO ALUNO ===========");
+            System.out.println("\n=========== MENU xDO ALUNO ===========");
             System.out.println("[1] - Cadastrar Projeto");
             System.out.println("[2] - Gerenciar Projetos");
             System.out.println("[3] - Listar Mentores");
@@ -75,7 +80,7 @@ public class MenuAluno {
     }
 
     public void gerenciarProjetos() {
-        List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos("raAluno", aluno.ra);
+        List<ProjetoEntity> listaProjetos = projetoRepository.buscarTodos(aluno.ra);
         int operacao = 0;
 
         do {
@@ -155,6 +160,10 @@ public class MenuAluno {
             System.out.println("- Grupo: " + projeto.getTamanhoDoGrupo() + " Integrantes");
             System.out.println("- Curso: " + projeto.getCurso());
             System.out.println("- Período: " + projeto.getPeriodo());
+            System.out.println("- Alunos participantes: ");
+            for (AlunoEntity aluno : projeto.getAlunos()){
+                System.out.println("- RA: " + aluno.getRa() + " | Nome: " + aluno.getNome());
+            }
         }
         System.out.println("---------------------------------------------------------------\n");
     }

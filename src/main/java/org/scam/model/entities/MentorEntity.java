@@ -34,7 +34,7 @@ public class MentorEntity implements UsuarioEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private StatusMentor status = StatusMentor.ATIVO; // por padrão, todos mentor é ATIVO
+    private StatusMentor status = StatusMentor.PENDENTE; // por padrão, todos mentor é PENDENTE para avaliar
 
     @Column(name = "motivo_desativacao", length = 255)
     private String motivoDesativacao;
@@ -121,4 +121,11 @@ public class MentorEntity implements UsuarioEntity{
     public Mentor toMentor(){
         return new Mentor(id, nome, cpf, email, senha, tipoDeUsuario, telefone, tempoDeExperiencia, tipoDeVinculo, areaDeAtuacao, endereco);
     }
+
+    @Override
+    public String toString() {
+        return nome + " - " + email;
+    }
+
+
 }

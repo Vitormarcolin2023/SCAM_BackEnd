@@ -1,6 +1,7 @@
 package org.scam.controller.menus;
 
 import org.scam.controller.classes.Coordenador;
+import org.scam.model.entities.AlunoEntity;
 import org.scam.model.entities.MentorEntity;
 import org.scam.model.entities.ProjetoEntity;
 import org.scam.model.repository.CoordenacaoRepository;
@@ -73,9 +74,13 @@ public class MenuCoordenador {
                             System.out.println("ID: " + p.getId() +
                                     "\n| Nome: " + p.getNomeDoProjeto() +
                                     "\n| Curso: " + p.getCurso() +
-                                    "\n| Área de atuação: " + p.getAreaDeAtuacao() +
-                                    "\n| Aluno: " + p.getRaAluno() +
-                                    "\n| Mentor: " + p.getIdMentor()) ;
+                                    "\n| Área de atuação: " + p.getAreaDeAtuacao());
+                            System.out.println("| Alunos: ");
+                            for (AlunoEntity aluno : p.getAlunos()){
+                                System.out.println("| RA: " + aluno.getRa() + " | Nome: " + aluno.getNome());
+                            }
+                            MentorEntity mentor = p.getMentor();
+                            System.out.println("| Mentor: " + mentor.getNome());
                         }
                     }
 

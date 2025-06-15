@@ -3,6 +3,8 @@ package org.scam.model.entities;
 import org.scam.controller.classes.Aluno;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "tb_aluno")
 public class AlunoEntity implements UsuarioEntity   {
@@ -22,6 +24,17 @@ public class AlunoEntity implements UsuarioEntity   {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToMany(mappedBy = "alunos")
+    private List<ProjetoEntity> projetos = new ArrayList<>();
+
+    public List<ProjetoEntity> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(List<ProjetoEntity> projetos) {
+        this.projetos = projetos;
+    }
 
     public String getNome() {
         return nome;

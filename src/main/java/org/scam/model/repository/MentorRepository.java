@@ -102,7 +102,7 @@ public class MentorRepository {
 
     public MentorEntity buscarPorEmail(String email) {
         try {
-            return em.createQuery("SELECT m FROM MentorEntity m WHERE m.email = :email", MentorEntity.class)
+            return em.createQuery("SELECT m FROM tb_mentor m WHERE m.email = :email", MentorEntity.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -111,12 +111,22 @@ public class MentorRepository {
     }
 
     public void editarMentor(MentorEntity mentor) {
+        boolean novaTransacao = false;
+
         try {
-            em.getTransaction().begin();
-            em.merge(mentor); // atualiza o objeto no banco
-            em.getTransaction().commit();
+            // Só começa se não estiver ativa
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+                novaTransacao = true;
+            }
+
+            em.merge(mentor);
+
+            if (novaTransacao) {
+                em.getTransaction().commit();
+            }
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
+            if (novaTransacao && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
             e.printStackTrace();
@@ -124,9 +134,11 @@ public class MentorRepository {
         }
     }
 
+
     public List<MentorEntity> buscarMentoresPorAreaDeAtuacao(AreaDeAtuacao area) {
-        return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area", MentorEntity.class)
+        return em.createQuery("FROM tb_mentor m WHERE m.areaDeAtuacao = :area AND m.status = :status", MentorEntity.class)
                 .setParameter("area", area)
+                .setParameter("status", StatusMentor.ATIVO)
                 .getResultList();
     }
 
@@ -135,6 +147,22 @@ public class MentorRepository {
         TypedQuery<ProjetoEntity> query = em.createQuery(buscarBanco, ProjetoEntity.class);
         query.setParameter("ra", ra);
         return query.getResultList();
+    }
+
+
+    public void desativarMentorPorEmail(String email, String motivo) {
+        MentorEntity mentor = buscarPorEmail(email);
+
+        if (mentor != null) {
+            mentor.setStatus(StatusMentor.DESATIVO);
+            mentor.setMotivoDesativacao(motivo);
+
+            em.getTransaction().begin();
+            em.merge(mentor);
+            em.getTransaction().commit();
+        } else {
+            throw new IllegalArgumentException("Mentor não encontrado com o e-mail: " + email);
+        }
     }
 
 }
