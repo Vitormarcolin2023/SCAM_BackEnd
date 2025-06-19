@@ -30,7 +30,7 @@ public class ListMentoresView {
         List<MentorEntity> mentores = AlunoController.listarMentoresPorStatus(StatusMentor.ATIVO);
 
         // Define as colunas da tabela
-        String[] colunas = {"ID", "Nome", "CPF", "Email", "Telefone", "Área de Atuação", "Status"};
+        String[] colunas = {"ID", "Nome", "Email", "Telefone", "Área de Atuação", "Tempo de Experiencia"};
 
         // Cria um DefaultTableModel para permitir personalização
         DefaultTableModel model = new DefaultTableModel(colunas, 0) {
@@ -45,11 +45,12 @@ public class ListMentoresView {
             Object[] rowData = {
                     mentor.getIdMentor(),
                     mentor.getNome(),
-                    mentor.getCpf(),
+                    //mentor.getCpf(),
                     mentor.getEmail(),
                     mentor.getTelefone(),
                     mentor.getAreaDeAtuacao().name(),
-                    mentor.getStatus().name()
+                    mentor.getTempoDeExperiencia()
+                    //mentor.getStatus().name()
             };
             model.addRow(rowData);
         }
