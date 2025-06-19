@@ -1,17 +1,19 @@
 package org.scam.view.mentor;
 
+import org.scam.model.entities.MentorEntity;
 import org.scam.model.repository.TipoUsuario;
 import org.scam.view.EstilosPadrao;
 import org.scam.view.Reuniao.AgendaReuniaoView;
 import org.scam.view.Reuniao.VisualizarReunioesView;
 import org.scam.view.TelaSelecaoUsuarioView;
+import org.scam.view.coordenacao.TelaAnaliseProjeto;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TelaInicialMentor {
 
-    public static void telaMentor() {
+    public static void telaMentor(MentorEntity mentorLogado) {
         JFrame frame = new JFrame("Sistema de Acompanhamento de Mentorias");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,12 +39,13 @@ public class TelaInicialMentor {
         painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        JButton btnAnalisarProjetos = new JButton("Analisar Projetos");
         JButton btnVisuProjetos = new JButton("Visualizar Projetos");
         JButton btnAtualizarConta = new JButton("Atualizar Conta");
         JButton btnDesativarConta = new JButton("Desativar Conta");
         JButton btnVoltar = new JButton("Voltar");
 
-        for (JButton btn : new JButton[]{btnVisuProjetos, btnAtualizarConta, btnDesativarConta}) {
+        for (JButton btn : new JButton[]{btnAnalisarProjetos, btnVisuProjetos, btnAtualizarConta, btnDesativarConta}) {
             btn.setMaximumSize(EstilosPadrao.tamanhoBotao);
             btn.setPreferredSize(EstilosPadrao.tamanhoBotao);
             btn.setFont(EstilosPadrao.fonteBtnAcaoLateral);
@@ -86,7 +89,10 @@ public class TelaInicialMentor {
         desktopPane.setBackground(EstilosPadrao.cinzaClaro);
         painelCentral.add(desktopPane, BorderLayout.CENTER);
 
-        // ActionListener para Visualizar Projetos ficou mais limpo
+        btnAnalisarProjetos.addActionListener(e -> {
+            TelaAnaliseProjeto.mostrarProjetosPendentes(desktopPane, mentorLogado);
+        });
+
         btnVisuProjetos.addActionListener(e -> {
             VisualizarProjetoMentorView.exibir(frame, desktopPane);
         });
@@ -97,15 +103,13 @@ public class TelaInicialMentor {
 
         btnDesativarConta.addActionListener(e -> {
             JInternalFrame internalFrame = DesativarContaMentorView.exibirTelaDesativarConta(frame);
-
             Dimension desktopSize = desktopPane.getSize();
             Dimension frameSize = internalFrame.getSize();
             int x = (desktopSize.width - frameSize.width) / 2;
             int y = (desktopSize.height - frameSize.height) / 2;
             internalFrame.setLocation(x, y);
-
             desktopPane.add(internalFrame);
-            internalFrame.setVisible(true); // Garante que a janela seja visível
+            internalFrame.setVisible(true);
             try {
                 internalFrame.setSelected(true);
             } catch (java.beans.PropertyVetoException pve) {
@@ -117,7 +121,6 @@ public class TelaInicialMentor {
             int confirmar = JOptionPane.showConfirmDialog(frame,
                     "Tem certeza que deseja voltar para a tela de login?",
                     "Confirmação", JOptionPane.YES_NO_OPTION);
-
             if (confirmar == JOptionPane.YES_OPTION) {
                 frame.dispose();
                 TelaSelecaoUsuarioView.exibirTelaSelecao();
@@ -126,20 +129,15 @@ public class TelaInicialMentor {
 
         btnReuniao.addActionListener(e -> {
             int selectedIndex = btnReuniao.getSelectedIndex();
-
-            // Evita executar ao selecionar "Reuniões"
             if (selectedIndex == 0) return;
-
             SwingUtilities.invokeLater(() -> {
                 JInternalFrame internalFrame = null;
-
-                if (selectedIndex == 1) { // "Visualizar Reuniões"
+                if (selectedIndex == 1) {
                     internalFrame = VisualizarReunioesView.visualizarReunioes(desktopPane, TipoUsuario.MENTOR);
-                } else if (selectedIndex == 2) { // "Agendar Reunião"
+                } else if (selectedIndex == 2) {
                     AgendaReuniaoView.setTipoUsuario(TipoUsuario.MENTOR);
                     internalFrame = AgendaReuniaoView.cadastrarReuniao();
                 }
-
                 if (internalFrame != null) {
                     desktopPane.add(internalFrame);
                     int x = (desktopPane.getWidth() - internalFrame.getWidth()) / 2;
@@ -147,11 +145,6 @@ public class TelaInicialMentor {
                     internalFrame.setLocation(x, y);
                     internalFrame.setVisible(true);
                     internalFrame.moveToFront();
-                    try {
-                        internalFrame.setSelected(true);
-                    } catch (java.beans.PropertyVetoException ex) {
-                        ex.printStackTrace();
-                    }
                 }
             });
         });

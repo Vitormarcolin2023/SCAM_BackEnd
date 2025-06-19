@@ -2,6 +2,7 @@ package org.scam.model.entities;
 
 import org.scam.controller.cadastros.AreaDeAtuacao;
 import org.scam.controller.cadastros.Curso;
+import org.scam.model.repository.StatusProjeto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -42,8 +43,7 @@ public class ProjetoEntity {
     @Column(name = "periodo", nullable = false, length = 45)
     private String periodo;
 
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_projeto_aluno",
             joinColumns = @JoinColumn(name = "projeto_id"),
@@ -51,12 +51,13 @@ public class ProjetoEntity {
     )
     private List<AlunoEntity> alunos = new ArrayList<>();
 
-
     @ManyToOne
     @JoinColumn(name = "fk_mentor_id", nullable = false)
     private MentorEntity mentor;
 
-    // Getters e setters
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusProjeto status;
 
     public List<AlunoEntity> getAlunos() {
         return alunos;
@@ -73,9 +74,6 @@ public class ProjetoEntity {
     public void setMentor(MentorEntity mentor) {
         this.mentor = mentor;
     }
-
-
-    //GETTER AND SETTER
 
     public Long getId() {
         return id;
@@ -149,8 +147,16 @@ public class ProjetoEntity {
         this.periodo = periodo;
     }
 
-    public ProjetoEntity() {
+    public StatusProjeto getStatus() {
+        return status;
+    }
 
+    public void setStatus(StatusProjeto status) {
+        this.status = status;
+    }
+
+    public ProjetoEntity() {
+        this.status = StatusProjeto.PENDENTE;
     }
 
     public ProjetoEntity(Long id, String nomeDoProjeto, String descricao, AreaDeAtuacao areaDeAtuacao,
@@ -167,10 +173,9 @@ public class ProjetoEntity {
         this.periodo = periodo;
         this.alunos = alunos;
         this.mentor = mentor;
+        this.status = StatusProjeto.PENDENTE;
     }
 
-
-    //valida se a data inicial do projeto não vem depois da data final, não permitindo q isso aconteça
     @PrePersist
     @PreUpdate
     private void validarProjeto(){
@@ -185,11 +190,8 @@ public class ProjetoEntity {
         }
     }
 
-    // Dentro da classe ProjetoEntity.java
-
     @Override
     public String toString() {
-        return this.getNomeDoProjeto(); // Retorna o nome do projeto, que aparecerá na lista de seleção.
+        return this.getNomeDoProjeto();
     }
-
 }

@@ -119,6 +119,7 @@ public class LoginAlunoView {
                     JOptionPane.showMessageDialog(null, "Bem-vindo(a), " + aluno.getNome());
                     telaLogin.dispose();
                     Sessao.setAlunoLogado(aluno);
+                    Sessao.setRaAluno(aluno.getRa());
                     PrincipalAlunoView.principal();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);

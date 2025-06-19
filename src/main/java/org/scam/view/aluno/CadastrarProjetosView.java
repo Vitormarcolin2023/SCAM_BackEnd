@@ -14,6 +14,7 @@ import org.scam.view.EstilosPadrao;
 import javax.persistence.EntityManager;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,9 +48,15 @@ public class CadastrarProjetosView extends JInternalFrame {
 
         setTitle("Cadastro de Novo Projeto");
         setClosable(true);
-        setResizable(true);
-        setMaximizable(true);
+        setResizable(false);
+        setMaximizable(false);
         setIconifiable(true);
+
+        // tamanho padrão de todos os internal Frames
+        this.setSize(EstilosPadrao.tamanhoInternalFrame);
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
+        setBorder(BorderFactory.createLineBorder(EstilosPadrao.cinzaFundo, 3));
 
         initComponents();
         initListeners();

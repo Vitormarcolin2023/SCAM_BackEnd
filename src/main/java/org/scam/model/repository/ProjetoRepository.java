@@ -19,23 +19,17 @@ public class ProjetoRepository {
         if (!em.getTransaction().isActive()) {
             em.getTransaction().begin();
         }
-
         try {
             em.persist(projeto);
-
             em.getTransaction().commit();
-
-            return true; // Sucesso
-
+            return true;
         } catch (Exception e) {
             System.err.println("!!!!!!!!!! ERRO AO SALVAR PROJETO NO REPOSITÓRIO !!!!!!!!!!");
             e.printStackTrace();
-
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-
-            return false; // Falha
+            return false;
         }
     }
 
@@ -88,9 +82,7 @@ public class ProjetoRepository {
     }
 
     public void atualizar(ProjetoEntity tb_projeto) {
-        em.getTransaction().begin();
         em.merge(tb_projeto);
-        em.getTransaction().commit();
     }
 
     public void remover(Long id) {
@@ -106,6 +98,22 @@ public class ProjetoRepository {
         String jpql = "SELECT p FROM ProjetoEntity p WHERE p.mentor = :mentor";
         return em.createQuery(jpql, ProjetoEntity.class)
                 .setParameter("mentor", mentor)
+                .getResultList();
+    }
+
+    public List<ProjetoEntity> findByMentorAndStatus(MentorEntity mentor, StatusProjeto status) {
+        String jpql = "SELECT p FROM ProjetoEntity p WHERE p.mentor = :mentor AND p.status = :status";
+        return em.createQuery(jpql, ProjetoEntity.class)
+                .setParameter("mentor", mentor)
+                .setParameter("status", status)
+                .getResultList();
+    }
+
+    public List<ProjetoEntity> findByAlunoRaAndStatus(int ra, StatusProjeto status) {
+        String jpql = "SELECT p FROM ProjetoEntity p JOIN p.alunos a WHERE a.ra = :ra AND p.status = :status";
+        return em.createQuery(jpql, ProjetoEntity.class)
+                .setParameter("ra", ra)
+                .setParameter("status", status)
                 .getResultList();
     }
 }
